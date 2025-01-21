@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3e6129dcbbad6574081e9322e528c02a
+guid: b3b5aedf5a6ef6146a65b0267bafc726
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7311578648209406581
-    second: DoanGiaLinh-turn-ava_0
+      213: 6586382296579012112
+    second: Turn frame orange_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DoanGiaLinh-turn-ava_0
+      name: Turn frame orange_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 114
-        height: 113
+        height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b85c52635fd088a90800000000000000
-      internalID: -7311578648209406581
+      spriteID: 01673867dc7876b50800000000000000
+      internalID: 6586382296579012112
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DoanGiaLinh-turn-ava_0: -7311578648209406581
+      Turn frame orange_0: 6586382296579012112
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

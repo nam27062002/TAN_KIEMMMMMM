@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7f52d1259e80eab41b1338c5e43d9578
+guid: 6ae64008cc0af0745807ca194da17967
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -609362603315950370
-    second: LyVoDanh-Ava_0
+      213: 2232672408874480342
+    second: Turn highline_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LyVoDanh-Ava_0
+      name: Turn highline_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 8
-        width: 77
-        height: 91
+        x: 0
+        y: 0
+        width: 138
+        height: 135
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: edc02f9d0fb1b87f0800000000000000
-      internalID: -609362603315950370
+      spriteID: 6d277c60abb0cfe10800000000000000
+      internalID: 2232672408874480342
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LyVoDanh-Ava_0: -609362603315950370
+      Turn highline_0: 2232672408874480342
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

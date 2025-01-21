@@ -96,15 +96,15 @@ MonoBehaviour:
   characterConfig:
     characterHeight: 0.55
     characterName: "Thi\u1EBFt Nh\xE2n"
-    characterIcon: {fileID: 21300000, guid: 1211ca30f3b3f2a4fa6eba8ac59799f1, type: 3}
+    characterIcon: {fileID: 21300000, guid: 177a247f955219b40b307348ba3c6abc, type: 3}
     characterAttributes:
-      maxMoveRange: 0
-      health: 0
-      mana: 0
-      atk: 0
-      def: 0
-      chiDef: 0
-      spd: 0
+      maxMoveRange: 5
+      health: 40
+      mana: 20
+      atk: 8
+      def: 10
+      chiDef: 16
+      spd: 6
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 9319fcf17bb013a40af510e16132c80e, type: 3}

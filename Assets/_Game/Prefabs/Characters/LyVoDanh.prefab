@@ -88,15 +88,15 @@ MonoBehaviour:
   characterConfig:
     characterHeight: 1
     characterName: "L\xFD V\xF4 Danh"
-    characterIcon: {fileID: 21300000, guid: 7f52d1259e80eab41b1338c5e43d9578, type: 3}
+    characterIcon: {fileID: 21300000, guid: 2e699fd2a5398dc4cbf81d03dd2de78d, type: 3}
     characterAttributes:
-      maxMoveRange: 0
-      health: 0
-      mana: 0
-      atk: 0
-      def: 0
-      chiDef: 0
-      spd: 0
+      maxMoveRange: 5
+      health: 40
+      mana: 24
+      atk: 12
+      def: 12
+      chiDef: 12
+      spd: 8
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 5a881b8a6a8de22419817212449f2a56, type: 3}

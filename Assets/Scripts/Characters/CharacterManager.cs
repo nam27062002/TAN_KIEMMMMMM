@@ -48,19 +48,16 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
                         Players.Add(playerCharacter);
                         break;
                 }
-                
             }
         }
         
         SortCharacterBySpeed();
-        
+        SetMainCharacter();
     }
     
     private void SortCharacterBySpeed()
     {
-        Debug.Log("Gameplay: Sort Character by Speed");
         Characters = Characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
-        SetMainCharacter();
     }
     
     private void SetMainCharacter()
@@ -72,7 +69,13 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     {
         MainCharacter = character;
         SetSelectedCharacter(character); 
+        HUD.Instance.SetupCharacterFocus(Characters, _characterIndex);
         HUD.Instance.SetCharacterFocus(GetSelectedCharacterParams());
+        
+        if (Characters.Count > 0 && character == Characters[0])
+        {
+            GameplayManager.Instance.HandleNewRound();
+        }
     }
 
     private void SetSelectedCharacter(Character character)

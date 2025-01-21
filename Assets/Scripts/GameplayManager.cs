@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [SerializeField] private LevelConfig levelConfig;  
     [SerializeField] private CharacterManager characterManager;
     [ShowInInspector, ReadOnly] public MapManager MapManager { get; private set; }
+    public int CurrentRound { get; private set; } = 0;
+
+    public event EventHandler OnNewRound;
     
     protected override void Awake()
     {
@@ -17,6 +21,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private void Start()
     {
+        StartNewGame();
+    }
+
+    private void StartNewGame()
+    {
+        CurrentRound = 0;
+        HUD.Instance.SetLevelName(levelConfig.levelName);
         LoadMapGame();
     }
     
@@ -30,5 +41,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void LoadCharacter()
     {
         characterManager.Initialize(levelConfig.spawnerConfig, MapManager);
+    }
+
+    public void HandleNewRound()
+    {
+        CurrentRound++;
+        OnNewRound?.Invoke(this, EventArgs.Empty);
+        Debug.Log($"NT - Gameplay: round {CurrentRound}");
     }
 }

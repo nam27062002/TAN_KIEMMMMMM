@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 10cd0016f9671224aa6dc051a8e3b6ff
+guid: 6059acfa4eee5c94aa347899aca6e514
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7611810268245942841
-    second: LyVoDanh_turn-ava_0
+      213: 8424418625136020285
+    second: circleBtn0 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LyVoDanh_turn-ava_0
+      name: circleBtn0 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 114
-        height: 112
+        width: 83
+        height: 82
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7cd978fd3ea6d5690800000000000000
-      internalID: -7611810268245942841
+      spriteID: d3bca66ea1c89e470800000000000000
+      internalID: 8424418625136020285
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LyVoDanh_turn-ava_0: -7611810268245942841
+      circleBtn0 1_0: 8424418625136020285
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

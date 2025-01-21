@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityToolbarExtender;
@@ -35,13 +36,15 @@ namespace Editor
                 GUILayout.Width(120));
 
             // Open Scene Button
-            if (GUILayout.Button(new GUIContent("🔄 Open Scene", "Open the selected scene"), EditorStyles.toolbarButton))
+            if (GUILayout.Button(new GUIContent("🔄 Open Scene", "Open the selected scene"),
+                    EditorStyles.toolbarButton))
             {
                 OpenSelectedScene();
             }
 
             // Run Official Button
-            if (GUILayout.Button(new GUIContent("▶ Run Official", "Run the official Bootstrap scene"), EditorStyles.toolbarButton))
+            if (GUILayout.Button(new GUIContent("▶ Run Official", "Run the official Bootstrap scene"),
+                    EditorStyles.toolbarButton))
             {
                 RunOfficial();
             }
@@ -92,3 +95,4 @@ namespace Editor
         }
     }
 }
+#endif
