@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &105415065458405885
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_Name
+      value: LyVoDanh
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330223302066570300, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.137
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5598662789892198034, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8476363159216195691}
+  m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+--- !u!1 &959730211588684647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 105415065458405885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8476363159216195691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959730211588684647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb37350c28d44f5c89a6e4ddca9ee6a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterAnimationData: {fileID: 4661756497990611313}
+  hpBar: {fileID: 8521261965995647725}
+  model: {fileID: 1430476920419069654}
+  characterConfig:
+    characterHeight: 1
+    characterName: "L\xFD V\xF4 Danh"
+    characterIcon: {fileID: 21300000, guid: 7f52d1259e80eab41b1338c5e43d9578, type: 3}
+    characterAttributes:
+      maxMoveRange: 0
+      health: 0
+      mana: 0
+      atk: 0
+      def: 0
+      chiDef: 0
+      spd: 0
+  skillConfig:
+    internalSkill:
+    - icon: {fileID: 21300000, guid: 5a881b8a6a8de22419817212449f2a56, type: 3}
+      name: "\u0110\xE1nh th\u01B0\u1EDDng"
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 1
+    - icon: {fileID: 21300000, guid: f8c6300edbc219b4099992fb8366474e, type: 3}
+      name: "V\u1EA5n Truy L\u01B0u"
+      mpCost: 2
+      range: 2
+      isDirectionalSkill: 1
+    - icon: {fileID: 21300000, guid: 4a284cf3f3d4fae4baee0a01744b5c0c, type: 3}
+      name: "Nh\u1EA5t Giang Y\xEAn Tr\xFAc"
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 0
+    - icon: {fileID: 21300000, guid: 748b49141ded6bb4cb3e062af2c159e2, type: 3}
+      name: "Th\u1EA5t Ca Ng\xE2m"
+      mpCost: 3
+      range: 2
+      isDirectionalSkill: 1
+    movementSkill:
+    - icon: {fileID: 21300000, guid: 8c1777af8fdc083458f7882b7817ba9f, type: 3}
+      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 1
+    - icon: {fileID: 21300000, guid: 66c1d166a644d474aa81ba1e38e8b0ff, type: 3}
+      name: "Hu\u1EC1 H\u1ED3 Vi\u1EC5n Du"
+      mpCost: 2
+      range: 2
+      isDirectionalSkill: 1
+    - icon: {fileID: 21300000, guid: a58a7c4ec4bd53843a53239ef355700a, type: 3}
+      name: "Li\xEAn V\u1EA5n"
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 0
+    - icon: {fileID: 21300000, guid: 7ee6655c6c54f3149a563a40311e01b6, type: 3}
+      name: "B\u1EA5t Th\xE0nh Danh"
+      mpCost: 3
+      range: 2
+      isDirectionalSkill: 1
+    combatSkill:
+    - icon: {fileID: 21300000, guid: 9abd56b3b82f07549b9766afd97db3bb, type: 3}
+      name: "\u0110\xE1nh th\u01B0\u1EDDng"
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 1
+    - icon: {fileID: 21300000, guid: f1127bb72f6e3fe44ad3741940e4a4cb, type: 3}
+      name: "S\u1EA1 B\u1EA5t Ki\u1EBFn"
+      mpCost: 2
+      range: 2
+      isDirectionalSkill: 1
+    - icon: {fileID: 21300000, guid: c85a2b1dd3dfcad4c9099661931b738b, type: 3}
+      name: "M\xEDnh \u0110\xEDnh Quy Lai"
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 0
+    - icon: {fileID: 21300000, guid: 122e4b20043b2004b9195a0f862c1f1e, type: 3}
+      name: "\u0110\u1EA1p Thi\xEAn Nhai"
+      mpCost: 3
+      range: 2
+      isDirectionalSkill: 1
+--- !u!1 &1430476920419069654 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 105415065458405885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4661756497990611313 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4739863392310132876, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 105415065458405885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430476920419069654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8c6a644fad47c0ab8aa0cd8d58090c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8521261965995647725 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8590362223701447440, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 105415065458405885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6608937a70b9405e956ed94070f74f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

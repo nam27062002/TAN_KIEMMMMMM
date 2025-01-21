@@ -1,0 +1,534 @@
+fileFormatVersion: 2
+guid: 9f0baec69cba81e4ab9a58ec5ba20367
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8390108956473656165
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_0"
+  - first:
+      213: 2587946723839608196
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_1"
+  - first:
+      213: -7487710182990890096
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_2"
+  - first:
+      213: 3123343265481767517
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_3"
+  - first:
+      213: 5528352174812391071
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_4"
+  - first:
+      213: 7318652726806471604
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_5"
+  - first:
+      213: 143261596295852574
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_6"
+  - first:
+      213: -6438316851139504038
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_7"
+  - first:
+      213: -2941920870199968624
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_8"
+  - first:
+      213: 5068905103706168143
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_9"
+  - first:
+      213: 6121953438940568396
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_10"
+  - first:
+      213: -4226589085035422812
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_11"
+  - first:
+      213: -8924448934863591585
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_12"
+  - first:
+      213: 6499756732887158638
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_13"
+  - first:
+      213: -5985560194828446087
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_14"
+  - first:
+      213: 8135383910340628152
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_15"
+  - first:
+      213: -3805785752447159482
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_16"
+  - first:
+      213: -6541850052704934880
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_17"
+  - first:
+      213: -1890302377533892694
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_18"
+  - first:
+      213: -9071762491250762435
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_19"
+  - first:
+      213: 6945592441127015702
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_20"
+  - first:
+      213: 6111632618026451541
+    second: "Tuy\u1EBFt \u0110i\u1EC3m_21"
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Win64
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_0"
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 31
+        width: 98
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9c70965b58509b80800000000000000
+      internalID: -8390108956473656165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_1"
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 31
+        width: 90
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 485881475db3ae320800000000000000
+      internalID: 2587946723839608196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_2"
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 25
+        width: 89
+        height: 166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09bb0c9924f461890800000000000000
+      internalID: -7487710182990890096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_3"
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 6
+        width: 130
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5a36aad628585b20800000000000000
+      internalID: 3123343265481767517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_4"
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 10
+        width: 126
+        height: 181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9663f43307a8bc40800000000000000
+      internalID: 5528352174812391071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_5"
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 14
+        width: 139
+        height: 177
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b36ebf01e3119560800000000000000
+      internalID: 7318652726806471604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_6"
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 10
+        width: 143
+        height: 181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e127b2da9a7fcf100800000000000000
+      internalID: 143261596295852574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_9"
+      rect:
+        serializedVersion: 2
+        x: 1495
+        y: 0
+        width: 148
+        height: 191
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4b129ae55e585640800000000000000
+      internalID: 5068905103706168143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_10"
+      rect:
+        serializedVersion: 2
+        x: 1715
+        y: 10
+        width: 132
+        height: 181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4b988b973c85f450800000000000000
+      internalID: 6121953438940568396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_11"
+      rect:
+        serializedVersion: 2
+        x: 1933
+        y: 11
+        width: 111
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ab9beede932855c0800000000000000
+      internalID: -4226589085035422812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_12"
+      rect:
+        serializedVersion: 2
+        x: 2146
+        y: 10
+        width: 89
+        height: 181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f57a75d3afcf52480800000000000000
+      internalID: -8924448934863591585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_13"
+      rect:
+        serializedVersion: 2
+        x: 2362
+        y: 31
+        width: 90
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6f4136bf46c33a50800000000000000
+      internalID: 6499756732887158638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Tuy\u1EBFt \u0110i\u1EC3m_21"
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 0
+        width: 11
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 552482b3c71e0d450800000000000000
+      internalID: 6111632618026451541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d45f4267f89c6114ba2ff7280242db74
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      "Tuy\u1EBFt \u0110i\u1EC3m_0": -8390108956473656165
+      "Tuy\u1EBFt \u0110i\u1EC3m_1": 2587946723839608196
+      "Tuy\u1EBFt \u0110i\u1EC3m_10": 6121953438940568396
+      "Tuy\u1EBFt \u0110i\u1EC3m_11": -4226589085035422812
+      "Tuy\u1EBFt \u0110i\u1EC3m_12": -8924448934863591585
+      "Tuy\u1EBFt \u0110i\u1EC3m_13": 6499756732887158638
+      "Tuy\u1EBFt \u0110i\u1EC3m_2": -7487710182990890096
+      "Tuy\u1EBFt \u0110i\u1EC3m_21": 6111632618026451541
+      "Tuy\u1EBFt \u0110i\u1EC3m_3": 3123343265481767517
+      "Tuy\u1EBFt \u0110i\u1EC3m_4": 5528352174812391071
+      "Tuy\u1EBFt \u0110i\u1EC3m_5": 7318652726806471604
+      "Tuy\u1EBFt \u0110i\u1EC3m_6": 143261596295852574
+      "Tuy\u1EBFt \u0110i\u1EC3m_9": 5068905103706168143
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
