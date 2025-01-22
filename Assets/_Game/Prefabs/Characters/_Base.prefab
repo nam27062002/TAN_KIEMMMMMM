@@ -46,11 +46,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecabba7f6a0a480897f4773582af0b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterConfig:
-    characterHeight: 1
   characterAnimationData: {fileID: 4739863392310132876}
   hpBar: {fileID: 8590362223701447440}
   model: {fileID: 1345610228408147755}
+  characterConfig:
+    characterHeight: 1
+    characterName: 
+    characterIcon: {fileID: 0}
+    characterAttributes:
+      maxMoveRange: 0
+      health: 0
+      mana: 0
+      atk: 0
+      def: 0
+      chiDef: 0
+      spd: 0
+  skillConfig:
+    internalSkill: []
+    movementSkill: []
+    combatSkill: []
 --- !u!1 &1345610228408147755
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +252,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!114 &6593618829422824396
 MonoBehaviour:

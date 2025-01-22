@@ -10,8 +10,10 @@ public class Skill_UI : MonoBehaviour
     public Button skillButton;
     public GameObject lockObject;
 
-    private bool isEnoughMana;
-    private bool isLocked;
+    private bool _isEnoughMana;
+    private bool _isLocked;
+    private int _skillIndex;
+    
     
     private void Awake()
     {
@@ -25,14 +27,14 @@ public class Skill_UI : MonoBehaviour
 
     private void OnSkillButtonClicked()
     {
-        Debug.Log("OnSkillButtonClicked");
+        GameplayManager.Instance.HandleSelectSkill(_skillIndex);
     }
     
     public void SetSkill(int index, Sprite skillIcon, bool unlock, bool enoughMana)
     {
-        isEnoughMana = !unlock;
-        isEnoughMana = enoughMana;
-        
+        _isEnoughMana = !unlock;
+        _isEnoughMana = enoughMana;
+        _skillIndex = index - 1;
         skillIndex.text = index.ToString();
         skillImage.sprite = skillIcon;
         gameObject.SetActive(true);

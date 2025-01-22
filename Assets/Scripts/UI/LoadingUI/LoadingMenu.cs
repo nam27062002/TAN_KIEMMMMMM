@@ -13,7 +13,7 @@ public class LoadingMenu : MonoBehaviour
 
     private IEnumerator StartLoading()
     {
-#if UNITY_EDITOR
+#if QUICK_CHECK
         timeLoading = 0.1f;
 #endif
         float elapsedTime = 0f;

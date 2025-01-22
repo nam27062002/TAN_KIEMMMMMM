@@ -14,6 +14,11 @@ public class SkillInfo
     [LabelWidth(75)] 
     public string name;
 
+    [HorizontalGroup("Skill Info")]
+    [VerticalGroup("Skill Info/Details")] 
+    [LabelWidth(75), ReadOnly] 
+    public int skillIndex;
+    
     [VerticalGroup("Skill Info/Details")]
     [LabelWidth(75)] 
     [GUIColor(0.2f, 0.6f, 1f)]

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HUD : SingletonMonoBehavior<HUD>
 { 
     public List<Skill_UI> skillUI = new List<Skill_UI>();
-    
+    public Button endTurnButton;
     [Title("Text Mesh Pro")]
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI levelName;
@@ -25,6 +25,18 @@ public class HUD : SingletonMonoBehavior<HUD>
     public ProcessBar mpBar;
     
     private CharacterParams _characterParams;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        endTurnButton.onClick.AddListener(EndTurnButtonClicked);
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        endTurnButton.onClick.RemoveListener(EndTurnButtonClicked);
+    }
 
     public void SetLevelName(string level)
     {
@@ -64,7 +76,9 @@ public class HUD : SingletonMonoBehavior<HUD>
                 enoughMana: true);
         }
 
-        characterFocusName.text = $"Lượt của {characterParams.Character.characterConfig.characterName}";
+        if (GameplayManager.Instance.characterManager.IsMainCharacterSelected)
+            characterFocusName.text = $"Lượt của {characterParams.Character.characterConfig.characterName}";
+        endTurnButton.gameObject.SetActiveIfNeeded(GameplayManager.Instance.characterManager.CanShowEndTurn);
         characterName.text = characterParams.Character.characterConfig.characterName;
         characterIcon.sprite = characterParams.Character.characterConfig.characterIcon;
         characterParams.Character.characterInfo.OnHpChanged = OnHpChanged;
@@ -85,5 +99,20 @@ public class HUD : SingletonMonoBehavior<HUD>
         var currentMp = _characterParams.Character.characterInfo.CurrentMP;
         var maxMp = _characterParams.Character.characterInfo.Attributes.mana;
         mpBar.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
+    }
+
+    private void EndTurnButtonClicked()
+    {
+        GameplayManager.Instance.HandleEndTurn();
+    }
+
+    public void HideHUD()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void ShowHUD()
+    {
+        gameObject.SetActive(true);
     }
 }

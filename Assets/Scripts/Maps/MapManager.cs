@@ -31,6 +31,7 @@ public class MapManager : MonoBehaviour
 
     public void Initialize()
     {
+        _pathfinding = new Pathfinding(this);
         _completed = 0;
         var count = 0;
         foreach (var cell in cells)
@@ -40,8 +41,6 @@ public class MapManager : MonoBehaviour
             cell.Value.Initialize(delay, OnLoadMapFinished);
             count++;
         }
-    
-        _pathfinding = new Pathfinding(this);
     }
 
     private void OnLoadMapFinished()
@@ -121,6 +120,7 @@ public class MapManager : MonoBehaviour
     {
         return _moveRange != null && _moveRange.Contains(cell);
     }
+    
 #if UNITY_EDITOR
     [Button("Create Map")]
     private void CreateMap()

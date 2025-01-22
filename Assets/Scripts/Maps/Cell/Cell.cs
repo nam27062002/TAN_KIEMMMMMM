@@ -36,7 +36,7 @@ public class Cell : MonoBehaviour
             return;
         }
 
-#if UNITY_EDITOR
+#if QUICK_CHECK
         transform.localScale = Vector3.one;
         backgroundSprite.color = new Color(backgroundSprite.color.r, backgroundSprite.color.g, backgroundSprite.color.b, 1f);
         onComplete?.Invoke();
@@ -90,12 +90,12 @@ public class Cell : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // if (!GameplayManager.Instance.IsTutorial) HandleCellClicked();
+        HandleCellClicked();
     }
 
     public void HandleCellClicked()
     {
-        // GameplayManager.Instance.OnCellClicked(this);
+        GameplayManager.Instance.OnCellClicked(this);
     }
 
 #if UNITY_EDITOR

@@ -135,44 +135,44 @@ MonoBehaviour:
     movementSkill:
     - icon: {fileID: 21300000, guid: e1109e1473cbe4a43a1ded5a0cde98a6, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
-      mpCost: 6
-      range: 0
-      isDirectionalSkill: 0
+      mpCost: 0
+      range: 1
+      isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 17c6e89310de8a145b908133f78dc6fe, type: 3}
       name: "B\u0103ng Ho\u1EA1i"
-      mpCost: 0
-      range: 0
-      isDirectionalSkill: 0
+      mpCost: 6
+      range: 8
+      isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: e9b2156db6f0d7148838129e6c1b2b01, type: 3}
       name: "Sen Tr\u1EAFng"
-      mpCost: 0
-      range: 0
-      isDirectionalSkill: 0
+      mpCost: 4
+      range: 2
+      isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 4227811f9b7bb39408552d36a7dd212c, type: 3}
       name: "H\u1ED3ng Ti"
-      mpCost: 0
-      range: 0
+      mpCost: 4
+      range: 6
       isDirectionalSkill: 0
     combatSkill:
     - icon: {fileID: 21300000, guid: 412bd91e9a05fce4a9aa62acfe3e8ad8, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       mpCost: 0
-      range: 0
-      isDirectionalSkill: 0
+      range: 1
+      isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 025694a806a682f4cbb7ade780ba78ee, type: 3}
       name: "M\u1ED9ng Y\u1EC3m"
-      mpCost: 0
-      range: 0
-      isDirectionalSkill: 0
+      mpCost: 6
+      range: 8
+      isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: c209965e5c9cd4d45a226df6607e7407, type: 3}
       name: "C\xFAc V\xE0ng Th\u1ECD"
-      mpCost: 0
-      range: 0
-      isDirectionalSkill: 0
+      mpCost: 4
+      range: 2
+      isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: f0245e1542ae3204080686bb10664dc7, type: 3}
       name: "Kim T\u01B0\u1EDBc Mai"
-      mpCost: 0
-      range: 0
+      mpCost: 4
+      range: 6
       isDirectionalSkill: 0
 --- !u!114 &6624640028912595744 stripped
 MonoBehaviour:

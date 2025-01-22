@@ -23,4 +23,14 @@ public class SkillConfig
             };
         }
     }
+
+    public void OnValidate()
+    {
+        for (var i = 0; i < internalSkill.Count; i++)
+        {
+            internalSkill[i].skillIndex = i;
+            movementSkill[i].skillIndex = i;
+            combatSkill[i].skillIndex = i;
+        }
+    }
 }
