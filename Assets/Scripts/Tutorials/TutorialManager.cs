@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 {
     public SerializableDictionary<CharacterType, Character> charactersInTutorial;
-    [ReadOnly] public SerializedDictionary<int, TutorialSequence> tutorialClickIndex = new();
+    [ReadOnly] private SerializedDictionary<int, TutorialSequence> tutorialClickIndex = new();
     public TutorialConfig tutorialConfig;
     public List<GotoPos> lvdGotos;
     public List<GotoPos> dglGotos;
@@ -33,6 +33,13 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         SpawnCharactersInTutorial();
         
         GameplayManager.Instance.OnLoadCharacterFinished += OnLoadCharacterFinished;
+    }
+
+    public void AddTutorialClick(int key, TutorialSequence tutorialSequence)
+    {
+        tutorialClickIndex ??= new SerializedDictionary<int, TutorialSequence>();
+        tutorialClickIndex[key] = tutorialSequence;
+        Debug.Log($"NT - Add tutorial index: {key}");
     }
     
     private void Start()

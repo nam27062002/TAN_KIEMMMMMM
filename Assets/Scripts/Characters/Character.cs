@@ -115,37 +115,29 @@ public class Character : MonoBehaviour
 
     public void MoveCharacter(List<Cell> cells)
     {
-        // characterInfo.Cell.HideFocus();
-        // characterInfo.MoveAmount += cells.Count;
-        // var moveSequence = DOTween.Sequence();
-        // float currentX = transform.position.x;
-        // foreach (var cell in cells)
-        // {
-        //     var targetPos = cell.transform.position;
-        //     targetPos.y += characterConfig.characterHeight / 2f;
-        //     if (cell.transform.position.x > currentX)
-        //     {
-        //         PlayAnim(AnimationParameterNameType.MoveRight);
-        //     }
-        //     else
-        //     {
-        //         PlayAnim(AnimationParameterNameType.MoveLeft);
-        //     }
-        //     currentX = cell.transform.position.x;
-        //     moveSequence.Append(transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
-        // }
-        //
-        // moveSequence.OnComplete(() =>
-        // {
-        //     SetIdle();
-        //     SetCell(cells[^1]);
-        //     characterInfo.Cell.ShowFocus();
-        // });
+        characterInfo.Cell.HideFocus();
+        characterInfo.MoveAmount += cells.Count;
+        var moveSequence = DOTween.Sequence();
+        float currentX = transform.position.x;
+        foreach (var cell in cells)
+        {
+            var targetPos = cell.transform.position;
+            targetPos.y += characterConfig.characterHeight / 2f;
+            ChangeState(cell.transform.position.x > currentX ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
+            currentX = cell.transform.position.x;
+            moveSequence.Append(transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
+        }
+        
+        moveSequence.OnComplete(() =>
+        {
+            SetIdle();
+            SetCell(cells[^1]);
+            characterInfo.Cell.ShowFocus();
+        });
     }
 
     public void MoveCharacter(Vector3 targetPos, float duration)
     {
-        //targetPos.y += characterConfig.characterHeight / 2f;
         ChangeState(targetPos.x > transform.position.x ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
         transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }

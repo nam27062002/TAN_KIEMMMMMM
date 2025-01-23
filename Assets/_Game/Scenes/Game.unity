@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 702396813}
   - component: {fileID: 702396814}
+  - component: {fileID: 702396815}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -358,9 +359,6 @@ MonoBehaviour:
     - {fileID: 8476363159216195691, guid: b66348842be014b4ba9d986355ab8d8f, type: 3}
     - {fileID: 2203334176055078997, guid: fe2068912a251fa4ea416286b601690f, type: 3}
     - {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
-  tutorialClickIndex:
-    m_Keys: 
-    m_Values: []
   tutorialConfig:
     tutorials:
     - tutorialTypes: 7
@@ -373,6 +371,24 @@ MonoBehaviour:
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
       tutorialMenuText: "Ch\u1ECDn v\xE0o <color=#0000FF>\u0110o\xE0n Gia Linh</color>
         \u0111\u1EC3 di chuy\u1EC3n"
+    - tutorialTypes: 3
+      arrowPosition: {x: 173.3, y: -346}
+      arrowRotation: {x: 0, y: 0, z: 0, w: 0}
+      tutorialMenuText: "Ch\u1ECDn v\xE0o <color=#0000FF>Ma \xC2m: Nhi\xEAn huy\u1EBFt</color>"
+    - tutorialTypes: 3
+      arrowPosition: {x: -444, y: 196}
+      arrowRotation: {x: 0, y: 0, z: 0, w: 0}
+      tutorialMenuText: "Ch\u1ECDn v\xE0o <color=#0000FF>L\xFD V\xF4 Danh</color>
+        \u0111\u1EC3 buff"
+    - tutorialTypes: 3
+      arrowPosition: {x: -461.3, y: -436.7}
+      arrowRotation: {x: 0, y: 0, z: 0.70710677, w: -0.70710677}
+      tutorialMenuText: "\u0110i\u1EC3m h\xE0nh \u0111\u1ED9ng chuy\u1EC3n th\xE0nh
+        m\xE0u v\xE0ng khi \u0111\u01B0\u1EE3c s\u1EED d\u1EE5ng"
+    - tutorialTypes: 3
+      arrowPosition: {x: 792, y: -356}
+      arrowRotation: {x: 0, y: 0, z: 0, w: 0}
+      tutorialMenuText: "Ch\u1ECDn k\u1EBFt th\xFAc l\u01B0\u1EE3t"
   lvdGotos:
   - {fileID: 8997004532296797488}
   - {fileID: 116588355}
@@ -389,6 +405,22 @@ MonoBehaviour:
   conversation_2: {fileID: 11400000, guid: 6d6cf197ec346d34099f16180003b0b0, type: 2}
   tutorialIndex: 0
   arrow: {fileID: 1196676956}
+--- !u!114 &702396815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702396812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67387f43b72d46679c9832c7034aa067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 4
+  highlightable:
+    highlightType: 0
+    highlightObject: {fileID: 0}
 --- !u!1 &742362094
 GameObject:
   m_ObjectHideFlags: 0
