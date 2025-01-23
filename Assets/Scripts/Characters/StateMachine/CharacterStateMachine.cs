@@ -5,7 +5,8 @@ public class CharacterStateMachine : StateMachine
     public Character Character {get; set;}
     
     private IdleState IdleState {get; set;}
-    private MoveState MoveState {get; set;}
+    private MoveRight MoveRight {get; set;}
+    private MoveLeft MoveLeft {get; set;}
     private DamageTaken DamageTaken {get; set;}
 
     private Dictionary<ECharacterState, CharacterState> CharacterStates = new();
@@ -15,11 +16,13 @@ public class CharacterStateMachine : StateMachine
         Character = character;
         
         IdleState = new IdleState(character);
-        MoveState = new MoveState(character);
+        MoveRight = new MoveRight(character);
+        MoveLeft = new MoveLeft(character);
         DamageTaken = new DamageTaken(character);
         
         CharacterStates[ECharacterState.Idle] = IdleState;
-        CharacterStates[ECharacterState.Move] = MoveState;
+        CharacterStates[ECharacterState.MoveLeft] = MoveLeft;
+        CharacterStates[ECharacterState.MoveRight] = MoveRight;
         CharacterStates[ECharacterState.DamageTaken] = DamageTaken;
     }
 
@@ -33,6 +36,7 @@ public enum ECharacterState
 {
     None,
     Idle,
-    Move,
+    MoveRight,
+    MoveLeft,
     DamageTaken,
 }

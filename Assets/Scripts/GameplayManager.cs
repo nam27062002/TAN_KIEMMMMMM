@@ -18,6 +18,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     // public
     public CharacterManager characterManager;
     public int CharacterIndex { get; set; }
+
+    public bool IsTutorialLevel => levelConfig.levelType == LevelType.Tutorial;
     // Event
     public event EventHandler OnNewRound;
     
@@ -38,7 +40,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HUD.Instance.HideHUD();
         CurrentRound = 0;
         HUD.Instance.SetLevelName(levelConfig.levelName);
-        LoadMapGame();
+        
+        if (!IsTutorialLevel) 
+            LoadMapGame();
     }
     
     private void LoadMapGame()
@@ -51,6 +55,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void LoadCharacter()
     {
         characterManager.Initialize(levelConfig.spawnerConfig, MapManager);
+        HUD.Instance.ShowHUD();
     }
 
     public void HandleNewRound()

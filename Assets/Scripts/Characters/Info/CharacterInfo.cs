@@ -62,6 +62,6 @@ public class CharacterInfo
     public void OnDamageTaken(int damage, Action onEndAnim)
     {
         HandleHpChanged(-damage);
-        Character.PlayAnim(AnimationParameterNameType.OnDamageTaken, onEndAnim);
+        // Character.PlayAnim(AnimationParameterNameType.OnDamageTaken, onEndAnim);
     }
 }

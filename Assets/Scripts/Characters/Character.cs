@@ -12,20 +12,20 @@ public class Character : MonoBehaviour
     public GameObject model;
     public CharacterStateMachine StateMachine { get; set; }
     protected CharacterManager CharacterManager;
-    [Title("Settings")] public CharacterConfig characterConfig;
+    
+    [Title("Settings"), Space(10)] 
+    public CharacterConfig characterConfig;
     public CharacterInfo characterInfo;
     public SkillConfig skillConfig;
 
+    private Roll _roll;
+    
     private void Awake()
     {
         StateMachine = new CharacterStateMachine(this);
-    }
-
-    private void Start()
-    {
         ChangeState(ECharacterState.Idle);
     }
-
+    
     public void Initialize(CharacterManager characterManager, Cell cell)
     {
         CharacterManager = characterManager;
@@ -38,9 +38,11 @@ public class Character : MonoBehaviour
             Character = this,
         };
         skillConfig.SetSkillConfigs();
+        _roll = new Roll(characterInfo.Attributes);
         SetCell(cell);
         SetCharacterPosition(cell);
         SetIdle();
+        SetSpeed();
         characterInfo.OnHpChanged = OnHpChanged;
         characterInfo.OnHpChanged?.Invoke();
     }
@@ -52,16 +54,16 @@ public class Character : MonoBehaviour
 
     public void PlaySkillAnim(SkillInfo skillInfo, Action onEndAnim)
     {
-        AnimationParameterNameType GetAnimNameByIndex(int index)
-        {
-            if (index == 0) return AnimationParameterNameType.Skill1;
-            if (index == 1) return AnimationParameterNameType.Skill2;
-            if (index == 2) return AnimationParameterNameType.Skill3;
-            if (index == 3) return AnimationParameterNameType.Skill4;
-            return AnimationParameterNameType.Idle;
-        }
-        
-        PlayAnim(GetAnimNameByIndex(skillInfo.skillIndex), onEndAnim);
+        // AnimationParameterNameType GetAnimNameByIndex(int index)
+        // {
+        //     if (index == 0) return AnimationParameterNameType.Skill1;
+        //     if (index == 1) return AnimationParameterNameType.Skill2;
+        //     if (index == 2) return AnimationParameterNameType.Skill3;
+        //     if (index == 3) return AnimationParameterNameType.Skill4;
+        //     return AnimationParameterNameType.Idle;
+        // }
+        //
+        // PlayAnim(GetAnimNameByIndex(skillInfo.skillIndex), onEndAnim);
     }
     
     public void ChangeState(ECharacterState newState)
@@ -112,37 +114,44 @@ public class Character : MonoBehaviour
 
     public void MoveCharacter(List<Cell> cells)
     {
-        characterInfo.Cell.HideFocus();
-        characterInfo.MoveAmount += cells.Count;
-        var moveSequence = DOTween.Sequence();
-        float currentX = transform.position.x;
-        foreach (var cell in cells)
-        {
-            var targetPos = cell.transform.position;
-            targetPos.y += characterConfig.characterHeight / 2f;
-            if (cell.transform.position.x > currentX)
-            {
-                PlayAnim(AnimationParameterNameType.MoveRight);
-            }
-            else
-            {
-                PlayAnim(AnimationParameterNameType.MoveLeft);
-            }
-            currentX = cell.transform.position.x;
-            moveSequence.Append(transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
-        }
-        
-        moveSequence.OnComplete(() =>
-        {
-            SetIdle();
-            SetCell(cells[^1]);
-            characterInfo.Cell.ShowFocus();
-        });
+        // characterInfo.Cell.HideFocus();
+        // characterInfo.MoveAmount += cells.Count;
+        // var moveSequence = DOTween.Sequence();
+        // float currentX = transform.position.x;
+        // foreach (var cell in cells)
+        // {
+        //     var targetPos = cell.transform.position;
+        //     targetPos.y += characterConfig.characterHeight / 2f;
+        //     if (cell.transform.position.x > currentX)
+        //     {
+        //         PlayAnim(AnimationParameterNameType.MoveRight);
+        //     }
+        //     else
+        //     {
+        //         PlayAnim(AnimationParameterNameType.MoveLeft);
+        //     }
+        //     currentX = cell.transform.position.x;
+        //     moveSequence.Append(transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
+        // }
+        //
+        // moveSequence.OnComplete(() =>
+        // {
+        //     SetIdle();
+        //     SetCell(cells[^1]);
+        //     characterInfo.Cell.ShowFocus();
+        // });
     }
 
-    public void SetIdle()
+    public void MoveCharacter(Vector3 targetPos, float duration)
     {
-        PlayAnim(AnimationParameterNameType.Idle);
+        targetPos.y += characterConfig.characterHeight / 2f;
+        ChangeState(targetPos.x > transform.position.x ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
+        transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
+    }
+
+    private void SetIdle()
+    {
+        ChangeState(ECharacterState.Idle);
         SetFacing();
     }
     
@@ -154,6 +163,11 @@ public class Character : MonoBehaviour
     public virtual void OnUnSelected()
     {
         characterInfo.Cell.HideFocus();
+    }
+
+    protected virtual void SetSpeed()
+    {
+        characterInfo.Speed = _roll.GetSpeed();
     }
 
 #if UNITY_EDITOR
