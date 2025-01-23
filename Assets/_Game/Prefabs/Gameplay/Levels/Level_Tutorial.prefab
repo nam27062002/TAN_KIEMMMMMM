@@ -239,7 +239,6 @@ MonoBehaviour:
   cellPrefab: {fileID: 5704361207653108254, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
   mapSize: {x: 16, y: 10}
   offset: {x: 0.95, y: 0.6}
-  bgCanvas: {fileID: 0}
   cellHolder: {fileID: 6899018354959385028}
   cells:
     m_keys:
@@ -943,14 +942,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2183422949545785601, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5883537299201124016}
   m_SourcePrefab: {fileID: 100100000, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
+--- !u!1 &2260929645060657670 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2183422949545785601, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
+  m_PrefabInstance: {fileID: 84860385645112071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5883537299201124016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260929645060657670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76e2832efb745d4a560fec5a3f80315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 1
+  highlightable:
+    highlightType: 0
+    highlightObject: {fileID: 0}
+  cell: {fileID: 5621770352562512153}
 --- !u!114 &5621770352562512153 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5704361207653108254, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
   m_PrefabInstance: {fileID: 84860385645112071}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2260929645060657670}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebb05467a82b4739813bb69b6323e48b, type: 3}
@@ -1344,14 +1368,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2183422949545785601, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 243914888958409505}
   m_SourcePrefab: {fileID: 100100000, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
+--- !u!1 &2115652407463349633 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2183422949545785601, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
+  m_PrefabInstance: {fileID: 221060375189206144}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &243914888958409505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115652407463349633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76e2832efb745d4a560fec5a3f80315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
+  highlightable:
+    highlightType: 0
+    highlightObject: {fileID: 0}
+  cell: {fileID: 5492328272861576862}
 --- !u!114 &5492328272861576862 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5704361207653108254, guid: 187ff48671e3c7b43bc1a6663633f7dd, type: 3}
   m_PrefabInstance: {fileID: 221060375189206144}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2115652407463349633}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ebb05467a82b4739813bb69b6323e48b, type: 3}

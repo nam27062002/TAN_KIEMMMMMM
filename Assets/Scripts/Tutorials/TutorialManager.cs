@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 {
     public SerializableDictionary<CharacterType, Character> charactersInTutorial;
-    
+    [ReadOnly] public SerializedDictionary<int, TutorialSequence> tutorialClickIndex = new();
+    public TutorialConfig tutorialConfig;
     public List<GotoPos> lvdGotos;
     public List<GotoPos> dglGotos;
     public List<GotoPos> tnGotos;
     public ConversationData conversation_1;
     public ConversationData conversation_2;
-    
+    public int tutorialIndex;
     private Dictionary<CharacterType, List<GotoPos>> gotoPoses = new();
 
     private Dictionary<CharacterType, Character> charactersDict = new();
 
     private int _footStep;
+    public RectTransform arrow;
     
     protected override void Awake()
     {
@@ -39,7 +43,6 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        GameplayManager.Instance.OnLoadCharacterFinished -= OnLoadCharacterFinished;
     }
 
     private void SpawnCharactersInTutorial()
@@ -110,14 +113,64 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void OnNextConversation(int index)
     {
-        if (index == 2)
+        if (index == 1)
         {
-            
+            var character = GameplayManager.Instance.characterManager.GetCharacterByType(CharacterType.LyVoDanh);
+            character.ChangeState(ECharacterState.Skill1);
         }
     }
 
     private void OnEndSecondConversation()
     {
-        
+        Invoke(nameof(OnEndSecondConversationDelay), 1f);
+    }
+
+    private void OnEndSecondConversationDelay()
+    {
+        GameplayManager.Instance.HandleEndSecondConversation();
+        SetTutorial();
+    }
+    
+    public void OnTutorialClicked(int index)
+    {
+        if (index != tutorialIndex) return;
+        Debug.Log($"TutorialManager: OnTutorialClicked: {index}");
+        tutorialIndex++;
+        if (tutorialIndex < tutorialClickIndex.Count)
+            SetTutorial();
+        else
+        {
+            // Invoke(nameof(Wait), 2f);
+        }
+    }
+    
+    private void SetTutorial()
+    {
+        if (!tutorialClickIndex.ContainsKey(tutorialIndex)) return;
+        ApplyTutorial(tutorialConfig.tutorials[tutorialIndex]);
+        tutorialClickIndex[tutorialIndex].PrepareTutorial();
+    }
+    
+    private void ApplyTutorial(TutorialConfig.TutorialData tutorial)
+    {
+        if (tutorial.tutorialTypes.HasFlag(TutorialType.Arrow))
+        {
+            arrow.gameObject.SetActive(true);
+            arrow.anchoredPosition = tutorial.arrowPosition;
+            arrow.rotation = tutorial.arrowRotation;
+        }
+        else
+        {
+            arrow.gameObject.SetActive(false);
+        }
+            
+        if (tutorial.tutorialTypes.HasFlag(TutorialType.Menu))
+        {
+            MessageMenu.Instance.SetTutorialText(tutorial.tutorialMenuText);
+        }
+        else
+        {
+            MessageMenu.Instance.HideTutorialText();
+        }
     }
 }

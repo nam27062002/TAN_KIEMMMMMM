@@ -218,4 +218,15 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         
     }
+
+    #region Tutorial
+
+    public void HandleEndSecondConversation()
+    {
+        HUD.Instance.ShowHUD();
+        characterManager.ShowAllHPBar();
+        characterManager.SetMainCharacterTutorial();
+    }
+
+    #endregion
 }

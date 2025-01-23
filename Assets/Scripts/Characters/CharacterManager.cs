@@ -87,6 +87,23 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
         }
     }
 
+    public void SetMainCharacterTutorial()
+    {
+        Character character = Characters[GPManager.CharacterIndex];
+        MainCharacter = character;
+        MainCharacter.SetMainCharacter();
+        SelectedCharacter?.OnUnSelected();
+        SelectedCharacter = character;
+        HideMoveRange();
+        HideSkillRange();
+        HUD.Instance.SetCharacterFocus(GetSelectedCharacterParams());
+        HUD.Instance.SetupCharacterFocus(Characters, GPManager.CharacterIndex);
+        if (Characters.Count > 0 && character == Characters[0])
+        {
+            GPManager.HandleNewRound();
+        }
+    }
+
     public void SetSelectedCharacter(Character character)
     {
         Debug.Log($"Gameplay: SetSelectedCharacter: {character.characterConfig.characterName}");
@@ -176,6 +193,14 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
             Character = SelectedCharacter,
             Skills = SelectedCharacter.GetSkillInfos(GetSkillType())
         };
+    }
+
+    public void ShowAllHPBar()
+    {
+        foreach (var character in Characters)
+        {
+            character.ShowHpBar();
+        }
     }
 
     public bool IsMainCharacterSelected => SelectedCharacter == MainCharacter;
