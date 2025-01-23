@@ -7,12 +7,13 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public virtual Type Type => Type.None;
+    public CharacterType characterType;
     public CharacterAnimationData characterAnimationData;
     public ProcessBar hpBar;
     public GameObject model;
     public CharacterStateMachine StateMachine { get; set; }
     protected CharacterManager CharacterManager;
-    
+    protected GameplayManager GpManager => GameplayManager.Instance;
     [Title("Settings"), Space(10)] 
     public CharacterConfig characterConfig;
     public CharacterInfo characterInfo;
@@ -144,7 +145,7 @@ public class Character : MonoBehaviour
 
     public void MoveCharacter(Vector3 targetPos, float duration)
     {
-        targetPos.y += characterConfig.characterHeight / 2f;
+        //targetPos.y += characterConfig.characterHeight / 2f;
         ChangeState(targetPos.x > transform.position.x ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
         transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }
@@ -168,6 +169,21 @@ public class Character : MonoBehaviour
     protected virtual void SetSpeed()
     {
         characterInfo.Speed = _roll.GetSpeed();
+    }
+
+    public void ShowHpBar()
+    {
+        hpBar.gameObject.SetActiveIfNeeded(true);
+    }
+
+    public void HideHpBar()
+    {
+        hpBar.gameObject.SetActiveIfNeeded(false);
+    }
+
+    public void DestroyCharacter()
+    {
+        Destroy(gameObject);
     }
 
 #if UNITY_EDITOR

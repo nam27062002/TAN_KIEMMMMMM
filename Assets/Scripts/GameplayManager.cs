@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
     [SerializeField] private LevelConfig levelConfig;  
-    
+    [SerializeField] private GameObject tutorialPrefab;
     // private
     private MapManager MapManager { get; set; }
     private int CurrentRound { get; set; } = 0;
@@ -19,15 +17,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public CharacterManager characterManager;
     public int CharacterIndex { get; set; }
 
-    public bool IsTutorialLevel => levelConfig.levelType == LevelType.Tutorial;
+    public bool IsTutorialLevel;
+
+    //public bool IsTutorialLevel => false;
     // Event
     public event EventHandler OnNewRound;
+    public event EventHandler OnLoadCharacterFinished;
     
     protected override void Awake()
     {
         base.Awake();
         DOTween.Init(false, false, LogBehaviour.ErrorsOnly);
         DOTween.SetTweensCapacity(500, 125);
+        IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
+        if (IsTutorialLevel)
+        {
+            tutorialPrefab.SetActive(true);
+        }
     }
     
     private void Start()
@@ -45,7 +51,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             LoadMapGame();
     }
     
-    private void LoadMapGame()
+    public void LoadMapGame()
     {
         var go = Instantiate(levelConfig.mapPrefab, transform);
         MapManager = go.GetComponent<MapManager>();
@@ -55,7 +61,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void LoadCharacter()
     {
         characterManager.Initialize(levelConfig.spawnerConfig, MapManager);
-        HUD.Instance.ShowHUD();
+        if (!IsTutorialLevel) HUD.Instance.ShowHUD();
+        OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
     public void HandleNewRound()

@@ -90,7 +90,7 @@ public class Cell : MonoBehaviour
 
     private void OnMouseDown()
     {
-        HandleCellClicked();
+        if (!GameplayManager.Instance.IsTutorialLevel) HandleCellClicked();
     }
 
     public void HandleCellClicked()

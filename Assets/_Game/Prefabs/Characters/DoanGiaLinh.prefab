@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737bb98e42684bf4b4056d4336c49bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterType: 1
   characterAnimationData: {fileID: 6624640028912595744}
   hpBar: {fileID: 7863015879838392508}
   model: {fileID: 613759459630214279}
@@ -114,63 +115,75 @@ MonoBehaviour:
     internalSkill:
     - icon: {fileID: 21300000, guid: 46d500e793f68bf4c9b66a3c3b2afbfc, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      skillIndex: 0
       mpCost: 0
       range: 1
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 40119a4d7c6def14490a64bcd642c753, type: 3}
       name: "Nhi\xEAn Huy\u1EBFt"
+      skillIndex: 1
       mpCost: 6
       range: 4
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: ce02b039dfb1d974385826061c887829, type: 3}
       name: "Th\u01B0\u1EE3c D\u01B0\u1EE3c \u0110\u1ECF"
+      skillIndex: 2
       mpCost: 4
       range: 2
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 495b61bfe7e7a2d46b7e55a40df97d16, type: 3}
       name: "Thi\u1EBFt Kho\xE1i T\u1EED"
+      skillIndex: 3
       mpCost: 4
       range: 6
       isDirectionalSkill: 0
     movementSkill:
     - icon: {fileID: 21300000, guid: e1109e1473cbe4a43a1ded5a0cde98a6, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      skillIndex: 0
       mpCost: 0
       range: 1
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 17c6e89310de8a145b908133f78dc6fe, type: 3}
       name: "B\u0103ng Ho\u1EA1i"
+      skillIndex: 1
       mpCost: 6
       range: 8
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: e9b2156db6f0d7148838129e6c1b2b01, type: 3}
       name: "Sen Tr\u1EAFng"
+      skillIndex: 2
       mpCost: 4
       range: 2
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 4227811f9b7bb39408552d36a7dd212c, type: 3}
       name: "H\u1ED3ng Ti"
+      skillIndex: 3
       mpCost: 4
       range: 6
       isDirectionalSkill: 0
     combatSkill:
     - icon: {fileID: 21300000, guid: 412bd91e9a05fce4a9aa62acfe3e8ad8, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      skillIndex: 0
       mpCost: 0
       range: 1
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: 025694a806a682f4cbb7ade780ba78ee, type: 3}
       name: "M\u1ED9ng Y\u1EC3m"
+      skillIndex: 1
       mpCost: 6
       range: 8
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: c209965e5c9cd4d45a226df6607e7407, type: 3}
       name: "C\xFAc V\xE0ng Th\u1ECD"
+      skillIndex: 2
       mpCost: 4
       range: 2
       isDirectionalSkill: 1
     - icon: {fileID: 21300000, guid: f0245e1542ae3204080686bb10664dc7, type: 3}
       name: "Kim T\u01B0\u1EDBc Mai"
+      skillIndex: 3
       mpCost: 4
       range: 6
       isDirectionalSkill: 0

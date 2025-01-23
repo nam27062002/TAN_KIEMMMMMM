@@ -53,11 +53,16 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
                         Players.Add(playerCharacter);
                         break;
                 }
+
+                if (GPManager.IsTutorialLevel)
+                {
+                    character.HideHpBar();
+                }
             }
         }
 
         SortCharacterBySpeed();
-        SetMainCharacter();
+        if (!GPManager.IsTutorialLevel) SetMainCharacter();
     }
 
     private void SortCharacterBySpeed()
@@ -155,6 +160,11 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     private void SetDamageTakenFinished()
     {
         Debug.Log("NT - SetDamageTakenFinished");
+    }
+
+    public Character GetCharacterByType(CharacterType characterType)
+    {
+        return Characters.FirstOrDefault(character => character.characterType == characterType);
     }
     
     #region Sub
