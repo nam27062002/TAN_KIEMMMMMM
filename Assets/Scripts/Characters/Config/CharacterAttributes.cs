@@ -9,4 +9,5 @@ public class CharacterAttributes
     public int def;
     public int chiDef;
     public int spd;
+    public int rollValue;
 }

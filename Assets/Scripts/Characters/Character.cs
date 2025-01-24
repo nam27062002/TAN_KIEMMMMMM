@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
     public virtual Type Type => Type.None;
     public CharacterType characterType;
     public CharacterAnimationData characterAnimationData;
-    public ProcessBar hpBar;
+    public HpBar hpBar;
     public GameObject model;
     public CharacterStateMachine StateMachine { get; set; }
     protected CharacterManager CharacterManager;
@@ -18,8 +18,9 @@ public class Character : MonoBehaviour
     public CharacterConfig characterConfig;
     public CharacterInfo characterInfo;
     public SkillConfig skillConfig;
-
-    private Roll _roll;
+    public event EventHandler OnEndAnimEventHandler;
+    public Action OnEndAnim;
+    public Roll Roll {get; set;}
     
     private void Awake()
     {
@@ -39,7 +40,7 @@ public class Character : MonoBehaviour
             Character = this,
         };
         skillConfig.SetSkillConfigs();
-        _roll = new Roll(characterInfo.Attributes);
+        Roll = new Roll(characterInfo.Attributes);
         SetCell(cell);
         SetCharacterPosition(cell);
         SetIdle();
@@ -53,23 +54,29 @@ public class Character : MonoBehaviour
         characterInfo.ResetBuffBefore();
     }
 
-    public void PlaySkillAnim(SkillInfo skillInfo, Action onEndAnim)
+    public void CastSkill(SkillInfo skillInfo, Action onEndAnim)
     {
-        // AnimationParameterNameType GetAnimNameByIndex(int index)
-        // {
-        //     if (index == 0) return AnimationParameterNameType.Skill1;
-        //     if (index == 1) return AnimationParameterNameType.Skill2;
-        //     if (index == 2) return AnimationParameterNameType.Skill3;
-        //     if (index == 3) return AnimationParameterNameType.Skill4;
-        //     return AnimationParameterNameType.Idle;
-        // }
-        //
-        // PlayAnim(GetAnimNameByIndex(skillInfo.skillIndex), onEndAnim);
+        OnEndAnim = onEndAnim;
+        ECharacterState GetCharacterStateByIndex(int index)
+        {
+            if (index == 0) return ECharacterState.Skill1;
+            if (index == 1) return ECharacterState.Skill2;
+            if (index == 2) return ECharacterState.Skill3;
+            if (index == 3) return ECharacterState.Skill4;
+            return ECharacterState.None;
+        }
+        
+        ChangeState(GetCharacterStateByIndex(skillInfo.skillIndex));
     }
     
     public void ChangeState(ECharacterState newState)
     {
         StateMachine.ChangeState(newState);
+    }
+
+    public void OnEndAnimAction()
+    {
+        OnEndAnimEventHandler?.Invoke(this, EventArgs.Empty);
     }
 
     public void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
@@ -96,6 +103,11 @@ public class Character : MonoBehaviour
         SetFacing(facing);
     }
 
+    private void ReleaseFacing()
+    {
+        model.transform.localScale = Vector3.one;
+    }
+
     private void SetFacing(FacingType facing)
     {
         model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
@@ -113,8 +125,9 @@ public class Character : MonoBehaviour
         return skillConfig.SkillConfigs[skillType];
     }
 
-    public void MoveCharacter(List<Cell> cells)
+    public void MoveCharacter(List<Cell> cells, Action onEndAnim = null)
     {
+        ReleaseFacing();
         characterInfo.Cell.HideFocus();
         characterInfo.MoveAmount += cells.Count;
         var moveSequence = DOTween.Sequence();
@@ -133,6 +146,7 @@ public class Character : MonoBehaviour
             SetIdle();
             SetCell(cells[^1]);
             characterInfo.Cell.ShowFocus();
+            onEndAnim?.Invoke();
         });
     }
 
@@ -160,7 +174,7 @@ public class Character : MonoBehaviour
 
     protected virtual void SetSpeed()
     {
-        characterInfo.Speed = _roll.GetSpeed();
+        characterInfo.Speed = Roll.GetSpeed();
     }
 
     public void ShowHpBar()
@@ -193,7 +207,7 @@ public class Character : MonoBehaviour
 
         if (hpBar == null)
         {
-            hpBar = GetComponentInChildren<ProcessBar>();
+            hpBar = GetComponentInChildren<HpBar>();
         }
 
         skillConfig.OnValidate();

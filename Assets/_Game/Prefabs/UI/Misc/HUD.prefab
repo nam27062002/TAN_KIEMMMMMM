@@ -629,6 +629,7 @@ GameObject:
   - component: {fileID: 152588193250613850}
   - component: {fileID: 5218505327511161532}
   - component: {fileID: 4086584405864658839}
+  - component: {fileID: 171094316647779836}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -722,6 +723,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 5
+  delayTime: 0
+  highlightable:
+    highlightType: 1
+    highlightObject: {fileID: 6230747084731725783}
+  button: {fileID: 152588193250613850}
+  isWaiting: 0
+--- !u!114 &171094316647779836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068982575203400722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd1cc30da5c481b8030e3b672c6635d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 17
   delayTime: 0
   highlightable:
     highlightType: 1
@@ -1906,6 +1926,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1229254932897709257, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}
       insertIndex: -1
       addedObject: {fileID: 186995654924398338}
+    - targetCorrespondingSourceObject: {fileID: 1229254932897709257, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3295887877734047321}
   m_SourcePrefab: {fileID: 100100000, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}
 --- !u!1 &1351477083451628556 stripped
 GameObject:
@@ -1949,6 +1972,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 9
+  delayTime: 0
+  highlightable:
+    highlightType: 1
+    highlightObject: {fileID: 1351477083451628556}
+  button: {fileID: 6943974075847090712}
+  skillIndex: 1
+--- !u!114 &3295887877734047321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087802931286698244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcd70457f8c4e9db77eff76ce729a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 15
   delayTime: 0
   highlightable:
     highlightType: 1

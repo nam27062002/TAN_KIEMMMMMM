@@ -17,10 +17,12 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         {
             MessageMenu.Instance.HideTutorialText();
         }
-        popups[popupType].OpenPopup();
+
+        currentPopup = popups[popupType];
+        currentPopup.OpenPopup();
     }
     
-    private void ClosePopup()
+    public void ClosePopup()
     {
         if (_hasTutorialMenu)
         {
@@ -28,6 +30,10 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         }
         if (currentPopup != null)
         {
+            if (GameplayManager.Instance.IsTutorialLevel && currentPopup is ShowInfoPopup)
+            {
+                TutorialManager.Instance?.OnTutorialClicked(13, 0);
+            }
             currentPopup.ClosePopup();
         }
     }

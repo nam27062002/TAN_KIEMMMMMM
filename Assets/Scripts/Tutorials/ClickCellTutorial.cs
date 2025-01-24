@@ -1,13 +1,29 @@
-﻿public class ClickCellTutorial : TutorialSequence
+﻿using UnityEngine;
+
+public class ClickCellTutorial : TutorialSequence
 {
     public Cell cell;
     public void OnMouseDown()
     {
-        if (!CanClick()) return;
-        OnFinishTutorial();
-        cell.HandleCellClicked();
+        
     }
         
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (!CanClick()) return;
+            Tutorial.arrow.gameObject.SetActive(false);
+            GameplayManager.Instance.ShowInfo(cell.Character);
+        }
+        else if (Input.GetMouseButtonDown(0) && index != 13)
+        {
+            if (!CanClick()) return;
+            OnFinishTutorial();
+            cell.HandleCellClicked();
+        }
+    }
+    
     public override void PrepareTutorial()
     {
     }

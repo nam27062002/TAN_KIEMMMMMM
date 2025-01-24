@@ -2,6 +2,7 @@
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Cell : MonoBehaviour
 {
@@ -88,11 +89,19 @@ public class Cell : MonoBehaviour
         cellType = CellType.Character;
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
-        if (!GameplayManager.Instance.IsTutorialLevel) HandleCellClicked();
+        if ((!GameplayManager.Instance.IsTutorialLevel) && Input.GetMouseButtonDown(1))
+        {
+            if (cellType == CellType.Character) 
+                GameplayManager.Instance.ShowInfo(Character);
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (!GameplayManager.Instance.IsTutorialLevel) HandleCellClicked();
+        }
     }
-
+    
     public void HandleCellClicked()
     {
         GameplayManager.Instance.OnCellClicked(this);

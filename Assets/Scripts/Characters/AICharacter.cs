@@ -1,6 +1,11 @@
-﻿public class AICharacter : Character
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AICharacter : Character
 {
     public override Type Type => Type.AI;
+    private Character _enemy;
     
     public override void SetMainCharacter()
     {
@@ -10,45 +15,63 @@
 
     private void HandleAIPlay()
     {
+        Debug.Log("NT - HandleAIPlay");
         if (!TryCastSkill())
         {
-            // if (!TryMoving())
-            // {
-            //     CharacterManager.OnEndTurn?.Invoke();
-            // }
+            if (!TryMoving())
+            {
+                GameplayManager.Instance.HandleEndTurn();
+            }
         }
     }
     
     private bool TryMoving()
     {
-        // if (Info.GetMoveRange() <= 0) return false;
-        // var cells = CharacterManager.MapManager.GetCellsWalkableInRange(Info.Cell, Info.GetMoveRange());
-        // if (cells.Count == 0) return false;
-        // var random = new System.Random();
-        // var randomCell = cells[random.Next(cells.Count)];
-        // var path = CharacterManager.MapManager.FindPath(Info.Cell, randomCell);
-        // MoveCharacter(path, OnReachToDestination);
-        // Debug.Log($"Gameplay: AI move to cell: {randomCell.CellPosition}");
+        if (characterInfo.GetMoveRange() <= 0) return false;
+        var cells = CharacterManager.MapManager.GetCellsWalkableInRange(characterInfo.Cell, characterInfo.GetMoveRange());
+        if (cells.Count == 0) return false;
+        var random = new System.Random();
+        var randomCell = cells[random.Next(cells.Count)];
+        var path = CharacterManager.MapManager.FindPath(characterInfo.Cell, randomCell);
+        MoveCharacter(path, OnReachToDestination);
+        Debug.Log($"Gameplay: AI move to cell: {randomCell.CellPosition}");
         return true;
     }
     
     private bool TryCastSkill()
     {
-        // SkillInfo skill = Config.skillInfo;
-        //
-        // for (int i = 0; i < skill.datas.Count; i++)
-        // {
-        //     if (Info.CanCastSkill(skill.datas[i]) && !skill.datas[i].isDirectionalSkill && skill.datas[i].damageTargetType.HasFlag(DamageTargetType.Enemies))
-        //     {
-        //         var enemiesInRange = CharacterManager.Instance.GetEnemiesInRange(this, skill.datas[i].range);
-        //         if (enemiesInRange.Count > 0)
-        //         {
-        //             CharacterManager.OnEndAnimFeedback += OnAnimFeedbackFinished;
-        //             CharacterManager.HandleCastSkill(enemiesInRange[0], i, skill.datas[i]);
-        //             return true;
-        //         }
-        //     }
-        // }
+        Debug.Log("NT - TryCastSkill");
+        var skillType = CharacterManager.GetSkillType(this);
+        List<SkillInfo> skills = GetSkillInfos(skillType);
+        
+        for (int i = 0; i < skills.Count; i++)
+        {
+            if (characterInfo.CanCastSkill(skills[i], skillType) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
+            {
+                var enemiesInRange = base.CharacterManager.GetEnemiesInRange(this, skills[i].range);
+                if (enemiesInRange.Count > 0)
+                {
+                    _enemy = enemiesInRange[0];
+                    _enemy.OnEndAnimEventHandler += EnemyOnOnEndAnimEventHandler;
+                    Debug.Log($"NT - HandleAICastSkill: {i}");
+                    GameplayManager.Instance.HandleCastSkill(_enemy, skills[i]);
+                    return true;
+                }
+            }
+        }
         return false;
     }
+
+    private void EnemyOnOnEndAnimEventHandler(object sender, EventArgs e)
+    {
+        Debug.Log("EnemyOnOnEndAnimEventHandler");
+        _enemy.OnEndAnimEventHandler -= EnemyOnOnEndAnimEventHandler;
+        GameplayManager.Instance.HandleEndTurn();
+    }
+    
+    private void OnReachToDestination()
+    {
+        HandleAIPlay();
+    }
+    
 }

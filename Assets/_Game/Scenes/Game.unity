@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 702396814}
   - component: {fileID: 702396816}
   - component: {fileID: 702396817}
+  - component: {fileID: 702396818}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -381,7 +382,7 @@ MonoBehaviour:
       tutorialMenuText: "Ch\u1ECDn v\xE0o <color=#0000FF>L\xFD V\xF4 Danh</color>
         \u0111\u1EC3 buff"
     - tutorialTypes: 3
-      arrowPosition: {x: -461.3, y: -436.7}
+      arrowPosition: {x: -494.5, y: -460.7}
       arrowRotation: {x: 0, y: 0, z: 0.70710677, w: -0.70710677}
       tutorialMenuText: "\u0110i\u1EC3m h\xE0nh \u0111\u1ED9ng chuy\u1EC3n th\xE0nh
         m\xE0u v\xE0ng khi \u0111\u01B0\u1EE3c s\u1EED d\u1EE5ng"
@@ -424,27 +425,30 @@ MonoBehaviour:
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
       tutorialMenuText: "L\u01B0u \xFD k\u1EBB \u0111\u1ECBch c\u0169ng c\xF3 th\u1EC3
         l\xE0m t\u01B0\u01A1ng t\u1EF1"
-    - tutorialTypes: 2
-      arrowPosition: {x: 0, y: 0}
+    - tutorialTypes: 3
+      arrowPosition: {x: -103.5, y: 285.9}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
       tutorialMenuText: "Nh\u1EA5n chu\u1ED9t ph\u1EA3i v\xE0o m\u1EE5c ti\xEAu \u0111\u1EC3
         hi\u1EC3n th\u1ECB th\xF4ng tin nh\xE2n v\u1EADt"
-    - tutorialTypes: 0
-      arrowPosition: {x: 0, y: 0}
+    - tutorialTypes: 3
+      arrowPosition: {x: -103.5, y: 285.9}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
-      tutorialMenuText: 
-    - tutorialTypes: 0
-      arrowPosition: {x: 0, y: 0}
+      tutorialMenuText: "Ch\u1ECDn <color=#0000FF>L\xFD V\xF4 Danh </color> \u0111\u1EC3
+        chuy\u1EC3n v\u1EC1 l\u01B0\u1EE3t ch\xEDnh"
+    - tutorialTypes: 3
+      arrowPosition: {x: 172, y: -338}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
-      tutorialMenuText: 
-    - tutorialTypes: 0
-      arrowPosition: {x: 0, y: 0}
+      tutorialMenuText: "Ch\u1ECDn <color=#0000FF>T\xFAy \u0110\u1EC1 B\xEDch: V\u1EA5n
+        Truy L\u01B0u</color>"
+    - tutorialTypes: 3
+      arrowPosition: {x: 63.7, y: 192.9}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
-      tutorialMenuText: 
-    - tutorialTypes: 0
-      arrowPosition: {x: 0, y: 0}
+      tutorialMenuText: "Ch\u1ECDn <color=#0000FF>Thi\u1EBFt Nh\xE2n</color> \u0111\u1EC3
+        s\u1EED d\u1EE5ng k\u0129 n\u0103ng trong l\u01B0\u1EE3t c\u1EE7a m\xECnh"
+    - tutorialTypes: 3
+      arrowPosition: {x: 754.8, y: -356}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
-      tutorialMenuText: 
+      tutorialMenuText: "Ch\u1ECDn k\u1EBFt th\xFAc l\u01B0\u1EE3t"
     - tutorialTypes: 0
       arrowPosition: {x: 0, y: 0}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -495,6 +499,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 12
+  delayTime: 0
+  highlightable:
+    highlightType: 0
+    highlightObject: {fileID: 0}
+--- !u!114 &702396818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702396812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70dfdc1fd94445d0849287cdff719d49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 18
   delayTime: 0
   highlightable:
     highlightType: 0

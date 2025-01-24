@@ -19,7 +19,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [ShowInInspector] public int CharacterIndex { get; set; }
 
     public bool IsTutorialLevel;
-
+    public CharacterParams ShowInfoCharacterParams { get; set; }
     //public bool IsTutorialLevel => false;
     // Event
     public event EventHandler OnNewRound;
@@ -120,6 +120,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         characterManager.HandleCastSkill(character);
     }
+
+    public void HandleCastSkill(Character character, SkillInfo skillInfo)
+    {
+        SkillInfo = skillInfo;
+        HandleCastSkill(character);
+    }
     
     private void OnWaypointClicked(Cell cell)
     {
@@ -171,23 +177,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             Debug.Log($"Gameplay: Show skill range: {SkillInfo.range}");
         }
         
-        // get character can be interact
-        // if (_skillData.damageTargetType.HasFlag(DamageTargetType.Self))
-        // {
-        //     CharactersInRange.Add(SelectedCharacter);
-        // }
+        //get character can be interact
+        if (SkillInfo.damageType.HasFlag(DamageTargetType.Self))
+        {
+            characterManager.Characters.Add(characterManager.SelectedCharacter);
+        }
 
         foreach (var cell in MapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
         {
             if (cell.Character.Type == characterManager.SelectedCharacter.Type 
-                // && _skillData.damageTargetType.HasFlag(DamageTargetType.Team)
+                && SkillInfo.damageType.HasFlag(DamageTargetType.Team)
                 )
             {
                 characterManager.CharactersInRange.Add(cell.Character);
             }
 
             if (cell.Character.Type != characterManager.SelectedCharacter.Type 
-                // && _skillData.damageTargetType.HasFlag(DamageTargetType.Enemies)
+                && SkillInfo.damageType.HasFlag(DamageTargetType.Enemies)
                 )
             {
                 characterManager.CharactersInRange.Add(cell.Character);
@@ -220,14 +226,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         
     }
 
-    #region Tutorial
+    public void ShowInfo(Character character)
+    {
+        ShowInfoCharacterParams = new CharacterParams()
+        {
+            Character = character,
+            Skills = character.GetSkillInfos(characterManager.GetSkillType(character)),
+        };
+        UIManager.Instance.ShowPopup(PopupType.ShowInfo);
+    }
 
+    #region Tutorial
     public void HandleEndSecondConversation()
     {
         HUD.Instance.ShowHUD();
         characterManager.ShowAllHPBar();
         characterManager.SetMainCharacter();
     }
-
+    
     #endregion
 }

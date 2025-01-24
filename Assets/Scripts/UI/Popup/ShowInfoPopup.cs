@@ -9,17 +9,23 @@ public class ShowInfoPopup : PopupBase
     public TextMeshProUGUI chiDef;
     public ProcessBar hpBarUI;
     public ProcessBar mpBarUI;
-
-    private Character Character => CharacterManager.Instance.SelectedCharacter;
+    
     public override void OpenPopup()
     {
         base.OpenPopup();
-        // characterName.text = Character.Config.characterName;
-        // damage.text = Character.Info.CharacterAttributes.atk.ToString();
-        // spd.text = Character.Info.Speed.ToString();
-        // def.text = Character.Info.CharacterAttributes.def.ToString();
-        // chiDef.text = Character.Info.CharacterAttributes.chiDef.ToString();
-        // hpBarUI.SetProcess(Character.Info.Health * 1f/ Character.Info.CharacterAttributes.hp, Character.Info.Health,Character.Info.CharacterAttributes.hp);
-        // mpBarUI.SetProcess(Character.Info.Mp * 1f/ Character.Info.CharacterAttributes.mp, Character.Info.Mp,Character.Info.CharacterAttributes.mp);
+        var characterParams = GameplayManager.Instance.ShowInfoCharacterParams;
+        characterName.text = characterParams.Character.characterConfig.characterName;
+        damage.text =  characterParams.Character.characterInfo.Attributes.atk.ToString();
+        spd.text =  characterParams.Character.characterInfo.Attributes.spd.ToString();
+        def.text =  characterParams.Character.characterInfo.Attributes.def.ToString();
+        chiDef.text =  characterParams.Character.characterInfo.Attributes.chiDef.ToString();
+        
+        var currentHp = characterParams.Character.characterInfo.CurrentHP;
+        var maxHp = characterParams.Character.characterInfo.Attributes.health;
+        hpBarUI.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
+        
+        var currentMp = characterParams.Character.characterInfo.CurrentMP;
+        var maxMp = characterParams.Character.characterInfo.Attributes.mana;
+        mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
     }
 }

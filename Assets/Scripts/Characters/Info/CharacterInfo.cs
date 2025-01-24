@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 
 [Serializable]
@@ -14,6 +16,7 @@ public class CharacterInfo
     
     [ShowInInspector, ReadOnly] public int MoveAmount { get; set; }
     [ShowInInspector, ReadOnly] public int MoveBuff { get; set; } 
+    [ShowInInspector, ReadOnly] public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
     // Action
     
     public Action OnHpChanged;
@@ -21,9 +24,12 @@ public class CharacterInfo
     
     public SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
+    public int Dodge =>  Character.Roll.GetDodge();
+    public int BaseDamage => Character.Roll.GetBaseDamage(Character.characterConfig.damageRollData);
     public void HandleHpChanged(int value)
     {
         CurrentHP += value;
+        Character.ChangeState(ECharacterState.DamageTaken);
         OnHpChanged?.Invoke();
     }
 
@@ -56,12 +62,31 @@ public class CharacterInfo
     public void OnCastSkill(SkillInfo skillInfo, Action onEndAnim)
     {
         HandleMpChanged(-skillInfo.mpCost);
-        Character.PlaySkillAnim(skillInfo, onEndAnim);
+        Character.CastSkill(skillInfo, onEndAnim);
+    }
+    
+    public bool CanCastSkill(SkillInfo skillInfo, SkillType skillType)
+    {
+        return Attributes.mana >= skillInfo.mpCost && IsEnoughActionPoints(skillType);
+    }
+    
+    public bool IsEnoughActionPoints(SkillType skillType)
+    {
+        var actionPoints = GetActionPoints(skillType);
+        return ActionPoints.Any(point => actionPoints < point);
+    }
+    
+    private int GetActionPoints(SkillType skillType)
+    {
+        return Character.characterConfig.actionPoints[skillType];
     }
 
     public void OnDamageTaken(int damage, Action onEndAnim)
     {
+        string message = "";
+        message = damage == 0 ? "Né" : damage.ToString();
         HandleHpChanged(-damage);
-        // Character.PlayAnim(AnimationParameterNameType.OnDamageTaken, onEndAnim);
+        Character.OnEndAnim = onEndAnim;
+        Character.hpBar.ShowDamageReceive(message);
     }
 }

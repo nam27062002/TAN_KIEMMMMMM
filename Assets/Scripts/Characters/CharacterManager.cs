@@ -12,7 +12,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     private List<Character> Enemies { get; set; } = new();
 
 
-    private MapManager _mapManager;
+    public MapManager MapManager { get; set; }
     private CharacterSpawnerConfig _spawnerConfig;
     
     // public 
@@ -22,11 +22,11 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public List<Character> Characters { get; set; } = new();
     public HashSet<Character> CharactersInRange { get; set; } = new();
     public GameplayManager GPManager => GameplayManager.Instance;
-
+    
     public void Initialize(CharacterSpawnerConfig config, MapManager mapManager)
     {
         _spawnerConfig = config;
-        _mapManager = mapManager;
+        MapManager = mapManager;
         SpawnCharacter();
     }
 
@@ -42,7 +42,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
             {
                 var go = Instantiate(allCharacter[spawnPoint.Key], transform);
                 var character = go.GetComponent<Character>();
-                character.Initialize(this, _mapManager.GetCell(point));
+                character.Initialize(this, MapManager.GetCell(point));
                 Characters.Add(character);
                 switch (character)
                 {
@@ -115,51 +115,57 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     
     private bool TryAttackEnemies(Character focusedCharacter)
     {
-        FocusedCharacter.characterInfo.OnDamageTaken(5, SetDamageTakenFinished);
+        var skillInfo = GPManager.SkillInfo;
+        // FocusedCharacter.characterInfo.OnDamageTaken(5, SetDamageTakenFinished);
         // check crit
-        // int damage = SelectedCharacter.Info.BaseDamage;
-        // var isCritical = RollManager.Instance.IsCritical(SelectedCharacter.Info.CharacterAttributes.rollValue);
-        // if (!isCritical)
-        // {
-        //     var hitChange = RollManager.Instance.GetHitChange(SelectedCharacter.Info.CharacterAttributes);
-        //     var dodge = focusedCharacter.Info.Dodge;
-        //     if (dodge > hitChange)
-        //     {
-        //         Debug.Log($"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
-        //     }
-        //     else
-        //     {
-        //         if (_skillData.hasApplyDamage)
-        //         {
-        //             damage += RollManager.RollDice(_skillData.damageConfig.rollData);
-        //         }
-        //         // 
-        //         if (_skillData.effectConfig.effectIndex != EffectIndex.None)
-        //         {
-        //             var debuffResistance = RollManager.Instance.GetDebuffResistance(focusedCharacter.Info.CharacterAttributes);
-        //             if (debuffResistance < GameplayManager.EffectConstant
-        //                     .effectData[_skillData.effectConfig.effectIndex].debuffResistance)
-        //             {
-        //                 focusedCharacter.Info.ApplyDeBuff(_skillData.effectConfig, SelectedCharacter);
-        //                 Debug.Log($"[Gameplay] - Damage: {damage}");
-        //             }
-        //         }
-        //     }
-        // }
-        //
-        // else
-        // {
-        //     damage *= 2;
-        //     focusedCharacter.Info.OnDamageTaken(damage);
-        //     Debug.Log($"Gameplay: Get Damage Taken {damage}");
-        // }
-        //
+        int damage = SelectedCharacter.characterInfo.BaseDamage;
+        var hitChange = SelectedCharacter.Roll.GetHitChange();
+        var isCritical = SelectedCharacter.Roll.IsCritical(hitChange);
+        if (!isCritical)
+        {
+            var dodge = focusedCharacter.characterInfo.Dodge;
+            if (dodge > hitChange)
+            {
+                Debug.Log($"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
+                focusedCharacter.characterInfo.OnDamageTaken(0, SetDamageTakenFinished);
+            }
+            else
+            {
+                if (skillInfo.hasApplyDamage)
+                {
+                    damage += SelectedCharacter.Roll.RollDice(skillInfo.damageConfig);
+                }
+                // 
+                if (skillInfo.effectIndex != EffectIndex.None)
+                {
+                    // var debuffResistance = RollManager.Instance.GetDebuffResistance(focusedCharacter.Info.CharacterAttributes);
+                    // if (debuffResistance < GameplayManager.EffectConstant
+                    //         .effectData[_skillData.effectConfig.effectIndex].debuffResistance)
+                    // {
+                    //     focusedCharacter.Info.ApplyDeBuff(_skillData.effectConfig, SelectedCharacter);
+                    //     Debug.Log($"[Gameplay] - Damage: {damage}");
+                    // }
+                }
+                focusedCharacter.characterInfo.OnDamageTaken(damage, SetDamageTakenFinished);
+            }
+        }
+        
+        else
+        {
+            damage *= 2;
+            focusedCharacter.characterInfo.OnDamageTaken(damage, SetDamageTakenFinished);
+            Debug.Log($"Gameplay: Get Damage Taken {damage}");
+        }
+        
         return false;
     }
 
     private void SetDamageTakenFinished()
     {
-        Debug.Log("NT - SetDamageTakenFinished");
+        if (FocusedCharacter is PlayerCharacter && MainCharacter is AICharacter)
+        {
+            ReactMenu.Instance.Open();
+        }
     }
 
     public Character GetCharacterByType(CharacterType characterType)
@@ -177,7 +183,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
             Skills = SelectedCharacter.GetSkillInfos(GetSkillType())
         };
     }
-
+    
     public void ShowAllHPBar()
     {
         foreach (var character in Characters)
@@ -197,33 +203,40 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     {
         var range = SelectedCharacter.characterInfo.GetMoveRange();
         Debug.Log($"Gameplay: [{SelectedCharacter.characterConfig.characterName}] Show Move Range: {range}");
-        _mapManager.ShowMoveRange(SelectedCharacter.characterInfo.Cell, range);
+        MapManager.ShowMoveRange(SelectedCharacter.characterInfo.Cell, range);
     }
 
     public void HideMoveRange()
     {
         Debug.Log($"Gameplay: [{SelectedCharacter.characterConfig.characterName}] Hide Move Range");
-        _mapManager.HideMoveRange();
+        MapManager.HideMoveRange();
     }
 
     public void HideSkillRange()
     {
         Debug.Log($"Gameplay: [{SelectedCharacter.characterConfig.characterName}] Hide Skill Range");
-        _mapManager.HideSkillRange();
+        MapManager.HideSkillRange();
         CharactersInRange.Clear();
     }
 
     public bool TryMoveToCell(Cell cell)
     {
-        if (SelectedCharacter is PlayerCharacter && SelectedCharacter != null && _mapManager.CanMove(cell))
+        if (SelectedCharacter is PlayerCharacter && SelectedCharacter != null && MapManager.CanMove(cell))
         {
-            var cellPath = _mapManager.FindPath(SelectedCharacter.characterInfo.Cell, cell);
-            _mapManager.HideMoveRange();
+            var cellPath = MapManager.FindPath(SelectedCharacter.characterInfo.Cell, cell);
+            MapManager.HideMoveRange();
             SelectedCharacter.MoveCharacter(cellPath);
             return true;
         }
         return false;
     }
+    
+    public List<Character> GetEnemiesInRange(Character character, int range)
+    {
+        var characters = MapManager.GetCharacterInRange(character.characterInfo.Cell, range);
+        return characters.Where(c => c.Type != character.Type).ToList();
+    }
+    
     #endregion
 
     #region Facing
@@ -232,6 +245,12 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     {
         if (SelectedCharacter == MainCharacter) return SkillType.InternalSkill;
         return SelectedCharacter.Type == MainCharacter.Type ? SkillType.MovementSkill : SkillType.CombatSkill;
+    }
+    
+    public SkillType GetSkillType(Character character)
+    {
+        if (character == MainCharacter) return SkillType.InternalSkill;
+        return character.Type == MainCharacter.Type ? SkillType.MovementSkill : SkillType.CombatSkill;
     }
 
     public SkillInfo GetSkillInfo(int index)

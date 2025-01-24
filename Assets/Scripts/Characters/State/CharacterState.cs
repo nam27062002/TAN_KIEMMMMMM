@@ -1,4 +1,6 @@
-﻿public abstract class CharacterState : IState
+﻿using UnityEngine;
+
+public abstract class CharacterState : IState
 {
     public abstract string NameState { get; set; }
     
@@ -12,4 +14,10 @@
     public virtual void OnEnter(){}
 
     public virtual void OnExit(){}
+
+    protected virtual void OnEndAnim()
+    {
+        Character.OnEndAnimAction();
+        Character.OnEndAnim?.Invoke();
+    }
 }

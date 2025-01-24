@@ -73,6 +73,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1236668399952266962}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+--- !u!114 &788589882186884014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 717060944506119049, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 216772500856537127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618060fc918741ebb601372ea285c46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1091285681089268413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
@@ -92,12 +103,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 2
   characterAnimationData: {fileID: 4811324158122557611}
-  hpBar: {fileID: 8373662429259256631}
+  hpBar: {fileID: 788589882186884014}
   model: {fileID: 1274149462394461964}
   characterConfig:
     characterHeight: 0.55
     characterName: "Thi\u1EBFt Nh\xE2n"
     characterIcon: {fileID: 21300000, guid: 177a247f955219b40b307348ba3c6abc, type: 3}
+    damageRollData:
+      rollTime: 1
+      rollValue: 6
+      add: 0
     characterAttributes:
       maxMoveRange: 5
       health: 40
@@ -106,6 +121,10 @@ MonoBehaviour:
       def: 10
       chiDef: 16
       spd: 6
+      rollValue: 20
+    actionPoints:
+      m_keys: 000000000100000002000000
+      m_values: 010000000100000002000000
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 9319fcf17bb013a40af510e16132c80e, type: 3}
@@ -114,37 +133,85 @@ MonoBehaviour:
       mpCost: 0
       range: 1
       isDirectionalSkill: 1
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     - icon: {fileID: 21300000, guid: 2d0b910c24d834a48bcf21d1e71e5cae, type: 3}
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
       range: 8
       isDirectionalSkill: 1
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     - icon: {fileID: 21300000, guid: 2b34cb4773b89294bbce104eeef056b9, type: 3}
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
       mpCost: 6
       range: 2
       isDirectionalSkill: 1
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     movementSkill:
     - icon: {fileID: 21300000, guid: 2bea061885017714799bf019c2ad2d5b, type: 3}
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
       range: 0
-      isDirectionalSkill: 0
+      isDirectionalSkill: 1
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     - icon: {fileID: 21300000, guid: 490dcf1da86c8754e8e730f264d4fe25, type: 3}
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
       range: 0
-      isDirectionalSkill: 0
+      isDirectionalSkill: 1
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     - icon: {fileID: 21300000, guid: 096d26e94d1059447814c91e19e64908, type: 3}
       name: 
       skillIndex: 2
       mpCost: 0
       range: 0
-      isDirectionalSkill: 0
+      isDirectionalSkill: 1
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     combatSkill:
     - icon: {fileID: 21300000, guid: 9bf0eafd57dc5c5489f2b349bb9e4af8, type: 3}
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
@@ -152,18 +219,42 @@ MonoBehaviour:
       mpCost: 0
       range: 1
       isDirectionalSkill: 1
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     - icon: {fileID: 21300000, guid: 1bfc139fd02cce54e893d0a7c16f72d3, type: 3}
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
       range: 3
       isDirectionalSkill: 0
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
     - icon: {fileID: 21300000, guid: a3fe2025ac048a340be307f59e9ab142, type: 3}
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
       mpCost: 6
       range: 0
       isDirectionalSkill: 0
+      damageType: 4
+      effectIndex: 0
+      buffType: 0
+      hasApplyDamage: 0
+      damageConfig:
+        rollTime: 0
+        rollValue: 0
+        add: 0
 --- !u!1 &1274149462394461964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
@@ -178,16 +269,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8c6a644fad47c0ab8aa0cd8d58090c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8373662429259256631 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8590362223701447440, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 216772500856537127}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6608937a70b9405e956ed94070f74f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
