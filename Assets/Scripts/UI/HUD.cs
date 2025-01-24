@@ -30,6 +30,7 @@ public class HUD : SingletonMonoBehavior<HUD>
     {
         base.Awake();
         endTurnButton.onClick.AddListener(EndTurnButtonClicked);
+        gameObject.SetActiveIfNeeded(false);
     }
 
     protected override void OnDestroy()
