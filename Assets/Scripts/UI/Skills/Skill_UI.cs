@@ -27,7 +27,7 @@ public class Skill_UI : MonoBehaviour
 
     private void OnSkillButtonClicked()
     {
-        GameplayManager.Instance.HandleSelectSkill(_skillIndex);
+        if (!GameplayManager.Instance.IsTutorialLevel) GameplayManager.Instance.HandleSelectSkill(_skillIndex);
     }
     
     public void SetSkill(int index, Sprite skillIcon, bool unlock, bool enoughMana)

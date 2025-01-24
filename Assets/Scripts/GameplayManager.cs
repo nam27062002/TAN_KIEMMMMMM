@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
@@ -15,7 +16,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     // public
     public CharacterManager characterManager;
-    public int CharacterIndex { get; set; }
+    [ShowInInspector] public int CharacterIndex { get; set; }
 
     public bool IsTutorialLevel;
 
@@ -225,7 +226,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         HUD.Instance.ShowHUD();
         characterManager.ShowAllHPBar();
-        characterManager.SetMainCharacterTutorial();
+        characterManager.SetMainCharacter();
     }
 
     #endregion

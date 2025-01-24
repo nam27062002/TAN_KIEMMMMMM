@@ -5,11 +5,13 @@ using UnityEngine;
 public abstract class TutorialSequence : MonoBehaviour
 {
     public int index;
+    public float delayTime;
     protected TutorialManager Tutorial => TutorialManager.Instance;
     public Highlightable highlightable;
     
     public virtual void Start()
     {
+        highlightable.Unhighlight();
         StartCoroutine(AddTutorial());
     }
 
@@ -36,7 +38,9 @@ public abstract class TutorialSequence : MonoBehaviour
     
     protected void OnFinishTutorial()
     {
-        TutorialManager.Instance?.OnTutorialClicked(index);
+        TutorialManager.Instance?.arrow.gameObject.SetActive(false);
+        // MessageMenu.Instance?.HideTutorialText();
+        TutorialManager.Instance?.OnTutorialClicked(index, delayTime);
     }
     
     

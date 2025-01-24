@@ -42,6 +42,9 @@ public class ConversationMenu : SingletonMonoBehavior<ConversationMenu>
         DisplayCurrentDialogue();
         _onEndConversation = OnEndConversation;
         _onNextConversation = OnNextConversation;
+#if QUICK_CHECK
+        EndConversation();
+#endif
     }
 
     private void DisplayCurrentDialogue()

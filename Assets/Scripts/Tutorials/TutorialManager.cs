@@ -138,13 +138,13 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         SetTutorial();
     }
     
-    public void OnTutorialClicked(int index)
+    public void OnTutorialClicked(int index, float delayTime = 0f)
     {
         if (index != tutorialIndex) return;
         Debug.Log($"TutorialManager: OnTutorialClicked: {index}");
         tutorialIndex++;
         if (tutorialIndex < tutorialClickIndex.Count)
-            SetTutorial();
+            Invoke(nameof(SetTutorial), delayTime);
         else
         {
             // Invoke(nameof(Wait), 2f);

@@ -103,7 +103,7 @@ public class HUD : SingletonMonoBehavior<HUD>
 
     private void EndTurnButtonClicked()
     {
-        GameplayManager.Instance.HandleEndTurn();
+        if (!GameplayManager.Instance.IsTutorialLevel) GameplayManager.Instance.HandleEndTurn();
     }
 
     public void HideHUD()
