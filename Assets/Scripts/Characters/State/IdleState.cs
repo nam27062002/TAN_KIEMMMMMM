@@ -10,6 +10,7 @@
     {
         base.OnEnter();
         Character.PlayAnim(AnimationParameterNameType.Idle);
+        SetFacing();
     }
 
     public override void OnExit()

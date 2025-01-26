@@ -9,7 +9,7 @@
     public override void OnEnter()
     {
         base.OnEnter();
-        Character.PlayAnim(AnimationParameterNameType.Skill1, OnEndAnim);
+        Character.PlayAnim(AnimationParameterNameType.Skill1, OnFinishAction);
     }
 
     public override void OnExit()

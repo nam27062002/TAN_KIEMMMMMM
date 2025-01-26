@@ -12,7 +12,7 @@ public class Character : MonoBehaviour
     public HpBar hpBar;
     public GameObject model;
     public CharacterStateMachine StateMachine { get; set; }
-    protected CharacterManager CharacterManager;
+    public CharacterManager CharacterManager;
     protected GameplayManager GpManager => GameplayManager.Instance;
     [Title("Settings"), Space(10)] 
     public CharacterConfig characterConfig;
@@ -25,7 +25,6 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         StateMachine = new CharacterStateMachine(this);
-        ChangeState(ECharacterState.Idle);
     }
     
     public void Initialize(CharacterManager characterManager, Cell cell)
@@ -47,6 +46,7 @@ public class Character : MonoBehaviour
         SetSpeed();
         characterInfo.OnHpChanged = OnHpChanged;
         characterInfo.OnHpChanged?.Invoke();
+        ChangeState(ECharacterState.Idle);
     }
 
     public virtual void SetMainCharacter()
@@ -57,16 +57,21 @@ public class Character : MonoBehaviour
     public void CastSkill(SkillInfo skillInfo, Action onEndAnim)
     {
         OnEndAnim = onEndAnim;
+
+        ChangeState(GetCharacterStateByIndex(skillInfo.skillIndex));
+        return;
+
         ECharacterState GetCharacterStateByIndex(int index)
         {
-            if (index == 0) return ECharacterState.Skill1;
-            if (index == 1) return ECharacterState.Skill2;
-            if (index == 2) return ECharacterState.Skill3;
-            if (index == 3) return ECharacterState.Skill4;
-            return ECharacterState.None;
+            return index switch
+            {
+                0 => ECharacterState.Skill1,
+                1 => ECharacterState.Skill2,
+                2 => ECharacterState.Skill3,
+                3 => ECharacterState.Skill4,
+                _ => ECharacterState.None
+            };
         }
-        
-        ChangeState(GetCharacterStateByIndex(skillInfo.skillIndex));
     }
     
     public void ChangeState(ECharacterState newState)
@@ -96,23 +101,7 @@ public class Character : MonoBehaviour
         pos.y += characterConfig.characterHeight / 2f;
         transform.position = pos;
     }
-
-    private void SetFacing()
-    {
-        var facing = CharacterManager.GetFacingType(this);
-        SetFacing(facing);
-    }
-
-    private void ReleaseFacing()
-    {
-        model.transform.localScale = Vector3.one;
-    }
-
-    private void SetFacing(FacingType facing)
-    {
-        model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
-    }
-
+    
     private void OnHpChanged()
     {
         var currentHp = characterInfo.CurrentHP;
@@ -127,39 +116,39 @@ public class Character : MonoBehaviour
 
     public void MoveCharacter(List<Cell> cells, Action onEndAnim = null)
     {
-        ReleaseFacing();
-        characterInfo.Cell.HideFocus();
-        characterInfo.MoveAmount += cells.Count;
-        var moveSequence = DOTween.Sequence();
-        float currentX = transform.position.x;
-        foreach (var cell in cells)
-        {
-            var targetPos = cell.transform.position;
-            targetPos.y += characterConfig.characterHeight / 2f;
-            ChangeState(cell.transform.position.x > currentX ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
-            currentX = cell.transform.position.x;
-            moveSequence.Append(transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
-        }
         
-        moveSequence.OnComplete(() =>
-        {
-            SetIdle();
-            SetCell(cells[^1]);
-            characterInfo.Cell.ShowFocus();
-            onEndAnim?.Invoke();
-        });
+        // ReleaseFacing();
+        // characterInfo.Cell.HideFocus();
+        // characterInfo.MoveAmount += cells.Count;
+        // var moveSequence = DOTween.Sequence();
+        // float currentX = transform.position.x;
+        // foreach (var cell in cells)
+        // {
+        //     var targetPos = cell.transform.position;
+        //     targetPos.y += characterConfig.characterHeight / 2f;
+        //     ChangeState(cell.transform.position.x > currentX ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
+        //     currentX = cell.transform.position.x;
+        //     moveSequence.Append(transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
+        // }
+        //
+        // moveSequence.OnComplete(() =>
+        // {
+        //     SetIdle();
+        //     SetCell(cells[^1]);
+        //     characterInfo.Cell.ShowFocus();
+        //     onEndAnim?.Invoke();
+        // });
     }
 
     public void MoveCharacter(Vector3 targetPos, float duration)
     {
-        ChangeState(targetPos.x > transform.position.x ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
-        transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
+        // ChangeState(targetPos.x > transform.position.x ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
+        // transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }
 
     private void SetIdle()
     {
         ChangeState(ECharacterState.Idle);
-        SetFacing();
     }
     
     public virtual void OnSelected()
