@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -84,10 +85,10 @@ public class HUD : SingletonMonoBehavior<HUD>
         endTurnButton.gameObject.SetActiveIfNeeded(GameplayManager.Instance.characterManager.CanShowEndTurn);
         characterName.text = characterParams.Character.characterConfig.characterName;
         characterIcon.sprite = characterParams.Character.characterConfig.characterIcon;
-        characterParams.Character.characterInfo.OnHpChanged = OnHpChanged;
-        characterParams.Character.characterInfo.OnMpChanged = OnMpChanged;
-        characterParams.Character.characterInfo.OnHpChanged?.Invoke();
-        characterParams.Character.characterInfo.OnMpChanged?.Invoke();
+        characterParams.Character.characterInfo.OnHpChanged += OnHpChanged;
+        characterParams.Character.characterInfo.OnMpChanged += OnMpChanged;
+        OnHpChanged(null, null);
+        OnMpChanged(null, null);
         SetRound();
     }
 
@@ -96,14 +97,14 @@ public class HUD : SingletonMonoBehavior<HUD>
         roundIndex.text = $"Vòng " + GameplayManager.Instance.CurrentRound.ToString();
     }
 
-    private void OnHpChanged()
+    private void OnHpChanged(object sender, EventArgs e)
     {
         var currentHp = _characterParams.Character.characterInfo.CurrentHP;
         var maxHp = _characterParams.Character.characterInfo.Attributes.health;
         hpBar.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
     }
 
-    private void OnMpChanged()
+    private void OnMpChanged(object sender, EventArgs e)
     {
         var currentMp = _characterParams.Character.characterInfo.CurrentMP;
         var maxMp = _characterParams.Character.characterInfo.Attributes.mana;

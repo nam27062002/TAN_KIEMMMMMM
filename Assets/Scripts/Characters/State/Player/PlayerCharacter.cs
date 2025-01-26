@@ -14,7 +14,7 @@
     public override void OnSelected()
     {
         base.OnSelected();
-        if (CharacterManager.MainCharacter == this)
+        if (CharacterManager.MainCharacter == this && !GameplayManager.Instance.IsTutorialLevel)
         {
             CharacterManager.ShowMoveRange();
         }

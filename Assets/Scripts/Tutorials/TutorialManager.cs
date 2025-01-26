@@ -149,7 +149,9 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         yield return new WaitForSeconds(4f);
         MessageMenu.Instance.SetTutorialText("Điểm hành động đỏ chuyển thành màu vàng. Không thể được sử dụng");
         yield return new WaitForSeconds(4f);
+        MessageMenu.Instance.HideTutorialText();
         GameplayManager.Instance.IsTutorialLevel = false;
+        GameplayManager.Instance.characterManager.SetMainCharacter();
         Destroy(gameObject);
     }
     

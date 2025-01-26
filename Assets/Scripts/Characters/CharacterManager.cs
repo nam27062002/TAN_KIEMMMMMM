@@ -105,7 +105,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
         SelectedCharacter = character;
         HideMoveRange();
         HideSkillRange();
-        if (!GPManager.IsTutorialLevel) character.OnSelected();
+        character.OnSelected();
         SetHUD();
     }
 
@@ -338,6 +338,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public void OnCancelClick()
     {
         Debug.Log("[Gameplay] - OnCancelClick");
+        FocusedCharacter.characterInfo.IsReact = false;
         OnEndReact();
     }
 }

@@ -45,8 +45,8 @@ public abstract class Character : MonoBehaviour
         SetCharacterPosition(cell);
         SetIdle();
         SetSpeed();
-        characterInfo.OnHpChanged = OnHpChanged;
-        characterInfo.OnHpChanged?.Invoke();
+        characterInfo.OnHpChanged += OnHpChanged;
+        OnHpChanged(null, null);
         ChangeState(ECharacterState.Idle);
     }
 
@@ -94,7 +94,7 @@ public abstract class Character : MonoBehaviour
         transform.position = pos;
     }
     
-    private void OnHpChanged()
+    private void OnHpChanged(object sender, EventArgs e)
     {
         var currentHp = characterInfo.CurrentHP;
         var maxHp = characterInfo.Attributes.health;

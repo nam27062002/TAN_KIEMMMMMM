@@ -23,8 +23,8 @@ public class CharacterInfo
     [ShowInInspector, ReadOnly] public bool IsReact {get; set;}
    
     // Action
-    public Action OnHpChanged;
-    public Action OnMpChanged;
+    public event EventHandler OnHpChanged;
+    public event EventHandler OnMpChanged;
     
     public SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
@@ -34,13 +34,13 @@ public class CharacterInfo
     {
         CurrentHP += value;
         Character.ChangeState(ECharacterState.DamageTaken);
-        OnHpChanged?.Invoke();
+        OnHpChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void HandleMpChanged(int value)
     {
         CurrentMP += value;
-        OnMpChanged?.Invoke();
+        OnMpChanged?.Invoke(this, EventArgs.Empty);
     }
     
     public int GetMoveRange()
