@@ -13,6 +13,7 @@ public class HUD : SingletonMonoBehavior<HUD>
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI levelName;
     public TextMeshProUGUI characterFocusName;
+    public TextMeshProUGUI roundIndex;
     
     [Title("Character Index")]
     public Transform characterPool;
@@ -87,6 +88,12 @@ public class HUD : SingletonMonoBehavior<HUD>
         characterParams.Character.characterInfo.OnMpChanged = OnMpChanged;
         characterParams.Character.characterInfo.OnHpChanged?.Invoke();
         characterParams.Character.characterInfo.OnMpChanged?.Invoke();
+        SetRound();
+    }
+
+    public void SetRound()
+    {
+        roundIndex.text = $"Vòng " + GameplayManager.Instance.CurrentRound.ToString();
     }
 
     private void OnHpChanged()

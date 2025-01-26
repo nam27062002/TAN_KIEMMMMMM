@@ -452,9 +452,9 @@ MonoBehaviour:
       arrowPosition: {x: 754.8, y: -356}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
       tutorialMenuText: "Ch\u1ECDn k\u1EBFt th\xFAc l\u01B0\u1EE3t"
-    - tutorialTypes: 0
-      arrowPosition: {x: 0, y: 0}
-      arrowRotation: {x: 0, y: 0, z: 0, w: 0}
+    - tutorialTypes: 1
+      arrowPosition: {x: 128, y: -57}
+      arrowRotation: {x: 0, y: 0, z: 1, w: -0.00000004371139}
       tutorialMenuText: 
     - tutorialTypes: 3
       arrowPosition: {x: 172, y: -338}
@@ -481,6 +481,7 @@ MonoBehaviour:
   - {fileID: 1062635311}
   conversation_1: {fileID: 11400000, guid: b5e23f147f0bdfe44b51d1a7e38d8a68, type: 2}
   conversation_2: {fileID: 11400000, guid: 6d6cf197ec346d34099f16180003b0b0, type: 2}
+  conversation_3: {fileID: 11400000, guid: ce652997ce82e1e4282bb0f43e40f784, type: 2}
   tutorialIndex: 0
   arrow: {fileID: 1196676956}
 --- !u!114 &702396816
@@ -529,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56dfbdeb2ef34904bc7380ca0d076c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 20
+  index: 21
   delayTime: 0
   highlightable:
     highlightType: 0

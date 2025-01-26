@@ -77,10 +77,21 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
 
     public void SetMainCharacter(Character character)
     {
-        MainCharacter = character;
-        MainCharacter.SetMainCharacter();
-        SetSelectedCharacter(character);
-        SetupCharacterFocus();
+        if (TutorialManager.Instance != null
+            && GPManager.CurrentRound == 1 
+            && character == Characters[0]
+            && !TutorialManager.Instance.EndTuto)
+        {
+            MainCharacter.OnUnSelected();
+            TutorialManager.Instance.OnNewRound();
+        }
+        else
+        {
+            MainCharacter = character;
+            MainCharacter.SetMainCharacter();
+            SetSelectedCharacter(character);
+            SetupCharacterFocus();   
+        }
         if (Characters.Count > 0 && character == Characters[0])
         {
             GPManager.HandleNewRound();
@@ -229,7 +240,9 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
 
     public bool IsMainCharacterSelected => SelectedCharacter == MainCharacter;
 
-    public bool CanShowEndTurn => IsMainCharacterSelected && MainCharacter is PlayerCharacter;
+    public bool CanShowEndTurn => 
+        IsMainCharacterSelected && MainCharacter is PlayerCharacter || 
+        SelectedCharacter.characterInfo.IsReact;
     #endregion
 
     #region Cell Interact
@@ -325,6 +338,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public void OnCancelClick()
     {
         Debug.Log("[Gameplay] - OnCancelClick");
+        OnEndReact();
     }
 }
 

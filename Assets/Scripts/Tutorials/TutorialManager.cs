@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,12 +15,14 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     public List<GotoPos> tnGotos;
     public ConversationData conversation_1;
     public ConversationData conversation_2;
+    public ConversationData conversation_3;
     public int tutorialIndex;
     private Dictionary<CharacterType, List<GotoPos>> gotoPoses = new();
 
     private Dictionary<CharacterType, Character> charactersDict = new();
 
     private int _footStep;
+    public bool EndTuto;
     public RectTransform arrow;
     
     protected override void Awake()
@@ -44,6 +47,13 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     private void Start()
     {
         StartTutorial();
+    }
+
+    public void OnNewRound()
+    {
+        GameplayManager.Instance.IsTutorialLevel = true;
+        HUD.Instance.HideHUD();
+        ShowFinalConversation();
     }
 
     protected override void OnDestroy()
@@ -117,6 +127,32 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         ConversationMenu.Instance.StartConversation(conversation_2, OnEndSecondConversation, OnNextConversation);
     }
 
+    private void ShowFinalConversation()
+    {
+        ConversationMenu.Instance.StartConversation(conversation_3, OnEndFinal);
+    }
+
+    private void OnEndFinal()
+    {
+        HUD.Instance.ShowHUD();
+        EndTuto = true;
+        GameplayManager.Instance.characterManager.SetMainCharacter();
+        StartCoroutine(ShowTutorial2());
+    }
+
+    private IEnumerator ShowTutorial2()
+    {
+        arrow.gameObject.SetActive(true);
+        arrow.anchoredPosition = new Vector2(-494.5f, -460.7f);
+        arrow.rotation = Quaternion.Euler(0f, 0f, 270f);
+        MessageMenu.Instance.SetTutorialText("Sau một vòng, điểm hành động vàng chuyển thành màu xanh và có thể được sử dụng");
+        yield return new WaitForSeconds(4f);
+        MessageMenu.Instance.SetTutorialText("Điểm hành động đỏ chuyển thành màu vàng. Không thể được sử dụng");
+        yield return new WaitForSeconds(4f);
+        GameplayManager.Instance.IsTutorialLevel = false;
+        Destroy(gameObject);
+    }
+    
     private void OnNextConversation(int index)
     {
         if (index == 1)
@@ -142,12 +178,20 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         if (index != tutorialIndex) return;
         Debug.Log($"TutorialManager: OnTutorialClicked: {index}");
         tutorialIndex++;
-        if (tutorialIndex < tutorialClickIndex.Count)
+        if (tutorialIndex < tutorialConfig.tutorials.Count)
             Invoke(nameof(SetTutorial), delayTime);
         else
         {
-            // Invoke(nameof(Wait), 2f);
+            Debug.Log("End Tutorial");
+            EndFirstTutorial();
         }
+    }
+
+    private void EndFirstTutorial()
+    {
+        arrow.gameObject.SetActiveIfNeeded(false);
+        MessageMenu.Instance.HideTutorialText();
+        GameplayManager.Instance.IsTutorialLevel = false;
     }
     
     private void SetTutorial()

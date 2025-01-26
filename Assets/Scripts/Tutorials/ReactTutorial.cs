@@ -22,9 +22,9 @@
 
     public void OnOpen()
     {
-        if (Tutorial != null && GameplayManager.Instance.IsTutorialLevel)
-        {
-            Tutorial.arrow.gameObject.SetActive(true);
-        }
+        // if (Tutorial != null && GameplayManager.Instance.IsTutorialLevel)
+        // {
+        //     Tutorial.arrow.gameObject.SetActive(true);
+        // }
     }
 }

@@ -10,7 +10,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [SerializeField] private GameObject tutorialPrefab;
     // private
     private MapManager MapManager { get; set; }
-    private int CurrentRound { get; set; } = 0;
+    public int CurrentRound { get; set; } = 0;
     private bool InPlayerTurn => characterManager.MainCharacter is PlayerCharacter;
     public SkillInfo SkillInfo { get; set; }
     
@@ -70,6 +70,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         CurrentRound++;
         OnNewRound?.Invoke(this, EventArgs.Empty);
+        HUD.Instance.SetRound();
         Debug.Log($"NT - Gameplay: round {CurrentRound}");
     }
     
@@ -137,7 +138,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleEndTurn()
     {
-        Debug.Log("NT - Gameplay: end turn");
         CharacterIndex++;
         if (CharacterIndex >= characterManager.Characters.Count)
         {
