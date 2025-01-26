@@ -105,9 +105,11 @@ MonoBehaviour:
   characterAnimationData: {fileID: 4811324158122557611}
   hpBar: {fileID: 788589882186884014}
   model: {fileID: 1274149462394461964}
+  CharacterManager: {fileID: 0}
   characterConfig:
     characterHeight: 0.55
     characterName: "Thi\u1EBFt Nh\xE2n"
+    timeMoveToTarget: 0.5
     characterIcon: {fileID: 21300000, guid: 177a247f955219b40b307348ba3c6abc, type: 3}
     damageRollData:
       rollTime: 1
@@ -141,6 +143,7 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: 
     - icon: {fileID: 21300000, guid: 2d0b910c24d834a48bcf21d1e71e5cae, type: 3}
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
@@ -155,6 +158,9 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Khi\u1EBFn thi\u1EBFt nh\xE2n \u0111\u1EE9ng ngay s\xE1t c\xF9ng
+        t\u1EA5n c\xF4ng k\u1EBB \u0111\u1ECBch b\u1EB1ng c\xE1ch n\xE9m \u0111\xE1
+        (roll 1d20. >= 10 th\xEC n\xE9m \u0111\xE1.)"
     - icon: {fileID: 21300000, guid: 2b34cb4773b89294bbce104eeef056b9, type: 3}
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
@@ -169,6 +175,10 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "T\xF3m l\u1EA5y k\u1EBB \u0111\u1ECBch, sau \u0111\xF3 nh\u1ED5
+        m\u1ED9t h\u1EA1t nh\xE2n v\xE0o mi\u1EC7ng \u0111\u1ED1i ph\u01B0\u01A1ng.
+        C\xE1c thi\u1EBFt nh\xE2n \u0111\u1EE9ng c\u1EA1nh c\xF3 c\u01A1 h\u1ED9i
+        t\u1EA5n c\xF4ng k\u1EBB \u0111\u1ECBch (t\u01B0\u01A1ng t\u1EF1 skill 1)"
     movementSkill:
     - icon: {fileID: 21300000, guid: 2bea061885017714799bf019c2ad2d5b, type: 3}
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
@@ -184,6 +194,7 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: 
     - icon: {fileID: 21300000, guid: 490dcf1da86c8754e8e730f264d4fe25, type: 3}
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
@@ -198,6 +209,7 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: 
     - icon: {fileID: 21300000, guid: 096d26e94d1059447814c91e19e64908, type: 3}
       name: 
       skillIndex: 2
@@ -212,6 +224,7 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: 
     combatSkill:
     - icon: {fileID: 21300000, guid: 9bf0eafd57dc5c5489f2b349bb9e4af8, type: 3}
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
@@ -227,6 +240,7 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: 
     - icon: {fileID: 21300000, guid: 1bfc139fd02cce54e893d0a7c16f72d3, type: 3}
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
@@ -241,6 +255,13 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Tr\xF3i \u0111\u1ED1i th\u1EE7 b\u1EB1ng t\u01A1 th\u1ECBt, khi\u1EBFn
+        \u0111\u1ED1i ph\u01B0\u01A1ng b\u1EA5t \u0111\u1ED9ng. G\xE2y s\xE1t th\u01B0\u01A1ng
+        d\u1EF1a tr\xEAn s\u1ED1 thi\u1EBFt nh\xE2n \u0111\u1EE9ng c\u1EA1nh. C\xE1c
+        thi\u1EBFt nh\xE2n \u0111\u1ED3ng minh c\u0169ng c\xF3 c\u01A1 h\u1ED9i t\u1EA5n
+        c\xF4ng k\u1EBB b\u1ECB tr\xF3i ch\xE2n b\u1EB1ng m\u1ED9t \u0111\xF2n \u0111\xE1nh
+        th\u01B0\u1EDDng. +1 s\xE1t th\u01B0\u01A1ng * s\u1ED1 Thi\u1EBFt Nh\xE2n
+        trong ph\u1EA1m vi b\xE1n k\xEDnh 3 \xF4 (apply debuff 15)"
     - icon: {fileID: 21300000, guid: a3fe2025ac048a340be307f59e9ab142, type: 3}
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
@@ -255,6 +276,11 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Nh\u1ED5 h\u1EA1t nh\xE2n v\u1EC1 ph\xEDa \u0111\u1ECBch, ch\u1EB7n
+        \u0111\xF2n \u0111\xE1nh c\u1EE7a \u0111\u1ED1i th\u1EE7. M\xE1u \u0111\u1ED9c
+        c\u1EE7a Thi\u1EBFt Nh\xE2n v\u1EA3y ra ngo\xE0i g\xE2y b\u1ECFng, v\xE0
+        c\xF3 t\u1EC9 l\u1EC7 g\xE2y m\xF9 l\xF2a (apply debuff 30, 31). Version
+        2 k apply \u0111\u01B0\u1EE3c status h\xF3a Thi\u1EBFt Nh\xE2n c\u1EE7a skill"
 --- !u!1 &1274149462394461964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

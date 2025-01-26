@@ -94,7 +94,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
         MainCharacter = character;
         MainCharacter.SetMainCharacter();
         SetSelectedCharacter(character);
-        HUD.Instance.SetupCharacterFocus(Characters, GPManager.CharacterIndex);
+        SetupCharacterFocus();
         if (Characters.Count > 0 && character == Characters[0])
         {
             GPManager.HandleNewRound();
@@ -109,8 +109,22 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
         HideMoveRange();
         HideSkillRange();
         if (!GPManager.IsTutorialLevel) character.OnSelected();
+        SetHUD();
+    }
+
+    #region HUD
+
+    private void SetupCharacterFocus()
+    {
+        HUD.Instance.SetupCharacterFocus(Characters, GPManager.CharacterIndex);
+    }
+    
+    public void SetHUD()
+    {
         HUD.Instance.SetCharacterFocus(GetSelectedCharacterParams());
     }
+
+    #endregion
 
     public void HandleCastSkill(Character character)
     {
@@ -122,6 +136,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
 
     public void OnCastSkillFinished()
     {
+        SetHUD();
         TryAttackEnemies(FocusedCharacter);
     }
     

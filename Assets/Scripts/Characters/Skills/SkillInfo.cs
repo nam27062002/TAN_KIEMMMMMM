@@ -38,6 +38,7 @@ public class SkillInfo
     public BuffType buffType;
     public bool hasApplyDamage;
     [ShowIf(nameof(hasApplyDamage))] public RollData damageConfig;
+    public string description;
     [Button("Set Effect")]
     public void SetEffect()
     {

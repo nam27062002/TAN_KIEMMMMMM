@@ -110,9 +110,11 @@ MonoBehaviour:
   characterAnimationData: {fileID: 6624640028912595744}
   hpBar: {fileID: 1430896205935333413}
   model: {fileID: 613759459630214279}
+  CharacterManager: {fileID: 0}
   characterConfig:
     characterHeight: 1
     characterName: "\u0110o\xE0n Gia Linh"
+    timeMoveToTarget: 0.5
     characterIcon: {fileID: 21300000, guid: e6389fba37d1c3241bcb9529c9a99783, type: 3}
     damageRollData:
       rollTime: 1
@@ -146,6 +148,7 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: 
     - icon: {fileID: 21300000, guid: 40119a4d7c6def14490a64bcd642c753, type: 3}
       name: "Nhi\xEAn Huy\u1EBFt"
       skillIndex: 1
@@ -160,6 +163,14 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Nhi\xEAn huy\u1EBFt (Boiling Blood): \xE2m thanh v\xE0 ch\u1EA5t
+        \u0111\u1ED9c k\xEDch th\xEDch ti\u1EC1m l\u1EF1c c\u1EE7a \u0111\u1ED3ng
+        \u0111\u1ED9i trong ph\u1EA1m vi 4 \xF4, t\u0103ng th\xEAm 2 \xF4 v\xE0o
+        kho\u1EA3ng c\xE1ch di chuy\u1EC3n v\xE0 t\u0103ng th\xEAm 1 \u0111i\u1EC3m
+        h\xE0nh \u0111\u1ED9ng t\u1EA1m th\u1EDDi (m\u1EA5t sau khi s\u1EED d\u1EE5ng
+        ho\u1EB7c 1 v\xF2ng). \u0110\u1ED3ng \u0111\u1ED9i kh\xF4ng th\u1EC3 h\xE0nh
+        \u0111\u1ED9ng trong l\u01B0\u1EE3t k\u1EF9 n\u0103ng n\xE0y \u0111\u01B0\u1EE3c
+        s\u1EED d\u1EE5ng. (apply debuff 17) "
     - icon: {fileID: 21300000, guid: ce02b039dfb1d974385826061c887829, type: 3}
       name: "Th\u01B0\u1EE3c D\u01B0\u1EE3c \u0110\u1ECF"
       skillIndex: 2
@@ -174,6 +185,12 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Th\u01B0\u1EE3c d\u01B0\u1EE3c \u0111\u1ECF (Red Dahlia): ch\u1EA5t
+        \u0111\u1ED9c g\xE2y m\u1EDD m\u1EAFt, khi\u1EBFn \u0111\u1ED1i ph\u01B0\u01A1ng
+        d\u1EC5 \u0111\xE1nh tr\u01B0\u1EE3t (\u0111\xF2n \u0111\xE1nh c\u1EE7a \u0111\u1ED1i
+        ph\u01B0\u01A1ng g\u1EB7p b\u1EA5t l\u1EE3i, kh\xE1c v\u1EDBi hi\u1EC7u \u1EE9ng
+        m\xF9 31). Sau khi k\u1EBFt th\xFAc tr\xEAn ng\u01B0\u1EDDi m\u1EE5c ti\xEAu
+        n\u1EDF ra m\u1ED9t \u0111\xF3a hoa th\u01B0\u1EE3c d\u01B0\u1EE3c. "
     - icon: {fileID: 21300000, guid: 495b61bfe7e7a2d46b7e55a40df97d16, type: 3}
       name: "Thi\u1EBFt Kho\xE1i T\u1EED"
       skillIndex: 3
@@ -188,6 +205,11 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Thi\u1EBFt Kho\xE1i T\u1EED (Winter Rose): thu h\u1ED3i \u0111\u1ED9c
+        ph\u1EA5n t\u1EEB to\xE0n b\u1ED9 k\u1EBB \u0111\u1ECBch, gi\u1EA3m h\u1ED9
+        th\u1EC3 c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng t\xF9y theo s\u1ED1 stacks
+        \u0111\u1ED9c ph\u1EA5n b\u1ECB x\xF3a b\u1ECF. (apply debuff 7. Gi\u1EA3m
+        1 chi def vs m\u1ED7i stack)"
     movementSkill:
     - icon: {fileID: 21300000, guid: e1109e1473cbe4a43a1ded5a0cde98a6, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
@@ -203,6 +225,12 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "M\u1ED9ng y\u1EC3m (Haunting Nightmares): \xE2m thanh v\xE0 ch\u1EA5t
+        \u0111\u1ED9c g\xE2y \u1EA3o gi\xE1c, khi\u1EBFn m\u1EE5c ti\xEAu kh\xF4ng
+        th\u1EC3 h\xE0nh \u0111\u1ED9ng v\xE0 li\xEAn t\u1EE5c ch\u1ECBu s\xE1t th\u01B0\u01A1ng.
+        Sau khi k\u1EBFt th\xFAc, tr\xEAn ng\u01B0\u1EDDi m\u1EE5c ti\xEAu m\u1ECDc
+        ra m\u1ED9t b\xF4ng hoa qu\u1EF3nh. (apply debuff 15). S\xE1t th\u01B0\u01A1ng
+        ch\u1ECBu m\u1ED7i v\xF2ng l\xE0 1d6 "
     - icon: {fileID: 21300000, guid: 17c6e89310de8a145b908133f78dc6fe, type: 3}
       name: "B\u0103ng Ho\u1EA1i"
       skillIndex: 1
@@ -217,6 +245,12 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "B\u0103ng ho\u1EA1i (Lingering Paralysis): \xE2m thanh v\xE0
+        ch\u1EA5t \u0111\u1ED9c g\xE2y t\xEA, khi\u1EBFn ph\u1EA3n \u1EE9ng c\u1EE7a
+        k\u1EBB \u0111\u1ECBch ch\u1EADm l\u1EA1i. Khi\u1EBFn \u0111\xF2n \u0111\xE1nh
+        l\xEAn k\u1EBB \u0111\u1ECBch c\u1EE7a \u0111\u1ED3ng minh c\xF3 l\u1EE3i
+        th\u1EBF (apply debuff 16. s\u1ED1 \xF4 di chuy\u1EC3n gi\u1EA3m \u0111i
+        = 1d4)"
     - icon: {fileID: 21300000, guid: e9b2156db6f0d7148838129e6c1b2b01, type: 3}
       name: "Sen Tr\u1EAFng"
       skillIndex: 2
@@ -231,6 +265,10 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Sen tr\u1EAFng (White Lotus): ch\u1EA5t \u0111\u1ED9c g\xE2y
+        bu\u1ED3n ng\u1EE7. Sau khi k\u1EBFt th\xFAc tr\xEAn ng\u01B0\u1EDDi m\u1EE5c
+        ti\xEAu m\u1ECDc ra m\u1ED9t \u0111\xF3a hoa sen tr\u1EAFng. (apply debuff
+        5)"
     - icon: {fileID: 21300000, guid: 4227811f9b7bb39408552d36a7dd212c, type: 3}
       name: "H\u1ED3ng Ti"
       skillIndex: 3
@@ -245,6 +283,11 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "H\u1ED3ng Ti (Red Dodder): thu h\u1ED3i \u0111\u1ED9c ph\u1EA5n
+        t\u1EEB \u0111\u1ED3ng \u0111\u1ED9i, c\u1ED9ng 1 h\xFAt m\xE1u t\u1EEB m\u1ED7i
+        stack \u0111\u1ED9c ph\u1EA5n x\xF3a b\u1ECF cho b\u1EA3n th\xE2n v\xE0 \u0111\u1ED3ng
+        minh (apply buff 3. l\u01B0\u1EE3ng h\xFAt m\xE1u m\u1ED7i \u0111\xF2n =
+        s\u1ED1 stack)"
     combatSkill:
     - icon: {fileID: 21300000, guid: 412bd91e9a05fce4a9aa62acfe3e8ad8, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
@@ -260,6 +303,7 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: 
     - icon: {fileID: 21300000, guid: 025694a806a682f4cbb7ade780ba78ee, type: 3}
       name: "M\u1ED9ng Y\u1EC3m"
       skillIndex: 1
@@ -274,6 +318,12 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "M\u1ED9ng y\u1EC3m (Haunting Nightmares): \xE2m thanh v\xE0 ch\u1EA5t
+        \u0111\u1ED9c g\xE2y \u1EA3o gi\xE1c, khi\u1EBFn m\u1EE5c ti\xEAu kh\xF4ng
+        th\u1EC3 h\xE0nh \u0111\u1ED9ng v\xE0 li\xEAn t\u1EE5c ch\u1ECBu s\xE1t th\u01B0\u01A1ng.
+        Sau khi k\u1EBFt th\xFAc, tr\xEAn ng\u01B0\u1EDDi m\u1EE5c ti\xEAu m\u1ECDc
+        ra m\u1ED9t b\xF4ng hoa qu\u1EF3nh. (apply debuff 15). S\xE1t th\u01B0\u01A1ng
+        ch\u1ECBu m\u1ED7i v\xF2ng l\xE0 1d6 "
     - icon: {fileID: 21300000, guid: c209965e5c9cd4d45a226df6607e7407, type: 3}
       name: "C\xFAc V\xE0ng Th\u1ECD"
       skillIndex: 2
@@ -288,6 +338,10 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "C\xFAc v\u1EA1n th\u1ECD (Marigold): ch\u1EA5t \u0111\u1ED9c
+        g\xE2y t\xEA c\u01A1, g\xE2y cho\xE1ng. Sau khi k\u1EBFt th\xFAc tr\xEAn
+        ng\u01B0\u1EDDi m\u1EE5c ti\xEAu n\u1EDF ra m\u1ED9t \u0111\xF3a hoa c\xFAc.
+        (apply debuff 14)"
     - icon: {fileID: 21300000, guid: f0245e1542ae3204080686bb10664dc7, type: 3}
       name: "Kim T\u01B0\u1EDBc Mai"
       skillIndex: 3
@@ -302,6 +356,10 @@ MonoBehaviour:
         rollTime: 0
         rollValue: 0
         add: 0
+      description: "Kim T\u01B0\u1EDBc Mai (Sundews): thu h\u1ED3i \u0111\u1ED9c
+        ph\u1EA5n t\u1EEB k\u1EBB \u0111ang t\u1EA5n c\xF4ng m\xECnh, gi\u1EA3m to\xE0n
+        b\u1ED9 s\xE1t th\u01B0\u01A1ng v\u1EADt l\xFD m\xE0 b\u1EA3n th\xE2n \u0111\xE1ng
+        l\u1EBD ph\u1EA3i nh\u1EADn. (apply debuff 21)"
 --- !u!114 &6624640028912595744 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4739863392310132876, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

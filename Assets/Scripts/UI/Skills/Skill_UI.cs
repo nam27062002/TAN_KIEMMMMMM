@@ -27,19 +27,27 @@ public class Skill_UI : MonoBehaviour
 
     private void OnSkillButtonClicked()
     {
-        if (!GameplayManager.Instance.IsTutorialLevel) GameplayManager.Instance.HandleSelectSkill(_skillIndex);
+        if (CanTrigger()) 
+            GameplayManager.Instance.HandleSelectSkill(_skillIndex);
+    }
+
+    private bool CanTrigger()
+    {
+        return !GameplayManager.Instance.IsTutorialLevel &&
+               _isEnoughMana &&
+               !_isLocked;
     }
     
     public void SetSkill(int index, Sprite skillIcon, bool unlock, bool enoughMana)
     {
-        _isEnoughMana = !unlock;
+        _isLocked = !unlock;
         _isEnoughMana = enoughMana;
         _skillIndex = index - 1;
         skillIndex.text = index.ToString();
         skillImage.sprite = skillIcon;
         gameObject.SetActive(true);
         lockObject.SetActive(!unlock);
-
+        Debug.Log($"[Gameplay][Skill_UI] SetSkill {_skillIndex}: {CanTrigger()}");
         if (!unlock) return;
         var color = skillImage.color;
         color.a = enoughMana ? 1f : 0.5f;

@@ -63,6 +63,7 @@ public class HUD : SingletonMonoBehavior<HUD>
     
     public void SetCharacterFocus(CharacterParams characterParams)
     {
+        Debug.Log("[Gameplay][HUD] SetCharacterFocus");
         _characterParams = characterParams;
         foreach (var skill in skillUI)
         {
@@ -74,7 +75,7 @@ public class HUD : SingletonMonoBehavior<HUD>
             skillUI[i].SetSkill(index: i + 1, 
                 skillIcon: characterParams.Skills[i].icon, 
                 unlock: !characterParams.Character.characterInfo.LockSkill, 
-                enoughMana: characterParams.Character.characterInfo.Attributes.mana >= characterParams.Skills[i].mpCost);
+                enoughMana: characterParams.Character.characterInfo.CurrentMP >= characterParams.Skills[i].mpCost);
         }
 
         if (GameplayManager.Instance.characterManager.IsMainCharacterSelected)
