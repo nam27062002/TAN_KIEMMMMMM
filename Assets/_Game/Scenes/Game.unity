@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 702396814}
   - component: {fileID: 702396816}
   - component: {fileID: 702396817}
+  - component: {fileID: 702396818}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -455,6 +456,17 @@ MonoBehaviour:
       arrowPosition: {x: 0, y: 0}
       arrowRotation: {x: 0, y: 0, z: 0, w: 0}
       tutorialMenuText: 
+    - tutorialTypes: 3
+      arrowPosition: {x: 172, y: -338}
+      arrowRotation: {x: 0, y: 0, z: 0, w: 0}
+      tutorialMenuText: "Ch\u1ECDn <color=#0000FF>T\xFAy \u0110\u1EC1 B\xEDch: \r\nS\u1EA1
+        B\u1EA5t Ki\u1EBFn</color>"
+    - tutorialTypes: 3
+      arrowPosition: {x: 63.7, y: 192.9}
+      arrowRotation: {x: 0, y: 0, z: 0, w: 0}
+      tutorialMenuText: "Ch\u1ECDn <color=#0000FF>Thi\u1EBFt Nh\xE2n</color> \u0111\u1EC3
+        s\u1EED d\u1EE5ng k\u0129 n\u0103ng trong l\u01B0\u1EE3t c\u1EE7a k\u1EBB
+        \u0111\u1ECBch"
   lvdGotos:
   - {fileID: 8997004532296797488}
   - {fileID: 116588355}
@@ -501,6 +513,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 12
+  delayTime: 0
+  highlightable:
+    highlightType: 0
+    highlightObject: {fileID: 0}
+--- !u!114 &702396818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702396812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56dfbdeb2ef34904bc7380ca0d076c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 20
   delayTime: 0
   highlightable:
     highlightType: 0

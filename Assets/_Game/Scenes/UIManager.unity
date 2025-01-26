@@ -172,6 +172,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1217052773}
     m_Modifications:
+    - target: {fileID: 209167938365955976, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 209167938365955976, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 209167938365955976, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 364848226}
+    - target: {fileID: 209167938365955976, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 209167938365955976, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 209167938365955976, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ReactTutorial, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 209167938365955976, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1622190129542728215, guid: 4ff015e55bf639f4eab03fce3fd322ac, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1141,6 +1169,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1217052773}
     m_Modifications:
+    - target: {fileID: 171094316647779836, guid: c1a31ff13ce5e23408bf0445db9c6383, type: 3}
+      propertyPath: isWaiting
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 432248357922105574, guid: c1a31ff13ce5e23408bf0445db9c6383, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

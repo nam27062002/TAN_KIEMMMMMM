@@ -39,7 +39,6 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     {
         tutorialClickIndex ??= new SerializedDictionary<int, TutorialSequence>();
         tutorialClickIndex[key] = tutorialSequence;
-        Debug.Log($"[Gameplay] - Add tutorial index: {key}");
     }
     
     private void Start()

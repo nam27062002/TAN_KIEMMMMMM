@@ -1929,6 +1929,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1229254932897709257, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3295887877734047321}
+    - targetCorrespondingSourceObject: {fileID: 1229254932897709257, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6043807538544597066}
   m_SourcePrefab: {fileID: 100100000, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}
 --- !u!1 &1351477083451628556 stripped
 GameObject:
@@ -1953,10 +1956,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 2
-  delayTime: 0
+  delayTime: 1
   highlightable:
-    highlightType: 0
-    highlightObject: {fileID: 0}
+    highlightType: 1
+    highlightObject: {fileID: 1351477083451628556}
   button: {fileID: 6943974075847090712}
   skillIndex: 1
 --- !u!114 &186995654924398338
@@ -1972,7 +1975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 9
-  delayTime: 0
+  delayTime: 1
   highlightable:
     highlightType: 1
     highlightObject: {fileID: 1351477083451628556}
@@ -1991,12 +1994,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 15
-  delayTime: 0
+  delayTime: 1
   highlightable:
     highlightType: 1
     highlightObject: {fileID: 1351477083451628556}
   button: {fileID: 6943974075847090712}
   skillIndex: 1
+--- !u!114 &6043807538544597066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087802931286698244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcd70457f8c4e9db77eff76ce729a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 19
+  delayTime: 1
+  highlightable:
+    highlightType: 1
+    highlightObject: {fileID: 1351477083451628556}
+  button: {fileID: 6943974075847090712}
+  skillIndex: 0
 --- !u!224 &2497426763683677832 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3413386593865831237, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}

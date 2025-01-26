@@ -8039,7 +8039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 10
-  delayTime: 0
+  delayTime: 1
   highlightable:
     highlightType: 0
     highlightObject: {fileID: 0}
@@ -8057,7 +8057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 16
-  delayTime: 0
+  delayTime: 1
   highlightable:
     highlightType: 0
     highlightObject: {fileID: 0}
@@ -13631,7 +13631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 3
-  delayTime: 0
+  delayTime: 1
   highlightable:
     highlightType: 0
     highlightObject: {fileID: 0}
@@ -13649,7 +13649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 6
-  delayTime: 0
+  delayTime: 1
   highlightable:
     highlightType: 0
     highlightObject: {fileID: 0}

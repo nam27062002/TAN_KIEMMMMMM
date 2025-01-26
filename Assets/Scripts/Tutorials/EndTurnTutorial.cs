@@ -34,6 +34,7 @@ public class EndTurnTutorial : TutorialSequence
         {
             Tutorial.arrow.gameObject.SetActive(false);
             MessageMenu.Instance.HideTutorialText();
+            Tutorial.OnTutorialClicked(index);
         }
 
         GameplayManager.Instance.HandleEndTurn();

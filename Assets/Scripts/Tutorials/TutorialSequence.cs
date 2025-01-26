@@ -27,7 +27,6 @@ public abstract class TutorialSequence : MonoBehaviour
             yield return null;
         }
         TutorialManager.Instance.AddTutorialClick(index, this);
-        Debug.Log($"NT - Add tutorial index: {index}");
     }
     
     protected bool CanClick()

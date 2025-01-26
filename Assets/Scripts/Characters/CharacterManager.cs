@@ -22,20 +22,6 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public List<Character> Characters { get; set; } = new();
     public HashSet<Character> CharactersInRange { get; set; } = new();
     public GameplayManager GPManager => GameplayManager.Instance;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        ReactMenu.Instance.OnConFirmClick += OnConFirmClick;
-        ReactMenu.Instance.OnCancelClick += OnCancelClick;
-    }
-    
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-        // ReactMenu.Instance.OnConFirmClick -= OnConFirmClick;
-        // ReactMenu.Instance.OnCancelClick -= OnCancelClick;
-    }
     
     public void Initialize(CharacterSpawnerConfig config, MapManager mapManager)
     {
@@ -329,14 +315,14 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
 
     #endregion
     
-    private void OnConFirmClick()
+    public void OnConFirmClick()
     {
         Debug.Log($"[Gameplay] - OnConFirmClick");
         FocusedCharacter.characterInfo.IsReact = true;
         SetSelectedCharacter(FocusedCharacter);
     }
 
-    private void OnCancelClick()
+    public void OnCancelClick()
     {
         Debug.Log("[Gameplay] - OnCancelClick");
     }

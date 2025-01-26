@@ -47,7 +47,7 @@ public class Skill_UI : MonoBehaviour
         skillImage.sprite = skillIcon;
         gameObject.SetActive(true);
         lockObject.SetActive(!unlock);
-        Debug.Log($"[Gameplay][Skill_UI] SetSkill {_skillIndex}: {CanTrigger()}");
+        // Debug.Log($"[Gameplay][Skill_UI] SetSkill {_skillIndex}: {CanTrigger()}");
         if (!unlock) return;
         var color = skillImage.color;
         color.a = enoughMana ? 1f : 0.5f;
