@@ -74,7 +74,7 @@ public class HUD : SingletonMonoBehavior<HUD>
             skillUI[i].SetSkill(index: i + 1, 
                 skillIcon: characterParams.Skills[i].icon, 
                 unlock: !characterParams.Character.characterInfo.LockSkill, 
-                enoughMana: true);
+                enoughMana: characterParams.Character.characterInfo.Attributes.mana >= characterParams.Skills[i].mpCost);
         }
 
         if (GameplayManager.Instance.characterManager.IsMainCharacterSelected)
