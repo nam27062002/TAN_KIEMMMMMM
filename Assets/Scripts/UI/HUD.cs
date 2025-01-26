@@ -25,7 +25,7 @@ public class HUD : SingletonMonoBehavior<HUD>
     public Image characterIcon;
     public ProcessBar hpBar;
     public ProcessBar mpBar;
-    
+    public ActionPointUI actionPointUI;
     private CharacterParams _characterParams;
 
     protected override void Awake()
@@ -77,7 +77,8 @@ public class HUD : SingletonMonoBehavior<HUD>
             skillUI[i].SetSkill(index: i + 1, 
                 skillIcon: characterParams.Skills[i].icon, 
                 unlock: !characterParams.Character.characterInfo.LockSkill, 
-                enoughMana: characterParams.Character.characterInfo.CurrentMP >= characterParams.Skills[i].mpCost);
+                enoughMana: characterParams.Character.characterInfo.CurrentMP >= characterParams.Skills[i].mpCost
+                && characterParams.Character.characterInfo.IsEnoughActionPoints(GameplayManager.Instance.characterManager.GetSkillType()));
         }
 
         if (GameplayManager.Instance.characterManager.IsMainCharacterSelected)
@@ -89,6 +90,7 @@ public class HUD : SingletonMonoBehavior<HUD>
         characterParams.Character.characterInfo.OnMpChanged += OnMpChanged;
         OnHpChanged(null, null);
         OnMpChanged(null, null);
+        actionPointUI.SetActionPoints(characterParams.Character.characterInfo.ActionPoints);
         SetRound();
     }
 
