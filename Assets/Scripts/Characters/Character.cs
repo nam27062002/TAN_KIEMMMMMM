@@ -113,8 +113,8 @@ public abstract class Character : MonoBehaviour
 
     public void MoveCharacter(Vector3 targetPos, float duration)
     {
-        // ChangeState(targetPos.x > transform.position.x ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
-        // transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
+        PlayAnim(targetPos.x > transform.position.x ? AnimationParameterNameType.MoveRight : AnimationParameterNameType.MoveLeft);
+        transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }
     public virtual void OnSelected()
     {

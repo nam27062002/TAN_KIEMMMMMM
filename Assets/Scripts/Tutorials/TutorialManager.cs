@@ -98,9 +98,9 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void SetFacing()
     {
-        charactersDict[CharacterType.LyVoDanh].ChangeState(ECharacterState.Idle);
-        charactersDict[CharacterType.DoanGiaLinh].ChangeState(ECharacterState.Idle);
-        charactersDict[CharacterType.ThietNhan].ChangeState(ECharacterState.Idle);
+        charactersDict[CharacterType.LyVoDanh].PlayAnim(AnimationParameterNameType.Idle);
+        charactersDict[CharacterType.DoanGiaLinh].PlayAnim(AnimationParameterNameType.Idle);
+        charactersDict[CharacterType.ThietNhan].PlayAnim(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.ThietNhan].transform.localScale = new Vector3(-1, 1, 1);
     }
     
@@ -123,7 +123,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         if (index == 1)
         {
             var character = GameplayManager.Instance.characterManager.GetCharacterByType(CharacterType.LyVoDanh);
-            // character.ChangeState(ECharacterState.Skill1);
+            character.PlayAnim(AnimationParameterNameType.Skill1);
         }
     }
 
