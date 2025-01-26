@@ -1,6 +1,6 @@
-﻿public class DamageTaken : CharacterState
+﻿public class DamageTakenState : CharacterState
 {
-    public DamageTaken(Character character) : base(character)
+    public DamageTakenState(Character character) : base(character)
     {
     }
 
@@ -8,7 +8,7 @@
     public override void OnEnter()
     {
         base.OnEnter();
-        Character.PlayAnim(AnimationParameterNameType.OnDamageTaken);
+        Character.PlayAnim(AnimationParameterNameType.OnDamageTaken, OnFinishAction);
     }
 
     public override void OnExit()

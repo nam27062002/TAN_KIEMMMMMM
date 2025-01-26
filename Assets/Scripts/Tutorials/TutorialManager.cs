@@ -123,7 +123,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         if (index == 1)
         {
             var character = GameplayManager.Instance.characterManager.GetCharacterByType(CharacterType.LyVoDanh);
-            character.ChangeState(ECharacterState.Skill1);
+            // character.ChangeState(ECharacterState.Skill1);
         }
     }
 

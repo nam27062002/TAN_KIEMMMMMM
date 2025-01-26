@@ -1,43 +1,47 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class CharacterStateMachine : StateMachine
 {
     public Character Character {get; set;}
     private IdleState IdleState {get; set;}
-    private Move Move {get; set;}
-    private DamageTaken DamageTaken {get; set;}
-    private Skill1 Skill1 {get; set;}
-    private Skill2 Skill2 {get; set;}
-    private Skill3 Skill3 {get; set;}
-    private Skill4 Skill4 {get; set;}
+    private MoveState MoveState {get; set;}
+    private DamageTakenState DamageTakenState {get; set;}
+    private SkillState SkillState {get; set;}
 
     private Dictionary<ECharacterState, CharacterState> CharacterStates = new();
     
-    public CharacterStateMachine(Character character)
+    public CharacterStateMachine(Character character, IdleState idleState, MoveState moveState, DamageTakenState damageTakenState, SkillState skillState)
     {
         Character = character;
-        
-        IdleState = new IdleState(character);
-        Move = new Move(character);
-        DamageTaken = new DamageTaken(character);
-        Skill1 = new Skill1(character);
-        Skill2 = new Skill2(character);
-        Skill3 = new Skill3(character);
-        Skill4 = new Skill4(character);
+
+        IdleState = idleState;
+        MoveState = moveState;
+        DamageTakenState = damageTakenState;
+        SkillState = skillState;
         
         CharacterStates[ECharacterState.Idle] = IdleState;
-        CharacterStates[ECharacterState.Move] = Move;
-        CharacterStates[ECharacterState.DamageTaken] = DamageTaken;
-        CharacterStates[ECharacterState.Skill1] = Skill1;
-        CharacterStates[ECharacterState.Skill2] = Skill2;
-        CharacterStates[ECharacterState.Skill3] = Skill3;
-        CharacterStates[ECharacterState.Skill4] = Skill4;
+        CharacterStates[ECharacterState.Move] = MoveState;
+        CharacterStates[ECharacterState.DamageTaken] = DamageTakenState;
+        CharacterStates[ECharacterState.Skill] = SkillState;
     }
 
     public void ChangeState(ECharacterState newState)
     {
         ChangeState(CharacterStates[newState]);
     }
+    
+    
+#if USE_DEBUG
+    protected override void ShowDebug(IState newState)
+    {
+        if (!_canShowDebug) return;
+        if (CurrentState != null)
+        {
+            Debug.Log($"[Gameplay] - {Character.characterConfig.characterName}: [{CurrentState?.NameState}] => [{newState?.NameState}]");
+        }
+    }
+#endif
 }
 
 public enum ECharacterState
@@ -46,8 +50,5 @@ public enum ECharacterState
     Idle = 1,
     Move = 2,
     DamageTaken = 3,
-    Skill1 = 4,
-    Skill2 = 5,
-    Skill3 = 6,
-    Skill4 = 7
+    Skill = 4,
 }

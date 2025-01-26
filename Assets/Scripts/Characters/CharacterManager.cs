@@ -22,6 +22,20 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public List<Character> Characters { get; set; } = new();
     public HashSet<Character> CharactersInRange { get; set; } = new();
     public GameplayManager GPManager => GameplayManager.Instance;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        ReactMenu.Instance.OnConFirmClick += OnConFirmClick;
+        ReactMenu.Instance.OnCancelClick += OnCancelClick;
+    }
+    
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        // ReactMenu.Instance.OnConFirmClick -= OnConFirmClick;
+        // ReactMenu.Instance.OnCancelClick -= OnCancelClick;
+    }
     
     public void Initialize(CharacterSpawnerConfig config, MapManager mapManager)
     {
@@ -100,16 +114,14 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
 
     public void HandleCastSkill(Character character)
     {
-        Debug.Log("NT - Handle Cast Skill");
         HideMoveRange();
         HideSkillRange();
         FocusedCharacter = character;
-        SelectedCharacter.characterInfo.OnCastSkill(GPManager.SkillInfo, OnCastSkillFinished);
+        SelectedCharacter.characterInfo.OnCastSkill(GPManager.SkillInfo);
     }
 
-    private void OnCastSkillFinished()
+    public void OnCastSkillFinished()
     {
-        Debug.Log("NT - On Cast Skill Finished");
         TryAttackEnemies(FocusedCharacter);
     }
     
@@ -127,7 +139,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
             if (dodge > hitChange)
             {
                 Debug.Log($"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
-                focusedCharacter.characterInfo.OnDamageTaken(0, SetDamageTakenFinished);
+                focusedCharacter.characterInfo.OnDamageTaken(0);
             }
             else
             {
@@ -146,26 +158,36 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
                     //     Debug.Log($"[Gameplay] - Damage: {damage}");
                     // }
                 }
-                focusedCharacter.characterInfo.OnDamageTaken(damage, SetDamageTakenFinished);
+                focusedCharacter.characterInfo.OnDamageTaken(damage);
             }
         }
         
         else
         {
             damage *= 2;
-            focusedCharacter.characterInfo.OnDamageTaken(damage, SetDamageTakenFinished);
+            focusedCharacter.characterInfo.OnDamageTaken(damage);
             Debug.Log($"Gameplay: Get Damage Taken {damage}");
         }
         
         return false;
     }
 
-    private void SetDamageTakenFinished()
+    public void SetDamageTakenFinished()
     {
-        if (FocusedCharacter is PlayerCharacter && MainCharacter is AICharacter)
+        if (FocusedCharacter is PlayerCharacter && MainCharacter is AICharacter) // react
         {
             ReactMenu.Instance.Open();
         }
+        else if (SelectedCharacter.characterInfo.IsReact)
+        {
+            OnEndReact();
+        }
+        
+    }
+
+    private void OnEndReact()
+    {
+        GPManager.HandleEndTurn();
     }
 
     public Character GetCharacterByType(CharacterType characterType)
@@ -202,19 +224,19 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public void ShowMoveRange()
     {
         var range = SelectedCharacter.characterInfo.GetMoveRange();
-        Debug.Log($"Gameplay: [{SelectedCharacter.characterConfig.characterName}] Show Move Range: {range}");
+        Debug.Log($"[Gameplay] [{SelectedCharacter.characterConfig.characterName}] Show Move Range: {range}");
         MapManager.ShowMoveRange(SelectedCharacter.characterInfo.Cell, range);
     }
 
     public void HideMoveRange()
     {
-        Debug.Log($"Gameplay: [{SelectedCharacter.characterConfig.characterName}] Hide Move Range");
+        Debug.Log($"[Gameplay] {SelectedCharacter.characterConfig.characterName} Hide Move Range");
         MapManager.HideMoveRange();
     }
 
     public void HideSkillRange()
     {
-        Debug.Log($"Gameplay: [{SelectedCharacter.characterConfig.characterName}] Hide Skill Range");
+        Debug.Log($"[Gameplay] [{SelectedCharacter.characterConfig.characterName}] Hide Skill Range");
         MapManager.HideSkillRange();
         CharactersInRange.Clear();
     }
@@ -279,6 +301,18 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     }
 
     #endregion
+    
+    private void OnConFirmClick()
+    {
+        Debug.Log($"[Gameplay] - OnConFirmClick");
+        FocusedCharacter.characterInfo.IsReact = true;
+        SetSelectedCharacter(FocusedCharacter);
+    }
+
+    private void OnCancelClick()
+    {
+        Debug.Log("[Gameplay] - OnCancelClick");
+    }
 }
 
 public enum FacingType

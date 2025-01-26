@@ -150,7 +150,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleSelectSkill(int skillIndex)
     {
-        Debug.Log($"NT - Gameplay: select skill {skillIndex}");
+        Debug.Log($"[Gameplay] - select skill {skillIndex}");
         characterManager.HideMoveRange();
         UnSelectSkill();
         if (SkillInfo != GetSkillInfo(skillIndex))

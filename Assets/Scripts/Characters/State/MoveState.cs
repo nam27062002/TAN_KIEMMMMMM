@@ -1,12 +1,13 @@
 ﻿using DG.Tweening;
 
-public class Move : CharacterState
+public class MoveState : CharacterState
 {
-    public Move(Character character) : base(character)
+    public MoveState(Character character) : base(character)
     {
     }
 
     public override string NameState { get; set; } = "Move";
+    
     public override void OnEnter()
     {
         base.OnEnter();
@@ -35,7 +36,7 @@ public class Move : CharacterState
         {
             SetCell(Character.characterInfo.MoveCells[^1]);
             Character.characterInfo.Cell.ShowFocus();
-            OnFinishAction(this);
+            OnFinishAction();
         });
         
     }

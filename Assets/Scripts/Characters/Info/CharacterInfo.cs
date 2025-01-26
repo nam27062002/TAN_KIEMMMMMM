@@ -17,9 +17,11 @@ public class CharacterInfo
     [ShowInInspector, ReadOnly] public int MoveAmount { get; set; }
     [ShowInInspector, ReadOnly] public int MoveBuff { get; set; } 
     [ShowInInspector, ReadOnly] public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
-    public List<Cell> MoveCells = new List<Cell>();
+    [ShowInInspector, ReadOnly] public List<Cell> MoveCells { get; set; } = new();
+    [ShowInInspector, ReadOnly] public SkillInfo SkillInfo { get; set; }
+    [ShowInInspector, ReadOnly] public bool IsReact {get; set;}
+   
     // Action
-    
     public Action OnHpChanged;
     public Action OnMpChanged;
     
@@ -60,10 +62,11 @@ public class CharacterInfo
         return SkillConfig.SkillConfigs[skillType][index];
     }
 
-    public void OnCastSkill(SkillInfo skillInfo, Action onEndAnim)
+    public void OnCastSkill(SkillInfo skillInfo)
     {
+        SkillInfo = skillInfo;
         HandleMpChanged(-skillInfo.mpCost);
-        Character.CastSkill(skillInfo, onEndAnim);
+        Character.HandleCastSkill();
     }
     
     public bool CanCastSkill(SkillInfo skillInfo, SkillType skillType)
@@ -82,12 +85,11 @@ public class CharacterInfo
         return Character.characterConfig.actionPoints[skillType];
     }
 
-    public void OnDamageTaken(int damage, Action onEndAnim)
+    public void OnDamageTaken(int damage)
     {
         string message = "";
         message = damage == 0 ? "Né" : damage.ToString();
         HandleHpChanged(-damage);
-        Character.OnEndAnim = onEndAnim;
         Character.hpBar.ShowDamageReceive(message);
     }
 }

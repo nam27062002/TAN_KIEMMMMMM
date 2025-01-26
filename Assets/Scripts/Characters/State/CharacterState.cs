@@ -43,8 +43,36 @@ public abstract class CharacterState : IState
 
     protected virtual void OnFinishAction(CharacterState state)
     {
-        Debug.Log($"OnFinishAction - {state.NameState}");
         Character.ChangeState(ECharacterState.Idle);
+        switch (state)
+        {
+            case MoveState:
+                OnReachToTarget();
+                break;
+            case SkillState:
+                OnCastSkillFinished();
+                break;
+            case DamageTakenState:
+                SetDamageTakenFinished();
+                break;
+        }
+    }
+
+    protected virtual void OnReachToTarget()
+    {
+        Debug.Log($"[Gameplay] - OnReachToTarget - {NameState}");
+    }
+
+    protected virtual void OnCastSkillFinished()
+    {
+        Debug.Log($"[Gameplay] - OnCastSkillFinished - {NameState}");
+        CharacterManager.OnCastSkillFinished();
+    }
+
+    protected virtual void SetDamageTakenFinished()
+    {
+        Debug.Log($"[Gameplay] - SetDamageTakenFinished - {NameState}");
+        CharacterManager.SetDamageTakenFinished();
     }
 
     protected virtual void OnFinishAction()

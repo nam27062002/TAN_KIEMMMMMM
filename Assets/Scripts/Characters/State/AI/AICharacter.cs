@@ -6,6 +6,15 @@ public class AICharacter : Character
 {
     public override Type Type => Type.AI;
     private Character _enemy;
+
+    protected override void SetStateMachine()
+    {
+        StateMachine = new CharacterStateMachine(this,
+            new IdleState(this),
+            new AIMoveState(this),
+            new DamageTakenState(this),
+            new SkillState(this));
+    }
     
     public override void SetMainCharacter()
     {
@@ -33,9 +42,15 @@ public class AICharacter : Character
         var random = new System.Random();
         var randomCell = cells[random.Next(cells.Count)];
         var path = CharacterManager.MapManager.FindPath(characterInfo.Cell, randomCell);
-        MoveCharacter(path, OnReachToDestination);
+        MoveCharacter(path);
         Debug.Log($"Gameplay: AI move to cell: {randomCell.CellPosition}");
         return true;
+    }
+    
+    public override void MoveCharacter(List<Cell> cells)
+    {
+        base.MoveCharacter(cells);
+        
     }
     
     private bool TryCastSkill()
@@ -67,11 +82,6 @@ public class AICharacter : Character
         Debug.Log("EnemyOnOnEndAnimEventHandler");
         _enemy.OnEndAnimEventHandler -= EnemyOnOnEndAnimEventHandler;
         GameplayManager.Instance.HandleEndTurn();
-    }
-    
-    private void OnReachToDestination()
-    {
-        HandleAIPlay();
     }
     
 }

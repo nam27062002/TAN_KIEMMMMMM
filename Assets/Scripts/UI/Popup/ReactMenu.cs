@@ -7,6 +7,7 @@ public class ReactMenu : SingletonMonoBehavior<ReactMenu>
     public Button confirmButton;
     
     public Action OnConFirmClick;
+    public Action OnCancelClick;
     public Action OnOpen;
     
     protected override void Awake()
@@ -31,14 +32,13 @@ public class ReactMenu : SingletonMonoBehavior<ReactMenu>
     private void OnConfirmClicked()
     {
         OnConFirmClick?.Invoke();
-        // CharacterManager.Instance.OnReact();
         gameObject.SetActive(false);
     }
 
     private void OnCancelClicked()
     {
         if (GameplayManager.Instance.IsTutorialLevel) return;
-        // CharacterManager.Instance.CallOnEndAnimFeedback();
+        OnCancelClick?.Invoke();
         gameObject.SetActive(false);
     }
 

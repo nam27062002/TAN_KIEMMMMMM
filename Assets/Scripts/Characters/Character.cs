@@ -4,7 +4,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public abstract class Character : MonoBehaviour
 {
     public virtual Type Type => Type.None;
     public CharacterType characterType;
@@ -19,13 +19,14 @@ public class Character : MonoBehaviour
     public CharacterInfo characterInfo;
     public SkillConfig skillConfig;
     public event EventHandler OnEndAnimEventHandler;
-    public Action OnEndAnim;
     public Roll Roll {get; set;}
     
     private void Awake()
     {
-        StateMachine = new CharacterStateMachine(this);
+        SetStateMachine();
     }
+
+    protected abstract void SetStateMachine();
     
     public void Initialize(CharacterManager characterManager, Cell cell)
     {
@@ -54,40 +55,30 @@ public class Character : MonoBehaviour
         characterInfo.ResetBuffBefore();
     }
 
-    public void CastSkill(SkillInfo skillInfo, Action onEndAnim)
+    #region Set States  
+    
+    private void SetIdle()
     {
-        OnEndAnim = onEndAnim;
-
-        ChangeState(GetCharacterStateByIndex(skillInfo.skillIndex));
-        return;
-
-        ECharacterState GetCharacterStateByIndex(int index)
-        {
-            return index switch
-            {
-                0 => ECharacterState.Skill1,
-                1 => ECharacterState.Skill2,
-                2 => ECharacterState.Skill3,
-                3 => ECharacterState.Skill4,
-                _ => ECharacterState.None
-            };
-        }
+        ChangeState(ECharacterState.Idle);
+    }
+    
+    public void HandleCastSkill()
+    {
+        ChangeState(ECharacterState.Skill);
     }
     
     public void ChangeState(ECharacterState newState)
     {
         StateMachine.ChangeState(newState);
     }
-
-    public void OnEndAnimAction()
-    {
-        OnEndAnimEventHandler?.Invoke(this, EventArgs.Empty);
-    }
-
+    
     public void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
     {
         characterAnimationData.PlayAnimation(animationParameterNameType, onEndAnim);
     }
+    #endregion
+    
+
 
     public void SetCell(Cell cell)
     {
@@ -114,7 +105,7 @@ public class Character : MonoBehaviour
         return skillConfig.SkillConfigs[skillType];
     }
 
-    public void MoveCharacter(List<Cell> cells, Action onEndAnim = null)
+    public virtual void MoveCharacter(List<Cell> cells)
     {
         characterInfo.MoveCells = cells;
         ChangeState(ECharacterState.Move);   
@@ -125,12 +116,6 @@ public class Character : MonoBehaviour
         // ChangeState(targetPos.x > transform.position.x ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
         // transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }
-
-    private void SetIdle()
-    {
-        ChangeState(ECharacterState.Idle);
-    }
-    
     public virtual void OnSelected()
     {
         characterInfo.Cell.ShowFocus();
