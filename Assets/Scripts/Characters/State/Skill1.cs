@@ -11,7 +11,7 @@
         base.OnEnter();
         Character.PlayAnim(AnimationParameterNameType.Skill1, OnFinishAction);
     }
-
+    
     public override void OnExit()
     {
         

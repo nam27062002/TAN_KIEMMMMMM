@@ -17,6 +17,7 @@ public class CharacterInfo
     [ShowInInspector, ReadOnly] public int MoveAmount { get; set; }
     [ShowInInspector, ReadOnly] public int MoveBuff { get; set; } 
     [ShowInInspector, ReadOnly] public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
+    public List<Cell> MoveCells = new List<Cell>();
     // Action
     
     public Action OnHpChanged;

@@ -35,11 +35,21 @@ public abstract class CharacterState : IState
     {
         Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
     }
+    
+    protected void SetCell(Cell cell)
+    {
+        Character.SetCell(cell);
+    }
+
+    protected virtual void OnFinishAction(CharacterState state)
+    {
+        Debug.Log($"OnFinishAction - {state.NameState}");
+        Character.ChangeState(ECharacterState.Idle);
+    }
 
     protected virtual void OnFinishAction()
     {
-        // Character.OnEndAnimAction();
-        // Character.OnEndAnim?.Invoke();
+        OnFinishAction(this);
     }
     
 }

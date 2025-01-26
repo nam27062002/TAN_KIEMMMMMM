@@ -13,8 +13,7 @@ public class Cell : MonoBehaviour
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer highlightSprite;
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer withinAttackRangeSprite;
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer withinMoveRangeSprite;
-    public Action OnCharacterReached;
-
+    
     public CellType CellType
     {
         get => cellType;

@@ -89,7 +89,7 @@ public class Character : MonoBehaviour
         characterAnimationData.PlayAnimation(animationParameterNameType, onEndAnim);
     }
 
-    private void SetCell(Cell cell)
+    public void SetCell(Cell cell)
     {
         characterInfo.Cell = cell;
         cell.OnCharacterRegister(this);
@@ -116,28 +116,8 @@ public class Character : MonoBehaviour
 
     public void MoveCharacter(List<Cell> cells, Action onEndAnim = null)
     {
-        
-        // ReleaseFacing();
-        // characterInfo.Cell.HideFocus();
-        // characterInfo.MoveAmount += cells.Count;
-        // var moveSequence = DOTween.Sequence();
-        // float currentX = transform.position.x;
-        // foreach (var cell in cells)
-        // {
-        //     var targetPos = cell.transform.position;
-        //     targetPos.y += characterConfig.characterHeight / 2f;
-        //     ChangeState(cell.transform.position.x > currentX ? ECharacterState.MoveRight : ECharacterState.MoveLeft);
-        //     currentX = cell.transform.position.x;
-        //     moveSequence.Append(transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
-        // }
-        //
-        // moveSequence.OnComplete(() =>
-        // {
-        //     SetIdle();
-        //     SetCell(cells[^1]);
-        //     characterInfo.Cell.ShowFocus();
-        //     onEndAnim?.Invoke();
-        // });
+        characterInfo.MoveCells = cells;
+        ChangeState(ECharacterState.Move);   
     }
 
     public void MoveCharacter(Vector3 targetPos, float duration)
