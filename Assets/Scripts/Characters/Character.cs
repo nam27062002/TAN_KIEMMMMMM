@@ -52,6 +52,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void SetMainCharacter()
     {
+        characterInfo.IncreaseActionPoints();
         characterInfo.ResetBuffBefore();
     }
 

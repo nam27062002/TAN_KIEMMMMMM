@@ -157,7 +157,7 @@ MonoBehaviour:
       isDirectionalSkill: 1
       damageType: 2
       effectIndex: 17
-      buffType: 3
+      buffType: 7
       hasApplyDamage: 0
       damageConfig:
         rollTime: 0

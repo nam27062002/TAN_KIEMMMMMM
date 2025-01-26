@@ -137,7 +137,19 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public void OnCastSkillFinished()
     {
         SetHUD();
-        TryAttackEnemies(FocusedCharacter);
+        if (GPManager.SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
+        {
+            TryAttackEnemies(FocusedCharacter);
+        }
+        if (GPManager.SkillInfo.damageType.HasFlag(DamageTargetType.Team))
+        {
+            ApplyBuff();
+        }
+    }
+
+    private void ApplyBuff()
+    {
+        FocusedCharacter.characterInfo.ApplyBuff(GPManager.SkillInfo);
     }
     
     private bool TryAttackEnemies(Character focusedCharacter)
@@ -163,7 +175,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
                     damage += SelectedCharacter.Roll.RollDice(skillInfo.damageConfig);
                 }
                 // 
-                if (skillInfo.effectIndex != EffectIndex.None)
+                // if (skillInfo.effectIndex != EffectIndex.None)
                 {
                     // var debuffResistance = RollManager.Instance.GetDebuffResistance(focusedCharacter.Info.CharacterAttributes);
                     // if (debuffResistance < GameplayManager.EffectConstant

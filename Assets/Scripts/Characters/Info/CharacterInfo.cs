@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 [Serializable]
 public class CharacterInfo
@@ -54,6 +55,7 @@ public class CharacterInfo
     
     public void ResetBuffBefore()
     {
+        LockSkill = false;
         MoveAmount = 0;
     }
 
@@ -84,12 +86,53 @@ public class CharacterInfo
     {
         return Character.characterConfig.actionPoints[skillType];
     }
+    
+    private void ReduceActionPoints(int point)
+    {
+        for (int i = 0; i < ActionPoints.Count; i++)
+        {
+            if (ActionPoints[i] <= point) continue;
+            ActionPoints[i] -= point;
+            Debug.Log($"[Gameplay] {Character.characterConfig.characterName} reduced action point: {ActionPoints[i]}");
+            break;
+
+        }
+    }
+    
+    public void IncreaseActionPoints()
+    {
+        for (int i = 0; i < ActionPoints.Count; i++)
+        {
+            ActionPoints[i] = Math.Min(ActionPoints[i] + 1, 3);
+        }
+    }
 
     public void OnDamageTaken(int damage)
     {
-        string message = "";
-        message = damage == 0 ? "Né" : damage.ToString();
+        var message = damage == 0 ? "Né" : damage.ToString();
         HandleHpChanged(-damage);
-        Character.hpBar.ShowDamageReceive(message);
+        ShowMessage(message);
+    }
+
+    public void ShowMessage(string message)
+    {
+        Character.hpBar.ShowMessage(message);
+    }
+
+    public void ApplyBuff(SkillInfo skillInfo)
+    {
+        if (skillInfo.buffType.HasFlag(BuffType.IncreaseMoveRange))
+        {
+            MoveBuff += 1;
+        }
+        if (skillInfo.buffType.HasFlag(BuffType.IncreaseActionPoints))
+        {
+            IncreaseActionPoints();
+        }
+        if (skillInfo.buffType.HasFlag(BuffType.BlockSkill))
+        {
+            LockSkill = true;
+        }
+        ShowMessage("Nhận Buff");
     }
 }

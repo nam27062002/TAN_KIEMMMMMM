@@ -34,7 +34,7 @@ public class SkillInfo
     public bool isDirectionalSkill;
     
     public DamageTargetType damageType;
-    public EffectIndex effectIndex;
+    [SerializeField] private EffectIndex effectIndex;
     public BuffType buffType;
     public bool hasApplyDamage;
     [ShowIf(nameof(hasApplyDamage))] public RollData damageConfig;

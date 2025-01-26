@@ -12,7 +12,7 @@ public class HpBar : ProcessBar
         damageTakenText.gameObject.SetActive(false);
     }
 
-    public void ShowDamageReceive(string message)
+    public void ShowMessage(string message)
     {
         StartCoroutine(ShowDamageReceiveCoroutine(message));
     }

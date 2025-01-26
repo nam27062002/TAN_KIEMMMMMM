@@ -316,7 +316,6 @@ GameObject:
   - component: {fileID: 702396814}
   - component: {fileID: 702396816}
   - component: {fileID: 702396817}
-  - component: {fileID: 702396818}
   m_Layer: 0
   m_Name: TutorialManager
   m_TagString: Untagged
@@ -361,6 +360,9 @@ MonoBehaviour:
     - {fileID: 8476363159216195691, guid: b66348842be014b4ba9d986355ab8d8f, type: 3}
     - {fileID: 2203334176055078997, guid: fe2068912a251fa4ea416286b601690f, type: 3}
     - {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+  tutorialClickIndex:
+    m_Keys: 
+    m_Values: []
   tutorialConfig:
     tutorials:
     - tutorialTypes: 7
@@ -499,23 +501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 12
-  delayTime: 0
-  highlightable:
-    highlightType: 0
-    highlightObject: {fileID: 0}
---- !u!114 &702396818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702396812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70dfdc1fd94445d0849287cdff719d49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  index: 18
   delayTime: 0
   highlightable:
     highlightType: 0
