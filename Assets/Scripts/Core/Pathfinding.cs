@@ -9,7 +9,7 @@ public class Pathfinding
     public Pathfinding(MapManager map)
     {
         _map = map;
-        Debug.Log("Gameplay Pathfinding: Initializing...");
+        //AlkawaDebug.Log("Gameplay Pathfinding: Initializing...");
     }
 
     public List<Cell> FindPath(Cell startHexagon, Cell endHexagon)

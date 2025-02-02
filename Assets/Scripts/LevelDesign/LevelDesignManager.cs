@@ -43,14 +43,14 @@ public class LevelDesignManager : MonoBehaviour
         GameObject prefabObject = PrefabUtility.SaveAsPrefabAsset(mapManager.gameObject, prefabFullPath);
         if (prefabObject == null)
         {
-            Debug.LogError($"Failed to create prefab at path: {prefabFullPath}");
+            //AlkawaDebug.LogError($"Failed to create prefab at path: {prefabFullPath}");
             return;
         }
         
         var prefabMapManager = prefabObject.GetComponent<MapManager>();
         if (prefabMapManager == null)
         {
-            Debug.LogError("The saved prefab does not contain a MapManager component.");
+            //AlkawaDebug.LogError("The saved prefab does not contain a MapManager component.");
             return;
         }
         levelConfig.mapPrefab = prefabMapManager;
@@ -60,7 +60,7 @@ public class LevelDesignManager : MonoBehaviour
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
     
-        Debug.Log($"Level saved successfully!\nPrefab path: {prefabFullPath}\nLevelConfig path: {assetFullPath}");
+        //AlkawaDebug.Log($"Level saved successfully!\nPrefab path: {prefabFullPath}\nLevelConfig path: {assetFullPath}");
     }
     
     [Button("Load Level")]

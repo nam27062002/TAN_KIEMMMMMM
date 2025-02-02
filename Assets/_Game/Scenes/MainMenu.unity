@@ -558,6 +558,7 @@ MonoBehaviour:
   loadGameButton: {fileID: 1575108878}
   settingGameButton: {fileID: 270377911}
   exitGameButton: {fileID: 579425773}
+  confirmPopup: {fileID: 11400000, guid: 0abb8916aacdd644d9e1d813f9b9cfd2, type: 2}
 --- !u!1 &1036235276
 GameObject:
   m_ObjectHideFlags: 0

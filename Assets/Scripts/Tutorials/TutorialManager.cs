@@ -178,13 +178,13 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     public void OnTutorialClicked(int index, float delayTime = 0f)
     {
         if (index != tutorialIndex) return;
-        Debug.Log($"TutorialManager: OnTutorialClicked: {index}");
+        //AlkawaDebug.Log($"TutorialManager: OnTutorialClicked: {index}");
         tutorialIndex++;
         if (tutorialIndex < tutorialConfig.tutorials.Count)
             Invoke(nameof(SetTutorial), delayTime);
         else
         {
-            Debug.Log("End Tutorial");
+            //AlkawaDebug.Log("End Tutorial");
             EndFirstTutorial();
         }
     }

@@ -24,7 +24,7 @@ public class AICharacter : Character
 
     private void HandleAIPlay()
     {
-        Debug.Log("NT - HandleAIPlay");
+        //AlkawaDebug.Log("NT - HandleAIPlay");
         if (!TryCastSkill())
         {
             if (!TryMoving())
@@ -43,7 +43,7 @@ public class AICharacter : Character
         var randomCell = cells[random.Next(cells.Count)];
         var path = CharacterManager.MapManager.FindPath(characterInfo.Cell, randomCell);
         MoveCharacter(path);
-        Debug.Log($"Gameplay: AI move to cell: {randomCell.CellPosition}");
+        //AlkawaDebug.Log($"Gameplay: AI move to cell: {randomCell.CellPosition}");
         return true;
     }
     
@@ -55,7 +55,7 @@ public class AICharacter : Character
     
     private bool TryCastSkill()
     {
-        Debug.Log("NT - TryCastSkill");
+        //AlkawaDebug.Log("NT - TryCastSkill");
         var skillType = CharacterManager.GetSkillType(this);
         List<SkillInfo> skills = GetSkillInfos(skillType);
         
@@ -68,7 +68,7 @@ public class AICharacter : Character
                 {
                     _enemy = enemiesInRange[0];
                     _enemy.OnEndAnimEventHandler += EnemyOnOnEndAnimEventHandler;
-                    Debug.Log($"NT - HandleAICastSkill: {i}");
+                    //AlkawaDebug.Log($"NT - HandleAICastSkill: {i}");
                     GameplayManager.Instance.HandleCastSkill(_enemy, skills[i]);
                     return true;
                 }
@@ -79,7 +79,7 @@ public class AICharacter : Character
 
     private void EnemyOnOnEndAnimEventHandler(object sender, EventArgs e)
     {
-        Debug.Log("EnemyOnOnEndAnimEventHandler");
+        //AlkawaDebug.Log("EnemyOnOnEndAnimEventHandler");
         _enemy.OnEndAnimEventHandler -= EnemyOnOnEndAnimEventHandler;
         GameplayManager.Instance.HandleEndTurn();
     }

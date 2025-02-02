@@ -9,6 +9,6 @@ public class AIMoveState : MoveState
     protected override void OnReachToTarget()
     {
         base.OnReachToTarget();
-        Debug.Log("NT - ach to target");
+        //AlkawaDebug.Log("NT - ach to target");
     }
 }

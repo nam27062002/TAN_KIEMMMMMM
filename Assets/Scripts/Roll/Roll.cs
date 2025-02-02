@@ -41,7 +41,8 @@ public class Roll
     
     private static int RollDice(int sides, int add)
     {
-        var res = Random.Range(1, sides + 1) + add;
+        var res = Random.Range(1, sides + 1);
+        res += add;
         return res;
     }
     

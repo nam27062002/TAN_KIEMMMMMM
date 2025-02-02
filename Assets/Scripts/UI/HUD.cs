@@ -65,7 +65,7 @@ public class HUD : SingletonMonoBehavior<HUD>
     
     public void SetCharacterFocus(CharacterParams characterParams)
     {
-        Debug.Log("[Gameplay][HUD] SetCharacterFocus");
+        //AlkawaDebug.Log("[Gameplay][HUD] SetCharacterFocus");
         _characterParams = characterParams;
         foreach (var skill in skillUI)
         {
@@ -126,5 +126,11 @@ public class HUD : SingletonMonoBehavior<HUD>
     public void ShowHUD()
     {
         gameObject.SetActive(true);
+    }
+
+    public void OnCharacterDeath(int index)
+    {
+        avtSpdUI[index].DestroyObject();
+        avtSpdUI.RemoveAt(index);   
     }
 }

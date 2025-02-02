@@ -87,10 +87,17 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
         }
         else
         {
-            MainCharacter = character;
-            MainCharacter.SetMainCharacter();
-            SetSelectedCharacter(character);
-            SetupCharacterFocus();   
+            if (character.characterInfo.CurrentHP <= 0)
+            {
+                GPManager.HandleEndTurn();
+            }
+            else
+            {
+                MainCharacter = character;
+                MainCharacter.SetMainCharacter();
+                SetSelectedCharacter(character);
+                SetupCharacterFocus();   
+            }
         }
         if (Characters.Count > 0 && character == Characters[0])
         {
@@ -100,7 +107,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     
     public void SetSelectedCharacter(Character character)
     {
-        Debug.Log($"Gameplay: SetSelectedCharacter: {character.characterConfig.characterName}");
+        //AlkawaDebug.Log($"Gameplay: SetSelectedCharacter: {character.characterConfig.characterName}");
         SelectedCharacter?.OnUnSelected();
         SelectedCharacter = character;
         HideMoveRange();
@@ -162,7 +169,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
             var dodge = focusedCharacter.characterInfo.Dodge;
             if (dodge > hitChange)
             {
-                Debug.Log($"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
+                //AlkawaDebug.Log($"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
                 focusedCharacter.characterInfo.OnDamageTaken(0);
             }
             else
@@ -190,7 +197,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
         {
             damage *= 2;
             focusedCharacter.characterInfo.OnDamageTaken(damage);
-            Debug.Log($"Gameplay: Get Damage Taken {damage}");
+            //AlkawaDebug.Log($"Gameplay: Get Damage Taken {damage}");
         }
         
         return false;
@@ -250,19 +257,19 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     public void ShowMoveRange()
     {
         var range = SelectedCharacter.characterInfo.GetMoveRange();
-        Debug.Log($"[Gameplay] [{SelectedCharacter.characterConfig.characterName}] Show Move Range: {range}");
+        //AlkawaDebug.Log($"[Gameplay] [{SelectedCharacter.characterConfig.characterName}] Show Move Range: {range}");
         MapManager.ShowMoveRange(SelectedCharacter.characterInfo.Cell, range);
     }
 
     public void HideMoveRange()
     {
-        Debug.Log($"[Gameplay] {SelectedCharacter.characterConfig.characterName} Hide Move Range");
+        //AlkawaDebug.Log($"[Gameplay] {SelectedCharacter.characterConfig.characterName} Hide Move Range");
         MapManager.HideMoveRange();
     }
 
     public void HideSkillRange()
     {
-        Debug.Log($"[Gameplay] [{SelectedCharacter.characterConfig.characterName}] Hide Skill Range");
+        //AlkawaDebug.Log($"[Gameplay] [{SelectedCharacter.characterConfig.characterName}] Hide Skill Range");
         MapManager.HideSkillRange();
         CharactersInRange.Clear();
     }
@@ -310,7 +317,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     {
         if (character == null)
         {
-            Debug.LogWarning("GetFacingType: Character is null.");
+            //AlkawaDebug.LogWarning("GetFacingType: Character is null.");
             return FacingType.Right;
         }
 
@@ -318,7 +325,7 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
         var nearestOpponent = Utils.FindNearestCharacter(character, character is AICharacter ? Players : Enemies);
         if (nearestOpponent == null)
         {
-            Debug.LogWarning("GetFacingType: No opponents found.");
+            //AlkawaDebug.LogWarning("GetFacingType: No opponents found.");
             return FacingType.Right;
         }
 
@@ -330,16 +337,54 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
     
     public void OnConFirmClick()
     {
-        Debug.Log($"[Gameplay] - OnConFirmClick");
+        //AlkawaDebug.Log($"[Gameplay] - OnConFirmClick");
         FocusedCharacter.characterInfo.IsReact = true;
         SetSelectedCharacter(FocusedCharacter);
     }
 
     public void OnCancelClick()
     {
-        Debug.Log("[Gameplay] - OnCancelClick");
+        //AlkawaDebug.Log("[Gameplay] - OnCancelClick");
         FocusedCharacter.characterInfo.IsReact = false;
         OnEndReact();
+    }
+    
+    public void HandleCharacterDie(Character character)
+    {
+        Characters.Remove(character);
+        if (character is AICharacter)
+        {
+            Enemies.Remove(character);
+            if (Enemies.Count == 0)
+            {
+                Invoke(nameof(OnWin), 1f);
+            }
+        }
+        else
+        {
+            Players.Remove(character);
+            if (Players.Count == 0)
+            {
+                Invoke(nameof(OnLose), 1f);
+            }
+        }
+    }
+    
+    private void OnWin()
+    {
+        // HUD.Instance.SetUIWinGame();
+        // HandleWinCondition();
+    }
+
+    private void HandleWinCondition()
+    {
+        //AlkawaDebug.Log("WINNNN");
+    }
+
+    private void OnLose()
+    {
+        // HUDMenu.Instance.gameObject.SetActive(false);
+        // UIManager.Instance.ShowPopup(PopupType.Defeat);
     }
 }
 

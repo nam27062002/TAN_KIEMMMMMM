@@ -27,7 +27,7 @@ public class LoadingMenu : MonoBehaviour
         }
         
         progressBar.SetValue(1f, "Loading 100%");
-        Debug.Log("Loading Complete!");
+        //AlkawaDebug.Log("Loading Complete!");
         GameManager.Instance.OnLoadComplete?.Invoke();
         SceneLoader.UnloadSceneAsync(ESceneType.Loading);
     }

@@ -38,7 +38,7 @@ public class CharacterStateMachine : StateMachine
         if (!_canShowDebug) return;
         if (CurrentState != null)
         {
-            Debug.Log($"[Gameplay] - {Character.characterConfig.characterName}: [{CurrentState?.NameState}] => [{newState?.NameState}]");
+            //AlkawaDebug.Log($"[Gameplay] - {Character.characterConfig.characterName}: [{CurrentState?.NameState}] => [{newState?.NameState}]");
         }
     }
 #endif

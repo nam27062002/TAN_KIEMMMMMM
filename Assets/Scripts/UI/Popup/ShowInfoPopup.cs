@@ -1,6 +1,6 @@
 ﻿using TMPro;
 
-public class ShowInfoPopup : PopupBase
+public abstract class ShowInfoPopup : PopupBase
 {
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI damage;
@@ -10,9 +10,9 @@ public class ShowInfoPopup : PopupBase
     public ProcessBar hpBarUI;
     public ProcessBar mpBarUI;
     
-    public override void OpenPopup()
+    public void OpenPopup()
     {
-        base.OpenPopup();
+        // base.OpenPopup();
         var characterParams = GameplayManager.Instance.ShowInfoCharacterParams;
         characterName.text = characterParams.Character.characterConfig.characterName;
         damage.text =  characterParams.Character.characterInfo.Attributes.atk.ToString();

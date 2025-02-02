@@ -8,14 +8,14 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
         
     protected virtual void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (HasInstance && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
         Instance = this as T;
-        DontDestroyOnLoad(gameObject);
+        RegisterEvents();
     }
         
     protected virtual void OnDestroy()
@@ -24,5 +24,10 @@ public class SingletonMonoBehavior<T> : MonoBehaviour where T : MonoBehaviour
         {
             Instance = null;
         }
+        UnRegisterEvents();
     }
+    
+    protected virtual void RegisterEvents(){}
+    
+    protected virtual void UnRegisterEvents(){}
 }

@@ -147,6 +147,16 @@ public abstract class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void OnDie()
+    {
+        //AlkawaDebug.Log($"Gameplay: {characterConfig.characterName} die");
+        characterInfo.Cell.CellType = CellType.Walkable;
+        var index = CharacterManager.Instance.Characters.IndexOf(this);
+        HUD.Instance.OnCharacterDeath(index);
+        CharacterManager.HandleCharacterDie(this);
+        Destroy(gameObject);
+    }
+    
 #if UNITY_EDITOR
     private void OnValidate()
     {

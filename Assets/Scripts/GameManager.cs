@@ -1,16 +1,16 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehavior<GameManager>
 {
     private ESceneType _nextScene;
-    
+
     #region Action
 
     public Action OnLoadComplete;
 
     #endregion
-    
     
     protected override void Awake()
     {
@@ -29,16 +29,17 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         base.OnDestroy();
         OnLoadComplete -= HandleLoadComplete;
     }
-
-
-    public void Loading(ESceneType eSceneType)
+    
+    private void Loading(ESceneType eSceneType)
     {
         SceneLoader.LoadSceneAsync(ESceneType.Loading, LoadSceneMode.Additive);
         _nextScene = eSceneType;
+        AlkawaDebug.Log(ELogCategory.ENGINE, "Loading scene " + eSceneType);
     }
 
     private void HandleLoadComplete()
     {
         SceneLoader.LoadSceneAsync(_nextScene, LoadSceneMode.Additive);
+        AlkawaDebug.Log(ELogCategory.ENGINE, "Loaded scene " + _nextScene);
     }
 }

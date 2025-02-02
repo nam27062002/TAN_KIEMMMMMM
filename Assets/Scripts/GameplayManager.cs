@@ -71,7 +71,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         CurrentRound++;
         OnNewRound?.Invoke(this, EventArgs.Empty);
         HUD.Instance.SetRound();
-        Debug.Log($"NT - Gameplay: round {CurrentRound}");
+        //AlkawaDebug.Log($"NT - Gameplay: round {CurrentRound}");
     }
     
     public void OnCellClicked(Cell cell)
@@ -150,7 +150,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleSelectSkill(int skillIndex)
     {
-        Debug.Log($"[Gameplay] - select skill {skillIndex}");
+        //AlkawaDebug.Log($"[Gameplay] - select skill {skillIndex}");
         characterManager.HideMoveRange();
         UnSelectSkill();
         if (SkillInfo != GetSkillInfo(skillIndex))
@@ -174,7 +174,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         if (SkillInfo.range > 0)
         {
             MapManager.ShowSkillRange(characterManager.SelectedCharacter.characterInfo.Cell, SkillInfo.range);
-            Debug.Log($"Gameplay: Show skill range: {SkillInfo.range}");
+            //AlkawaDebug.Log($"Gameplay: Show skill range: {SkillInfo.range}");
         }
         
         //get character can be interact

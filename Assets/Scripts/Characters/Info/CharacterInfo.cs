@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEngine;
 
 [Serializable]
@@ -33,8 +34,16 @@ public class CharacterInfo
     public void HandleHpChanged(int value)
     {
         CurrentHP += value;
-        Character.ChangeState(ECharacterState.DamageTaken);
-        OnHpChanged?.Invoke(this, EventArgs.Empty);
+        CurrentHP = math.max(0, CurrentHP);
+        if (CurrentHP <= 0)
+        {
+            Character.OnDie();
+        }
+        else
+        {
+            Character.ChangeState(ECharacterState.DamageTaken);
+            OnHpChanged?.Invoke(this, EventArgs.Empty);  
+        }
     }
 
     public void HandleMpChanged(int value)
@@ -94,7 +103,7 @@ public class CharacterInfo
         {
             if (ActionPoints[i] <= point) continue;
             ActionPoints[i] -= point;
-            Debug.Log($"[Gameplay] {Character.characterConfig.characterName} reduced action point: {ActionPoints[i]}");
+            //AlkawaDebug.Log($"[Gameplay] {Character.characterConfig.characterName} reduced action point: {ActionPoints[i]}");
             break;
 
         }

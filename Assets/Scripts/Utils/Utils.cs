@@ -7,7 +7,7 @@ public static class Utils
     {
         if (gameObject == null)
         {
-            Debug.LogWarning("GameObject is null. Cannot set active state.");
+            //AlkawaDebug.LogWarning("GameObject is null. Cannot set active state.");
             return;
         }
         if (gameObject.activeSelf != active)
@@ -42,7 +42,7 @@ public static class Utils
     {
         if (parent == null)
         {
-            Debug.LogWarning("Parent object is null.");
+            //AlkawaDebug.LogWarning("Parent object is null.");
             return null;
         }
         

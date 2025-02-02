@@ -1,14 +1,18 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+     [Title("Buttons")]
      [SerializeField] private Button startGameButton;
      [SerializeField] private Button loadGameButton;
      [SerializeField] private Button settingGameButton;
      [SerializeField] private Button exitGameButton;
 
+     [Title("Scriptable Object")]
+     [SerializeField] private ConfirmPopupSO confirmPopup;
      private void Start()
      {
           startGameButton.onClick.AddListener(OnStartGameClicked);
@@ -16,9 +20,9 @@ public class MainMenu : MonoBehaviour
           settingGameButton.onClick.AddListener(OnSettingGameClicked);
           exitGameButton.onClick.AddListener(OnExitGameClicked);
           
-#if UNITY_EDITOR
-          startGameButton.onClick.Invoke();
-#endif
+// #if UNITY_EDITOR
+//           startGameButton.onClick.Invoke();
+// #endif
      }
 
      private void OnDestroy()
@@ -31,7 +35,7 @@ public class MainMenu : MonoBehaviour
 
      private void OnStartGameClicked()
      {
-          Debug.Log("StartGameClicked");
+          //AlkawaDebug.Log("StartGameClicked");
           SceneLoader.LoadSceneAsync(ESceneType.Game, LoadSceneMode.Additive);
           SceneLoader.UnloadSceneAsync(ESceneType.MainMenu);
      }
@@ -48,6 +52,21 @@ public class MainMenu : MonoBehaviour
 
      private void OnExitGameClicked()
      {
-          
+          var parameters = new ConfirmPopupParameters(
+               confirmPopup.title, 
+               confirmPopup.message, 
+               confirmPopup.confirmText,
+               confirmPopup.cancelText,
+               OnQuitGameClicked);
+          UIManager.Instance.OpenPopup(PopupType.ConfirmPopup, parameters);
+     }
+
+     private void OnQuitGameClicked()
+     {
+#if UNITY_EDITOR
+          UnityEditor.EditorApplication.isPlaying = false;
+#else
+          Application.Quit();
+#endif
      }
 }
