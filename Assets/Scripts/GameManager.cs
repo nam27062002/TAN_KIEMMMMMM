@@ -30,7 +30,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         OnLoadComplete -= HandleLoadComplete;
     }
     
-    private void Loading(ESceneType eSceneType)
+    public void Loading(ESceneType eSceneType)
     {
         SceneLoader.LoadSceneAsync(ESceneType.Loading, LoadSceneMode.Additive);
         _nextScene = eSceneType;
@@ -40,6 +40,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     private void HandleLoadComplete()
     {
         SceneLoader.LoadSceneAsync(_nextScene, LoadSceneMode.Additive);
+        SceneLoader.UnloadSceneAsync(ESceneType.Loading);
         AlkawaDebug.Log(ELogCategory.ENGINE, "Loaded scene " + _nextScene);
     }
 }

@@ -35,8 +35,7 @@ public class MainMenu : MonoBehaviour
 
      private void OnStartGameClicked()
      {
-          //AlkawaDebug.Log("StartGameClicked");
-          SceneLoader.LoadSceneAsync(ESceneType.Game, LoadSceneMode.Additive);
+          GameManager.Instance.Loading(ESceneType.Game);
           SceneLoader.UnloadSceneAsync(ESceneType.MainMenu);
      }
 
