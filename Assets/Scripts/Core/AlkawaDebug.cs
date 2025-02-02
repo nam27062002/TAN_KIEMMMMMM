@@ -16,6 +16,7 @@ public enum ELogCategory
     ENGINE,
     AI,
     AUDIO,
+    GAMEPLAY,
 }
 
 public enum ELogSeverity
@@ -37,7 +38,8 @@ public class AlkawaDebug
         CategoryColors[ELogCategory.LOADSAVE] = "#FF9800"; 
         CategoryColors[ELogCategory.ENGINE] = "#607D8B";    
         CategoryColors[ELogCategory.AI] = "#FF5722";      
-        CategoryColors[ELogCategory.AUDIO] = "#E91E63";    
+        CategoryColors[ELogCategory.AUDIO] = "#E91E63";
+        CategoryColors[ELogCategory.GAMEPLAY] = "#FFEB3B";
     }
 
     [Conditional("USE_DEBUG")]

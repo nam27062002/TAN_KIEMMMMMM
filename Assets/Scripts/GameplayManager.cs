@@ -5,10 +5,63 @@ using UnityEngine;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
+    [Title("Scriptable Objects")]
     [SerializeField] private LevelConfig levelConfig;  
+    
+    private MapManager _mapManager;
+    // new
+    protected override void Awake()
+    {
+        base.Awake();
+        UIManager.Instance.OpenMenu(MenuType.InGame);
+        // IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
+        // if (IsTutorialLevel)
+        // {
+        //     tutorialPrefab.SetActive(true);
+        // }
+    }
+    
+    private void Start()
+    {
+        StartNewGame();
+    }
+    
+    protected override void UnRegisterEvents()
+    {
+        base.UnRegisterEvents();
+        _mapManager.OnLoadMapFinished -= OnLoadMapFinished;
+    }
+    
+    private void StartNewGame()
+    {
+        CurrentRound = 0;
+        // HUD.Instance.SetLevelName(levelConfig.levelName);
+        //
+        // if (!IsTutorialLevel) 
+        LoadMapGame();
+    }
+    
+    public void LoadMapGame()
+    {
+        var go = Instantiate(levelConfig.mapPrefab, transform);
+        _mapManager = go.GetComponent<MapManager>();
+        _mapManager.OnLoadMapFinished += OnLoadMapFinished;
+        _mapManager.Initialize();
+    }
+
+    #region Events
+
+    private void OnLoadMapFinished(object sender, EventArgs e)
+    {
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, "Load Map Finished");
+    }
+
+    #endregion
+    
+    // old
     [SerializeField] private GameObject tutorialPrefab;
     // private
-    private MapManager MapManager { get; set; }
+
     public int CurrentRound { get; set; } = 0;
     private bool InPlayerTurn => characterManager.MainCharacter is PlayerCharacter;
     public SkillInfo SkillInfo { get; set; }
@@ -24,42 +77,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler OnNewRound;
     public event EventHandler OnLoadCharacterFinished;
     
-    protected override void Awake()
-    {
-        base.Awake();
-        UIManager.Instance.OpenMenu(MenuType.InGame);
-        // IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
-        // if (IsTutorialLevel)
-        // {
-        //     tutorialPrefab.SetActive(true);
-        // }
-    }
-    
-    private void Start()
-    {
-        //StartNewGame();
-    }
-
-    private void StartNewGame()
-    {
-        // HUD.Instance.HideHUD();
-        // CurrentRound = 0;
-        // HUD.Instance.SetLevelName(levelConfig.levelName);
-        //
-        // if (!IsTutorialLevel) 
-        //     LoadMapGame();
-    }
-    
-    public void LoadMapGame()
-    {
-        var go = Instantiate(levelConfig.mapPrefab, transform);
-        MapManager = go.GetComponent<MapManager>();
-        MapManager.Initialize();
-    }
-
     public void LoadCharacter()
     {
-        characterManager.Initialize(levelConfig.spawnerConfig, MapManager);
+        characterManager.Initialize(levelConfig.spawnerConfig, _mapManager);
         // if (!IsTutorialLevel) HUD.Instance.ShowHUD();
         OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
@@ -171,7 +191,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         // show skill range
         if (SkillInfo.range > 0)
         {
-            MapManager.ShowSkillRange(characterManager.SelectedCharacter.characterInfo.Cell, SkillInfo.range);
+            _mapManager.ShowSkillRange(characterManager.SelectedCharacter.characterInfo.Cell, SkillInfo.range);
             //AlkawaDebug.Log($"Gameplay: Show skill range: {SkillInfo.range}");
         }
         
@@ -181,7 +201,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             characterManager.Characters.Add(characterManager.SelectedCharacter);
         }
 
-        foreach (var cell in MapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
+        foreach (var cell in _mapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
         {
             if (cell.Character.Type == characterManager.SelectedCharacter.Type 
                 && SkillInfo.damageType.HasFlag(DamageTargetType.Team)

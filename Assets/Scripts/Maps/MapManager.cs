@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor;
@@ -20,6 +21,7 @@ public class MapManager : MonoBehaviour
 
     private HashSet<Cell> _moveRange = new();
     public HashSet<Cell> SkillRange { get; set; } = new();
+    public event EventHandler OnLoadMapFinished;
     
     private void Awake()
     {
@@ -38,18 +40,17 @@ public class MapManager : MonoBehaviour
         {
             cell.Value.gameObject.SetActive(true);
             var delay = count * DelayIncrement;
-            cell.Value.Initialize(delay, OnLoadMapFinished);
+            cell.Value.Initialize(delay, HandleLoadMapFinished);
             count++;
         }
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, "Map Manager initialized");
     }
 
-    private void OnLoadMapFinished()
+    private void HandleLoadMapFinished()
     {
         _completed++;
-        if (_completed >= cells.Count)
-        {
-            GameplayManager.Instance.LoadCharacter();
-        }
+        if (_completed < cells.Count) return;
+        OnLoadMapFinished?.Invoke(this, EventArgs.Empty);
     }
 
     public Cell GetCell(Vector2Int position)
