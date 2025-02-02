@@ -1,5 +1,5 @@
 ﻿using System;
-using UnityEngine;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMonoBehavior<GameManager>
@@ -11,11 +11,13 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     public Action OnLoadComplete;
 
     #endregion
-    
+
     protected override void Awake()
     {
         base.Awake();
         OnLoadComplete += HandleLoadComplete;
+        DOTween.Init(false, false, LogBehaviour.ErrorsOnly);
+        DOTween.SetTweensCapacity(500, 125);
     }
 
     private void Start()
@@ -29,7 +31,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         base.OnDestroy();
         OnLoadComplete -= HandleLoadComplete;
     }
-    
+
     public void Loading(ESceneType eSceneType)
     {
         SceneLoader.LoadSceneAsync(ESceneType.Loading, LoadSceneMode.Additive);

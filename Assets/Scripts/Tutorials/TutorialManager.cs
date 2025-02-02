@@ -52,7 +52,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     public void OnNewRound()
     {
         GameplayManager.Instance.IsTutorialLevel = true;
-        HUD.Instance.HideHUD();
+        // HUD.Instance.HideHUD();
         ShowFinalConversation();
     }
 
@@ -134,7 +134,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void OnEndFinal()
     {
-        HUD.Instance.ShowHUD();
+        // HUD.Instance.ShowHUD();
         EndTuto = true;
         GameplayManager.Instance.characterManager.SetMainCharacter();
         StartCoroutine(ShowTutorial2());

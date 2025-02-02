@@ -120,12 +120,12 @@ public class CharacterManager : SingletonMonoBehavior<CharacterManager>
 
     private void SetupCharacterFocus()
     {
-        HUD.Instance.SetupCharacterFocus(Characters, GPManager.CharacterIndex);
+        // HUD.Instance.SetupCharacterFocus(Characters, GPManager.CharacterIndex);
     }
     
     public void SetHUD()
     {
-        HUD.Instance.SetCharacterFocus(GetSelectedCharacterParams());
+        // HUD.Instance.SetCharacterFocus(GetSelectedCharacterParams());
     }
 
     #endregion

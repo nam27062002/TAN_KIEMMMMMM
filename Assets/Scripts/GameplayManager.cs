@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -28,28 +27,27 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     protected override void Awake()
     {
         base.Awake();
-        DOTween.Init(false, false, LogBehaviour.ErrorsOnly);
-        DOTween.SetTweensCapacity(500, 125);
-        IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
-        if (IsTutorialLevel)
-        {
-            tutorialPrefab.SetActive(true);
-        }
+        UIManager.Instance.OpenMenu(MenuType.InGame);
+        // IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
+        // if (IsTutorialLevel)
+        // {
+        //     tutorialPrefab.SetActive(true);
+        // }
     }
     
     private void Start()
     {
-        StartNewGame();
+        //StartNewGame();
     }
 
     private void StartNewGame()
     {
-        HUD.Instance.HideHUD();
-        CurrentRound = 0;
-        HUD.Instance.SetLevelName(levelConfig.levelName);
-        
-        if (!IsTutorialLevel) 
-            LoadMapGame();
+        // HUD.Instance.HideHUD();
+        // CurrentRound = 0;
+        // HUD.Instance.SetLevelName(levelConfig.levelName);
+        //
+        // if (!IsTutorialLevel) 
+        //     LoadMapGame();
     }
     
     public void LoadMapGame()
@@ -62,7 +60,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void LoadCharacter()
     {
         characterManager.Initialize(levelConfig.spawnerConfig, MapManager);
-        if (!IsTutorialLevel) HUD.Instance.ShowHUD();
+        // if (!IsTutorialLevel) HUD.Instance.ShowHUD();
         OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
@@ -70,7 +68,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         CurrentRound++;
         OnNewRound?.Invoke(this, EventArgs.Empty);
-        HUD.Instance.SetRound();
+        // HUD.Instance.SetRound();
         //AlkawaDebug.Log($"NT - Gameplay: round {CurrentRound}");
     }
     
@@ -233,13 +231,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             Character = character,
             Skills = character.GetSkillInfos(characterManager.GetSkillType(character)),
         };
-        UIManager.Instance.ShowPopup(PopupType.ShowInfo);
+        // UIManager.Instance.ShowPopup(PopupType.ShowInfo);
     }
 
     #region Tutorial
     public void HandleEndSecondConversation()
     {
-        HUD.Instance.ShowHUD();
+        // HUD.Instance.ShowHUD();
         characterManager.ShowAllHPBar();
         characterManager.SetMainCharacter();
     }

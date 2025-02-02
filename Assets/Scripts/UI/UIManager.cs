@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +8,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
 {
     // new
     [SerializeField] private SerializableDictionary<PopupType, UIBase> allPopups = new();
-    [SerializeField] private SerializableDictionary<PopupType, UIBase> allMenus = new();
+    [SerializeField] private SerializableDictionary<MenuType, UIBase> allMenus = new();
     [SerializeField] private Image greyBackground;
 
     private UIBase _currentMenu;
@@ -34,7 +34,24 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         PopupBase.OnOpen -= OnOpenPopup;
         PopupBase.OnClose -= OnClosePopup;
     }
-    
+
+    #region Main Function
+
+    public void OpenPopup(PopupType popupType, UIBaseParameters parameters = null)
+    {
+        _currentPopup?.Close();
+        _currentPopup = allPopups[popupType];
+        _currentPopup.Open(parameters);
+    }
+
+    public void OpenMenu(MenuType menuType)
+    {
+        _currentMenu?.Close();
+        _currentMenu = allMenus[menuType];
+        _currentMenu.Open();
+    }
+
+    #endregion
     private void OnClosePopup(object sender, EventArgs e)
     {
         greyBackground.enabled = false;
@@ -62,46 +79,6 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         }
     }
     
-    public void OpenPopup(PopupType popupType, UIBaseParameters parameters = null)
-    {
-        _currentPopup?.Close();
-        _currentPopup = allPopups[popupType];
-        _currentPopup.Open(parameters);
-    }
-    
-    
-    // old
-    [ReadOnly] public PopupBase currentPopup;
-    public SerializableDictionary<PopupType, PopupBase> popups;
-    private bool _hasTutorialMenu;
-    public Image backgroundImage;
-    public void ShowPopup(PopupType popupType)
-    {
-        _hasTutorialMenu = MessageMenu.Instance.IsOpen;
-        if (_hasTutorialMenu)
-        {
-            MessageMenu.Instance.HideTutorialText();
-        }
-
-        currentPopup = popups[popupType];
-        // currentPopup.OpenPopup();
-    }
-    
-    public void ClosePopup()
-    {
-        if (_hasTutorialMenu)
-        {
-            MessageMenu.Instance.ShowTutorial();
-        }
-        if (currentPopup != null)
-        {
-            if (GameplayManager.Instance.IsTutorialLevel && currentPopup is ShowInfoPopup)
-            {
-                TutorialManager.Instance?.OnTutorialClicked(13, 0);
-            }
-            // currentPopup.ClosePopup();
-        }
-    }
 }
 
 
