@@ -17,8 +17,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     /*---------------------------------------------------*/
     private MapManager _mapManager;
-    private List<Character> _players = new();
-    private List<Character> _enemies = new();
+    private readonly List<Character> _players = new();
+    private readonly List<Character> _enemies = new();
     private List<Character> _characters = new();
     public Character MainCharacter => _characters[_currentPlayerIndex];
     private Character _selectedCharacter;
@@ -79,18 +79,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
              {
                  var go = Instantiate(allCharacter[spawnPoint.Key], transform);
                  var character = go.GetComponent<Character>();
-                 character.Initialize(_mapManager.GetCell(point));
                  _characters.Add(character);
-                 switch (character)
+                 switch (character.Type)
                  {
-                     case AICharacter aiCharacter:
-                         _enemies.Add(aiCharacter);
+                     case Type.AI:
+                         _enemies.Add(character);
                          break;
-                     case PlayerCharacter playerCharacter:
-                         _players.Add(playerCharacter);
+                     case Type.Player:
+                         _players.Add(character);
                          break;
                  }
-
+                 character.Initialize(_mapManager.GetCell(point));
                  // if (GPManager.IsTutorialLevel)
                  // {
                  //     character.HideHpBar();
@@ -156,6 +155,25 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             character.DestroyCharacter();
         }
+    }
+    
+    public FacingType GetFacingType(Character character)
+    {
+         if (character == null)
+         {
+             return FacingType.Right;
+         }
+
+         var characterPosition = character.transform.position;
+         var nearestOpponent = Utils.FindNearestCharacter(character, character.Type == Type.AI ? _players : _enemies);
+         if (nearestOpponent == null)
+         {
+             AlkawaDebug.Log(ELogCategory.GAMEPLAY,"GetFacingType: No opponents found.");
+             return FacingType.Right;
+         }
+
+         var opponentPosition = nearestOpponent.transform.position;
+         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
     }
     #endregion
     // old
@@ -362,4 +380,10 @@ public enum Type
     None,
     Player,
     AI,
+}
+
+public enum FacingType
+{
+    Left,
+    Right,
 }

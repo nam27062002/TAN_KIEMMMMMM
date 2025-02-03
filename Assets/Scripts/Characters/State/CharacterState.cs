@@ -9,7 +9,7 @@ public abstract class CharacterState : IState
     protected GameObject Model => Character.model;
     protected Transform Transform => Owner.transform;
     protected Vector3 Position => Owner.transform.position;
-    // protected CharacterManager CharacterManager => Character.CharacterManager;
+    protected GameplayManager GpManager => GameplayManager.Instance;
 
     protected CharacterState(Character character)
     {
@@ -27,14 +27,15 @@ public abstract class CharacterState : IState
     
     protected void SetFacing()
     {
-        // var facing = CharacterManager.GetFacingType(Character);
-        // SetFacing(facing);
+        var facing = GpManager.GetFacingType(Character);
+        SetFacing(facing);
     }
     
-    // private void SetFacing(FacingType facing)
-    // {
-    //     Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
-    // }
+    private void SetFacing(FacingType facing)
+    {
+        Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} set facing to {facing}");
+    }
     
     protected void SetCell(Cell cell)
     {

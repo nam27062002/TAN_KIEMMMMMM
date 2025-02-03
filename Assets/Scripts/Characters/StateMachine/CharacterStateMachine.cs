@@ -30,18 +30,12 @@ public class CharacterStateMachine : StateMachine
     {
         ChangeState(CharacterStates[newState]);
     }
-    
-    
-#if USE_DEBUG
-    protected override void ShowDebug(IState newState)
+
+    protected override void ChangeStateMessage(IState newState)
     {
-        if (!_canShowDebug) return;
-        if (CurrentState != null)
-        {
-            //AlkawaDebug.Log($"[Gameplay] - {Character.characterConfig.characterName}: [{CurrentState?.NameState}] => [{newState?.NameState}]");
-        }
+        if (CurrentState != null) 
+            AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"{Character.characterConfig.characterName}: [{CurrentState?.NameState}] => [{newState?.NameState}]");
     }
-#endif
 }
 
 public enum ECharacterState

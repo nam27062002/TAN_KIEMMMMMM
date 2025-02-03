@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class AICharacter : Character
 {
-    public override Type Type => Type.Player;
+    public override Type Type => Type.AI;
     private Character _enemy;
 
     protected override void SetStateMachine()
