@@ -30,14 +30,14 @@ public class ReactMenu : SingletonMonoBehavior<ReactMenu>
 
     private void OnConfirmClicked()
     {
-        GameplayManager.Instance.characterManager.OnConFirmClick();
+        // GameplayManager.Instance.characterManager.OnConFirmClick();
         gameObject.SetActive(false);
     }
 
     private void OnCancelClicked()
     {
         if (GameplayManager.Instance.IsTutorialLevel) return;
-        GameplayManager.Instance.characterManager.OnCancelClick();
+        // GameplayManager.Instance.characterManager.OnCancelClick();
         gameObject.SetActive(false);
     }
 

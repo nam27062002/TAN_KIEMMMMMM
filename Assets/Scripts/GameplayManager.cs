@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,7 +9,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [Title("Scriptable Objects")]
     [SerializeField] private LevelConfig levelConfig;  
     
+    [Title("Characters")]
+    [SerializeField] private SerializableDictionary<CharacterType, Character> allCharacter = new();
+    /*--------------------events-------------------------*/
+    public event EventHandler OnLoadCharacterFinished;
+    public event EventHandler<CharacterParams> OnSelectedCharacter;
+    
+    /*---------------------------------------------------*/
     private MapManager _mapManager;
+    private List<Character> _players = new();
+    private List<Character> _enemies = new();
+    private List<Character> _characters = new();
+    public Character MainCharacter => _characters[_currentPlayerIndex];
+    private Character _selectedCharacter;
+    
+    private int _currentRound;
+    private int _currentPlayerIndex;
+    
     // new
     protected override void Awake()
     {
@@ -31,10 +48,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         base.UnRegisterEvents();
         _mapManager.OnLoadMapFinished -= OnLoadMapFinished;
     }
-    
+
+    #region Main 
     private void StartNewGame()
     {
-        CurrentRound = 0;
+        _currentRound = 0;
         // HUD.Instance.SetLevelName(levelConfig.levelName);
         //
         // if (!IsTutorialLevel) 
@@ -48,45 +66,117 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _mapManager.OnLoadMapFinished += OnLoadMapFinished;
         _mapManager.Initialize();
     }
+    
+    private void LoadCharacter()
+    {
+        _characters.Clear();
+        _players.Clear();
+        _enemies.Clear();
+        _selectedCharacter = null;
+        foreach (var spawnPoint in levelConfig.spawnerConfig.spawnPoints)
+        {
+             foreach (var point in spawnPoint.Value.points)
+             {
+                 var go = Instantiate(allCharacter[spawnPoint.Key], transform);
+                 var character = go.GetComponent<Character>();
+                 character.Initialize(_mapManager.GetCell(point));
+                 _characters.Add(character);
+                 switch (character)
+                 {
+                     case AICharacter aiCharacter:
+                         _enemies.Add(aiCharacter);
+                         break;
+                     case PlayerCharacter playerCharacter:
+                         _players.Add(playerCharacter);
+                         break;
+                 }
 
+                 // if (GPManager.IsTutorialLevel)
+                 // {
+                 //     character.HideHpBar();
+                 // }
+             }
+        }
+        
+        SortCharacterBySpeed();
+        SetMainCharacter();
+        OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void SetMainCharacter()
+    {
+        MainCharacter.SetMainCharacter();
+        SetSelectedCharacter(MainCharacter);
+    }
+
+    private void SetSelectedCharacter(Character character)
+    {
+        _selectedCharacter?.OnUnSelected();
+        _selectedCharacter = character;
+        // HideMoveRange();
+        // HideSkillRange();
+        character.OnSelected();
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"SetSelectedCharacter: {character.characterConfig.characterName}");
+    }
+    
+    #endregion
     #region Events
 
     private void OnLoadMapFinished(object sender, EventArgs e)
     {
+        LoadCharacter();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, "Load Map Finished");
     }
 
     #endregion
     
+    #region Sub
+    private void SortCharacterBySpeed()
+    { 
+        _characters = _characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
+    }
+    
+    public void ShowMoveRange()
+    {
+        var range = _selectedCharacter.characterInfo.GetMoveRange();
+        _mapManager.ShowMoveRange(_selectedCharacter.characterInfo.Cell, range);
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"[Gameplay] [{_selectedCharacter.characterConfig.characterName}] Show Move Range: {range}");
+    }
+
+    public void DestroyGameplay()
+    {
+        _mapManager.DestroyMap();
+        DestroyAllCharacters();
+        StartNewGame();
+    }
+
+    public void DestroyAllCharacters()
+    {
+        foreach (var character in _characters)
+        {
+            character.DestroyCharacter();
+        }
+    }
+    #endregion
     // old
     [SerializeField] private GameObject tutorialPrefab;
     // private
-
-    public int CurrentRound { get; set; } = 0;
-    private bool InPlayerTurn => characterManager.MainCharacter is PlayerCharacter;
+    
+    // private bool InPlayerTurn => characterManager.MainCharacter is PlayerCharacter;
     public SkillInfo SkillInfo { get; set; }
     
     // public
-    public CharacterManager characterManager;
-    [ShowInInspector] public int CharacterIndex { get; set; }
+    
 
     public bool IsTutorialLevel;
     public CharacterParams ShowInfoCharacterParams { get; set; }
     //public bool IsTutorialLevel => false;
     // Event
     public event EventHandler OnNewRound;
-    public event EventHandler OnLoadCharacterFinished;
-    
-    public void LoadCharacter()
-    {
-        characterManager.Initialize(levelConfig.spawnerConfig, _mapManager);
-        // if (!IsTutorialLevel) HUD.Instance.ShowHUD();
-        OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
-    }
 
     public void HandleNewRound()
     {
-        CurrentRound++;
+        _currentRound++;
         OnNewRound?.Invoke(this, EventArgs.Empty);
         // HUD.Instance.SetRound();
         //AlkawaDebug.Log($"NT - Gameplay: round {CurrentRound}");
@@ -107,37 +197,37 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private void OnCharacterClicked(Cell cell)
     {
-        if (characterManager.CharactersInRange.Contains(cell.Character))
-        {
-            HandleCastSkill(cell.Character);
-        }
-        else
-        {
-            if (InPlayerTurn)
-            {
-                if (cell.Character.Type == Type.AI)
-                {
-                    characterManager.SetSelectedCharacter(cell.Character);
-                }
-                else
-                {
-                    if (cell.Character == characterManager.SelectedCharacter)
-                    {
-                        UnSelectSkill();
-                        if (characterManager.IsMainCharacterSelected) characterManager.ShowMoveRange();
-                    }
-                    else
-                    {
-                        characterManager.SetSelectedCharacter(cell.Character);
-                    }
-                }
-            }   
-        }
+        // if (characterManager.CharactersInRange.Contains(cell.Character))
+        // {
+        //     HandleCastSkill(cell.Character);
+        // }
+        // else
+        // {
+        //     if (InPlayerTurn)
+        //     {
+        //         if (cell.Character.Type == Type.AI)
+        //         {
+        //             characterManager.SetSelectedCharacter(cell.Character);
+        //         }
+        //         else
+        //         {
+        //             if (cell.Character == characterManager.SelectedCharacter)
+        //             {
+        //                 UnSelectSkill();
+        //                 if (characterManager.IsMainCharacterSelected) characterManager.ShowMoveRange();
+        //             }
+        //             else
+        //             {
+        //                 characterManager.SetSelectedCharacter(cell.Character);
+        //             }
+        //         }
+        //     }   
+        // }
     }
 
     private void HandleCastSkill(Character character)
     {
-        characterManager.HandleCastSkill(character);
+        // characterManager.HandleCastSkill(character);
     }
 
     public void HandleCastSkill(Character character, SkillInfo skillInfo)
@@ -148,32 +238,32 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private void OnWaypointClicked(Cell cell)
     {
-        if (InPlayerTurn)
-        {
-            characterManager.TryMoveToCell(cell);
-        }
+        // if (InPlayerTurn)
+        // {
+        //     characterManager.TryMoveToCell(cell);
+        // }
     }
 
     public void HandleEndTurn()
     {
-        CharacterIndex++;
-        if (CharacterIndex >= characterManager.Characters.Count)
-        {
-            CharacterIndex = 0;
-        }
-        characterManager.MainCharacter.characterInfo.ResetBuffAfter();
-        ResetAllChange();
-        characterManager.SetMainCharacter();
+        _currentPlayerIndex++;
+        // if (CharacterIndex >= characterManager.Characters.Count)
+        // {
+        //     CharacterIndex = 0;
+        // }
+        // characterManager.MainCharacter.characterInfo.ResetBuffAfter();
+        // ResetAllChange();
+        // characterManager.SetMainCharacter();
     }
 
     public void HandleSelectSkill(int skillIndex)
     {
         //AlkawaDebug.Log($"[Gameplay] - select skill {skillIndex}");
-        characterManager.HideMoveRange();
+        // characterManager.HideMoveRange();
         UnSelectSkill();
         if (SkillInfo != GetSkillInfo(skillIndex))
         {
-            characterManager.HideSkillRange();
+            // characterManager.HideSkillRange();
             SkillInfo = GetSkillInfo(skillIndex);
             if (SkillInfo.isDirectionalSkill)
             {
@@ -191,32 +281,32 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         // show skill range
         if (SkillInfo.range > 0)
         {
-            _mapManager.ShowSkillRange(characterManager.SelectedCharacter.characterInfo.Cell, SkillInfo.range);
+            //_mapManager.ShowSkillRange(characterManager.SelectedCharacter.characterInfo.Cell, SkillInfo.range);
             //AlkawaDebug.Log($"Gameplay: Show skill range: {SkillInfo.range}");
         }
         
         //get character can be interact
         if (SkillInfo.damageType.HasFlag(DamageTargetType.Self))
         {
-            characterManager.Characters.Add(characterManager.SelectedCharacter);
+            //characterManager.Characters.Add(characterManager.SelectedCharacter);
         }
 
-        foreach (var cell in _mapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
-        {
-            if (cell.Character.Type == characterManager.SelectedCharacter.Type 
-                && SkillInfo.damageType.HasFlag(DamageTargetType.Team)
-                )
-            {
-                characterManager.CharactersInRange.Add(cell.Character);
-            }
-
-            if (cell.Character.Type != characterManager.SelectedCharacter.Type 
-                && SkillInfo.damageType.HasFlag(DamageTargetType.Enemies)
-                )
-            {
-                characterManager.CharactersInRange.Add(cell.Character);
-            }
-        }
+        // foreach (var cell in _mapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
+        // {
+        //     if (cell.Character.Type == characterManager.SelectedCharacter.Type 
+        //         && SkillInfo.damageType.HasFlag(DamageTargetType.Team)
+        //         )
+        //     {
+        //         characterManager.CharactersInRange.Add(cell.Character);
+        //     }
+        //
+        //     if (cell.Character.Type != characterManager.SelectedCharacter.Type 
+        //         && SkillInfo.damageType.HasFlag(DamageTargetType.Enemies)
+        //         )
+        //     {
+        //         characterManager.CharactersInRange.Add(cell.Character);
+        //     }
+        // }
     }
 
     private void HandleNonDirectionalSkill()
@@ -231,12 +321,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             
         }
         SkillInfo = null;
-        characterManager.HideSkillRange();
+        // characterManager.HideSkillRange();
     }
 
     private SkillInfo GetSkillInfo(int index)
     {
-        return characterManager.GetSkillInfo(index);
+        return null;
+        // return characterManager.GetSkillInfo(index);
     }
 
     private void ResetAllChange()
@@ -249,7 +340,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         ShowInfoCharacterParams = new CharacterParams()
         {
             Character = character,
-            Skills = character.GetSkillInfos(characterManager.GetSkillType(character)),
+            // Skills = character.GetSkillInfos(characterManager.GetSkillType(character)),
         };
         // UIManager.Instance.ShowPopup(PopupType.ShowInfo);
     }
@@ -258,9 +349,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void HandleEndSecondConversation()
     {
         // HUD.Instance.ShowHUD();
-        characterManager.ShowAllHPBar();
-        characterManager.SetMainCharacter();
+        // characterManager.ShowAllHPBar();
+        // characterManager.SetMainCharacter();
     }
     
     #endregion
+}
+
+[Serializable]
+public enum Type
+{
+    None,
+    Player,
+    AI,
 }

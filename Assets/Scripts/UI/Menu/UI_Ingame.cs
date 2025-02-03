@@ -36,14 +36,55 @@ public class UI_Ingame : MenuBase
     [SerializeField] private ProcessBar mpBar;
     [SerializeField] private ActionPointUI actionPointUI;
     
+    [Title("Buttons"), Space]
+    [SerializeField] private Button settingsButton;
+    
     [Title("Objects"),Space]
     [SerializeField] private SerializableDictionary<UIInGameObjectType, GameObject> objects;
 
+    private GameplayManager GameplayManager => GameplayManager.Instance;
+    
     public override void Open(UIBaseParameters parameters = null)
     {
         base.Open(parameters);
         HideAllUI();
     }
+
+    protected override void RegisterEvents()
+    {
+        base.RegisterEvents();
+        GameplayManager.OnLoadCharacterFinished += OnLoadCharacterFinished;
+        settingsButton.onClick.AddListener(OnSettingsClick);
+    }
+
+    protected override void UnregisterEvents()
+    {
+        base.UnregisterEvents();
+        GameplayManager.OnLoadCharacterFinished -= OnLoadCharacterFinished;
+        settingsButton.onClick.RemoveListener(OnSettingsClick);
+    }
+
+    #region Events
+
+    private void OnLoadCharacterFinished(object sender, EventArgs e)
+    {
+        var activeObject = new HashSet<UIInGameObjectType>
+        {
+            UIInGameObjectType.SettingPanel
+        };
+        foreach (var item in activeObject)
+        {
+            objects[item].SetActiveIfNeeded(true);
+        }
+    }
+    
+    private void OnSettingsClick()
+    {
+        UIMng.OpenPopup(PopupType.PauseGame);
+        AlkawaDebug.Log(ELogCategory.UI, "Clicked Settings");
+    }
+
+    #endregion
     
     private void HideAllUI()
     {

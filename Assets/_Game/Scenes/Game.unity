@@ -1224,7 +1224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1484079383
 Transform:
   m_ObjectHideFlags: 0
@@ -1377,8 +1377,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelConfig: {fileID: 11400000, guid: 844bfcde8a69da446847997362a62f85, type: 2}
-  tutorialPrefab: {fileID: 702396812}
   characterManager: {fileID: 1484079384}
+  allCharacter:
+    m_keys: 000000000100000002000000
+    m_values:
+    - {fileID: 8476363159216195691, guid: b66348842be014b4ba9d986355ab8d8f, type: 3}
+    - {fileID: 2203334176055078997, guid: fe2068912a251fa4ea416286b601690f, type: 3}
+    - {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+  tutorialPrefab: {fileID: 702396812}
   IsTutorialLevel: 0
 --- !u!1001 &2962411132894324362
 PrefabInstance:

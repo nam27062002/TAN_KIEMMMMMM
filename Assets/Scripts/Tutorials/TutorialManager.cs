@@ -136,7 +136,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     {
         // HUD.Instance.ShowHUD();
         EndTuto = true;
-        GameplayManager.Instance.characterManager.SetMainCharacter();
+        // GameplayManager.Instance.characterManager.SetMainCharacter();
         StartCoroutine(ShowTutorial2());
     }
 
@@ -151,7 +151,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         yield return new WaitForSeconds(4f);
         MessageMenu.Instance.HideTutorialText();
         GameplayManager.Instance.IsTutorialLevel = false;
-        GameplayManager.Instance.characterManager.SetMainCharacter();
+        // GameplayManager.Instance.characterManager.SetMainCharacter();
         Destroy(gameObject);
     }
     
@@ -159,8 +159,8 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     {
         if (index == 1)
         {
-            var character = GameplayManager.Instance.characterManager.GetCharacterByType(CharacterType.LyVoDanh);
-            character.PlayAnim(AnimationParameterNameType.Skill1);
+            // var character = GameplayManager.Instance.characterManager.GetCharacterByType(CharacterType.LyVoDanh);
+            // character.PlayAnim(AnimationParameterNameType.Skill1);
         }
     }
 

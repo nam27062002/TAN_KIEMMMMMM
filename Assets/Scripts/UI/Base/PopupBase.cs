@@ -27,6 +27,7 @@ public abstract class PopupBase : UIBase
         if (_isAnimating) return;
         base.Open(parameters);
         StartOpenAnimation();
+        Time.timeScale = 0;
     }
     
     public override void Close()
@@ -35,6 +36,7 @@ public abstract class PopupBase : UIBase
         StartCloseAnimation(() =>
         {
             OnClose?.Invoke(this, EventArgs.Empty);
+            Time.timeScale = 1;
             base.Close();
         });   
     }
@@ -42,11 +44,10 @@ public abstract class PopupBase : UIBase
     private void StartOpenAnimation()
     {
         _isAnimating = true;
-        
         canvasGroup.alpha = 0f;
         mainPanel.localScale = originalScale * 0.7f;
-
-        Sequence openSequence = DOTween.Sequence()
+        var openSequence = DOTween.Sequence()
+            .SetUpdate(true)
             .Append(canvasGroup.DOFade(1f, openDuration))
             .Join(mainPanel.DOScale(originalScale, openDuration).SetEase(openEase))
             .OnComplete(() =>
@@ -54,15 +55,14 @@ public abstract class PopupBase : UIBase
                 _isAnimating = false;
                 OnOpen?.Invoke(this, EventArgs.Empty);
             });
-
         openSequence.Play();
     }
 
     private void StartCloseAnimation(TweenCallback onComplete)
     {
         _isAnimating = true;
-
-        Sequence closeSequence = DOTween.Sequence()
+        var closeSequence = DOTween.Sequence()
+            .SetUpdate(true) 
             .Append(canvasGroup.DOFade(0f, closeDuration))
             .Join(mainPanel.DOScale(originalScale * 0.7f, closeDuration).SetEase(closeEase))
             .OnComplete(() =>
@@ -70,7 +70,6 @@ public abstract class PopupBase : UIBase
                 _isAnimating = false;
                 onComplete?.Invoke();
             });
-
         closeSequence.Play();
     }
     

@@ -687,6 +687,7 @@ MonoBehaviour:
   hpBar: {fileID: 6440070880285171682}
   mpBar: {fileID: 714355571878135652}
   actionPointUI: {fileID: 5896168171341445251}
+  settingsButton: {fileID: 2489778659066420041}
   objects:
     m_keys: 010000000200000003000000
     m_values:
@@ -1217,7 +1218,7 @@ GameObject:
   - component: {fileID: 8414691823842414843}
   - component: {fileID: 2489778659066420041}
   m_Layer: 5
-  m_Name: QuitButton
+  m_Name: SettingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1640,8 +1641,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7857934249383630255}
   - {fileID: 1263183818701783091}
+  - {fileID: 7857934249383630255}
   m_Father: {fileID: 1553136712965055850}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}

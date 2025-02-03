@@ -11,7 +11,7 @@
     {
         if (!GameplayManager.Instance.IsTutorialLevel) return;
         if (!CanClick()) return;
-        GameplayManager.Instance.characterManager.OnConFirmClick();
+        // GameplayManager.Instance.characterManager.OnConFirmClick();
         Tutorial.OnTutorialClicked(index);
     }
     

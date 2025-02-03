@@ -105,7 +105,7 @@ public class Cell : MonoBehaviour
     {
         GameplayManager.Instance.OnCellClicked(this);
     }
-
+    
 #if UNITY_EDITOR
     [HideInInspector] public string iconName;
     [HideInInspector] public bool hasIcon;

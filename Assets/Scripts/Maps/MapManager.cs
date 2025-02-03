@@ -57,8 +57,7 @@ public class MapManager : MonoBehaviour
     {
         return cells[position];
     }
-
-
+    
     public void ShowMoveRange(Cell cell, int range)
     {
         _moveRange = _pathfinding.GetHexagonsInRange(cell, range);
@@ -120,6 +119,11 @@ public class MapManager : MonoBehaviour
     public bool CanMove(Cell cell)
     {
         return _moveRange != null && _moveRange.Contains(cell);
+    }
+
+    public void DestroyMap()
+    {
+       Destroy(gameObject);
     }
     
 #if UNITY_EDITOR

@@ -12,7 +12,6 @@ public abstract class Character : MonoBehaviour
     public HpBar hpBar;
     public GameObject model;
     public CharacterStateMachine StateMachine { get; set; }
-    public CharacterManager CharacterManager;
     protected GameplayManager GpManager => GameplayManager.Instance;
     [Title("Settings"), Space(10)] 
     public CharacterConfig characterConfig;
@@ -28,9 +27,8 @@ public abstract class Character : MonoBehaviour
 
     protected abstract void SetStateMachine();
     
-    public void Initialize(CharacterManager characterManager, Cell cell)
+    public void Initialize(Cell cell)
     {
-        CharacterManager = characterManager;
         characterInfo = new CharacterInfo
         {
             SkillConfig = skillConfig,
@@ -151,9 +149,9 @@ public abstract class Character : MonoBehaviour
     {
         //AlkawaDebug.Log($"Gameplay: {characterConfig.characterName} die");
         characterInfo.Cell.CellType = CellType.Walkable;
-        var index = CharacterManager.Instance.Characters.IndexOf(this);
-        // HUD.Instance.OnCharacterDeath(index);
-        CharacterManager.HandleCharacterDie(this);
+        // var index = CharacterManager.Instance.Characters.IndexOf(this);
+        // // HUD.Instance.OnCharacterDeath(index);
+        // CharacterManager.HandleCharacterDie(this);
         Destroy(gameObject);
     }
     

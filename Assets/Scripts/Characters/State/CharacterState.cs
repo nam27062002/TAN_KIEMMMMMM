@@ -9,7 +9,7 @@ public abstract class CharacterState : IState
     protected GameObject Model => Character.model;
     protected Transform Transform => Owner.transform;
     protected Vector3 Position => Owner.transform.position;
-    protected CharacterManager CharacterManager => Character.CharacterManager;
+    // protected CharacterManager CharacterManager => Character.CharacterManager;
 
     protected CharacterState(Character character)
     {
@@ -27,14 +27,14 @@ public abstract class CharacterState : IState
     
     protected void SetFacing()
     {
-        var facing = CharacterManager.GetFacingType(Character);
-        SetFacing(facing);
+        // var facing = CharacterManager.GetFacingType(Character);
+        // SetFacing(facing);
     }
     
-    private void SetFacing(FacingType facing)
-    {
-        Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
-    }
+    // private void SetFacing(FacingType facing)
+    // {
+    //     Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
+    // }
     
     protected void SetCell(Cell cell)
     {
@@ -66,13 +66,13 @@ public abstract class CharacterState : IState
     protected virtual void OnCastSkillFinished()
     {
         //AlkawaDebug.Log($"[Gameplay] - OnCastSkillFinished - {NameState}");
-        CharacterManager.OnCastSkillFinished();
+        // CharacterManager.OnCastSkillFinished();
     }
 
     protected virtual void SetDamageTakenFinished()
     {
         //AlkawaDebug.Log($"[Gameplay] - SetDamageTakenFinished - {NameState}");
-        CharacterManager.SetDamageTakenFinished();
+        // CharacterManager.SetDamageTakenFinished();
     }
 
     protected virtual void OnFinishAction()
