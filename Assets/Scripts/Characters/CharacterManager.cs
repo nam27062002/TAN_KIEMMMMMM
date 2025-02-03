@@ -315,7 +315,7 @@
 //     {
 //         return SelectedCharacter.characterInfo.GetSkillInfo(index, GetSkillType());
 //     }
-//
+//f
 //     public FacingType GetFacingType(Character character)
 //     {
 //         if (character == null)

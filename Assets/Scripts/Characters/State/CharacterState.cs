@@ -16,7 +16,7 @@ public abstract class CharacterState : IState
         Character = character;
     }
 
-    public virtual void OnEnter(){}
+    public virtual void OnEnter(StateParams stateParams = null){}
 
     public virtual void OnExit(){}
     

@@ -66,9 +66,9 @@ public abstract class Character : MonoBehaviour
         ChangeState(ECharacterState.Skill);
     }
     
-    public void ChangeState(ECharacterState newState)
+    public void ChangeState(ECharacterState newState, StateParams stateParams = null)
     {
-        StateMachine.ChangeState(newState);
+        StateMachine.ChangeState(newState, stateParams);
     }
     
     public void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
@@ -106,8 +106,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void MoveCharacter(List<Cell> cells)
     {
-        characterInfo.MoveCells = cells;
-        ChangeState(ECharacterState.Move);   
+        ChangeState(ECharacterState.Move, new MoveStateParams(cells));   
     }
 
     public void MoveCharacter(Vector3 targetPos, float duration)

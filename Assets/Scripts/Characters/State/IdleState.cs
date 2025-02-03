@@ -6,9 +6,9 @@
 
     public override string NameState { get; set; } = "Idle";
 
-    public override void OnEnter()
+    public override void OnEnter(StateParams stateParams = null)
     {
-        base.OnEnter();
+        base.OnEnter(stateParams);
         Character.PlayAnim(AnimationParameterNameType.Idle);
         SetFacing();
     }

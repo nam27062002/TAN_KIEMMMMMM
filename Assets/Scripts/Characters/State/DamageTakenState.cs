@@ -5,9 +5,9 @@
     }
 
     public override string NameState { get; set; } = "Damage Taken";
-    public override void OnEnter()
+    public override void OnEnter(StateParams stateParams = null)
     {
-        base.OnEnter();
+        base.OnEnter(stateParams);
         Character.PlayAnim(AnimationParameterNameType.OnDamageTaken, OnFinishAction);
     }
 

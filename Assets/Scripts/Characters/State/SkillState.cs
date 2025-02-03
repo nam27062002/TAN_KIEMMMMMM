@@ -6,9 +6,9 @@ public class SkillState : CharacterState
 
     public override string NameState { get; set; } = "Skill"; 
     
-    public override void OnEnter()
+    public override void OnEnter(StateParams stateParams = null)
     {
-        base.OnEnter();
+        base.OnEnter(stateParams);
         HandleCastSkill();
     }
 

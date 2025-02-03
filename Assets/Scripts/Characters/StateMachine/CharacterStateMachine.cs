@@ -26,9 +26,9 @@ public class CharacterStateMachine : StateMachine
         CharacterStates[ECharacterState.Skill] = SkillState;
     }
 
-    public void ChangeState(ECharacterState newState)
+    public void ChangeState(ECharacterState newState, StateParams stateParams = null)
     {
-        ChangeState(CharacterStates[newState]);
+        ChangeState(CharacterStates[newState], stateParams);
     }
 
     protected override void ChangeStateMessage(IState newState)

@@ -25,6 +25,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private int _currentRound;
     private int _currentPlayerIndex;
+
+    private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
     
     // new
     protected override void Awake()
@@ -118,88 +120,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
     
-    #endregion
-    #region Events
-
-    private void OnLoadMapFinished(object sender, EventArgs e)
-    {
-        LoadCharacter();
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY, "Load Map Finished");
-    }
-
-    #endregion
-    
-    #region Sub
-    private void SortCharacterBySpeed()
-    { 
-        _characters = _characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
-    }
-    
-    public void ShowMoveRange()
-    {
-        var range = _selectedCharacter.characterInfo.GetMoveRange();
-        _mapManager.ShowMoveRange(_selectedCharacter.characterInfo.Cell, range);
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"[Gameplay] [{_selectedCharacter.characterConfig.characterName}] Show Move Range: {range}");
-    }
-
-    public void DestroyGameplay()
-    {
-        _mapManager.DestroyMap();
-        DestroyAllCharacters();
-        StartNewGame();
-    }
-
-    public void DestroyAllCharacters()
-    {
-        foreach (var character in _characters)
-        {
-            character.DestroyCharacter();
-        }
-    }
-    
-    public FacingType GetFacingType(Character character)
-    {
-         if (character == null)
-         {
-             return FacingType.Right;
-         }
-
-         var characterPosition = character.transform.position;
-         var nearestOpponent = Utils.FindNearestCharacter(character, character.Type == Type.AI ? _players : _enemies);
-         if (nearestOpponent == null)
-         {
-             AlkawaDebug.Log(ELogCategory.GAMEPLAY,"GetFacingType: No opponents found.");
-             return FacingType.Right;
-         }
-
-         var opponentPosition = nearestOpponent.transform.position;
-         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
-    }
-    #endregion
-    // old
-    [SerializeField] private GameObject tutorialPrefab;
-    // private
-    
-    // private bool InPlayerTurn => characterManager.MainCharacter is PlayerCharacter;
-    public SkillInfo SkillInfo { get; set; }
-    
-    // public
-    
-
-    public bool IsTutorialLevel;
-    public CharacterParams ShowInfoCharacterParams { get; set; }
-    //public bool IsTutorialLevel => false;
-    // Event
-    public event EventHandler OnNewRound;
-
-    public void HandleNewRound()
-    {
-        _currentRound++;
-        OnNewRound?.Invoke(this, EventArgs.Empty);
-        // HUD.Instance.SetRound();
-        //AlkawaDebug.Log($"NT - Gameplay: round {CurrentRound}");
-    }
-    
     public void OnCellClicked(Cell cell)
     {
         switch (cell.CellType)
@@ -242,6 +162,107 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         //     }   
         // }
     }
+    
+    private void OnWaypointClicked(Cell cell)
+    {
+        if (!CanMove(cell)) return;
+        var cellPath = _mapManager.FindPath(_selectedCharacter.characterInfo.Cell, cell);
+        _mapManager.HideMoveRange();
+        _selectedCharacter.MoveCharacter(cellPath);
+    }
+
+    private void MoveToCell(Cell cell)
+    {
+        
+    }
+    
+    #endregion
+    #region Events
+
+    private void OnLoadMapFinished(object sender, EventArgs e)
+    {
+        LoadCharacter();
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, "Load Map Finished");
+    }
+
+    #endregion
+    
+    #region Sub
+    private void SortCharacterBySpeed()
+    { 
+        _characters = _characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
+    }
+    
+    public void ShowMoveRange()
+    {
+        var range = _selectedCharacter.characterInfo.GetMoveRange();
+        _mapManager.ShowMoveRange(_selectedCharacter.characterInfo.Cell, range);
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"[{_selectedCharacter.characterConfig.characterName}] move Range: {range}");
+    }
+
+    public void DestroyGameplay()
+    {
+        _mapManager.DestroyMap();
+        DestroyAllCharacters();
+        StartNewGame();
+    }
+
+    private void DestroyAllCharacters()
+    {
+        foreach (var character in _characters)
+        {
+            character.DestroyCharacter();
+        }
+    }
+    
+    public FacingType GetFacingType(Character character)
+    {
+         if (character == null)
+         {
+             return FacingType.Right;
+         }
+
+         var characterPosition = character.transform.position;
+         var nearestOpponent = Utils.FindNearestCharacter(character, character.Type == Type.AI ? _players : _enemies);
+         if (nearestOpponent == null)
+         {
+             AlkawaDebug.Log(ELogCategory.GAMEPLAY,"GetFacingType: No opponents found.");
+             return FacingType.Right;
+         }
+
+         var opponentPosition = nearestOpponent.transform.position;
+         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
+    }
+
+    private bool CanMove(Cell cell)
+    {
+        return IsRoundOfPlayer && MainCharacter == _selectedCharacter && _mapManager.CanMove(cell);
+    }
+    #endregion
+    // old
+    [SerializeField] private GameObject tutorialPrefab;
+    // private
+    
+    // private bool InPlayerTurn => characterManager.MainCharacter is PlayerCharacter;
+    public SkillInfo SkillInfo { get; set; }
+    
+    // public
+    
+
+    public bool IsTutorialLevel;
+    public CharacterParams ShowInfoCharacterParams { get; set; }
+    //public bool IsTutorialLevel => false;
+    // Event
+    public event EventHandler OnNewRound;
+
+    public void HandleNewRound()
+    {
+        _currentRound++;
+        OnNewRound?.Invoke(this, EventArgs.Empty);
+        // HUD.Instance.SetRound();
+        //AlkawaDebug.Log($"NT - Gameplay: round {CurrentRound}");
+    }
+    
 
     private void HandleCastSkill(Character character)
     {
@@ -254,14 +275,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HandleCastSkill(character);
     }
     
-    private void OnWaypointClicked(Cell cell)
-    {
-        // if (InPlayerTurn)
-        // {
-        //     characterManager.TryMoveToCell(cell);
-        // }
-    }
-
     public void HandleEndTurn()
     {
         _currentPlayerIndex++;

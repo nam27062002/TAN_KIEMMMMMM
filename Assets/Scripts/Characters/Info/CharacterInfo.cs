@@ -19,7 +19,6 @@ public class CharacterInfo
     [ShowInInspector, ReadOnly] public int MoveAmount { get; set; }
     [ShowInInspector, ReadOnly] public int MoveBuff { get; set; } 
     [ShowInInspector, ReadOnly] public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
-    [ShowInInspector, ReadOnly] public List<Cell> MoveCells { get; set; } = new();
     [ShowInInspector, ReadOnly] public SkillInfo SkillInfo { get; set; }
     [ShowInInspector, ReadOnly] public bool IsReact {get; set;}
    

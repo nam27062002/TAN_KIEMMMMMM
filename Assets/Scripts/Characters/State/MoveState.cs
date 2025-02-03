@@ -8,20 +8,20 @@ public class MoveState : CharacterState
 
     public override string NameState { get; set; } = "Move";
     
-    public override void OnEnter()
+    public override void OnEnter(StateParams stateParams = null)
     {
-        base.OnEnter();
-        HandleMovement();
+        base.OnEnter(stateParams);
+        HandleMovement((MoveStateParams)stateParams);
     }
 
-    private void HandleMovement()
+    private void HandleMovement(MoveStateParams stateParams)
     {
         ReleaseFacing();
         Character.characterInfo.Cell.HideFocus();
-        Character.characterInfo.MoveAmount += Character.characterInfo.MoveCells.Count;
+        Character.characterInfo.MoveAmount += stateParams.MoveCells.Count;
         var moveSequence = DOTween.Sequence();
         float currentX = Transform.position.x;
-        foreach (var cell in Character.characterInfo.MoveCells)
+        foreach (var cell in stateParams.MoveCells)
         {
             var targetPos = cell.transform.position;
             targetPos.y += Character.characterConfig.characterHeight / 2f;
@@ -34,7 +34,7 @@ public class MoveState : CharacterState
         
         moveSequence.OnComplete(() =>
         {
-            SetCell(Character.characterInfo.MoveCells[^1]);
+            SetCell(stateParams.MoveCells[^1]);
             Character.characterInfo.Cell.ShowFocus();
             OnFinishAction();
         });
