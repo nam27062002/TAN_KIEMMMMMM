@@ -2549,6 +2549,7 @@ MonoBehaviour:
   chiDef: {fileID: 908478409112957374}
   hpBarUI: {fileID: 8245229299753585688}
   mpBarUI: {fileID: 9179482490871847305}
+  avatar: {fileID: 4403012593314563161}
 --- !u!225 &9029461261502342537
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -43,6 +43,7 @@ public class Skill_UI : MonoBehaviour
         _isLocked = !unlock;
         _isEnoughMana = enoughMana;
         _skillIndex = index - 1;
+        _type = type;
         skillIndex.text = index.ToString();
         skillImage.sprite = skillIcon;
         gameObject.SetActive(true);

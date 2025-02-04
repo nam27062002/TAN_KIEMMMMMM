@@ -61,21 +61,21 @@ public abstract class CharacterState : IState
 
     protected virtual void OnReachToTarget()
     {
-        //AlkawaDebug.Log($"[Gameplay] - OnReachToTarget - {NameState}");
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"{Character.characterConfig.characterName} OnReachToTarget - {NameState}");
     }
 
     protected virtual void OnCastSkillFinished()
-    {
-        //AlkawaDebug.Log($"[Gameplay] - OnCastSkillFinished - {NameState}");
-        // CharacterManager.OnCastSkillFinished();
+    { 
+        GpManager.OnCastSkillFinished();
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} OnCastSkillFinished - {NameState}");
     }
 
     protected virtual void SetDamageTakenFinished()
     {
-        //AlkawaDebug.Log($"[Gameplay] - SetDamageTakenFinished - {NameState}");
-        // CharacterManager.SetDamageTakenFinished();
+        GpManager.SetDamageTakenFinished();
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"{Character.characterConfig.characterName} SetDamageTakenFinished - {NameState}");
     }
-
+    
     protected virtual void OnFinishAction()
     {
         OnFinishAction(this);

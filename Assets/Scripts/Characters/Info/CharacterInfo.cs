@@ -77,7 +77,7 @@ public class CharacterInfo
         SkillInfo = skillInfo;
         HandleMpChanged(-skillInfo.mpCost);
         Character.HandleCastSkill();
-        // ReduceActionPoints(GetActionPoints(Character.CharacterManager.GetSkillType()));
+        ReduceActionPoints(GetActionPoints(GameplayManager.Instance.GetSkillType(Character)));
     }
     
     public bool CanCastSkill(SkillInfo skillInfo, SkillType skillType)

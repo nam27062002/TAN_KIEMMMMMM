@@ -59,6 +59,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnLoadCharacterFinished += OnLoadCharacterFinished;
         GameplayManager.OnSelectedCharacter += GameplayManagerOnOnSelectedCharacter;
         GameplayManager.OnSetMainCharacterFinished += GameplayManagerOnOnSetMainCharacterFinished;
+        endTurnButton.button.onClick.AddListener(OnEndTurnButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsClick);
     }
     
@@ -68,6 +69,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnLoadCharacterFinished -= OnLoadCharacterFinished;
         GameplayManager.OnSelectedCharacter -= GameplayManagerOnOnSelectedCharacter;
         GameplayManager.OnSetMainCharacterFinished -= GameplayManagerOnOnSetMainCharacterFinished;
+        endTurnButton.button.onClick.RemoveListener(OnEndTurnButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsClick);
     }
 
@@ -101,6 +103,11 @@ public class UI_Ingame : MenuBase
         SetupCharacterFocus();
     }
 
+    private void OnEndTurnButtonClicked()
+    {
+        GameplayManager.HandleEndTurn();
+    }
+    
     #endregion
 
     private void SetObjectActiveWhenCharacterFocus()

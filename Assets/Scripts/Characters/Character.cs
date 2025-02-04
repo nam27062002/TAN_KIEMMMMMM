@@ -79,8 +79,6 @@ public abstract class Character : MonoBehaviour
     }
     #endregion
     
-
-
     public void SetCell(Cell cell)
     {
         characterInfo.Cell = cell;
