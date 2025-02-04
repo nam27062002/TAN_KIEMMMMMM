@@ -304,6 +304,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2797457204870314305, guid: 080d44dee1556504c8420a1661fe8773, type: 3}
   m_PrefabInstance: {fileID: 8997004532296797487}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &624776944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 624776945}
+  m_Layer: 0
+  m_Name: GameManager_Tuto
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &624776945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624776944}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &702396812
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &702396813
 Transform:
   m_ObjectHideFlags: 0
@@ -1377,7 +1408,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelConfig: {fileID: 11400000, guid: 844bfcde8a69da446847997362a62f85, type: 2}
-  characterManager: {fileID: 1484079384}
   allCharacter:
     m_keys: 000000000100000002000000
     m_values:
@@ -1703,5 +1733,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1395371490}
   - {fileID: 1787000951}
+  - {fileID: 624776945}
   - {fileID: 702396813}
   - {fileID: 886245765}

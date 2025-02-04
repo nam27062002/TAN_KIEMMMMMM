@@ -57,7 +57,7 @@ public class UI_Ingame : MenuBase
     {
         base.RegisterEvents();
         GameplayManager.OnLoadCharacterFinished += OnLoadCharacterFinished;
-        GameplayManager.OnSelectedCharacter += GameplayManagerOnOnSelectedCharacter;
+        GameplayManager.OnUpdateCharacterInfo += GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished += GameplayManagerOnOnSetMainCharacterFinished;
         endTurnButton.button.onClick.AddListener(OnEndTurnButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsClick);
@@ -67,7 +67,7 @@ public class UI_Ingame : MenuBase
     {
         base.UnregisterEvents();
         GameplayManager.OnLoadCharacterFinished -= OnLoadCharacterFinished;
-        GameplayManager.OnSelectedCharacter -= GameplayManagerOnOnSelectedCharacter;
+        GameplayManager.OnUpdateCharacterInfo -= GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished -= GameplayManagerOnOnSetMainCharacterFinished;
         endTurnButton.button.onClick.RemoveListener(OnEndTurnButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsClick);
@@ -93,7 +93,7 @@ public class UI_Ingame : MenuBase
         AlkawaDebug.Log(ELogCategory.UI, "Clicked Settings");
     }
     
-    private void GameplayManagerOnOnSelectedCharacter(object sender, ShowInfoCharacterParameters characterParams)
+    private void GameplayManagerOnOnUpdateCharacterInfo(object sender, ShowInfoCharacterParameters characterParams)
     {
         SetCharacterFocus(characterParams);
     }
@@ -157,11 +157,8 @@ public class UI_Ingame : MenuBase
              skillUI[i].SetSkill(index: i + 1, 
                  skillIcon: characterParams.Skills[i].icon, 
                  unlock: !characterParams.Character.characterInfo.LockSkill, 
-                 enoughMana: characterParams.Character.characterInfo.CurrentMP >= characterParams.Skills[i].mpCost
-                 // && characterParams.Character.characterInfo.IsEnoughActionPoints(GameplayManager.Instance.characterManager.GetSkillType())
-                 ,
-                 characterParams.Character.Type
-                 );
+                 enoughMana: characterParams.Character.characterInfo.CanCastSkill(characterParams.Skills[i]),
+                 type: characterParams.Character.Type);
          }
 
          if (characterParams.Character.IsMainCharacter)

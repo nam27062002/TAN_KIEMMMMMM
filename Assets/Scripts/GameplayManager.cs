@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
@@ -12,10 +13,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [Title("Characters")] [SerializeField]
     private SerializableDictionary<CharacterType, Character> allCharacter = new();
 
+    [Title("Tutorials")]
+    [SerializeField] private GameObject tutorialPrefab;
+    public bool IsTutorialLevel { get; private set; }
     /*--------------------events-------------------------*/
     public event EventHandler OnLoadCharacterFinished;
-    public event EventHandler<ShowInfoCharacterParameters> OnSelectedCharacter;
+    public event EventHandler<ShowInfoCharacterParameters> OnUpdateCharacterInfo;
     public event EventHandler OnSetMainCharacterFinished;
+    public event EventHandler OnNewRound;
 
     /*---------------------------------------------------*/
     private MapManager _mapManager;
@@ -128,7 +133,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HideMoveRange();
         HideSkillRange();
         character.OnSelected();
-        OnSelectedCharacter?.Invoke(this, GetSelectedCharacterParams());
+        UpdateCharacterInfo();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
 
@@ -144,6 +149,19 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 OnWaypointClicked(cell);
                 break;
         }
+    }
+    
+    public void HandleEndTurn()
+    {
+        CurrentPlayerIndex++;
+        if (CurrentPlayerIndex >= Characters.Count)
+        {
+            CurrentPlayerIndex = 0;
+        }
+
+        MainCharacter.characterInfo.ResetBuffAfter();
+        ResetAllChange();
+        SetMainCharacter();
     }
 
     private void OnCharacterClicked(Cell cell)
@@ -197,7 +215,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     #endregion
 
     #region Sub
-
+    private SkillInfo GetSkillInfo(int index)
+    {
+        return _selectedCharacter.characterInfo.GetSkillInfo(index, GetSkillType(_selectedCharacter));
+    }
+    
+    public void HandleNewRound()
+    {
+        CurrentRound++;
+        OnNewRound?.Invoke(this, EventArgs.Empty);
+    }
+    
     public void SetInteract(bool active)
     {
         _canInteract = active;
@@ -292,6 +320,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         UIManager.Instance.OpenPopup(PopupType.ShowInfo, showInfoParams);
     }
 
+    private void UpdateCharacterInfo()
+    {
+        OnUpdateCharacterInfo?.Invoke(this, GetSelectedCharacterParams());
+    }
+    
     #endregion
 
     #region Skills
@@ -366,6 +399,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void OnCastSkillFinished()
     {
+        UpdateCharacterInfo();
         if (SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
         {
             TryAttackEnemies(_focusedCharacter);
@@ -376,7 +410,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             ApplyBuff();
         }
     }
-
+    
     private void ApplyBuff()
     {
         _focusedCharacter.characterInfo.ApplyBuff(SkillInfo);
@@ -447,39 +481,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         HandleEndTurn();
     }
-
-    #endregion
-
-    // old
-    [SerializeField] private GameObject tutorialPrefab;
-
-    public bool IsTutorialLevel;
-
-    //public bool IsTutorialLevel => false;
-    // Event
-    public event EventHandler OnNewRound;
-
-    public void HandleNewRound()
-    {
-        CurrentRound++;
-        OnNewRound?.Invoke(this, EventArgs.Empty);
-        // HUD.Instance.SetRound();
-        //AlkawaDebug.Log($"NT - Gameplay: round {CurrentRound}");
-    }
-
-    public void HandleEndTurn()
-    {
-        CurrentPlayerIndex++;
-        if (CurrentPlayerIndex >= Characters.Count)
-        {
-            CurrentPlayerIndex = 0;
-        }
-
-        MainCharacter.characterInfo.ResetBuffAfter();
-        ResetAllChange();
-        SetMainCharacter();
-    }
-
+    
     private void HandleNonDirectionalSkill()
     {
     }
@@ -493,16 +495,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SkillInfo = null;
         HideSkillRange();
     }
-
-    private SkillInfo GetSkillInfo(int index)
-    {
-        return _selectedCharacter.characterInfo.GetSkillInfo(index, GetSkillType(_selectedCharacter));
-    }
-
+    
     private void ResetAllChange()
     {
     }
 
+    #endregion
+    
     #region Tutorial
 
     public void HandleEndSecondConversation()
@@ -511,7 +510,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         // characterManager.ShowAllHPBar();
         // characterManager.SetMainCharacter();
     }
-
     #endregion
 }
 

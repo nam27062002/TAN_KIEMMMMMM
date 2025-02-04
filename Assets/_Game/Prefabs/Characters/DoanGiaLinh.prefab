@@ -110,7 +110,6 @@ MonoBehaviour:
   characterAnimationData: {fileID: 6624640028912595744}
   hpBar: {fileID: 1430896205935333413}
   model: {fileID: 613759459630214279}
-  CharacterManager: {fileID: 0}
   characterConfig:
     characterHeight: 1
     characterName: "\u0110o\xE0n Gia Linh"
@@ -131,7 +130,7 @@ MonoBehaviour:
       rollValue: 20
     actionPoints:
       m_keys: 000000000100000002000000
-      m_values: 010000000100000002000000
+      m_values: 020000000100000002000000
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 46d500e793f68bf4c9b66a3c3b2afbfc, type: 3}

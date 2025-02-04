@@ -97,7 +97,6 @@ MonoBehaviour:
   characterAnimationData: {fileID: 4661756497990611313}
   hpBar: {fileID: 613898370352190068}
   model: {fileID: 1430476920419069654}
-  CharacterManager: {fileID: 0}
   characterConfig:
     characterHeight: 1
     characterName: "L\xFD V\xF4 Danh"
@@ -118,7 +117,7 @@ MonoBehaviour:
       rollValue: 20
     actionPoints:
       m_keys: 000000000100000002000000
-      m_values: 020000000100000001000000
+      m_values: 010000000200000001000000
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 5a881b8a6a8de22419817212449f2a56, type: 3}

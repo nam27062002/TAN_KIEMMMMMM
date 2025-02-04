@@ -80,15 +80,14 @@ public class CharacterInfo
         ReduceActionPoints(GetActionPoints(GameplayManager.Instance.GetSkillType(Character)));
     }
     
-    public bool CanCastSkill(SkillInfo skillInfo, SkillType skillType)
+    public bool CanCastSkill(SkillInfo skillInfo)
     {
-        return Attributes.mana >= skillInfo.mpCost && IsEnoughActionPoints(skillType);
+        return Attributes.mana >= skillInfo.mpCost && IsEnoughActionPoints();
     }
     
-    public bool IsEnoughActionPoints(SkillType skillType)
+    private bool IsEnoughActionPoints()
     {
-        var actionPoints = GetActionPoints(skillType);
-        return ActionPoints.Any(point => actionPoints < point);
+        return ActionPoints.Any(point => point == 3);
     }
     
     private int GetActionPoints(SkillType skillType)
