@@ -33,7 +33,7 @@ public class EndTurnTutorial : TutorialSequence
         else
         {
             Tutorial.arrow.gameObject.SetActive(false);
-            MessageMenu.Instance.HideTutorialText();
+            UIManager.Instance.TryClosePopup(PopupType.Message);
             Tutorial.OnTutorialClicked(index);
         }
 

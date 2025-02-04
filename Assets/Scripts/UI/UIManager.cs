@@ -43,6 +43,14 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         _currentPopup.Open(parameters);
     }
 
+    public void TryClosePopup(PopupType popupType)
+    {
+        if (_currentPopup == allPopups[popupType])
+        {
+            _currentPopup.Close();
+        }
+    }
+    
     public void OpenMenu(MenuType menuType)
     {
         _currentMenu?.Close();
@@ -84,7 +92,7 @@ public enum PopupType
     None = 0,
     PauseGame = 1,
     Conversation = 2,
-    WinGame = 3,
+    Message = 3,
     ShowInfo = 4,
     ConfirmPopup = 5,
 }

@@ -27,7 +27,7 @@ public class ConversationPopup : PopupBase
     private Coroutine _autoNextCoroutine;
     private Action _onEndConversation;
     private Action<int> _onNextConversation;
-
+    protected override bool ShowGreyBackground => false;
     private void Start()
     {
         nextButton.onClick.AddListener(OnNextButtonClicked);
@@ -48,6 +48,7 @@ public class ConversationPopup : PopupBase
             EndConversation();
 #endif
         }
+        Time.timeScale = 1;
     }
     
     private void DisplayCurrentDialogue()

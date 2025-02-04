@@ -159,11 +159,17 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         arrow.gameObject.SetActive(true);
         arrow.anchoredPosition = new Vector2(-494.5f, -460.7f);
         arrow.rotation = Quaternion.Euler(0f, 0f, 270f);
-        MessageMenu.Instance.SetTutorialText("Sau một vòng, điểm hành động vàng chuyển thành màu xanh và có thể được sử dụng");
+        UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters()
+        {
+            Message = "Sau một vòng, điểm hành động vàng chuyển thành màu xanh và có thể được sử dụng",
+        });
         yield return new WaitForSeconds(4f);
-        MessageMenu.Instance.SetTutorialText("Điểm hành động đỏ chuyển thành màu vàng. Không thể được sử dụng");
+        UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters()
+        {
+            Message = "Điểm hành động đỏ chuyển thành màu vàng. Không thể được sử dụng",
+        });
         yield return new WaitForSeconds(4f);
-        MessageMenu.Instance.HideTutorialText();
+        UIManager.Instance.TryClosePopup(PopupType.Message);
         GameplayManager.Instance.IsTutorialLevel = false;
         // GameplayManager.Instance.characterManager.SetMainCharacter();
         Destroy(gameObject);
@@ -206,7 +212,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     private void EndFirstTutorial()
     {
         arrow.gameObject.SetActiveIfNeeded(false);
-        MessageMenu.Instance.HideTutorialText();
+        UIManager.Instance.TryClosePopup(PopupType.Message);
         GameplayManager.Instance.IsTutorialLevel = false;
     }
     
@@ -232,11 +238,14 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
             
         if (tutorial.tutorialTypes.HasFlag(TutorialType.Menu))
         {
-            MessageMenu.Instance.SetTutorialText(tutorial.tutorialMenuText);
+            UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters()
+            {
+                Message = tutorial.tutorialMenuText,
+            });
         }
         else
         {
-            MessageMenu.Instance.HideTutorialText();
+            UIManager.Instance.TryClosePopup(PopupType.Message);
         }
     }
 }
