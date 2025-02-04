@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using DG.Tweening;
+using Sirenix.OdinInspector;
+using UnityEngine.UI;
+
 public abstract class PopupBase : UIBase
 {
     [Header("Popup Animation Settings")]
@@ -13,6 +16,9 @@ public abstract class PopupBase : UIBase
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private RectTransform mainPanel;
 
+    
+    [Title("Close Popup Button")]
+    [SerializeField] private Button closePopupButton;
     [SerializeField] private Vector3 originalScale = Vector3.one;
     private bool _isAnimating;
     
@@ -21,6 +27,18 @@ public abstract class PopupBase : UIBase
     
     protected override string OnCloseMessage => $"Closed popup: {popupType}";
     protected override string OnOpenMessage => $"Opened popup: {popupType}";
+
+    protected override void RegisterEvents()
+    {
+        base.RegisterEvents();
+        closePopupButton.onClick.AddListener(Close);
+    }
+
+    protected override void UnregisterEvents()
+    {
+        base.UnregisterEvents();
+        closePopupButton.onClick.RemoveListener(Close);
+    }
     
     public override void Open(UIBaseParameters parameters = null)
     {
@@ -28,6 +46,7 @@ public abstract class PopupBase : UIBase
         base.Open(parameters);
         StartOpenAnimation();
         Time.timeScale = 0;
+        GameplayManager.Instance.SetInteract(false);
     }
     
     public override void Close()
@@ -38,6 +57,7 @@ public abstract class PopupBase : UIBase
             OnClose?.Invoke(this, EventArgs.Empty);
             Time.timeScale = 1;
             base.Close();
+            GameplayManager.Instance.SetInteract(true);
         });   
     }
     

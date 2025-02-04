@@ -13,7 +13,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [SerializeField] private SerializableDictionary<CharacterType, Character> allCharacter = new();
     /*--------------------events-------------------------*/
     public event EventHandler OnLoadCharacterFinished;
-    public event EventHandler<CharacterParams> OnSelectedCharacter;
+    public event EventHandler<ShowInfoCharacterParameters> OnSelectedCharacter;
     public event EventHandler OnSetMainCharacterFinished;
     
     /*---------------------------------------------------*/
@@ -259,27 +259,37 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return IsRoundOfPlayer && MainCharacter == _selectedCharacter && _mapManager.CanMove(cell);
     }
     
-    private CharacterParams GetSelectedCharacterParams()
+    private ShowInfoCharacterParameters GetSelectedCharacterParams()
     {
-         return new CharacterParams
+         return new ShowInfoCharacterParameters
          {
              Character = _selectedCharacter,
-             Skills = _selectedCharacter.GetSkillInfos(GetSkillType())
+             Skills = _selectedCharacter.GetSkillInfos(GetSkillType(_selectedCharacter))
          };
     }
     
-    private SkillType GetSkillType()
+    private SkillType GetSkillType(Character character)
     {
-         if (_selectedCharacter == MainCharacter) return SkillType.InternalSkill;
-         return _selectedCharacter.Type == MainCharacter.Type ? SkillType.MovementSkill : SkillType.CombatSkill;
+         if (character == MainCharacter) return SkillType.InternalSkill;
+         return character.Type == MainCharacter.Type ? SkillType.MovementSkill : SkillType.CombatSkill;
     }
+    
+    public void ShowInfo(Character character)
+    {
+        var showInfoParams = new ShowInfoCharacterParameters()
+        {
+            Character = character,
+            Skills = character.GetSkillInfos(GetSkillType(character)),
+        };
+        UIManager.Instance.OpenPopup(PopupType.ShowInfo, showInfoParams);
+    }
+    
     #endregion
     // old
     [SerializeField] private GameObject tutorialPrefab;
     public SkillInfo SkillInfo { get; set; }
     
     public bool IsTutorialLevel;
-    public CharacterParams ShowInfoCharacterParams { get; set; }
     //public bool IsTutorialLevel => false;
     // Event
     public event EventHandler OnNewRound;
@@ -394,17 +404,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         
     }
-
-    public void ShowInfo(Character character)
-    {
-        ShowInfoCharacterParams = new CharacterParams()
-        {
-            Character = character,
-            // Skills = character.GetSkillInfos(characterManager.GetSkillType(character)),
-        };
-        // UIManager.Instance.ShowPopup(PopupType.ShowInfo);
-    }
-
+    
     #region Tutorial
     public void HandleEndSecondConversation()
     {

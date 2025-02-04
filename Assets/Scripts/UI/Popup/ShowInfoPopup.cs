@@ -1,7 +1,10 @@
-﻿using TMPro;
+﻿using Sirenix.OdinInspector;
+using TMPro;
+using UnityEngine;
 
-public abstract class ShowInfoPopup : PopupBase
+public class ShowInfoPopup : PopupBase
 {
+    [Title("Show Info Popup"), Space]
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI damage;
     public TextMeshProUGUI spd;
@@ -10,22 +13,24 @@ public abstract class ShowInfoPopup : PopupBase
     public ProcessBar hpBarUI;
     public ProcessBar mpBarUI;
     
-    public void OpenPopup()
+    public override void Open(UIBaseParameters parameters = null)
     {
-        // base.OpenPopup();
-        var characterParams = GameplayManager.Instance.ShowInfoCharacterParams;
-        characterName.text = characterParams.Character.characterConfig.characterName;
-        damage.text =  characterParams.Character.characterInfo.Attributes.atk.ToString();
-        spd.text =  characterParams.Character.characterInfo.Attributes.spd.ToString();
-        def.text =  characterParams.Character.characterInfo.Attributes.def.ToString();
-        chiDef.text =  characterParams.Character.characterInfo.Attributes.chiDef.ToString();
+        base.Open(parameters);
+        if (parameters is ShowInfoCharacterParameters showInfoCharacterParameters)
+        {
+            characterName.text = showInfoCharacterParameters.Character.characterConfig.characterName;
+            damage.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.atk.ToString();
+            spd.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.spd.ToString();
+            def.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.def.ToString();
+            chiDef.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.chiDef.ToString();
         
-        var currentHp = characterParams.Character.characterInfo.CurrentHP;
-        var maxHp = characterParams.Character.characterInfo.Attributes.health;
-        hpBarUI.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
+            var currentHp = showInfoCharacterParameters.Character.characterInfo.CurrentHP;
+            var maxHp = showInfoCharacterParameters.Character.characterInfo.Attributes.health;
+            hpBarUI.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
         
-        var currentMp = characterParams.Character.characterInfo.CurrentMP;
-        var maxMp = characterParams.Character.characterInfo.Attributes.mana;
-        mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
+            var currentMp = showInfoCharacterParameters.Character.characterInfo.CurrentMP;
+            var maxMp = showInfoCharacterParameters.Character.characterInfo.Attributes.mana;
+            mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
+        }
     }
 }

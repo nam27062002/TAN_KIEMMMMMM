@@ -44,7 +44,7 @@ public class UI_Ingame : MenuBase
     [SerializeField] private SerializableDictionary<UIInGameObjectType, GameObject> objects;
 
     private GameplayManager GameplayManager => GameplayManager.Instance;
-    private CharacterParams _characterParams;
+    private ShowInfoCharacterParameters _characterParams;
     private List<AVT_SpdUI> _avtSpdUI = new();
     
     public override void Open(UIBaseParameters parameters = null)
@@ -91,7 +91,7 @@ public class UI_Ingame : MenuBase
         AlkawaDebug.Log(ELogCategory.UI, "Clicked Settings");
     }
     
-    private void GameplayManagerOnOnSelectedCharacter(object sender, CharacterParams characterParams)
+    private void GameplayManagerOnOnSelectedCharacter(object sender, ShowInfoCharacterParameters characterParams)
     {
         SetCharacterFocus(characterParams);
     }
@@ -134,7 +134,7 @@ public class UI_Ingame : MenuBase
          }
      }
     
-    private void SetCharacterFocus(CharacterParams characterParams)
+    private void SetCharacterFocus(ShowInfoCharacterParameters characterParams)
      {
          SetObjectActiveWhenCharacterFocus();
          _characterParams = characterParams;
@@ -152,6 +152,8 @@ public class UI_Ingame : MenuBase
                  unlock: !characterParams.Character.characterInfo.LockSkill, 
                  enoughMana: characterParams.Character.characterInfo.CurrentMP >= characterParams.Skills[i].mpCost
                  // && characterParams.Character.characterInfo.IsEnoughActionPoints(GameplayManager.Instance.characterManager.GetSkillType())
+                 ,
+                 characterParams.Character.Type
                  );
          }
 

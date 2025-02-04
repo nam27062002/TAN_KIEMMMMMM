@@ -7,23 +7,23 @@ public class PauseGamePopup : PopupBase
     [SerializeField] private Button saveButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
-    [SerializeField] private Button closePopupButton;
-    private void Awake()
+    protected override void RegisterEvents()
     {
+        base.RegisterEvents();
         replayButton.onClick.AddListener(OnReplayButtonClick);
         saveButton.onClick.AddListener(OnSaveButtonClick);
         settingsButton.onClick.AddListener(OnSettingsButtonClick);
         exitButton.onClick.AddListener(OnExitButtonClick);
-        closePopupButton.onClick.AddListener(Close);
+
     }
 
-    private void OnDestroy()
+    protected override void UnregisterEvents()
     {
+        base.UnregisterEvents();    
         replayButton.onClick.RemoveListener(OnReplayButtonClick);
         saveButton.onClick.RemoveListener(OnSaveButtonClick);
         settingsButton.onClick.RemoveListener(OnSettingsButtonClick);
         exitButton.onClick.RemoveListener(OnExitButtonClick);
-        closePopupButton.onClick.RemoveListener(Close);
     }
 
     private void OnReplayButtonClick()

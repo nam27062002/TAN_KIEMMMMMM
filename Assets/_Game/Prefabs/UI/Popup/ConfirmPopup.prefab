@@ -333,6 +333,7 @@ MonoBehaviour:
   popupType: 5
   canvasGroup: {fileID: 3990258015458717892}
   mainPanel: {fileID: 6900777823432231715}
+  closePopupButton: {fileID: 0}
   originalScale: {x: 1, y: 1, z: 1}
   titleText: {fileID: 2191990918737544904}
   messageText: {fileID: 1313350898428729812}

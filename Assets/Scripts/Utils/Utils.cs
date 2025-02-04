@@ -7,7 +7,6 @@ public static class Utils
     {
         if (gameObject == null)
         {
-            //AlkawaDebug.LogWarning("GameObject is null. Cannot set active state.");
             return;
         }
         if (gameObject.activeSelf != active)

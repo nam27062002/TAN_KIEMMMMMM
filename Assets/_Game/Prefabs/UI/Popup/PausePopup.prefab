@@ -189,12 +189,12 @@ MonoBehaviour:
   popupType: 0
   canvasGroup: {fileID: 3990258015458717892}
   mainPanel: {fileID: 6900777823432231715}
+  closePopupButton: {fileID: 2184339925624711586}
   originalScale: {x: 1, y: 1, z: 1}
   replayButton: {fileID: 4742497922060610829}
   saveButton: {fileID: 3325576989553578595}
   settingsButton: {fileID: 8938992036799474593}
   exitButton: {fileID: 8435240895598366528}
-  closePopupButton: {fileID: 2184339925624711586}
 --- !u!1 &5337409204634048598
 GameObject:
   m_ObjectHideFlags: 0

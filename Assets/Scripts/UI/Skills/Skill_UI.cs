@@ -13,8 +13,7 @@ public class Skill_UI : MonoBehaviour
     private bool _isEnoughMana;
     private bool _isLocked;
     private int _skillIndex;
-    
-    
+    private Type _type;
     private void Awake()
     {
         skillButton.onClick.AddListener(OnSkillButtonClicked);
@@ -35,10 +34,11 @@ public class Skill_UI : MonoBehaviour
     {
         return !GameplayManager.Instance.IsTutorialLevel &&
                _isEnoughMana &&
-               !_isLocked;
+               !_isLocked &&
+               _type == Type.Player;
     }
     
-    public void SetSkill(int index, Sprite skillIcon, bool unlock, bool enoughMana)
+    public void SetSkill(int index, Sprite skillIcon, bool unlock, bool enoughMana, Type type)
     {
         _isLocked = !unlock;
         _isEnoughMana = enoughMana;
@@ -47,7 +47,6 @@ public class Skill_UI : MonoBehaviour
         skillImage.sprite = skillIcon;
         gameObject.SetActive(true);
         lockObject.SetActive(!unlock);
-        // Debug.Log($"[Gameplay][Skill_UI] SetSkill {_skillIndex}: {CanTrigger()}");
         if (!unlock) return;
         var color = skillImage.color;
         color.a = enoughMana ? 1f : 0.5f;
