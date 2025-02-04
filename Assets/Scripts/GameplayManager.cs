@@ -24,11 +24,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public Character MainCharacter => Characters[CurrentPlayerIndex];
     private Character _selectedCharacter;
     
+    private HashSet<Character> _charactersInRange= new();
+    
     public int CurrentRound { get; private set; }
     public int CurrentPlayerIndex { get; private set; }
 
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
-    
+
+    private bool _canInteract;
     // new
     protected override void Awake()
     {
@@ -102,6 +105,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         
         SortCharacterBySpeed();
         SetMainCharacter();
+        SetInteract(true);
         OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
@@ -116,8 +120,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         _selectedCharacter?.OnUnSelected();
         _selectedCharacter = character;
-        // HideMoveRange();
-        // HideSkillRange();
+        HideMoveRange();
+        HideSkillRange();
         character.OnSelected();
         OnSelectedCharacter?.Invoke(this, GetSelectedCharacterParams());
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"SetSelectedCharacter: {character.characterConfig.characterName}");
@@ -125,6 +129,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void OnCellClicked(Cell cell)
     {
+        if (!_canInteract) return;
         switch (cell.CellType)
         {
             case CellType.Character:
@@ -138,32 +143,32 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private void OnCharacterClicked(Cell cell)
     {
-        // if (characterManager.CharactersInRange.Contains(cell.Character))
-        // {
-        //     HandleCastSkill(cell.Character);
-        // }
-        // else
-        // {
-        //     if (InPlayerTurn)
-        //     {
-        //         if (cell.Character.Type == Type.AI)
-        //         {
-        //             characterManager.SetSelectedCharacter(cell.Character);
-        //         }
-        //         else
-        //         {
-        //             if (cell.Character == characterManager.SelectedCharacter)
-        //             {
-        //                 UnSelectSkill();
-        //                 if (characterManager.IsMainCharacterSelected) characterManager.ShowMoveRange();
-        //             }
-        //             else
-        //             {
-        //                 characterManager.SetSelectedCharacter(cell.Character);
-        //             }
-        //         }
-        //     }   
-        // }
+        if (_charactersInRange.Contains(cell.Character))
+        {
+            HandleCastSkill(cell.Character);
+        }
+        else
+        {
+            if (IsRoundOfPlayer)
+            {
+                if (cell.Character.Type == Type.AI)
+                {
+                    SetSelectedCharacter(cell.Character);
+                }
+                else
+                {
+                    if (cell.Character == _selectedCharacter)
+                    {
+                        UnSelectSkill();
+                        if (_selectedCharacter.IsMainCharacter) ShowMoveRange();
+                    }
+                    else
+                    {
+                        SetSelectedCharacter(cell.Character);
+                    }
+                }
+            }   
+        }
     }
     
     private void OnWaypointClicked(Cell cell)
@@ -186,6 +191,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     #endregion
     
     #region Sub
+
+    public void SetInteract(bool active)
+    {
+        _canInteract = active;
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"Set Interact: {active}");
+    }
     private void SortCharacterBySpeed()
     { 
         Characters = Characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
@@ -196,6 +207,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         var range = _selectedCharacter.characterInfo.GetMoveRange();
         _mapManager.ShowMoveRange(_selectedCharacter.characterInfo.Cell, range);
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"[{_selectedCharacter.characterConfig.characterName}] move Range: {range}");
+    }
+    
+    private void HideMoveRange()
+    {
+         _mapManager.HideMoveRange();
+    }
+
+    private void HideSkillRange()
+    {
+        _mapManager.HideSkillRange();
+        _charactersInRange.Clear();
     }
 
     public void DestroyGameplay()

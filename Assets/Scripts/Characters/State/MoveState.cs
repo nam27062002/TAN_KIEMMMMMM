@@ -10,6 +10,7 @@ public class MoveState : CharacterState
     
     public override void OnEnter(StateParams stateParams = null)
     {
+        GpManager.SetInteract(false);
         base.OnEnter(stateParams);
         HandleMovement((MoveStateParams)stateParams);
     }
@@ -36,6 +37,7 @@ public class MoveState : CharacterState
         {
             SetCell(stateParams.MoveCells[^1]);
             Character.characterInfo.Cell.ShowFocus();
+            GpManager.SetInteract(true);
             OnFinishAction();
         });
         
