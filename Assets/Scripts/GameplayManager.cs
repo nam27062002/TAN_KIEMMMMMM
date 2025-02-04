@@ -66,8 +66,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         CurrentRound = 0;
         // HUD.Instance.SetLevelName(levelConfig.levelName);
         //
-        // if (!IsTutorialLevel) 
-        LoadMapGame();
+        if (!IsTutorialLevel) LoadMapGame();
     }
 
     public void LoadMapGame()

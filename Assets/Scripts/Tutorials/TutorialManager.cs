@@ -95,7 +95,12 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void ShowFirstConversation()
     {
-        ConversationMenu.Instance.StartConversation(conversation_1, OnEndFirstConversation);
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        {
+            Conversation =  conversation_1.conversation,
+            OnEndConversation = OnEndFirstConversation,
+            OnNextConversation = null
+        });
     }
 
     private void OnEndFirstConversation()
@@ -124,12 +129,21 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void ShowSecondConversation()
     {
-        ConversationMenu.Instance.StartConversation(conversation_2, OnEndSecondConversation, OnNextConversation);
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        {
+            Conversation = conversation_2.conversation,
+            OnEndConversation = OnEndSecondConversation,
+            OnNextConversation = OnNextConversation
+        });
     }
 
     private void ShowFinalConversation()
     {
-        ConversationMenu.Instance.StartConversation(conversation_3, OnEndFinal);
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        {
+            Conversation = conversation_3.conversation,
+            OnEndConversation = OnEndFinal,
+        });
     }
 
     private void OnEndFinal()

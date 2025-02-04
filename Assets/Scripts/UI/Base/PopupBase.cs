@@ -27,17 +27,18 @@ public abstract class PopupBase : UIBase
     
     protected override string OnCloseMessage => $"Closed popup: {popupType}";
     protected override string OnOpenMessage => $"Opened popup: {popupType}";
+    protected virtual bool ShowGreyBackground => true;
 
     protected override void RegisterEvents()
     {
         base.RegisterEvents();
-        closePopupButton.onClick.AddListener(Close);
+        closePopupButton?.onClick.AddListener(Close);
     }
 
     protected override void UnregisterEvents()
     {
         base.UnregisterEvents();
-        closePopupButton.onClick.RemoveListener(Close);
+        closePopupButton?.onClick.RemoveListener(Close);
     }
     
     public override void Open(UIBaseParameters parameters = null)
@@ -54,7 +55,8 @@ public abstract class PopupBase : UIBase
         if (_isAnimating) return;
         StartCloseAnimation(() =>
         {
-            OnClose?.Invoke(this, EventArgs.Empty);
+            if (ShowGreyBackground)
+                OnClose?.Invoke(this, EventArgs.Empty);
             Time.timeScale = 1;
             base.Close();
             GameplayManager.Instance.SetInteract(true);
@@ -73,7 +75,8 @@ public abstract class PopupBase : UIBase
             .OnComplete(() =>
             {
                 _isAnimating = false;
-                OnOpen?.Invoke(this, EventArgs.Empty);
+                if (ShowGreyBackground) 
+                    OnOpen?.Invoke(this, EventArgs.Empty);
             });
         openSequence.Play();
     }

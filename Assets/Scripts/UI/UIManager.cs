@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -78,15 +77,13 @@ public class UIManager : SingletonMonoBehavior<UIManager>
             menu.gameObject.SetActiveIfNeeded(active);
         }
     }
-    
 }
-
 
 public enum PopupType
 {
     None = 0,
     PauseGame = 1,
-    Defeat = 2,
+    Conversation = 2,
     WinGame = 3,
     ShowInfo = 4,
     ConfirmPopup = 5,
