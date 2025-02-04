@@ -59,6 +59,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnLoadCharacterFinished += OnLoadCharacterFinished;
         GameplayManager.OnUpdateCharacterInfo += GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished += GameplayManagerOnOnSetMainCharacterFinished;
+        GameplayManager.OnNewRound += GameplayManagerOnOnNewRound;
         endTurnButton.button.onClick.AddListener(OnEndTurnButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsClick);
     }
@@ -69,6 +70,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnLoadCharacterFinished -= OnLoadCharacterFinished;
         GameplayManager.OnUpdateCharacterInfo -= GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished -= GameplayManagerOnOnSetMainCharacterFinished;
+        GameplayManager.OnNewRound -= GameplayManagerOnOnNewRound;
         endTurnButton.button.onClick.RemoveListener(OnEndTurnButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsClick);
     }
@@ -106,6 +108,11 @@ public class UI_Ingame : MenuBase
     private void OnEndTurnButtonClicked()
     {
         GameplayManager.HandleEndTurn();
+    }
+    
+    private void GameplayManagerOnOnNewRound(object sender, EventArgs e)
+    {
+        SetRound();
     }
     
     #endregion

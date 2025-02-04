@@ -15,7 +15,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     [Title("Tutorials")]
     [SerializeField] private GameObject tutorialPrefab;
-    public bool IsTutorialLevel { get; private set; }
+    public bool IsTutorialLevel { get; set; }
     /*--------------------events-------------------------*/
     public event EventHandler OnLoadCharacterFinished;
     public event EventHandler<ShowInfoCharacterParameters> OnUpdateCharacterInfo;
@@ -45,11 +45,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         base.Awake();
         UIManager.Instance.OpenMenu(MenuType.InGame);
-        // IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
-        // if (IsTutorialLevel)
-        // {
-        //     tutorialPrefab.SetActive(true);
-        // }
+        SetupTutorial();
     }
 
     private void Start()
@@ -106,10 +102,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 }
 
                 character.Initialize(_mapManager.GetCell(point));
-                // if (GPManager.IsTutorialLevel)
-                // {
-                //     character.HideHpBar();
-                // }
+                if (IsTutorialLevel)
+                {
+                    character.HideHpBar();
+                }
             }
         }
 
@@ -124,6 +120,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         MainCharacter.SetMainCharacter();
         SetSelectedCharacter(MainCharacter);
         OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
+        if (Characters.Count > 0 && MainCharacter == Characters[0])
+        { 
+            HandleNewRound();
+        }
     }
 
     private void SetSelectedCharacter(Character character)
@@ -220,7 +220,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return _selectedCharacter.characterInfo.GetSkillInfo(index, GetSkillType(_selectedCharacter));
     }
     
-    public void HandleNewRound()
+    private void HandleNewRound()
     {
         CurrentRound++;
         OnNewRound?.Invoke(this, EventArgs.Empty);
@@ -504,6 +504,15 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     #region Tutorial
 
+    private void SetupTutorial()
+    {
+        IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
+        if (IsTutorialLevel)
+        {
+            tutorialPrefab.SetActive(true);
+        }
+    }
+    
     public void HandleEndSecondConversation()
     {
         // HUD.Instance.ShowHUD();
