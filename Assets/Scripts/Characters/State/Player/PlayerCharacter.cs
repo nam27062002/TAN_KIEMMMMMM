@@ -1,6 +1,7 @@
 ﻿public abstract class PlayerCharacter : Character
 {
     public override Type Type => Type.Player;
+    public override bool CanEndTurn => true;
     
     protected override void SetStateMachine()
     {

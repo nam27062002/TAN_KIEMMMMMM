@@ -15,10 +15,10 @@ public class AVT_SpdUI : MonoBehaviour
 
     public GameObject focusObject;
 
-    public void SetupUI(bool isFocused, bool isEnemy, Sprite iconSprite)
+    public void SetupUI(bool isFocused, Type characterType, Sprite iconSprite)
     {
         icon.sprite = iconSprite;
-        background.sprite = isFocused ? main : (isEnemy ? enemy : team);
+        background.sprite = isFocused ? main : (characterType == Type.AI ? enemy : team);
         focusObject.SetActive(isFocused);
     }
         

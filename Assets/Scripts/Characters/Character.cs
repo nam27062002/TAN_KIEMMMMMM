@@ -20,6 +20,8 @@ public abstract class Character : MonoBehaviour
     public event EventHandler OnEndAnimEventHandler;
     public Roll Roll {get; set;}
     
+    public virtual bool CanEndTurn => false;
+    public bool IsMainCharacter => GpManager.MainCharacter == this;
     private void Awake()
     {
         SetStateMachine();

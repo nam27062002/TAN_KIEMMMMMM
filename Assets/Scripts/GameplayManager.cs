@@ -14,17 +14,18 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     /*--------------------events-------------------------*/
     public event EventHandler OnLoadCharacterFinished;
     public event EventHandler<CharacterParams> OnSelectedCharacter;
+    public event EventHandler OnSetMainCharacterFinished;
     
     /*---------------------------------------------------*/
     private MapManager _mapManager;
     private readonly List<Character> _players = new();
     private readonly List<Character> _enemies = new();
-    private List<Character> _characters = new();
-    public Character MainCharacter => _characters[_currentPlayerIndex];
+    public List<Character> Characters { get; private set; } = new();
+    public Character MainCharacter => Characters[CurrentPlayerIndex];
     private Character _selectedCharacter;
     
-    private int _currentRound;
-    private int _currentPlayerIndex;
+    public int CurrentRound { get; private set; }
+    public int CurrentPlayerIndex { get; private set; }
 
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
     
@@ -54,7 +55,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     #region Main 
     private void StartNewGame()
     {
-        _currentRound = 0;
+        CurrentRound = 0;
         // HUD.Instance.SetLevelName(levelConfig.levelName);
         //
         // if (!IsTutorialLevel) 
@@ -71,7 +72,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private void LoadCharacter()
     {
-        _characters.Clear();
+        Characters.Clear();
         _players.Clear();
         _enemies.Clear();
         _selectedCharacter = null;
@@ -81,7 +82,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
              {
                  var go = Instantiate(allCharacter[spawnPoint.Key], transform);
                  var character = go.GetComponent<Character>();
-                 _characters.Add(character);
+                 Characters.Add(character);
                  switch (character.Type)
                  {
                      case Type.AI:
@@ -108,6 +109,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         MainCharacter.SetMainCharacter();
         SetSelectedCharacter(MainCharacter);
+        OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
     private void SetSelectedCharacter(Character character)
@@ -117,6 +119,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         // HideMoveRange();
         // HideSkillRange();
         character.OnSelected();
+        OnSelectedCharacter?.Invoke(this, GetSelectedCharacterParams());
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
     
@@ -170,11 +173,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _mapManager.HideMoveRange();
         _selectedCharacter.MoveCharacter(cellPath);
     }
-
-    private void MoveToCell(Cell cell)
-    {
-        
-    }
     
     #endregion
     #region Events
@@ -190,7 +188,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     #region Sub
     private void SortCharacterBySpeed()
     { 
-        _characters = _characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
+        Characters = Characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
     }
     
     public void ShowMoveRange()
@@ -209,7 +207,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void DestroyAllCharacters()
     {
-        foreach (var character in _characters)
+        foreach (var character in Characters)
         {
             character.DestroyCharacter();
         }
@@ -238,17 +236,26 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         return IsRoundOfPlayer && MainCharacter == _selectedCharacter && _mapManager.CanMove(cell);
     }
+    
+    private CharacterParams GetSelectedCharacterParams()
+    {
+         return new CharacterParams
+         {
+             Character = _selectedCharacter,
+             Skills = _selectedCharacter.GetSkillInfos(GetSkillType())
+         };
+    }
+    
+    private SkillType GetSkillType()
+    {
+         if (_selectedCharacter == MainCharacter) return SkillType.InternalSkill;
+         return _selectedCharacter.Type == MainCharacter.Type ? SkillType.MovementSkill : SkillType.CombatSkill;
+    }
     #endregion
     // old
     [SerializeField] private GameObject tutorialPrefab;
-    // private
-    
-    // private bool InPlayerTurn => characterManager.MainCharacter is PlayerCharacter;
     public SkillInfo SkillInfo { get; set; }
     
-    // public
-    
-
     public bool IsTutorialLevel;
     public CharacterParams ShowInfoCharacterParams { get; set; }
     //public bool IsTutorialLevel => false;
@@ -257,7 +264,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleNewRound()
     {
-        _currentRound++;
+        CurrentRound++;
         OnNewRound?.Invoke(this, EventArgs.Empty);
         // HUD.Instance.SetRound();
         //AlkawaDebug.Log($"NT - Gameplay: round {CurrentRound}");
@@ -277,7 +284,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void HandleEndTurn()
     {
-        _currentPlayerIndex++;
+        CurrentPlayerIndex++;
         // if (CharacterIndex >= characterManager.Characters.Count)
         // {
         //     CharacterIndex = 0;
