@@ -36,7 +36,7 @@ public class ConversationPopup : PopupBase
     
     public override void Open(UIBaseParameters parameters = null)
     {
-        base.Open(parameters);
+        gameObject.SetActiveIfNeeded(true);
         if (parameters is ConversationPopupParameters conversationPopupParameters)
         {
             _conversationData = conversationPopupParameters.Conversation;
@@ -44,11 +44,10 @@ public class ConversationPopup : PopupBase
             DisplayCurrentDialogue();
             _onEndConversation = conversationPopupParameters.OnEndConversation;
             _onNextConversation = conversationPopupParameters.OnNextConversation;
-#if QUICK_CHECK
-            EndConversation();
-#endif
+// #if QUICK_CHECK
+//             EndConversation();
+// #endif
         }
-        Time.timeScale = 1;
     }
     
     private void DisplayCurrentDialogue()
@@ -147,6 +146,11 @@ public class ConversationPopup : PopupBase
 
         Close();
         _onEndConversation?.Invoke();
+    }
+
+    public override void Close()
+    {
+        gameObject.SetActiveIfNeeded(false);
     }
     
     private void Update()

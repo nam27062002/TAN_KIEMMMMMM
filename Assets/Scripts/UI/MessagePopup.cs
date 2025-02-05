@@ -26,7 +26,6 @@ public class MessagePopup : PopupBase
 
         public override void Open(UIBaseParameters parameters = null)
         {
-            gameObject.SetActiveIfNeeded(true);
             if (parameters is MessagePopupParameters messagePopupParameters)
             {
                 if (_isFadingOut)
@@ -79,21 +78,16 @@ public class MessagePopup : PopupBase
             IsOpen = false;
             _isFadingOut = true;
             _currentTween?.Kill();
-            _currentTween = _canvasGroup.DOFade(0f, fadeDuration).SetUpdate(true).OnComplete(() =>
-            {
-                _isFadingOut = false;
-                gameObject.SetActiveIfNeeded(false);
-                _currentTween = null;
-
-                onComplete?.Invoke();
-            });
+            _isFadingOut = false;
+            gameObject.SetActiveIfNeeded(false);
+            _currentTween = null;
+            onComplete?.Invoke();
         }
 
         public override void Close()
         {
             if (_isFadingOut || !gameObject.activeSelf)
                 return;
-
             FadeOut();
         }
 

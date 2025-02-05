@@ -10,7 +10,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     [SerializeField] private SerializableDictionary<MenuType, UIBase> allMenus = new();
     [SerializeField] private Image greyBackground;
 
-    private UIBase _currentMenu;
+    public UIBase CurrentMenu { get; set; }
     private UIBase _currentPopup;
 
     protected override void Awake()
@@ -53,9 +53,9 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     
     public void OpenMenu(MenuType menuType)
     {
-        _currentMenu?.Close();
-        _currentMenu = allMenus[menuType];
-        _currentMenu.Open();
+        CurrentMenu?.Close();
+        CurrentMenu = allMenus[menuType];
+        CurrentMenu.Open();
     }
 
     #endregion

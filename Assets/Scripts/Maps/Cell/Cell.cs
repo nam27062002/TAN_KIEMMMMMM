@@ -36,11 +36,11 @@ public class Cell : MonoBehaviour
             return;
         }
 
-#if QUICK_CHECK
-        transform.localScale = Vector3.one;
-        backgroundSprite.color = new Color(backgroundSprite.color.r, backgroundSprite.color.g, backgroundSprite.color.b, 1f);
-        onComplete?.Invoke();
-#else
+// #if QUICK_CHECK
+        // transform.localScale = Vector3.one;
+        // backgroundSprite.color = new Color(backgroundSprite.color.r, backgroundSprite.color.g, backgroundSprite.color.b, 1f);
+        // onComplete?.Invoke();
+// #else
         transform.localScale = Vector3.zero;
         backgroundSprite.color =
             new Color(backgroundSprite.color.r, backgroundSprite.color.g, backgroundSprite.color.b, 0f);
@@ -48,7 +48,7 @@ public class Cell : MonoBehaviour
         sequence.Append(transform.DOScale(Vector3.one, 0.5f).SetDelay(delay).SetEase(Ease.OutBack));
         sequence.Join(backgroundSprite.DOFade(1f, 0.5f).SetDelay(delay).SetEase(Ease.Linear));
         sequence.OnComplete(() => { onComplete?.Invoke(); });
-#endif
+// #endif
     }
 
 

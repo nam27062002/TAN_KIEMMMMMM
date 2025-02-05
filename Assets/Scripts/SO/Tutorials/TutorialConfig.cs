@@ -3,20 +3,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[Flags]
-public enum TutorialType
-{
-    None = 0,
-    Arrow = 1 << 0,
-    Menu = 1 << 1
-}
-
-[Serializable]
-public class TutorialConfig
+[CreateAssetMenu(fileName = "TutorialConfig", menuName = "SO/Tutorial/TutorialConfig")]
+public class TutorialConfig : ScriptableObject
 {
     [ListDrawerSettings(Expanded = true)]
     public List<TutorialData> tutorials = new List<TutorialData>();
-
+    
     [Serializable]
     public class TutorialData
     {
@@ -42,4 +34,12 @@ public class TutorialConfig
         [LabelText("Menu Text")]
         public string tutorialMenuText;
     }
+}
+
+[Flags, Serializable]
+public enum TutorialType
+{
+    None = 0,
+    Arrow = 1 << 0,
+    Menu = 1 << 1
 }

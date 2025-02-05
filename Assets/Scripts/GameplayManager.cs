@@ -114,7 +114,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
-    private void SetMainCharacter()
+    public void SetMainCharacter()
     {
         MainCharacter.SetMainCharacter();
         SetSelectedCharacter(MainCharacter);
@@ -214,6 +214,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     #endregion
 
     #region Sub
+    
+    public Character GetCharacterByType(CharacterType characterType)
+    {
+        return Characters.FirstOrDefault(character => character.characterType == characterType);
+    }
+    
     private SkillInfo GetSkillInfo(int index)
     {
         return _selectedCharacter.characterInfo.GetSkillInfo(index, GetSkillType(_selectedCharacter));

@@ -181,11 +181,19 @@ public class UI_Ingame : MenuBase
          SetRound();
      }
     
-    private void HideAllUI()
+    public void HideAllUI()
     {
         foreach (var item in objects.Values)
         {
             item.SetActive(false);
+        }
+    }
+
+    public void ShowAllUI()
+    {
+        foreach (var item in objects.Values)
+        {
+            item.SetActive(true);
         }
     }
     

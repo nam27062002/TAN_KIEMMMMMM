@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 {
     public SerializableDictionary<CharacterType, Character> charactersInTutorial;
     [SerializeField, ReadOnly] private SerializedDictionary<int, TutorialSequence> tutorialClickIndex = new();
-    public TutorialConfig tutorialConfig;
+    [FormerlySerializedAs("tutorialConfigSO")] [SerializeField] private TutorialConfig tutorialConfig;
     public List<GotoPos> lvdGotos;
     public List<GotoPos> dglGotos;
     public List<GotoPos> tnGotos;
@@ -24,17 +25,17 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     private int _footStep;
     public bool EndTuto;
     public RectTransform arrow;
-    
+
     protected override void Awake()
     {
         base.Awake();
-        
+
         gotoPoses[CharacterType.LyVoDanh] = lvdGotos;
         gotoPoses[CharacterType.DoanGiaLinh] = dglGotos;
         gotoPoses[CharacterType.ThietNhan] = tnGotos;
-        
+
         SpawnCharactersInTutorial();
-        
+
         GameplayManager.Instance.OnLoadCharacterFinished += OnLoadCharacterFinished;
     }
 
@@ -43,7 +44,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         tutorialClickIndex ??= new SerializedDictionary<int, TutorialSequence>();
         tutorialClickIndex[key] = tutorialSequence;
     }
-    
+
     private void Start()
     {
         StartTutorial();
@@ -56,16 +57,12 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         ShowFinalConversation();
     }
 
-    protected override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
-
     private void SpawnCharactersInTutorial()
     {
         foreach (var character in charactersInTutorial)
         {
-            var go = Instantiate(character.Value.gameObject, gotoPoses[character.Key][0].transform.position, Quaternion.identity);
+            var go = Instantiate(character.Value.gameObject, gotoPoses[character.Key][0].transform.position,
+                Quaternion.identity);
             var characterComponent = go.GetComponent<Character>();
             charactersDict[character.Key] = characterComponent;
             characterComponent.HideHpBar();
@@ -74,10 +71,8 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void StartTutorial()
     {
-        // 1: di chuyển nhân vật vào map trong 3s
         float duration = 3f;
         MoveCharacter(duration);
-        // 2: show hội thoại đầu tiên
         Invoke(nameof(ShowFirstConversation), duration);
     }
 
@@ -97,7 +92,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     {
         UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
         {
-            Conversation =  conversation_1.conversation,
+            Conversation = conversation_1.conversation,
             OnEndConversation = OnEndFirstConversation,
             OnNextConversation = null
         });
@@ -117,13 +112,15 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         charactersDict[CharacterType.ThietNhan].PlayAnim(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.ThietNhan].transform.localScale = new Vector3(-1, 1, 1);
     }
-    
+
     private void OnLoadCharacterFinished(object sender, EventArgs e)
     {
         foreach (var character in charactersDict)
         {
             character.Value.DestroyCharacter();
-        }    
+        }
+
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
         Invoke(nameof(ShowSecondConversation), 1f);
     }
 
@@ -150,7 +147,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     {
         // HUD.Instance.ShowHUD();
         EndTuto = true;
-        // GameplayManager.Instance.characterManager.SetMainCharacter();
+        GameplayManager.Instance.SetMainCharacter();
         StartCoroutine(ShowTutorial2());
     }
 
@@ -171,16 +168,16 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         yield return new WaitForSeconds(4f);
         UIManager.Instance.TryClosePopup(PopupType.Message);
         GameplayManager.Instance.IsTutorialLevel = false;
-        // GameplayManager.Instance.characterManager.SetMainCharacter();
+        GameplayManager.Instance.SetMainCharacter();
         Destroy(gameObject);
     }
-    
+
     private void OnNextConversation(int index)
     {
         if (index == 1)
         {
-            // var character = GameplayManager.Instance.characterManager.GetCharacterByType(CharacterType.LyVoDanh);
-            // character.PlayAnim(AnimationParameterNameType.Skill1);
+            var character = GameplayManager.Instance.GetCharacterByType(CharacterType.LyVoDanh);
+            character.PlayAnim(AnimationParameterNameType.Skill1);
         }
     }
 
@@ -192,9 +189,10 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     private void OnEndSecondConversationDelay()
     {
         GameplayManager.Instance.HandleEndSecondConversation();
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
         SetTutorial();
     }
-    
+
     public void OnTutorialClicked(int index, float delayTime = 0f)
     {
         if (index != tutorialIndex) return;
@@ -215,14 +213,14 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         UIManager.Instance.TryClosePopup(PopupType.Message);
         GameplayManager.Instance.IsTutorialLevel = false;
     }
-    
+
     private void SetTutorial()
     {
         if (!tutorialClickIndex.ContainsKey(tutorialIndex)) return;
         ApplyTutorial(tutorialConfig.tutorials[tutorialIndex]);
         tutorialClickIndex[tutorialIndex].PrepareTutorial();
     }
-    
+
     private void ApplyTutorial(TutorialConfig.TutorialData tutorial)
     {
         if (tutorial.tutorialTypes.HasFlag(TutorialType.Arrow))
@@ -235,7 +233,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         {
             arrow.gameObject.SetActive(false);
         }
-            
+
         if (tutorial.tutorialTypes.HasFlag(TutorialType.Menu))
         {
             UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters()
