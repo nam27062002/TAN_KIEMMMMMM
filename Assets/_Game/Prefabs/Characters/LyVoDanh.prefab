@@ -64,6 +64,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8476363159216195691}
+    - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1068771806723808600}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
 --- !u!1 &959730211588684647 stripped
 GameObject:
@@ -315,6 +318,22 @@ MonoBehaviour:
         add: 0
       description: "\u0110\u1EA1p thi\xEAn nhai (Sorrowful Journey): hai nh\xE1t
         ch\xE9m \u0111\xE1nh ng\xE3 \u0111\u1ED1i th\u1EE7. (apply debuff 9)"
+  passiveSkills:
+  - {fileID: 1068771806723808600}
+--- !u!114 &1068771806723808600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959730211588684647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd842022c824dfda4b76f9eadff71c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lyVoDanh: {fileID: 8476363159216195691}
+  triggerCondition: 5
 --- !u!1 &1430476920419069654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

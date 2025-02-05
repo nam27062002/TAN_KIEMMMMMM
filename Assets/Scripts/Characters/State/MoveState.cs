@@ -22,7 +22,6 @@ public class MoveState : CharacterState
         Character.characterInfo.Cell.HideFocus();
         var moveAmount = stateParams.MoveCells.Count - 1;
         Character.characterInfo.MoveAmount += moveAmount;
-        Character.characterInfo.OnMoveAmount?.Invoke(moveAmount);
         var moveSequence = DOTween.Sequence();
         float currentX = Transform.position.x;
         foreach (var cell in stateParams.MoveCells)

@@ -66,17 +66,13 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     private void OnClosePopup(object sender, EventArgs e)
     {
         CurrentPopup = null;
-
+        greyBackground.enabled = false;
         if (popupStack.Count > 0)
         {
             UIBase previousPopup = popupStack.Pop();
             CurrentPopup = previousPopup;
             CurrentPopup.gameObject.SetActive(true);
             greyBackground.enabled = true;
-        }
-        else
-        {
-            greyBackground.enabled = false;
         }
     }
 

@@ -14,8 +14,18 @@ public class CharacterInfo
     
     public int CurrentHp { get; set; }
     public int CurrentMp { get; set; }
-    
-    public int MoveAmount { get; set; }
+
+    private int moveAmount;
+    public int MoveAmount
+    {
+        get => moveAmount;
+        set
+        {
+            moveAmount = value;
+            OnMoveAmount?.Invoke(this, value);
+        }
+    }
+
     public int MoveBuff { get; set; } 
     public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
     public SkillInfo SkillInfo { get; set; }
@@ -25,7 +35,7 @@ public class CharacterInfo
     // Action
     public event EventHandler OnHpChanged;
     public event EventHandler OnMpChanged;
-    public Action<int> OnMoveAmount;
+    public event EventHandler<int> OnMoveAmount;
     
     public SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
@@ -89,10 +99,7 @@ public class CharacterInfo
     public void OnDamageTaken(int damage)
     {
         var message = damage == -1 ? "Né" : damage == 0 ? "Apply Debuff" : damage.ToString();
-        if (damage == -1)
-        {
-            return;
-        }
+        if (damage == -1) damage = 0;
         HandleHpChanged(-damage);
         ShowMessage(message);
     }

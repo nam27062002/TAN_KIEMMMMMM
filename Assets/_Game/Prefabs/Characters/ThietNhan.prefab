@@ -126,7 +126,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -223,7 +223,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -259,7 +259,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -269,6 +269,7 @@ MonoBehaviour:
         c\u1EE7a Thi\u1EBFt Nh\xE2n v\u1EA3y ra ngo\xE0i g\xE2y b\u1ECFng, v\xE0
         c\xF3 t\u1EC9 l\u1EC7 g\xE2y m\xF9 l\xF2a (apply debuff 30, 31). Version
         2 k apply \u0111\u01B0\u1EE3c status h\xF3a Thi\u1EBFt Nh\xE2n c\u1EE7a skill"
+  passiveSkills: []
 --- !u!1 &1274149462394461964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

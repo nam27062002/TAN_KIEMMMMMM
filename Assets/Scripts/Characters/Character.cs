@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -17,7 +18,8 @@ public abstract class Character : MonoBehaviour
     public CharacterConfig characterConfig;
     public CharacterInfo characterInfo;
     public SkillConfig skillConfig;
-    
+    public List<PassiveSkill> passiveSkills;
+    public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
     public Roll Roll {get; set;}
     
     public virtual bool CanEndTurn => false;
@@ -52,12 +54,21 @@ public abstract class Character : MonoBehaviour
         characterInfo.OnHpChanged += OnHpChanged;
         OnHpChanged(null, null);
         ChangeState(ECharacterState.Idle);
+        SetPassiveSkills();
     }
 
     public virtual void SetMainCharacter()
     {
         characterInfo.HandleIncreaseValueActionPoints();
         characterInfo.ResetBuffBefore();
+    }
+
+    private void SetPassiveSkills()
+    {
+        foreach (var item in passiveSkills)
+        {
+            item.RegisterEvents();
+        }
     }
 
     #region Set States  
@@ -148,6 +159,10 @@ public abstract class Character : MonoBehaviour
     public void DestroyCharacter()
     {
         Destroy(gameObject);
+        foreach (var item in passiveSkills)
+        {
+            item.UnregisterEvents();
+        }
     }
 
     public void OnDie()

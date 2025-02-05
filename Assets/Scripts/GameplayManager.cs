@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
@@ -287,6 +286,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void DestroyGameplay()
     {
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
         MapManager.DestroyMap();
         DestroyAllCharacters();
         StartNewGame();
@@ -387,12 +387,22 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _selectedCharacter.characterInfo.OnCastSkill(SkillInfo);
     }
 
+    private void HandleCastSkill()
+    {
+        _selectedCharacter.characterInfo.OnCastSkill(SkillInfo);
+    }
+
     public void HandleCastSkill(Character character, SkillInfo skillInfo)
     {
         SkillInfo = skillInfo;
         HandleCastSkill(character);
     }
 
+    private void HandleNonDirectionalSkill()
+    {
+        HandleCastSkill();
+    }
+    
     private void HandleDirectionalSkill()
     {
         // show skill range
@@ -428,15 +438,22 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void OnCastSkillFinished()
     {
-        UpdateCharacterInfo();
-        if (SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
+        if (SkillInfo.isDirectionalSkill)
         {
-            TryAttackEnemies(_focusedCharacter);
-        }
+            UpdateCharacterInfo();
+            if (SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
+            {
+                TryAttackEnemies(_focusedCharacter);
+            }
 
-        if (SkillInfo.damageType.HasFlag(DamageTargetType.Team))
+            if (SkillInfo.damageType.HasFlag(DamageTargetType.Team))
+            {
+                ApplyBuff();
+            }
+        }
+        else
         {
-            ApplyBuff();
+            UnSelectSkill();
         }
     }
     
@@ -531,10 +548,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HandleEndTurn(true);
     }
     
-    private void HandleNonDirectionalSkill()
-    {
-    }
-
     private void UnSelectSkill()
     {
         SkillInfo = null;

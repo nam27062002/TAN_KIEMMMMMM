@@ -191,7 +191,7 @@ public class Pathfinding
                 queue.Enqueue((neighbor, dist + 1));
             }
         }
-
+        results.Remove(center);
         return results;
     }
 }
