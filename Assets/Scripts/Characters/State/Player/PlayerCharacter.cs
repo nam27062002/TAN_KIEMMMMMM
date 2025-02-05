@@ -9,8 +9,7 @@
             new IdleState(this),
             new PlayerMoveState(this),
             new DamageTakenState(this),
-            new SkillState(this),
-            new ReactState(this));
+            new SkillState(this));
     }
     
     public override void OnSelected()

@@ -73,17 +73,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1236668399952266962}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
---- !u!114 &788589882186884014 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 717060944506119049, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 216772500856537127}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618060fc918741ebb601372ea285c46a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1091285681089268413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
@@ -103,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 2
   characterAnimationData: {fileID: 4811324158122557611}
-  hpBar: {fileID: 788589882186884014}
+  hpBar: {fileID: 2651813540610510734}
   model: {fileID: 1274149462394461964}
   characterConfig:
     characterHeight: 0.55
@@ -285,6 +274,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
   m_PrefabInstance: {fileID: 216772500856537127}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2651813540610510734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2868514981145055145, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 216772500856537127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618060fc918741ebb601372ea285c46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4811324158122557611 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4739863392310132876, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

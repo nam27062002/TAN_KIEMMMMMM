@@ -12,8 +12,7 @@ public abstract class AICharacter : Character
             new IdleState(this),
             new AIMoveState(this),
             new DamageTakenState(this),
-            new SkillState(this),
-            new ReactState(this));
+            new SkillState(this));
     }
     
     public override void SetMainCharacter()

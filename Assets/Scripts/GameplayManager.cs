@@ -27,12 +27,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public Character MainCharacter => Characters[CurrentPlayerIndex];
     private Character _selectedCharacter;
     private Character _focusedCharacter;
+    private Character _reactTarget;
     public SkillInfo SkillInfo { get; set; }
     private HashSet<Character> _charactersInRange = new();
 
     public int CurrentRound { get; private set; }
     public int CurrentPlayerIndex { get; private set; }
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
+    private bool IsReact => MainCharacter.Type != _selectedCharacter.Type;
     private bool _canInteract;
     public LevelConfig LevelConfig => levelConfig;
 
@@ -147,10 +149,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void SetCharacterReact(Character character)
     {
-        character.OnReact(new ReactStateParams()
-        {
-            target = _selectedCharacter,
-        });
+        _reactTarget = _selectedCharacter;
         SetSelectedCharacter(character);
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetCharacterReact: {character.characterConfig.characterName}");
     }
@@ -169,8 +168,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
     
-    public void HandleEndTurn()
+    public void HandleEndTurn(bool force = false)
     {
+        if (!_canInteract && !force) return;
         MainCharacter.characterInfo.ResetBuffAfter();
         CurrentPlayerIndex++;
         if (CurrentPlayerIndex >= Characters.Count)
@@ -183,10 +183,15 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnCharacterClicked(Cell cell)
     {
-        if (_charactersInRange.Contains(cell.Character))
+        if (_charactersInRange.Contains(cell.Character) && (!IsReact || cell.Character == _reactTarget))
         {
             HandleCastSkill(cell.Character);
+            if (IsReact)
+            {
+                _reactTarget = null;
+            }
         }
+
         else
         {
             if (IsRoundOfPlayer)
@@ -443,7 +448,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private bool TryAttackEnemies(Character focusedCharacter)
     {
         // check crit
-        int damage = _selectedCharacter.characterInfo.BaseDamage;
+        int damage = SkillInfo.hasApplyDamage ? _selectedCharacter.characterInfo.BaseDamage : 0;
         var hitChange = _selectedCharacter.Roll.GetHitChange();
         var isCritical = _selectedCharacter.Roll.IsCritical(hitChange);
         if (!isCritical)
@@ -453,7 +458,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             {
                 AlkawaDebug.Log(ELogCategory.GAMEPLAY,
                     $"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
-                focusedCharacter.characterInfo.OnDamageTaken(0);
+                focusedCharacter.characterInfo.OnDamageTaken(-1);
             }
             else
             {
@@ -510,19 +515,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void SetDamageTakenFinished()
     {
-        if (_focusedCharacter.Type == Type.Player && MainCharacter.Type == Type.AI) // react
+        if (_focusedCharacter.Type == Type.Player && MainCharacter.Type == Type.AI) // show react
         {
             UIManager.Instance.OpenPopup(PopupType.React);
         }
-        // else if (_selectedCharacter.characterInfo.IsReact)
-        // {
-        //     OnEndReact();
-        // }
+        else if (IsReact)
+        {
+            _selectedCharacter.ChangeState(ECharacterState.Idle);
+            OnEndReact();
+        }
     }
 
     private void OnEndReact()
     {
-        HandleEndTurn();
+        HandleEndTurn(true);
     }
     
     private void HandleNonDirectionalSkill()

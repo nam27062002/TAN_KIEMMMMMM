@@ -124,12 +124,7 @@ public abstract class Character : MonoBehaviour
     {
         characterInfo.Cell.ShowFocus();
     }
-
-    public virtual void OnReact(ReactStateParams reactParams)
-    {
-        ChangeState(ECharacterState.React, reactParams);
-    }
-
+    
     public virtual void OnUnSelected()
     {
         characterInfo.Cell.HideFocus();

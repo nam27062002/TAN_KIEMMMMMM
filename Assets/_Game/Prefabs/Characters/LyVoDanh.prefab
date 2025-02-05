@@ -65,17 +65,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8476363159216195691}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
---- !u!114 &613898370352190068 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 717060944506119049, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 105415065458405885}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618060fc918741ebb601372ea285c46a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &959730211588684647 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
@@ -95,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 0
   characterAnimationData: {fileID: 4661756497990611313}
-  hpBar: {fileID: 613898370352190068}
+  hpBar: {fileID: 2790403680272580180}
   model: {fileID: 1430476920419069654}
   characterConfig:
     characterHeight: 1
@@ -129,7 +118,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -144,7 +133,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -180,7 +169,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -197,7 +186,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -212,7 +201,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -250,7 +239,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -269,7 +258,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -284,7 +273,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -319,7 +308,7 @@ MonoBehaviour:
       damageType: 4
       effectIndex: 0
       buffType: 0
-      hasApplyDamage: 0
+      hasApplyDamage: 1
       damageConfig:
         rollTime: 0
         rollValue: 0
@@ -331,6 +320,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
   m_PrefabInstance: {fileID: 105415065458405885}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2790403680272580180 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2868514981145055145, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 105415065458405885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618060fc918741ebb601372ea285c46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4661756497990611313 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4739863392310132876, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

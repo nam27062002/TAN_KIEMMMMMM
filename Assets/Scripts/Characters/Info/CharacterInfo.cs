@@ -25,6 +25,7 @@ public class CharacterInfo
     // Action
     public event EventHandler OnHpChanged;
     public event EventHandler OnMpChanged;
+    public Action<int> OnMoveAmount;
     
     public SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
@@ -87,7 +88,11 @@ public class CharacterInfo
     
     public void OnDamageTaken(int damage)
     {
-        var message = damage == 0 ? "Né" : damage.ToString();
+        var message = damage == -1 ? "Né" : damage == 0 ? "Apply Debuff" : damage.ToString();
+        if (damage == -1)
+        {
+            return;
+        }
         HandleHpChanged(-damage);
         ShowMessage(message);
     }
