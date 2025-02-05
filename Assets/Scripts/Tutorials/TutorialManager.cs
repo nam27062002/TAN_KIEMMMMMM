@@ -53,7 +53,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     public void OnNewRound()
     {
         GameplayManager.Instance.IsTutorialLevel = true;
-        // HUD.Instance.HideHUD();
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
         ShowFinalConversation();
     }
 

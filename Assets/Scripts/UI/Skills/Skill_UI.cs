@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +8,12 @@ public class Skill_UI : MonoBehaviour
     public Image skillImage;
     public Button skillButton;
     public GameObject lockObject;
-
+    public Highlightable highlightable;
     private bool _isEnoughMana;
     private bool _isLocked;
     private int _skillIndex;
     private Type _type;
+    public static Skill_UI Selected; 
     private void Awake()
     {
         skillButton.onClick.AddListener(OnSkillButtonClicked);
@@ -26,8 +26,13 @@ public class Skill_UI : MonoBehaviour
 
     private void OnSkillButtonClicked()
     {
-        if (CanTrigger()) 
+        if (CanTrigger())
+        {
+            Selected?.highlightable.Unhighlight();
+            Selected = this;
+            highlightable.Highlight();
             GameplayManager.Instance.HandleSelectSkill(_skillIndex);
+        }
     }
 
     private bool CanTrigger()

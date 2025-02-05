@@ -4,14 +4,13 @@
     protected override void OnEnable()
     {
         base.OnEnable();
-        ReactMenu.Instance.OnOpen = OnOpen;
     }
     
     public void HandleClick()
     {
         if (!GameplayManager.Instance.IsTutorialLevel) return;
         if (!CanClick()) return;
-        // GameplayManager.Instance.characterManager.OnConFirmClick();
+        GameplayManager.Instance.OnConFirmClick();
         Tutorial.OnTutorialClicked(index);
     }
     

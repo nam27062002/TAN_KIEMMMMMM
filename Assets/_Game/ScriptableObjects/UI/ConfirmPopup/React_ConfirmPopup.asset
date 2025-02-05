@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbda2cb0a2b6458599472f3a6c2e92d0, type: 3}
+  m_Name: React_ConfirmPopup
+  m_EditorClassIdentifier: 
+  title: "B\u1EA1n mu\u1ED1n ph\u1EA3n c\xF4ng?"
+  message: 
+  confirmText: "C\xF3"
+  cancelText: "H\u1EE7y"

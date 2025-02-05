@@ -60,8 +60,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void StartNewGame()
     {
         CurrentRound = 0;
-        // HUD.Instance.SetLevelName(levelConfig.levelName);
-        //
         if (!IsTutorialLevel) LoadMapGame();
     }
 
@@ -107,17 +105,32 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SortCharacterBySpeed();
         SetMainCharacter();
         SetInteract(true);
+        HandleNewRound();
         OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetMainCharacter()
     {
-        MainCharacter.SetMainCharacter();
-        SetSelectedCharacter(MainCharacter);
-        OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
-        if (Characters.Count > 0 && MainCharacter == Characters[0])
-        { 
-            HandleNewRound();
+        if (TutorialManager.Instance != null
+            && CurrentRound == 2
+            && MainCharacter == Characters[0]
+            && !TutorialManager.Instance.EndTuto)
+        {
+            MainCharacter.OnUnSelected();
+            TutorialManager.Instance.OnNewRound();
+        }
+        else
+        {
+             if (MainCharacter.characterInfo.CurrentHP <= 0)
+             {
+                 HandleEndTurn();
+             }
+             else
+             {
+                 MainCharacter.SetMainCharacter();
+                 SetSelectedCharacter(MainCharacter);
+                 OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
+             }
         }
     }
 
@@ -152,6 +165,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         if (CurrentPlayerIndex >= Characters.Count)
         {
             CurrentPlayerIndex = 0;
+            HandleNewRound();
         }
 
         MainCharacter.characterInfo.ResetBuffAfter();
@@ -253,6 +267,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void HideSkillRange()
     {
+        Skill_UI.Selected = null;
         MapManager.HideSkillRange();
         _charactersInRange.Clear();
     }
@@ -464,12 +479,32 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return false;
     }
 
+    public void HandleCharacterDie(Character character)
+    {
+        Characters.Remove(character);
+        if (character is AICharacter)
+        {
+            _enemies.Remove(character);
+            if (_enemies.Count == 0)
+            {
+                // Invoke(nameof(OnWin), 1f);
+            }
+        }
+        else
+        {
+            _enemies.Remove(character);
+            if (_enemies.Count == 0)
+            {
+                // Invoke(nameof(OnLose), 1f);
+            }
+        }
+    }
+    
     public void SetDamageTakenFinished()
     {
         if (_focusedCharacter.Type == Type.Player && MainCharacter.Type == Type.AI) // react
         {
-            Debug.Log("NT - React nereeeeeeeeeeeeeeeeeeeeeeeeeeee");
-            // ReactMenu.Instance.Open();
+            UIManager.Instance.OpenPopup(PopupType.React);
         }
         else if (_selectedCharacter.characterInfo.IsReact)
         {
@@ -504,6 +539,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         var characters = MapManager.GetCharacterInRange(character.characterInfo.Cell, range);
         return characters.Where(c => c.Type != character.Type).ToList();
+    }
+    
+    public void OnConFirmClick()
+    {
+        _focusedCharacter.characterInfo.IsReact = true;
+        SetSelectedCharacter(_focusedCharacter);
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"OnConFirmClick");
+    }
+
+    public void OnCancelClick()
+    {
+        _focusedCharacter.characterInfo.IsReact = false;
+        OnEndReact();
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
     }
 
     #endregion

@@ -21,7 +21,7 @@ public abstract class AICharacter : Character
         Invoke(nameof(HandleAIPlay), 1f);
     }
 
-    private void HandleAIPlay()
+    public void HandleAIPlay()
     {
         AlkawaDebug.Log(ELogCategory.AI,"HandleAIPlay");
         if (!TryCastSkill())

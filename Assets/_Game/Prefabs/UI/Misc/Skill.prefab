@@ -217,6 +217,9 @@ MonoBehaviour:
   skillImage: {fileID: 3713999058177725969}
   skillButton: {fileID: 7902584574289147861}
   lockObject: {fileID: 8436393392392701788}
+  highlightable:
+    highlightType: 1
+    highlightObject: {fileID: 1154438086967965303}
 --- !u!1 &7935130533661614484
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,5 +741,10 @@ PrefabInstance:
 --- !u!224 &138493730306131442 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8774169431515737245, guid: 5289c3b2226ad8b48a8fe6949decc6d9, type: 3}
+  m_PrefabInstance: {fileID: 8658200847044454767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1154438086967965303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7506788777167822616, guid: 5289c3b2226ad8b48a8fe6949decc6d9, type: 3}
   m_PrefabInstance: {fileID: 8658200847044454767}
   m_PrefabAsset: {fileID: 0}

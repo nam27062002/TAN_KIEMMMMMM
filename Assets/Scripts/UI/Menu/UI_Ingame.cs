@@ -199,6 +199,12 @@ public class UI_Ingame : MenuBase
         }
     }
     
+     public void OnCharacterDeath(int index)
+     {
+         _avtSpdUI[index].DestroyObject();
+         _avtSpdUI.RemoveAt(index);   
+     }
+    
     private void OnHpChanged(object sender, EventArgs e)
     {
         var currentHp = _characterParams.Character.characterInfo.CurrentHP;

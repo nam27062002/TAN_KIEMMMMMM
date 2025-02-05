@@ -42,7 +42,7 @@ public class ShowInfoPopup : PopupBase
         base.Close();
         if (GameplayManager.Instance.IsTutorialLevel)
         {
-            TutorialManager.Instance.OnTutorialClicked(13, 1f);
+            TutorialManager.Instance.OnTutorialClicked(13, 0.5f);
         }
     }
 }
