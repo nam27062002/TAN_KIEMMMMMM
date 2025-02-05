@@ -20,7 +20,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler OnNewRound;
 
     /*---------------------------------------------------*/
-    private MapManager _mapManager;
+    public MapManager MapManager {get; private set;}
     private readonly List<Character> _players = new();
     private readonly List<Character> _enemies = new();
     public List<Character> Characters { get; private set; } = new();
@@ -52,7 +52,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     protected override void UnRegisterEvents()
     {
         base.UnRegisterEvents();
-        _mapManager.OnLoadMapFinished -= OnLoadMapFinished;
+        MapManager.OnLoadMapFinished -= OnLoadMapFinished;
     }
 
     #region Main
@@ -68,9 +68,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void LoadMapGame()
     {
         var go = Instantiate(levelConfig.mapPrefab, transform);
-        _mapManager = go.GetComponent<MapManager>();
-        _mapManager.OnLoadMapFinished += OnLoadMapFinished;
-        _mapManager.Initialize();
+        MapManager = go.GetComponent<MapManager>();
+        MapManager.OnLoadMapFinished += OnLoadMapFinished;
+        MapManager.Initialize();
     }
 
     private void LoadCharacter()
@@ -96,7 +96,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                         break;
                 }
 
-                character.Initialize(_mapManager.GetCell(point));
+                character.Initialize(MapManager.GetCell(point));
                 if (IsTutorialLevel)
                 {
                     character.HideHpBar();
@@ -192,8 +192,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void OnWaypointClicked(Cell cell)
     {
         if (!CanMove(cell)) return;
-        var cellPath = _mapManager.FindPath(_selectedCharacter.characterInfo.Cell, cell);
-        _mapManager.HideMoveRange();
+        var cellPath = MapManager.FindPath(_selectedCharacter.characterInfo.Cell, cell);
+        MapManager.HideMoveRange();
         _selectedCharacter.MoveCharacter(cellPath);
     }
 
@@ -241,25 +241,25 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void ShowMoveRange()
     {
         var range = _selectedCharacter.characterInfo.GetMoveRange();
-        _mapManager.ShowMoveRange(_selectedCharacter.characterInfo.Cell, range);
+        MapManager.ShowMoveRange(_selectedCharacter.characterInfo.Cell, range);
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,
             $"[{_selectedCharacter.characterConfig.characterName}] move Range: {range}");
     }
 
     private void HideMoveRange()
     {
-        _mapManager.HideMoveRange();
+        MapManager.HideMoveRange();
     }
 
     private void HideSkillRange()
     {
-        _mapManager.HideSkillRange();
+        MapManager.HideSkillRange();
         _charactersInRange.Clear();
     }
 
     public void DestroyGameplay()
     {
-        _mapManager.DestroyMap();
+        MapManager.DestroyMap();
         DestroyAllCharacters();
         StartNewGame();
     }
@@ -293,7 +293,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool CanMove(Cell cell)
     {
-        return IsRoundOfPlayer && MainCharacter == _selectedCharacter && _mapManager.CanMove(cell);
+        return IsRoundOfPlayer && MainCharacter == _selectedCharacter && MapManager.CanMove(cell);
     }
 
     private ShowInfoCharacterParameters GetSelectedCharacterParams()
@@ -370,7 +370,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         // show skill range
         if (SkillInfo.range > 0)
         {
-            _mapManager.ShowSkillRange(_selectedCharacter.characterInfo.Cell, SkillInfo.range);
+            MapManager.ShowSkillRange(_selectedCharacter.characterInfo.Cell, SkillInfo.range);
             AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"Gameplay: Show skill range: {SkillInfo.range}");
         }
 
@@ -380,7 +380,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             Characters.Add(_selectedCharacter);
         }
 
-        foreach (var cell in _mapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
+        foreach (var cell in MapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
         {
             if (cell.Character.Type == _selectedCharacter.Type
                 && SkillInfo.damageType.HasFlag(DamageTargetType.Team)
@@ -498,6 +498,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private void ResetAllChange()
     {
+    }
+    
+    public List<Character> GetEnemiesInRange(Character character, int range)
+    {
+        var characters = MapManager.GetCharacterInRange(character.characterInfo.Cell, range);
+        return characters.Where(c => c.Type != character.Type).ToList();
     }
 
     #endregion

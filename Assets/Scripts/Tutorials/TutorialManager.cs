@@ -121,6 +121,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         }
 
         ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
+        GameplayManager.Instance.Characters[0].OnUnSelected();
         Invoke(nameof(ShowSecondConversation), 1f);
     }
 
@@ -195,13 +196,13 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     public void OnTutorialClicked(int index, float delayTime = 0f)
     {
         if (index != tutorialIndex) return;
-        //AlkawaDebug.Log($"TutorialManager: OnTutorialClicked: {index}");
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"TutorialManager: OnTutorialClicked: {index}");
         tutorialIndex++;
         if (tutorialIndex < tutorialConfig.tutorials.Count)
             Invoke(nameof(SetTutorial), delayTime);
         else
         {
-            //AlkawaDebug.Log("End Tutorial");
+            AlkawaDebug.Log(ELogCategory.GAMEPLAY,"End Tutorial");
             EndFirstTutorial();
         }
     }

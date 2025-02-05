@@ -19,10 +19,5 @@
         {
             GpManager.ShowMoveRange();
         }
-
-        if (GpManager.IsTutorialLevel && UIManager.Instance.CurrentPopup is ConversationPopup)
-        {
-            OnUnSelected();
-        }
     }
 }

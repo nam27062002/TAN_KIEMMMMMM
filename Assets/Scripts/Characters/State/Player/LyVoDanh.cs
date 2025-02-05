@@ -9,7 +9,6 @@
         else
         {
             base.SetSpeed();
-            characterInfo.Speed = 100;
         }
     }       
 }

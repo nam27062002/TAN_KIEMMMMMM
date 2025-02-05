@@ -36,4 +36,13 @@ public class ShowInfoPopup : PopupBase
             mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
         }
     }
+
+    public override void Close()
+    {
+        base.Close();
+        if (GameplayManager.Instance.IsTutorialLevel)
+        {
+            TutorialManager.Instance.OnTutorialClicked(13, 1f);
+        }
+    }
 }

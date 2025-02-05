@@ -90,14 +90,14 @@ public class Cell : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1))
+        if ((!GameplayManager.Instance.IsTutorialLevel) && Input.GetMouseButtonDown(1))
         {
             if (cellType == CellType.Character) 
                 GameplayManager.Instance.ShowInfo(Character);
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            HandleCellClicked();
+            if (!GameplayManager.Instance.IsTutorialLevel) HandleCellClicked();
         }
     }
     

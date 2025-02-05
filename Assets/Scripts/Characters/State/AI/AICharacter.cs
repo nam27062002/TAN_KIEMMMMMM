@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public abstract class AICharacter : Character
 {
@@ -24,7 +23,7 @@ public abstract class AICharacter : Character
 
     private void HandleAIPlay()
     {
-        //AlkawaDebug.Log("NT - HandleAIPlay");
+        AlkawaDebug.Log(ELogCategory.AI,"HandleAIPlay");
         if (!TryCastSkill())
         {
             if (!TryMoving())
@@ -36,14 +35,14 @@ public abstract class AICharacter : Character
     
     private bool TryMoving()
     {
-        // if (characterInfo.GetMoveRange() <= 0) return false;
-        // var cells = CharacterManager.MapManager.GetCellsWalkableInRange(characterInfo.Cell, characterInfo.GetMoveRange());
-        // if (cells.Count == 0) return false;
-        // var random = new System.Random();
-        // var randomCell = cells[random.Next(cells.Count)];
-        // var path = CharacterManager.MapManager.FindPath(characterInfo.Cell, randomCell);
-        // MoveCharacter(path);
-        // //AlkawaDebug.Log($"Gameplay: AI move to cell: {randomCell.CellPosition}");
+        if (characterInfo.GetMoveRange() <= 0) return false;
+        var cells = GpManager.MapManager.GetCellsWalkableInRange(characterInfo.Cell, characterInfo.GetMoveRange());
+        if (cells.Count == 0) return false;
+        var random = new System.Random();
+        var randomCell = cells[random.Next(cells.Count)];
+        var path = GpManager.MapManager.FindPath(characterInfo.Cell, randomCell);
+        MoveCharacter(path);
+        AlkawaDebug.Log(ELogCategory.AI,$"move to cell: {randomCell.CellPosition}");
         return true;
     }
     
@@ -55,31 +54,31 @@ public abstract class AICharacter : Character
     
     private bool TryCastSkill()
     {
-        //AlkawaDebug.Log("NT - TryCastSkill");
-        // var skillType = CharacterManager.GetSkillType(this);
-        // List<SkillInfo> skills = GetSkillInfos(skillType);
-        //
-        // for (int i = 0; i < skills.Count; i++)
-        // {
-        //     if (characterInfo.CanCastSkill(skills[i], skillType) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
-        //     {
-        //         var enemiesInRange = base.CharacterManager.GetEnemiesInRange(this, skills[i].range);
-        //         if (enemiesInRange.Count > 0)
-        //         {
-        //             _enemy = enemiesInRange[0];
-        //             _enemy.OnEndAnimEventHandler += EnemyOnOnEndAnimEventHandler;
-        //             //AlkawaDebug.Log($"NT - HandleAICastSkill: {i}");
-        //             GameplayManager.Instance.HandleCastSkill(_enemy, skills[i]);
-        //             return true;
-        //         }
-        //     }
-        // }
+        AlkawaDebug.Log(ELogCategory.AI,"TryCastSkill");
+         var skillType = GpManager.GetSkillType(this);
+         List<SkillInfo> skills = GetSkillInfos(skillType);
+        
+         for (int i = 0; i < skills.Count; i++)
+         {
+             if (characterInfo.CanCastSkill(skills[i]) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
+             {
+                 var enemiesInRange = GpManager.GetEnemiesInRange(this, skills[i].range);
+                 if (enemiesInRange.Count > 0)
+                 {
+                     _enemy = enemiesInRange[0];
+                     _enemy.OnEndAnimEventHandler += EnemyOnOnEndAnimEventHandler;
+                     AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {i}");
+                     GameplayManager.Instance.HandleCastSkill(_enemy, skills[i]);
+                     return true;
+                 }
+             }
+         }
         return false;
     }
 
     private void EnemyOnOnEndAnimEventHandler(object sender, EventArgs e)
     {
-        //AlkawaDebug.Log("EnemyOnOnEndAnimEventHandler");
+        AlkawaDebug.Log(ELogCategory.AI,"EnemyOnOnEndAnimEventHandler");
         _enemy.OnEndAnimEventHandler -= EnemyOnOnEndAnimEventHandler;
         GameplayManager.Instance.HandleEndTurn();
     }
