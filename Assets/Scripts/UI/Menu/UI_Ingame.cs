@@ -51,6 +51,7 @@ public class UI_Ingame : MenuBase
     {
         base.Open(parameters);
         HideAllUI();
+        SetLevelName();
     }
 
     protected override void RegisterEvents()
@@ -75,6 +76,7 @@ public class UI_Ingame : MenuBase
         settingsButton.onClick.RemoveListener(OnSettingsClick);
     }
 
+    
     #region Events
 
     private void OnLoadCharacterFinished(object sender, EventArgs e)
@@ -214,5 +216,10 @@ public class UI_Ingame : MenuBase
      private void SetRound()
      {
          roundIndex.text = $"Vòng " + GameplayManager.Instance.CurrentRound;
+     }
+     
+     public void SetLevelName()
+     {
+         levelName.text = GameplayManager.LevelConfig.levelName;
      }
 }

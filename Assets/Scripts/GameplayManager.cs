@@ -7,14 +7,11 @@ using UnityEngine.PlayerLoop;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
-    [Title("Scriptable Objects")] [SerializeField]
-    private LevelConfig levelConfig;
+    [Title("Scriptable Objects")] [SerializeField] private LevelConfig levelConfig;
 
-    [Title("Characters")] [SerializeField]
-    private SerializableDictionary<CharacterType, Character> allCharacter = new();
+    [Title("Characters")] [SerializeField] private SerializableDictionary<CharacterType, Character> allCharacter = new();
 
-    [Title("Tutorials")]
-    [SerializeField] private GameObject tutorialPrefab;
+    [Title("Tutorials")] [SerializeField] private GameObject tutorialPrefab;
     public bool IsTutorialLevel { get; set; }
     /*--------------------events-------------------------*/
     public event EventHandler OnLoadCharacterFinished;
@@ -35,10 +32,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public int CurrentRound { get; private set; }
     public int CurrentPlayerIndex { get; private set; }
-
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
-
     private bool _canInteract;
+    public LevelConfig LevelConfig => levelConfig;
 
     // new
     protected override void Awake()
@@ -423,7 +419,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool TryAttackEnemies(Character focusedCharacter)
     {
-        // FocusedCharacter.characterInfo.OnDamageTaken(5, SetDamageTakenFinished);
         // check crit
         int damage = _selectedCharacter.characterInfo.BaseDamage;
         var hitChange = _selectedCharacter.Roll.GetHitChange();
@@ -520,9 +515,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void HandleEndSecondConversation()
     {
-        // HUD.Instance.ShowHUD();
-        // characterManager.ShowAllHPBar();
-        // characterManager.SetMainCharacter();
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
+        ShowAllHPBar();
+        SetMainCharacter();
+    }
+    
+    private void ShowAllHPBar()
+    { 
+         foreach (var character in Characters)
+         {
+             character.ShowHpBar();
+         }
     }
     #endregion
 }

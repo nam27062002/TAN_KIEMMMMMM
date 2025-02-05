@@ -11,7 +11,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     [SerializeField] private Image greyBackground;
 
     public UIBase CurrentMenu { get; set; }
-    private UIBase _currentPopup;
+    public UIBase CurrentPopup { get; set; }
 
     protected override void Awake()
     {
@@ -38,16 +38,16 @@ public class UIManager : SingletonMonoBehavior<UIManager>
 
     public void OpenPopup(PopupType popupType, UIBaseParameters parameters = null)
     {
-        _currentPopup?.Close();
-        _currentPopup = allPopups[popupType];
-        _currentPopup.Open(parameters);
+        CurrentPopup?.Close();
+        CurrentPopup = allPopups[popupType];
+        CurrentPopup.Open(parameters);
     }
 
     public void TryClosePopup(PopupType popupType)
     {
-        if (_currentPopup == allPopups[popupType])
+        if (CurrentPopup == allPopups[popupType])
         {
-            _currentPopup.Close();
+            CurrentPopup.Close();
         }
     }
     
@@ -62,7 +62,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     private void OnClosePopup(object sender, EventArgs e)
     {
         greyBackground.enabled = false;
-        _currentPopup = null;
+        CurrentPopup = null;
     }
 
     private void OnOpenPopup(object sender, EventArgs e)

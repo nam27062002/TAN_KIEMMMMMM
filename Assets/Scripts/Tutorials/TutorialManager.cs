@@ -189,7 +189,6 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     private void OnEndSecondConversationDelay()
     {
         GameplayManager.Instance.HandleEndSecondConversation();
-        ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
         SetTutorial();
     }
 
