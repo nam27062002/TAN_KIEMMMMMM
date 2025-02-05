@@ -60,7 +60,7 @@ public class MapManager : MonoBehaviour
     
     public void ShowMoveRange(Cell cell, int range)
     {
-        _moveRange = _pathfinding.GetHexagonsInRange(cell, range);
+        _moveRange = _pathfinding.GetHexagonsInMoveRange(cell, range);
         foreach (var item in _moveRange)
         {
             item.ShowMoveRange();
@@ -69,7 +69,7 @@ public class MapManager : MonoBehaviour
 
     public List<Cell> GetCellsWalkableInRange(Cell cell, int range)
     {
-        var allCells = _pathfinding.GetHexagonsInRange(cell, range);
+        var allCells = _pathfinding.GetHexagonsInMoveRange(cell, range);
         return allCells.Where(c => c.CellType == CellType.Walkable).ToList();
     }
 
@@ -87,7 +87,7 @@ public class MapManager : MonoBehaviour
 
     public void ShowSkillRange(Cell cell, int range)
     {
-        SkillRange = _pathfinding.GetHexagonsInRange(cell, range);
+        SkillRange = _pathfinding.GetHexagonsInAttack(cell, range);
         foreach (var item in SkillRange)
         {
             item.ShowSkillRange();
@@ -96,7 +96,7 @@ public class MapManager : MonoBehaviour
 
     public List<Character> GetCharacterInRange(Cell cell, int range)
     {
-        var allCells = _pathfinding.GetHexagonsInRange(cell, range);
+        var allCells = _pathfinding.GetHexagonsInAttack(cell, range);
         return (from item in allCells where item.CellType == CellType.Character select item.Character).ToList();
     }
 

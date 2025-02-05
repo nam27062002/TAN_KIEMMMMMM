@@ -17,11 +17,15 @@ public abstract class Character : MonoBehaviour
     public CharacterConfig characterConfig;
     public CharacterInfo characterInfo;
     public SkillConfig skillConfig;
-    public event EventHandler OnEndAnimEventHandler;
+    
     public Roll Roll {get; set;}
     
     public virtual bool CanEndTurn => false;
     public bool IsMainCharacter => GpManager.MainCharacter == this;
+
+    public ECharacterState CurrentState { get; set; } = ECharacterState.Idle;
+    public ECharacterState PreviousState { get; set; } = ECharacterState.Idle;
+    
     private void Awake()
     {
         SetStateMachine();
@@ -35,8 +39,8 @@ public abstract class Character : MonoBehaviour
         {
             SkillConfig = skillConfig,
             Attributes = characterConfig.characterAttributes,
-            CurrentHP = characterConfig.characterAttributes.health,
-            CurrentMP = characterConfig.characterAttributes.mana,
+            CurrentHp = characterConfig.characterAttributes.health,
+            CurrentMp = characterConfig.characterAttributes.mana,
             Character = this,
         };
         skillConfig.SetSkillConfigs();
@@ -52,7 +56,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void SetMainCharacter()
     {
-        characterInfo.IncreaseActionPoints();
+        characterInfo.HandleIncreaseValueActionPoints();
         characterInfo.ResetBuffBefore();
     }
 
@@ -70,6 +74,8 @@ public abstract class Character : MonoBehaviour
     
     public void ChangeState(ECharacterState newState, StateParams stateParams = null)
     {
+        PreviousState = CurrentState;
+        CurrentState = newState;
         StateMachine.ChangeState(newState, stateParams);
     }
     
@@ -94,7 +100,7 @@ public abstract class Character : MonoBehaviour
     
     private void OnHpChanged(object sender, EventArgs e)
     {
-        var currentHp = characterInfo.CurrentHP;
+        var currentHp = characterInfo.CurrentHp;
         var maxHp = characterInfo.Attributes.health;
         hpBar.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
     }
@@ -117,6 +123,11 @@ public abstract class Character : MonoBehaviour
     public virtual void OnSelected()
     {
         characterInfo.Cell.ShowFocus();
+    }
+
+    public virtual void OnReact(ReactStateParams reactParams)
+    {
+        ChangeState(ECharacterState.React, reactParams);
     }
 
     public virtual void OnUnSelected()

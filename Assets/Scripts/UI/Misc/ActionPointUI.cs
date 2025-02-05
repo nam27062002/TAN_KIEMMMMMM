@@ -7,24 +7,30 @@ public class ActionPointUI : MonoBehaviour
     public Sprite yellow;
     public Sprite red;
     public Sprite green;
-        
     public List<Image> actionPoints;
 
-    private readonly Dictionary<int, Sprite> _actionPointSprites = new Dictionary<int, Sprite>();
+    private readonly Dictionary<int, Sprite> _actionPointSprites = new();
+
+    private void Awake()
+    {
+        _actionPointSprites[1] = red;
+        _actionPointSprites[2] = yellow;
+        _actionPointSprites[3] = green;
+    }
 
     public void SetActionPoints(List<int> points)
     {
-        if (_actionPointSprites.Count == 0)
+        foreach (var item in actionPoints)
         {
-            _actionPointSprites[1] = red;
-            _actionPointSprites[2] = yellow;
-            _actionPointSprites[3] = green;
+            item.gameObject.SetActiveIfNeeded(false);
         }
+        
         points.Sort();
         points.Reverse();
         for (int i = 0; i < points.Count; i++)
         {
             actionPoints[i].sprite = _actionPointSprites[points[i]];
+            actionPoints[i].gameObject.SetActiveIfNeeded(true);
         }
     }
 }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2488554237871491635}
-  - component: {fileID: 5598662789892198034}
   m_Layer: 0
   m_Name: _Base
   m_TagString: Untagged
@@ -34,38 +33,6 @@ Transform:
   - {fileID: 7330223302066570300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5598662789892198034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 875712613406427802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecabba7f6a0a480897f4773582af0b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterType: 0
-  characterAnimationData: {fileID: 4739863392310132876}
-  hpBar: {fileID: 717060944506119049}
-  model: {fileID: 1345610228408147755}
-  characterConfig:
-    characterHeight: 1
-    characterName: 
-    characterIcon: {fileID: 0}
-    characterAttributes:
-      maxMoveRange: 0
-      health: 0
-      mana: 0
-      atk: 0
-      def: 0
-      chiDef: 0
-      spd: 0
-  skillConfig:
-    internalSkill: []
-    movementSkill: []
-    combatSkill: []
 --- !u!1 &1345610228408147755
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,8 +490,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: HPBar
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6431342551622234093, guid: c3569b134c0f3f549911dc75f6b704e8, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1700281104927005519, guid: c3569b134c0f3f549911dc75f6b704e8, type: 3}

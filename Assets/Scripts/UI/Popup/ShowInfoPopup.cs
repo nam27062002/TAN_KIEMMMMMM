@@ -27,11 +27,11 @@ public class ShowInfoPopup : PopupBase
             chiDef.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.chiDef.ToString();
             avatar.sprite = showInfoCharacterParameters.Character.characterConfig.characterIcon;
             
-            var currentHp = showInfoCharacterParameters.Character.characterInfo.CurrentHP;
+            var currentHp = showInfoCharacterParameters.Character.characterInfo.CurrentHp;
             var maxHp = showInfoCharacterParameters.Character.characterInfo.Attributes.health;
             hpBarUI.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
         
-            var currentMp = showInfoCharacterParameters.Character.characterInfo.CurrentMP;
+            var currentMp = showInfoCharacterParameters.Character.characterInfo.CurrentMp;
             var maxMp = showInfoCharacterParameters.Character.characterInfo.Attributes.mana;
             mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
         }

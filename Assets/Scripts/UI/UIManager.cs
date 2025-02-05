@@ -1,17 +1,19 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : SingletonMonoBehavior<UIManager>
 {
-    // new
     [SerializeField] private SerializableDictionary<PopupType, UIBase> allPopups = new();
     [SerializeField] private SerializableDictionary<MenuType, UIBase> allMenus = new();
     [SerializeField] private Image greyBackground;
-
+    
     public UIBase CurrentMenu { get; set; }
     public UIBase CurrentPopup { get; set; }
+    
+    private readonly Stack<UIBase> _popupStack = new();
 
     protected override void Awake()
     {
@@ -34,11 +36,14 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         PopupBase.OnClose -= OnClosePopup;
     }
 
-    #region Main Function
-
     public void OpenPopup(PopupType popupType, UIBaseParameters parameters = null)
     {
-        CurrentPopup?.Close();
+        if (CurrentPopup != null)
+        {
+            _popupStack.Push(CurrentPopup);
+            CurrentPopup.Close();
+        }
+        
         CurrentPopup = allPopups[popupType];
         CurrentPopup.Open(parameters);
     }
@@ -58,11 +63,17 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         CurrentMenu.Open();
     }
 
-    #endregion
     private void OnClosePopup(object sender, EventArgs e)
     {
-        greyBackground.enabled = false;
         CurrentPopup = null;
+        greyBackground.enabled = false;
+        if (_popupStack.Count > 0)
+        {
+            UIBase previousPopup = _popupStack.Pop();
+            CurrentPopup = previousPopup;
+            CurrentPopup.Open();
+            greyBackground.enabled = true;
+        }
     }
 
     private void OnOpenPopup(object sender, EventArgs e)

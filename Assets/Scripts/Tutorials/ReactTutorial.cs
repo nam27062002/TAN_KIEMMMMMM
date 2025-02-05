@@ -10,7 +10,7 @@
     {
         if (!GameplayManager.Instance.IsTutorialLevel) return;
         if (!CanClick()) return;
-        GameplayManager.Instance.OnConFirmClick();
+        GameplayManager.Instance.OnConFirmReact();
         Tutorial.OnTutorialClicked(index);
     }
     

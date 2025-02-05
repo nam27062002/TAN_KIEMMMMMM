@@ -8,20 +8,20 @@ using UnityEngine;
 [Serializable]
 public class CharacterInfo
 {
-    [ShowInInspector, ReadOnly] public Cell Cell { get; set; }
-    [ShowInInspector, ReadOnly] public int Speed { get; set; }
-    [ShowInInspector, ReadOnly] public bool LockSkill { get; set; }
-    [ShowInInspector, ReadOnly] public CharacterAttributes Attributes { get; set; }
+    public Cell Cell { get; set; }
+    public int Speed { get; set; }
+    public CharacterAttributes Attributes { get; set; }
     
-    [ShowInInspector, ReadOnly] public int CurrentHP { get; set; }
-    [ShowInInspector, ReadOnly] public int CurrentMP { get; set; }
+    public int CurrentHp { get; set; }
+    public int CurrentMp { get; set; }
     
-    [ShowInInspector, ReadOnly] public int MoveAmount { get; set; }
-    [ShowInInspector, ReadOnly] public int MoveBuff { get; set; } 
-    [ShowInInspector, ReadOnly] public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
-    [ShowInInspector, ReadOnly] public SkillInfo SkillInfo { get; set; }
-    [ShowInInspector, ReadOnly] public bool IsReact {get; set;}
-   
+    public int MoveAmount { get; set; }
+    public int MoveBuff { get; set; } 
+    public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
+    public SkillInfo SkillInfo { get; set; }
+    
+    // Buff & Debuff
+    public bool LockSkill { get; set; }
     // Action
     public event EventHandler OnHpChanged;
     public event EventHandler OnMpChanged;
@@ -32,9 +32,9 @@ public class CharacterInfo
     public int BaseDamage => Character.Roll.GetBaseDamage(Character.characterConfig.damageRollData);
     public void HandleHpChanged(int value)
     {
-        CurrentHP += value;
-        CurrentHP = math.max(0, CurrentHP);
-        if (CurrentHP <= 0)
+        CurrentHp += value;
+        CurrentHp = math.max(0, CurrentHp);
+        if (CurrentHp <= 0)
         {
             Character.OnDie();
         }
@@ -47,7 +47,7 @@ public class CharacterInfo
 
     public void HandleMpChanged(int value)
     {
-        CurrentMP += value;
+        CurrentMp += value;
         OnMpChanged?.Invoke(this, EventArgs.Empty);
     }
     
@@ -58,7 +58,7 @@ public class CharacterInfo
 
     public void ResetBuffAfter()
     {
-        
+        ResetActionPoints();
     }
     
     public void ResetBuffBefore()
@@ -77,7 +77,7 @@ public class CharacterInfo
         SkillInfo = skillInfo;
         HandleMpChanged(-skillInfo.mpCost);
         Character.HandleCastSkill();
-        ReduceActionPoints(GetActionPoints(GameplayManager.Instance.GetSkillType(Character)));
+        HandleReduceActionPoints(GetActionPoints(GameplayManager.Instance.GetSkillType(Character)));
     }
     
     public bool CanCastSkill(SkillInfo skillInfo)
@@ -85,36 +85,6 @@ public class CharacterInfo
         return Attributes.mana >= skillInfo.mpCost && IsEnoughActionPoints();
     }
     
-    private bool IsEnoughActionPoints()
-    {
-        return ActionPoints.Any(point => point == 3);
-    }
-    
-    private int GetActionPoints(SkillType skillType)
-    {
-        return Character.characterConfig.actionPoints[skillType];
-    }
-    
-    private void ReduceActionPoints(int point)
-    {
-        for (int i = 0; i < ActionPoints.Count; i++)
-        {
-            if (ActionPoints[i] <= point) continue;
-            ActionPoints[i] -= point;
-            //AlkawaDebug.Log($"[Gameplay] {Character.characterConfig.characterName} reduced action point: {ActionPoints[i]}");
-            break;
-
-        }
-    }
-    
-    public void IncreaseActionPoints()
-    {
-        for (int i = 0; i < ActionPoints.Count; i++)
-        {
-            ActionPoints[i] = Math.Min(ActionPoints[i] + 1, 3);
-        }
-    }
-
     public void OnDamageTaken(int damage)
     {
         var message = damage == 0 ? "Né" : damage.ToString();
@@ -135,7 +105,7 @@ public class CharacterInfo
         }
         if (skillInfo.buffType.HasFlag(BuffType.IncreaseActionPoints))
         {
-            IncreaseActionPoints();
+            HandleIncreaseSlotActionPoints();
         }
         if (skillInfo.buffType.HasFlag(BuffType.BlockSkill))
         {
@@ -143,4 +113,55 @@ public class CharacterInfo
         }
         ShowMessage("Nhận Buff");
     }
+
+    #region Action Points
+
+    public void HandleIncreaseSlotActionPoints()
+    {
+        ActionPoints.Add(3);
+    }
+
+    public void HandleIncreaseValueActionPoints()
+    {
+        for (int i = 0; i < ActionPoints.Count; i++)
+        {
+            ActionPoints[i] = Math.Min(ActionPoints[i] + 1, 3);
+        }
+    }
+    
+    private bool IsEnoughActionPoints()
+    {
+        return ActionPoints.Any(point => point == 3);
+    }
+    
+    private int GetActionPoints(SkillType skillType)
+    {
+        return Character.characterConfig.actionPoints[skillType];
+    }
+    
+    private void HandleReduceActionPoints(int point)
+    {
+        for (var i = 0; i < ActionPoints.Count; i++)
+        {
+            if (ActionPoints[i] <= point) continue;
+            ActionPoints[i] -= point;
+            break;
+        }
+    }
+
+    private void ResetActionPoints()
+    {
+        while (ActionPoints.Count > 3)
+        {
+            ActionPoints.RemoveAt(ActionPoints.Count - 1);
+        }
+        while (ActionPoints.Count < 3)
+        {
+            ActionPoints.Add(3);
+        }
+        
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} reset action points");
+    }
+    
+    #endregion
 }

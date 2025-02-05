@@ -44,7 +44,7 @@ public abstract class CharacterState : IState
 
     protected virtual void OnFinishAction(CharacterState state)
     {
-        Character.ChangeState(ECharacterState.Idle);
+        Character.ChangeState(Character.PreviousState);
         switch (state)
         {
             case MoveState:

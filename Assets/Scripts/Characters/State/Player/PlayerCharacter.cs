@@ -9,12 +9,14 @@
             new IdleState(this),
             new PlayerMoveState(this),
             new DamageTakenState(this),
-            new SkillState(this));
+            new SkillState(this),
+            new ReactState(this));
     }
     
     public override void OnSelected()
     {
         base.OnSelected();
+        
         if (GpManager.MainCharacter == this && !GpManager.IsTutorialLevel)
         {
             GpManager.ShowMoveRange();

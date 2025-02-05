@@ -121,7 +121,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
         else
         {
-             if (MainCharacter.characterInfo.CurrentHP <= 0)
+             if (MainCharacter.characterInfo.CurrentHp <= 0)
              {
                  HandleEndTurn();
              }
@@ -145,6 +145,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
 
+    private void SetCharacterReact(Character character)
+    {
+        character.OnReact(new ReactStateParams()
+        {
+            target = _selectedCharacter,
+        });
+        SetSelectedCharacter(character);
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetCharacterReact: {character.characterConfig.characterName}");
+    }
+
     public void OnCellClicked(Cell cell)
     {
         if (!_canInteract) return;
@@ -161,15 +171,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void HandleEndTurn()
     {
+        MainCharacter.characterInfo.ResetBuffAfter();
         CurrentPlayerIndex++;
         if (CurrentPlayerIndex >= Characters.Count)
         {
             CurrentPlayerIndex = 0;
             HandleNewRound();
         }
-
-        MainCharacter.characterInfo.ResetBuffAfter();
-        ResetAllChange();
         SetMainCharacter();
     }
 
@@ -267,6 +275,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void HideSkillRange()
     {
+        Skill_UI.Selected?.highlightable.Unhighlight();
         MapManager.HideSkillRange();
         _charactersInRange.Clear();
     }
@@ -505,10 +514,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             UIManager.Instance.OpenPopup(PopupType.React);
         }
-        else if (_selectedCharacter.characterInfo.IsReact)
-        {
-            OnEndReact();
-        }
+        // else if (_selectedCharacter.characterInfo.IsReact)
+        // {
+        //     OnEndReact();
+        // }
     }
 
     private void OnEndReact()
@@ -522,17 +531,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void UnSelectSkill()
     {
-        if (SkillInfo != null)
-        {
-        }
-
         SkillInfo = null;
-        Skill_UI.Selected?.highlightable.Unhighlight();
         HideSkillRange();
-    }
-    
-    private void ResetAllChange()
-    {
     }
     
     public List<Character> GetEnemiesInRange(Character character, int range)
@@ -541,16 +541,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return characters.Where(c => c.Type != character.Type).ToList();
     }
     
-    public void OnConFirmClick()
+    public void OnConFirmReact()
     {
-        _focusedCharacter.characterInfo.IsReact = true;
-        SetSelectedCharacter(_focusedCharacter);
+        SetCharacterReact(_focusedCharacter);
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"OnConFirmClick");
     }
 
-    public void OnCancelClick()
+    public void OnCancelReact()
     {
-        _focusedCharacter.characterInfo.IsReact = false;
         OnEndReact();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
     }
@@ -571,11 +569,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void HandleEndSecondConversation()
     {
         ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
-        ShowAllHPBar();
+        ShowAllHpBar();
         SetMainCharacter();
     }
     
-    private void ShowAllHPBar()
+    private void ShowAllHpBar()
     { 
          foreach (var character in Characters)
          {

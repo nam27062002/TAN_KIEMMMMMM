@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class CharacterStateMachine : StateMachine
 {
-    public Character Character {get; set;}
+    private Character Character {get; set;}
     private IdleState IdleState {get; set;}
     private MoveState MoveState {get; set;}
     private DamageTakenState DamageTakenState {get; set;}
     private SkillState SkillState {get; set;}
+    private ReactState ReactState {get; set;}
 
-    private Dictionary<ECharacterState, CharacterState> CharacterStates = new();
+    private readonly Dictionary<ECharacterState, CharacterState> _characterStates = new();
     
-    public CharacterStateMachine(Character character, IdleState idleState, MoveState moveState, DamageTakenState damageTakenState, SkillState skillState)
+    public CharacterStateMachine(Character character, IdleState idleState, MoveState moveState, DamageTakenState damageTakenState, SkillState skillState, ReactState reactState)
     {
         Character = character;
 
@@ -19,16 +20,18 @@ public class CharacterStateMachine : StateMachine
         MoveState = moveState;
         DamageTakenState = damageTakenState;
         SkillState = skillState;
+        ReactState = reactState;
         
-        CharacterStates[ECharacterState.Idle] = IdleState;
-        CharacterStates[ECharacterState.Move] = MoveState;
-        CharacterStates[ECharacterState.DamageTaken] = DamageTakenState;
-        CharacterStates[ECharacterState.Skill] = SkillState;
+        _characterStates[ECharacterState.Idle] = IdleState;
+        _characterStates[ECharacterState.Move] = MoveState;
+        _characterStates[ECharacterState.DamageTaken] = DamageTakenState;
+        _characterStates[ECharacterState.Skill] = SkillState;
+        _characterStates[ECharacterState.React] = ReactState;
     }
 
     public void ChangeState(ECharacterState newState, StateParams stateParams = null)
     {
-        ChangeState(CharacterStates[newState], stateParams);
+        ChangeState(_characterStates[newState], stateParams);
     }
 
     protected override void ChangeStateMessage(IState newState)
@@ -45,4 +48,5 @@ public enum ECharacterState
     Move = 2,
     DamageTaken = 3,
     Skill = 4,
+    React = 5,
 }

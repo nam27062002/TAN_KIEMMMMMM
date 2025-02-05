@@ -135,7 +135,7 @@ public class Pathfinding
         }
     }
 
-    public HashSet<Cell> GetHexagonsInRange(Cell center, int maxMoves)
+    public HashSet<Cell> GetHexagonsInMoveRange(Cell center, int maxMoves)
     {
         if (center == null || maxMoves < 0)
             return new HashSet<Cell>();
@@ -163,7 +163,35 @@ public class Pathfinding
                 queue.Enqueue((neighbor, moves + 1));
             }
         }
-
+        reachable.Remove(center);
         return reachable;
+    }
+    
+    public HashSet<Cell> GetHexagonsInAttack(Cell center, int radius)
+    {
+        if (center == null || radius < 0) return new HashSet<Cell>();
+
+        var results = new HashSet<Cell>();
+        var visited = new HashSet<Cell>();
+        var queue = new Queue<(Cell hex, int dist)>();
+
+        visited.Add(center);
+        queue.Enqueue((center, 0));
+
+        while (queue.Count > 0)
+        {
+            var (currentHex, dist) = queue.Dequeue();
+            results.Add(currentHex);
+
+            if (dist >= radius) continue;
+            var neighbors = GetNeighbors(currentHex);
+            foreach (var neighbor in neighbors.Where(neighbor => !visited.Contains(neighbor)))
+            {
+                visited.Add(neighbor);
+                queue.Enqueue((neighbor, dist + 1));
+            }
+        }
+
+        return results;
     }
 }

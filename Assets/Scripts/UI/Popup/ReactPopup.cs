@@ -21,14 +21,14 @@ public class ReactPopup : PopupBase
 
     private void OnConfirmClicked()
     {
-        GameplayManager.Instance.OnConFirmClick();
+        GameplayManager.Instance.OnConFirmReact();
         Close();
     }
 
     private void OnCancelClicked()
     {
         if (GameplayManager.Instance.IsTutorialLevel) return;
-        GameplayManager.Instance.OnCancelClick();
+        GameplayManager.Instance.OnCancelReact();
         Close();
     }
 }

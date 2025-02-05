@@ -207,14 +207,14 @@ public class UI_Ingame : MenuBase
     
     private void OnHpChanged(object sender, EventArgs e)
     {
-        var currentHp = _characterParams.Character.characterInfo.CurrentHP;
+        var currentHp = _characterParams.Character.characterInfo.CurrentHp;
         var maxHp = _characterParams.Character.characterInfo.Attributes.health;
         hpBar.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
     }
     
     private void OnMpChanged(object sender, EventArgs e)
     {
-        var currentMp = _characterParams.Character.characterInfo.CurrentMP;
+        var currentMp = _characterParams.Character.characterInfo.CurrentMp;
         var maxMp = _characterParams.Character.characterInfo.Attributes.mana;
         mpBar.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
     }

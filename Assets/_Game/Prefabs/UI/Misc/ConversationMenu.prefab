@@ -268,7 +268,6 @@ GameObject:
   - component: {fileID: 8637695002959325182}
   - component: {fileID: 1019475926748385074}
   - component: {fileID: 7455303403559211764}
-  - component: {fileID: 3048582781754690848}
   m_Layer: 5
   m_Name: ConversationMenu
   m_TagString: Untagged
@@ -337,24 +336,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3048582781754690848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 138850921452792186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a19f0813e3c14f46aa620282633b35c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  avatarImage: {fileID: 6831783468442216987}
-  conversationText: {fileID: 5804000919536685869}
-  nextButton: {fileID: 2471651409153010590}
-  skipButton: {fileID: 4708873015154785528}
-  typeSpeed: 0.01
-  autoNextDelay: 5
 --- !u!1 &1499668627806877454
 GameObject:
   m_ObjectHideFlags: 0

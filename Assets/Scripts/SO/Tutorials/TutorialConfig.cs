@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TutorialConfig", menuName = "SO/Tutorial/TutorialConfig")]
 public class TutorialConfig : ScriptableObject
 {
-    [ListDrawerSettings(Expanded = true)]
+    [ListDrawerSettings(ShowFoldout = true)]
     public List<TutorialData> tutorials = new List<TutorialData>();
     
     [Serializable]

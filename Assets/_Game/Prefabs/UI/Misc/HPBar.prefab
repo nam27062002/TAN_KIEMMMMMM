@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 1700281104927005519}
   - component: {fileID: 2955518778051272151}
   - component: {fileID: 9066689606418193543}
-  - component: {fileID: 6431342551622234093}
   m_Layer: 5
   m_Name: HPBar
   m_TagString: Untagged
@@ -289,18 +288,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6431342551622234093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5432950700816814173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6608937a70b9405e956ed94070f74f68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showText: 1
-  progressBar: {fileID: 6748169024012271343}
-  processText: {fileID: 7038276156656167263}

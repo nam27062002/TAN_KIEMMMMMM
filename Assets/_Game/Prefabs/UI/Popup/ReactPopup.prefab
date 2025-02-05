@@ -557,7 +557,7 @@ MonoBehaviour:
   closeDuration: 0.2
   openEase: 27
   closeEase: 26
-  popupType: 0
+  popupType: 6
   canvasGroup: {fileID: 1996930693452163154}
   mainPanel: {fileID: 6681841625726921286}
   closePopupButton: {fileID: 0}

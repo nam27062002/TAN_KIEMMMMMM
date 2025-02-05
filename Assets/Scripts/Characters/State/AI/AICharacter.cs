@@ -12,7 +12,8 @@ public abstract class AICharacter : Character
             new IdleState(this),
             new AIMoveState(this),
             new DamageTakenState(this),
-            new SkillState(this));
+            new SkillState(this),
+            new ReactState(this));
     }
     
     public override void SetMainCharacter()
@@ -46,12 +47,6 @@ public abstract class AICharacter : Character
         return true;
     }
     
-    public override void MoveCharacter(List<Cell> cells)
-    {
-        base.MoveCharacter(cells);
-        
-    }
-    
     private bool TryCastSkill()
     {
         AlkawaDebug.Log(ELogCategory.AI,"TryCastSkill");
@@ -66,7 +61,6 @@ public abstract class AICharacter : Character
                  if (enemiesInRange.Count > 0)
                  {
                      _enemy = enemiesInRange[0];
-                     _enemy.OnEndAnimEventHandler += EnemyOnOnEndAnimEventHandler;
                      AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {i}");
                      GameplayManager.Instance.HandleCastSkill(_enemy, skills[i]);
                      return true;
@@ -75,12 +69,4 @@ public abstract class AICharacter : Character
          }
         return false;
     }
-
-    private void EnemyOnOnEndAnimEventHandler(object sender, EventArgs e)
-    {
-        AlkawaDebug.Log(ELogCategory.AI,"EnemyOnOnEndAnimEventHandler");
-        _enemy.OnEndAnimEventHandler -= EnemyOnOnEndAnimEventHandler;
-        GameplayManager.Instance.HandleEndTurn();
-    }
-    
 }
