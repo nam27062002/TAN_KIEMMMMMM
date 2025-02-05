@@ -17,6 +17,7 @@ public class MoveState : CharacterState
 
     private void HandleMovement(MoveStateParams stateParams)
     {
+        Character.characterInfo.Cell.CellType = CellType.Walkable;
         ReleaseFacing();
         Character.characterInfo.Cell.HideFocus();
         Character.characterInfo.MoveAmount += stateParams.MoveCells.Count;

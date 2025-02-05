@@ -267,7 +267,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void HideSkillRange()
     {
-        Skill_UI.Selected = null;
         MapManager.HideSkillRange();
         _charactersInRange.Clear();
     }
@@ -528,6 +527,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
 
         SkillInfo = null;
+        Skill_UI.Selected?.highlightable.Unhighlight();
         HideSkillRange();
     }
     

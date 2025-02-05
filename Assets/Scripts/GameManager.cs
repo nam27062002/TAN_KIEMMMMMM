@@ -1,6 +1,8 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine.SceneManagement;
+using Action = System.Action;
+using Application = UnityEngine.Application;
 
 public class GameManager : SingletonMonoBehavior<GameManager>
 {
@@ -18,6 +20,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         OnLoadComplete += HandleLoadComplete;
         DOTween.Init(false, false, LogBehaviour.ErrorsOnly);
         DOTween.SetTweensCapacity(500, 125);
+        Application.runInBackground = true;
     }
 
     private void Start()

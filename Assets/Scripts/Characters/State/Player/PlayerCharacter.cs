@@ -7,7 +7,7 @@
     {
         StateMachine = new CharacterStateMachine(this,
             new IdleState(this),
-            new MoveState(this),
+            new PlayerMoveState(this),
             new DamageTakenState(this),
             new SkillState(this));
     }
