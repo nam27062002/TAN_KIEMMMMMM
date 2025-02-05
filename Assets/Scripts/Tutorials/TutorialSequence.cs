@@ -13,6 +13,7 @@ public abstract class TutorialSequence : MonoBehaviour
     {
         highlightable.Unhighlight();
         StartCoroutine(AddTutorial());
+        if (!GameplayManager.Instance.IsTutorialLevel) Destroy(this);
     }
 
     protected virtual void OnEnable()

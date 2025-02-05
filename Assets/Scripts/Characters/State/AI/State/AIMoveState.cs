@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class AIMoveState : MoveState
+﻿public class AIMoveState : MoveState
 {
     public AIMoveState(Character character) : base(character)
     {
@@ -9,6 +7,11 @@ public class AIMoveState : MoveState
     protected override void OnReachToTarget()
     {
         base.OnReachToTarget();
+        CoroutineDispatcher.Invoke(HandlePlay, 1f);
+    }
+
+    private void HandlePlay()
+    {
         ((AICharacter)Character).HandleAIPlay();
     }
 }

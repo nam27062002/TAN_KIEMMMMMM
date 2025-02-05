@@ -15,8 +15,8 @@ public class SkillState : CharacterState
     private void HandleCastSkill()
     {
         var animName = GetAnimByIndex(Character.characterInfo.SkillInfo.skillIndex);
-        //AlkawaDebug.Log($"[Gameplay] - Handle cast skill: {animName}");
         Character.PlayAnim(animName, OnFinishAction);
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"Handle cast skill: {animName}");
     }
     
     private static AnimationParameterNameType GetAnimByIndex(int index)

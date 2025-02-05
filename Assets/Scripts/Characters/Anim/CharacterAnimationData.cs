@@ -19,6 +19,7 @@ public class CharacterAnimationData : MonoBehaviour
         anim.SetBool(animationParameterNameType.ToString(), true);
         _endAction = callback;
         _lastParameter = animationParameterNameType;
+        AlkawaDebug.Log(ELogCategory.ANIMATION, $"Play animation: {animationParameterNameType}");
     }
 
     public void OnEndAnimation()

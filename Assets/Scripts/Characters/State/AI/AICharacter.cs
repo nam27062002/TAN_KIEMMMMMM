@@ -61,8 +61,8 @@ public abstract class AICharacter : Character
                  if (enemiesInRange.Count > 0)
                  {
                      _enemy = enemiesInRange[0];
-                     AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {i}");
                      GameplayManager.Instance.HandleCastSkill(_enemy, skills[i]);
+                     AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {skills[i].name}");
                      return true;
                  }
              }

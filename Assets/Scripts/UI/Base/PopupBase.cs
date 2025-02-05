@@ -55,8 +55,7 @@ public abstract class PopupBase : UIBase
         if (_isAnimating) return;
         StartCloseAnimation(() =>
         {
-            if (ShowGreyBackground)
-                OnClose?.Invoke(this, EventArgs.Empty);
+            OnClose?.Invoke(this, EventArgs.Empty);
             Time.timeScale = 1;
             base.Close();
             GameplayManager.Instance.SetInteract(true);

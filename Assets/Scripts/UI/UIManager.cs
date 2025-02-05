@@ -13,7 +13,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     public UIBase CurrentMenu { get; set; }
     public UIBase CurrentPopup { get; set; }
     
-    private readonly Stack<UIBase> _popupStack = new();
+    private Stack<UIBase> popupStack = new Stack<UIBase>();
 
     protected override void Awake()
     {
@@ -40,8 +40,8 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     {
         if (CurrentPopup != null)
         {
-            _popupStack.Push(CurrentPopup);
-            CurrentPopup.Close();
+            popupStack.Push(CurrentPopup);
+            CurrentPopup.gameObject.SetActive(false);
         }
         
         CurrentPopup = allPopups[popupType];
@@ -66,13 +66,17 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     private void OnClosePopup(object sender, EventArgs e)
     {
         CurrentPopup = null;
-        greyBackground.enabled = false;
-        if (_popupStack.Count > 0)
+
+        if (popupStack.Count > 0)
         {
-            UIBase previousPopup = _popupStack.Pop();
+            UIBase previousPopup = popupStack.Pop();
             CurrentPopup = previousPopup;
-            CurrentPopup.Open();
+            CurrentPopup.gameObject.SetActive(true);
             greyBackground.enabled = true;
+        }
+        else
+        {
+            greyBackground.enabled = false;
         }
     }
 
