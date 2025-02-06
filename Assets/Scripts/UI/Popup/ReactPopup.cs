@@ -21,6 +21,7 @@ public class ReactPopup : PopupBase
 
     private void OnConfirmClicked()
     {
+        if (GameplayManager.Instance.IsTutorialLevel) return;
         GameplayManager.Instance.OnConFirmReact();
         Close();
     }

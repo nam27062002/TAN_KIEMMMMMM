@@ -115,6 +115,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void OnLoadCharacterFinished(object sender, EventArgs e)
     {
+        GameplayManager.Instance.OnLoadCharacterFinished -= OnLoadCharacterFinished;
         foreach (var character in charactersDict)
         {
             character.Value.DestroyCharacter();
@@ -211,6 +212,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     {
         arrow.gameObject.SetActiveIfNeeded(false);
         UIManager.Instance.TryClosePopup(PopupType.Message);
+        GameplayManager.Instance.ShowLevelName();
         GameplayManager.Instance.IsTutorialLevel = false;
     }
 

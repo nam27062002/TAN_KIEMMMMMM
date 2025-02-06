@@ -20,7 +20,7 @@ public class FlyingTempest : PassiveSkill
     
     private void OnMoveAmount(object sender, int moveAmount)
     {
-        _currentMove += moveAmount;
+        _currentMove = moveAmount;
 
         if (_currentMove >= triggerCondition)
         {
@@ -36,7 +36,7 @@ public class FlyingTempest : PassiveSkill
         lyVoDanh.PlayAnim(AnimationParameterNameType.Skill1, OnEndAnim);
         foreach (var target in targets)
         {
-            target.characterInfo.OnDamageTaken(lyVoDanh.characterInfo.BaseDamage);
+            if (target.Type == Type.AI) target.characterInfo.OnDamageTaken(lyVoDanh.characterInfo.BaseDamage);
         }
     }
 

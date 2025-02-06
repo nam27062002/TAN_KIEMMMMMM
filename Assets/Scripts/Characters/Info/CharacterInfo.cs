@@ -14,17 +14,8 @@ public class CharacterInfo
     
     public int CurrentHp { get; set; }
     public int CurrentMp { get; set; }
-
-    private int moveAmount;
-    public int MoveAmount
-    {
-        get => moveAmount;
-        set
-        {
-            moveAmount = value;
-            OnMoveAmount?.Invoke(this, value);
-        }
-    }
+    
+    public int MoveAmount { get; set; }
 
     public int MoveBuff { get; set; } 
     public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
@@ -61,7 +52,11 @@ public class CharacterInfo
         CurrentMp += value;
         OnMpChanged?.Invoke(this, EventArgs.Empty);
     }
-    
+
+    public void HandleMoveAmountChanged(int value)
+    {
+        OnMoveAmount?.Invoke(this, value);
+    }
     public int GetMoveRange()
     {
         return Attributes.maxMoveRange + MoveBuff - MoveAmount;
@@ -93,7 +88,7 @@ public class CharacterInfo
     
     public bool CanCastSkill(SkillInfo skillInfo)
     {
-        return Attributes.mana >= skillInfo.mpCost && IsEnoughActionPoints();
+        return CurrentMp >= skillInfo.mpCost && IsEnoughActionPoints();
     }
     
     public void OnDamageTaken(int damage)

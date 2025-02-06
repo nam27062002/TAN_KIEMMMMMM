@@ -19,7 +19,7 @@ public abstract class Character : MonoBehaviour
     public CharacterInfo characterInfo;
     public SkillConfig skillConfig;
     public List<PassiveSkill> passiveSkills;
-    public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
+    [ShowInInspector] public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
     public Roll Roll {get; set;}
     
     public virtual bool CanEndTurn => false;

@@ -107,9 +107,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SetMainCharacter();
         SetInteract(true);
         HandleNewRound();
-        OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
+        ShowLevelName();
     }
-
+    
     public void SetMainCharacter()
     {
         if (TutorialManager.Instance != null
@@ -236,6 +236,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     #endregion
 
     #region Sub
+    
+    public void ShowLevelName()
+    {
+        OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
+    }
     
     public Character GetCharacterByType(CharacterType characterType)
     {
@@ -438,9 +443,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void OnCastSkillFinished()
     {
+        UpdateCharacterInfo();
         if (SkillInfo.isDirectionalSkill)
         {
-            UpdateCharacterInfo();
             if (SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
             {
                 TryAttackEnemies(_focusedCharacter);
@@ -571,6 +576,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         OnEndReact();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
     }
+    
+
 
     #endregion
     

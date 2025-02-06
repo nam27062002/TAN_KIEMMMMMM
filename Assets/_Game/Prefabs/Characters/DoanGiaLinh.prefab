@@ -119,7 +119,7 @@ MonoBehaviour:
       rollValue: 20
     actionPoints:
       m_keys: 000000000100000002000000
-      m_values: 020000000100000002000000
+      m_values: 010000000100000002000000
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 46d500e793f68bf4c9b66a3c3b2afbfc, type: 3}
@@ -348,6 +348,7 @@ MonoBehaviour:
         ph\u1EA5n t\u1EEB k\u1EBB \u0111ang t\u1EA5n c\xF4ng m\xECnh, gi\u1EA3m to\xE0n
         b\u1ED9 s\xE1t th\u01B0\u01A1ng v\u1EADt l\xFD m\xE0 b\u1EA3n th\xE2n \u0111\xE1ng
         l\u1EBD ph\u1EA3i nh\u1EADn. (apply debuff 21)"
+  passiveSkills: []
 --- !u!114 &4460552136440462341 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2868514981145055145, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
