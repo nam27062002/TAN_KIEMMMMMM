@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class CharacterInfo
 {
+    // 
+    public SkillInfo SkillInfo { get; set; }
+    //
     public Cell Cell { get; set; }
     public int Speed { get; set; }
     public CharacterAttributes Attributes { get; set; }
@@ -78,7 +81,7 @@ public class CharacterInfo
     public void OnCastSkill(SkillInfo skillInfo, SkillIndex skillIndex)
     {
         HandleMpChanged(-skillInfo.mpCost);
-        Character.HandleCastSkill(new SkillStateParams
+        Character.SetSkill(new SkillStateParams
         {
             skillIndex = skillIndex,
             skillInfo = skillInfo,

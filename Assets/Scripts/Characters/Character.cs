@@ -55,7 +55,6 @@ public abstract class Character : MonoBehaviour
         skillConfig.SetSkillConfigs();
         Roll = new Roll(CharacterInfo.Attributes);
         SetCell(cell);
-        SetCharacterPosition(cell);
         SetIdle();
         SetSpeed();
         CharacterInfo.OnHpChanged += OnHpChanged;
@@ -85,9 +84,14 @@ public abstract class Character : MonoBehaviour
         ChangeState(ECharacterState.Idle);
     }
 
-    public void HandleCastSkill(SkillStateParams skillStateParams)
+    public void SetSkill(SkillStateParams skillStateParams)
     {
         ChangeState(ECharacterState.Skill, skillStateParams);
+    }
+    
+    public virtual void SetMovement(List<Cell> cells)
+    {
+        ChangeState(ECharacterState.Move, new MoveStateParams(cells));
     }
 
     public void ChangeState(ECharacterState newState, StateParams stateParams = null)
@@ -97,59 +101,39 @@ public abstract class Character : MonoBehaviour
     
     #endregion
 
-    public void SetCell(Cell cell)
-    {
-        CharacterInfo.Cell = cell;
-        cell.OnCharacterRegister(this);
-    }
-
-    private void SetCharacterPosition(Cell cell)
-    {
-        var pos = cell.transform.position;
-        pos.y += characterConfig.characterHeight / 2f;
-        transform.position = pos;
-    }
-
-    private void OnHpChanged(object sender, EventArgs e)
-    {
-        var currentHp = CharacterInfo.CurrentHp;
-        var maxHp = CharacterInfo.Attributes.health;
-        hpBar.SetValue(currentHp * 1f / maxHp, $"{currentHp} / {maxHp}");
-    }
+    #region Skills
 
     public List<SkillInfo> GetSkillInfos(SkillType skillType)
     {
         return skillConfig.SkillConfigs[skillType];
     }
 
-    public virtual void MoveCharacter(List<Cell> cells)
+    public void HandleCastSkill()
     {
-        ChangeState(ECharacterState.Move, new MoveStateParams(cells));
+        // CharacterInfo.OnCastSkill();
     }
-
-    public void MoveCharacter(Vector3 targetPos, float duration)
+    #endregion
+    
+    #region Sub
+    
+    public void SetCell(Cell cell)
     {
-        // PlayAnim(targetPos.x > transform.position.x
-        //     ? AnimationParameterNameType.MoveRight
-        //     : AnimationParameterNameType.MoveLeft);
-        // transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
+        CharacterInfo.Cell = cell;
+        cell.OnCharacterRegister(this);
     }
-
-    public virtual void OnSelected()
-    {
-        CharacterInfo.Cell.ShowFocus();
-    }
-
-    public virtual void OnUnSelected()
-    {
-        CharacterInfo.Cell.HideFocus();
-    }
-
+    
     protected virtual void SetSpeed()
     {
         CharacterInfo.Speed = Roll.GetSpeed();
     }
-
+    
+    private void OnHpChanged(object sender, EventArgs e)
+    {
+        var currentHp = CharacterInfo.CurrentHp;
+        var maxHp = CharacterInfo.Attributes.health;
+        hpBar.SetValue(currentHp * 1f / maxHp, $"{currentHp} / {maxHp}");
+    }
+    
     public void ShowHpBar()
     {
         hpBar.gameObject.SetActiveIfNeeded(true);
@@ -159,7 +143,19 @@ public abstract class Character : MonoBehaviour
     {
         hpBar.gameObject.SetActiveIfNeeded(false);
     }
+    
+    public virtual void OnSelected()
+    {
+        CharacterInfo.Cell.ShowFocus();
+    }
 
+    public virtual void OnUnSelected()
+    {
+        CharacterInfo.Cell.HideFocus();
+    }
+    
+    #endregion
+    
     public void DestroyCharacter()
     {
         Destroy(gameObject);

@@ -11,6 +11,7 @@ public abstract class CharacterState : IState
     protected Transform Transform => Owner.transform;
     protected Vector3 Position => Owner.transform.position;
     protected GameplayManager GpManager => GameplayManager.Instance;
+    protected CharacterInfo Info => Character.CharacterInfo;
 
     protected CharacterState(Character character)
     {
@@ -86,5 +87,15 @@ public abstract class CharacterState : IState
     {
         Character.AnimationData.PlayAnimation(animationParameterNameType, onEndAnim);
     }
-    
+
+    #region Sub
+
+    protected void SetCharacterPosition()
+    {
+        var pos = Info.Cell.transform.position;
+        pos.y += Character.characterConfig.characterHeight / 2f;
+        Transform.position = pos;
+    }
+
+    #endregion
 }

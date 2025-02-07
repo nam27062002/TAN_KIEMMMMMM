@@ -10,6 +10,7 @@
     {
         base.OnEnter(stateParams);
         PlayAnim(AnimationParameterNameType.Idle);
+        SetCharacterPosition();
         SetFacing();
     }
 

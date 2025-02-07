@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -83,7 +84,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         {
             foreach (var character in charactersDict)
             {
-                character.Value.MoveCharacter(gotoPoses[character.Key][_footStep].transform.position, time);
+                MoveCharacter(character.Value, gotoPoses[character.Key][_footStep].transform.position, time);
             }
         }
     }
@@ -143,6 +144,14 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
             Conversation = conversation_3.conversation,
             OnEndConversation = OnEndFinal,
         });
+    }
+    
+    public void MoveCharacter(Character character, Vector3 targetPos, float duration)
+    {
+        character.AnimationData.PlayAnimation(targetPos.x > transform.position.x
+            ? AnimationParameterNameType.MoveRight
+            : AnimationParameterNameType.MoveLeft);
+        transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }
 
     private void OnEndFinal()
