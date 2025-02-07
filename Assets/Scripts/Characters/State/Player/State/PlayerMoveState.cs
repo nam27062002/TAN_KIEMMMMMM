@@ -7,6 +7,6 @@
     protected override void OnReachToTarget()
     {
         base.OnReachToTarget();
-        GpManager.ShowMoveRange();
+        Character.ShowMoveRange();
     }
 }

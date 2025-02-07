@@ -32,6 +32,7 @@ public class LyVoDanh : PlayerCharacter
         {
             base.SetSpeed();
         }
+        CharacterInfo.Speed = 50;
     }       
     
 }

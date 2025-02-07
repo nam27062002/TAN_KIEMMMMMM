@@ -7,10 +7,14 @@ using UnityEngine;
 
 public class CharacterInfo
 {
-    // 
+    // Cell
+    public Cell Cell { get; set; }
+    public HashSet<Cell> MoveRange { get; set; } = new();
+    public HashSet<Cell> SkillRange { get; set; } = new();
+    // Skill
     public SkillInfo SkillInfo { get; set; }
     //
-    public Cell Cell { get; set; }
+    
     public int Speed { get; set; }
     public CharacterAttributes Attributes { get; set; }
     

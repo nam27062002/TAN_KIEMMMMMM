@@ -19,8 +19,7 @@ public class MapManager : MonoBehaviour
     public Vector2Int MapSize => mapSize;
     public SerializableDictionary<Vector2Int, Cell> Cells => cells;
 
-    private HashSet<Cell> _moveRange = new();
-    public HashSet<Cell> SkillRange { get; set; } = new();
+
     public event EventHandler OnLoadMapFinished;
     
     private void Awake()
@@ -58,58 +57,28 @@ public class MapManager : MonoBehaviour
         return cells[position];
     }
     
-    public void ShowMoveRange(Cell cell, int range)
+    public HashSet<Cell> GetHexagonsInMoveRange(Cell cell, int range)
     {
-        _moveRange = _pathfinding.GetHexagonsInMoveRange(cell, range);
-        foreach (var item in _moveRange)
-        {
-            item.ShowMoveRange();
-        }
+        return _pathfinding.GetHexagonsInMoveRange(cell, range);
     }
 
+    public HashSet<Cell> GetHexagonsInAttack(Cell cell, int range)
+    {
+        return _pathfinding.GetHexagonsInAttack(cell, range);
+    }
     public List<Cell> GetCellsWalkableInRange(Cell cell, int range)
     {
         var allCells = _pathfinding.GetHexagonsInMoveRange(cell, range);
         return allCells.Where(c => c.CellType == CellType.Walkable).ToList();
     }
-
-    public void HideMoveRange()
-    {
-        if (_moveRange == null || _moveRange.Count == 0) return;
-        foreach (var item in _moveRange)
-        {
-            item.HideMoveRange();
-        }
-
-        _moveRange.Clear();
-    }
-
-
-    public void ShowSkillRange(Cell cell, int range)
-    {
-        SkillRange = _pathfinding.GetHexagonsInAttack(cell, range);
-        foreach (var item in SkillRange)
-        {
-            item.ShowSkillRange();
-        }
-    }
-
+    
     public List<Character> GetCharacterInRange(Cell cell, int range)
     {
         var allCells = _pathfinding.GetHexagonsInAttack(cell, range);
         return (from item in allCells where item.CellType == CellType.Character select item.Character).ToList();
     }
+    
 
-    public void HideSkillRange()
-    {
-        if (SkillRange == null || SkillRange.Count == 0) return;
-        foreach (var item in SkillRange)
-        {
-            item.HideSkillRange();
-        }
-
-        SkillRange.Clear();
-    }
 
     public List<Cell> FindPath(Cell startCell, Cell endCell)
     {
@@ -118,7 +87,8 @@ public class MapManager : MonoBehaviour
 
     public bool CanMove(Cell cell)
     {
-        return _moveRange != null && _moveRange.Contains(cell);
+        // return _moveRange != null && _moveRange.Contains(cell);
+        return true;
     }
 
     public void DestroyMap()

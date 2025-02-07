@@ -20,13 +20,16 @@ public abstract class Character : MonoBehaviour
     public List<PassiveSkill> passiveSkills;
 
     protected CharacterStateMachine StateMachine { get; set; }
-    protected GameplayManager GpManager => GameplayManager.Instance;
+
     protected HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
 
     public Roll Roll { get; private set; }
     public CharacterInfo CharacterInfo;
     
     public bool IsMainCharacter => GpManager.MainCharacter == this;
+    // protected function
+    protected GameplayManager GpManager => GameplayManager.Instance;
+    protected MapManager MapManager => GpManager.MapManager;
     
     // Public function
     public CharacterAnimationData AnimationData => characterAnimationData;
@@ -112,6 +115,11 @@ public abstract class Character : MonoBehaviour
     {
         // CharacterInfo.OnCastSkill();
     }
+
+    public void HandleSelectSkill()
+    {
+        
+    }
     #endregion
     
     #region Sub
@@ -152,8 +160,47 @@ public abstract class Character : MonoBehaviour
     public virtual void OnUnSelected()
     {
         CharacterInfo.Cell.HideFocus();
+        HideSkillRange();
+        HideMoveRange();
+    }
+
+    public void ShowMoveRange()
+    {
+        CharacterInfo.MoveRange = MapManager.GetHexagonsInMoveRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange());
+        foreach (var item in CharacterInfo.MoveRange)
+        {
+            item.ShowMoveRange();
+        }
     }
     
+    public void HideMoveRange()
+    {
+        if (CharacterInfo.MoveRange == null || CharacterInfo.MoveRange.Count == 0) return;
+        foreach (var item in CharacterInfo.MoveRange)
+        {
+            item.HideMoveRange();
+        }
+        CharacterInfo.MoveRange.Clear();
+    }
+    
+    public void ShowSkillRange(Cell cell, int range)
+    {
+        CharacterInfo.SkillRange = MapManager.GetHexagonsInAttack(cell, range);
+        foreach (var item in CharacterInfo.SkillRange)
+        {
+            item.ShowSkillRange();
+        }
+    }
+    
+    public void HideSkillRange()
+    {
+        if (CharacterInfo.SkillRange == null || CharacterInfo.SkillRange.Count == 0) return;
+        foreach (var item in CharacterInfo.SkillRange)
+        {
+            item.HideSkillRange();
+        }
+        CharacterInfo.SkillRange.Clear();
+    }
     #endregion
     
     public void DestroyCharacter()

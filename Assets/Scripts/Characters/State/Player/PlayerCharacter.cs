@@ -18,7 +18,7 @@
         
         if (GpManager.MainCharacter == this && !GpManager.IsTutorialLevel)
         {
-            GpManager.ShowMoveRange();
+            ShowMoveRange();
         }
     }
 }
