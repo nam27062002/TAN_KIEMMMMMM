@@ -26,7 +26,7 @@ public class LyVoDanh : PlayerCharacter
     {
         if (GpManager.IsTutorialLevel)
         {
-            characterInfo.Speed = 10;
+            CharacterInfo.Speed = 10;
         }
         else
         {

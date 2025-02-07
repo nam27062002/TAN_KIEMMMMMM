@@ -122,7 +122,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
         else
         {
-             if (MainCharacter.characterInfo.CurrentHp <= 0)
+             if (MainCharacter.CharacterInfo.CurrentHp <= 0)
              {
                  HandleEndTurn();
              }
@@ -170,7 +170,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void HandleEndTurn(bool force = false)
     {
         if (!_canInteract && !force) return;
-        MainCharacter.characterInfo.ResetBuffAfter();
+        MainCharacter.CharacterInfo.ResetBuffAfter();
         CurrentPlayerIndex++;
         if (CurrentPlayerIndex >= Characters.Count)
         {
@@ -218,7 +218,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void OnWaypointClicked(Cell cell)
     {
         if (!CanMove(cell)) return;
-        var cellPath = MapManager.FindPath(_selectedCharacter.characterInfo.Cell, cell);
+        var cellPath = MapManager.FindPath(_selectedCharacter.CharacterInfo.Cell, cell);
         MapManager.HideMoveRange();
         _selectedCharacter.MoveCharacter(cellPath);
     }
@@ -249,7 +249,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private SkillInfo GetSkillInfo(int index)
     {
-        return _selectedCharacter.characterInfo.GetSkillInfo(index, GetSkillType(_selectedCharacter));
+        return _selectedCharacter.CharacterInfo.GetSkillInfo(index, GetSkillType(_selectedCharacter));
     }
     
     private void HandleNewRound()
@@ -266,13 +266,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void SortCharacterBySpeed()
     {
-        Characters = Characters.OrderByDescending(c => c.characterInfo.Speed).ToList();
+        Characters = Characters.OrderByDescending(c => c.CharacterInfo.Speed).ToList();
     }
 
     public void ShowMoveRange()
     {
-        var range = _selectedCharacter.characterInfo.GetMoveRange();
-        MapManager.ShowMoveRange(_selectedCharacter.characterInfo.Cell, range);
+        var range = _selectedCharacter.CharacterInfo.GetMoveRange();
+        MapManager.ShowMoveRange(_selectedCharacter.CharacterInfo.Cell, range);
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,
             $"[{_selectedCharacter.characterConfig.characterName}] move Range: {range}");
     }
@@ -389,12 +389,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HideMoveRange();
         HideSkillRange();
         _focusedCharacter = character;
-        _selectedCharacter.characterInfo.OnCastSkill(SkillInfo);
+        _selectedCharacter.CharacterInfo.OnCastSkill(SkillInfo, SkillIndex.ActiveSkill1);
     }
 
     private void HandleCastSkill()
     {
-        _selectedCharacter.characterInfo.OnCastSkill(SkillInfo);
+        _selectedCharacter.CharacterInfo.OnCastSkill(SkillInfo, SkillIndex.ActiveSkill1);
     }
 
     public void HandleCastSkill(Character character, SkillInfo skillInfo)
@@ -413,7 +413,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         // show skill range
         if (SkillInfo.range > 0)
         {
-            MapManager.ShowSkillRange(_selectedCharacter.characterInfo.Cell, SkillInfo.range);
+            MapManager.ShowSkillRange(_selectedCharacter.CharacterInfo.Cell, SkillInfo.range);
             AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"Gameplay: Show skill range: {SkillInfo.range}");
         }
 
@@ -464,23 +464,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     private void ApplyBuff()
     {
-        _focusedCharacter.characterInfo.ApplyBuff(SkillInfo);
+        _focusedCharacter.CharacterInfo.ApplyBuff(SkillInfo);
     }
 
     private bool TryAttackEnemies(Character focusedCharacter)
     {
         // check crit
-        int damage = SkillInfo.hasApplyDamage ? _selectedCharacter.characterInfo.BaseDamage : 0;
+        int damage = SkillInfo.hasApplyDamage ? _selectedCharacter.CharacterInfo.BaseDamage : 0;
         var hitChange = _selectedCharacter.Roll.GetHitChange();
         var isCritical = _selectedCharacter.Roll.IsCritical(hitChange);
         if (!isCritical)
         {
-            var dodge = focusedCharacter.characterInfo.Dodge;
+            var dodge = focusedCharacter.CharacterInfo.Dodge;
             if (dodge > hitChange)
             {
                 AlkawaDebug.Log(ELogCategory.GAMEPLAY,
                     $"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
-                focusedCharacter.characterInfo.OnDamageTaken(-1);
+                focusedCharacter.CharacterInfo.OnDamageTaken(-1);
             }
             else
             {
@@ -500,14 +500,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                     //     Debug.Log($"[Gameplay] - Damage: {damage}");
                     // }
                 }
-                focusedCharacter.characterInfo.OnDamageTaken(damage);
+                focusedCharacter.CharacterInfo.OnDamageTaken(damage);
             }
         }
 
         else
         {
             damage *= 2;
-            focusedCharacter.characterInfo.OnDamageTaken(damage);
+            focusedCharacter.CharacterInfo.OnDamageTaken(damage);
             //AlkawaDebug.Log($"Gameplay: Get Damage Taken {damage}");
         }
 
@@ -561,7 +561,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public List<Character> GetEnemiesInRange(Character character, int range)
     {
-        var characters = MapManager.GetCharacterInRange(character.characterInfo.Cell, range);
+        var characters = MapManager.GetCharacterInRange(character.CharacterInfo.Cell, range);
         return characters.Where(c => c.Type != character.Type).ToList();
     }
     

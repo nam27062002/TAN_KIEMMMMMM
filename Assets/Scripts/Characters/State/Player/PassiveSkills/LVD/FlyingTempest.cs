@@ -9,13 +9,13 @@ public class FlyingTempest : PassiveSkill
     public override void RegisterEvents()
     {
         base.RegisterEvents();
-        lyVoDanh.characterInfo.OnMoveAmount += OnMoveAmount;
+        lyVoDanh.CharacterInfo.OnMoveAmount += OnMoveAmount;
     }
     
     public override void UnregisterEvents()
     {
         base.UnregisterEvents();
-        lyVoDanh.characterInfo.OnMoveAmount -= OnMoveAmount;
+        lyVoDanh.CharacterInfo.OnMoveAmount -= OnMoveAmount;
     }
     
     private void OnMoveAmount(object sender, int moveAmount)
@@ -24,7 +24,7 @@ public class FlyingTempest : PassiveSkill
 
         if (_currentMove >= triggerCondition)
         {
-            lyVoDanh.PendingPassiveSkillsTrigger.Add(this);
+            // lyVoDanh.PendingPassiveSkillsTrigger.Add(this);
             _currentMove = 0;
         }
     }
@@ -32,11 +32,11 @@ public class FlyingTempest : PassiveSkill
     public override void OnTrigger()
     {
         base.OnTrigger();
-        var targets = GameplayManager.Instance.MapManager.GetCharacterInRange(lyVoDanh.characterInfo.Cell, 1);
-        lyVoDanh.PlayAnim(AnimationParameterNameType.Skill1, OnEndAnim);
+        var targets = GameplayManager.Instance.MapManager.GetCharacterInRange(lyVoDanh.CharacterInfo.Cell, 1);
+        // lyVoDanh.PlayAnim(AnimationParameterNameType.Skill1, OnEndAnim);
         foreach (var target in targets)
         {
-            if (target.Type == Type.AI) target.characterInfo.OnDamageTaken(lyVoDanh.characterInfo.BaseDamage);
+            if (target.Type == Type.AI) target.CharacterInfo.OnDamageTaken(lyVoDanh.CharacterInfo.BaseDamage);
         }
     }
 

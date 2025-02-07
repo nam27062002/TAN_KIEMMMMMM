@@ -9,7 +9,7 @@
     public override void OnEnter(StateParams stateParams = null)
     {
         base.OnEnter(stateParams);
-        Character.PlayAnim(AnimationParameterNameType.Idle);
+        PlayAnim(AnimationParameterNameType.Idle);
         SetFacing();
     }
 

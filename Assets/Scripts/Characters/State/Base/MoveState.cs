@@ -17,20 +17,20 @@ public class MoveState : CharacterState
 
     private void HandleMovement(MoveStateParams stateParams)
     {
-        Character.characterInfo.Cell.CellType = CellType.Walkable;
+        Character.CharacterInfo.Cell.CellType = CellType.Walkable;
         ReleaseFacing();
-        Character.characterInfo.Cell.HideFocus();
+        Character.CharacterInfo.Cell.HideFocus();
         var moveAmount = stateParams.MoveCells.Count - 1;
-        Character.characterInfo.MoveAmount += moveAmount;
-        Character.characterInfo.HandleMoveAmountChanged(moveAmount);
+        Character.CharacterInfo.MoveAmount += moveAmount;
+        Character.CharacterInfo.HandleMoveAmountChanged(moveAmount);
         var moveSequence = DOTween.Sequence();
         float currentX = Transform.position.x;
         foreach (var cell in stateParams.MoveCells)
         {
             var targetPos = cell.transform.position;
             targetPos.y += Character.characterConfig.characterHeight / 2f;
-            Character.PlayAnim(AnimationParameterNameType.MoveLeft);
-            Character.PlayAnim(cell.transform.position.x > currentX ? AnimationParameterNameType.MoveRight :
+            PlayAnim(AnimationParameterNameType.MoveLeft);
+            PlayAnim(cell.transform.position.x > currentX ? AnimationParameterNameType.MoveRight :
                 AnimationParameterNameType.MoveLeft);
             currentX = cell.transform.position.x;
             moveSequence.Append(Transform.DOMove(targetPos, 0.5f).SetEase(Ease.Linear));
@@ -39,7 +39,7 @@ public class MoveState : CharacterState
         moveSequence.OnComplete(() =>
         {
             SetCell(stateParams.MoveCells[^1]);
-            Character.characterInfo.Cell.ShowFocus();
+            Character.CharacterInfo.Cell.ShowFocus();
             GpManager.SetInteract(true);
             OnFinishAction();
         });

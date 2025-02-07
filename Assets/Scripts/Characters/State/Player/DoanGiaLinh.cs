@@ -4,7 +4,7 @@
     {
         if (GpManager.IsTutorialLevel)
         {
-            characterInfo.Speed = 11;
+            CharacterInfo.Speed = 11;
         }
         else
         {

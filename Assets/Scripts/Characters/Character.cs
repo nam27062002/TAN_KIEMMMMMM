@@ -7,26 +7,33 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    public virtual Type Type => Type.None;
-    public CharacterType characterType;
-    public CharacterAnimationData characterAnimationData;
-    public HpBar hpBar;
+    [Title("Character Type")] public CharacterType characterType;
+
+    [Title("Animation"), Space] [SerializeField]
+    private CharacterAnimationData characterAnimationData;
+
+    [Title("References")] public HpBar hpBar;
     public GameObject model;
-    public CharacterStateMachine StateMachine { get; set; }
-    protected GameplayManager GpManager => GameplayManager.Instance;
-    [Title("Settings"), Space(10)] 
-    public CharacterConfig characterConfig;
-    public CharacterInfo characterInfo;
+
+    [Title("Settings"), Space(10)] public CharacterConfig characterConfig;
     public SkillConfig skillConfig;
     public List<PassiveSkill> passiveSkills;
-    [ShowInInspector] public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
-    public Roll Roll {get; set;}
-    
-    public virtual bool CanEndTurn => false;
-    public bool IsMainCharacter => GpManager.MainCharacter == this;
 
-    public ECharacterState CurrentState { get; set; } = ECharacterState.Idle;
-    public ECharacterState PreviousState { get; set; } = ECharacterState.Idle;
+    protected CharacterStateMachine StateMachine { get; set; }
+    protected GameplayManager GpManager => GameplayManager.Instance;
+    protected HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
+
+    public Roll Roll { get; private set; }
+    public CharacterInfo CharacterInfo;
+    
+    public bool IsMainCharacter => GpManager.MainCharacter == this;
+    
+    // Public function
+    public CharacterAnimationData AnimationData => characterAnimationData;
+    
+    // public vitual function
+    public virtual Type Type => Type.None;
+    public virtual bool CanEndTurn => false;
     
     private void Awake()
     {
@@ -34,10 +41,10 @@ public abstract class Character : MonoBehaviour
     }
 
     protected abstract void SetStateMachine();
-    
+
     public void Initialize(Cell cell)
     {
-        characterInfo = new CharacterInfo
+        CharacterInfo = new CharacterInfo
         {
             SkillConfig = skillConfig,
             Attributes = characterConfig.characterAttributes,
@@ -46,12 +53,12 @@ public abstract class Character : MonoBehaviour
             Character = this,
         };
         skillConfig.SetSkillConfigs();
-        Roll = new Roll(characterInfo.Attributes);
+        Roll = new Roll(CharacterInfo.Attributes);
         SetCell(cell);
         SetCharacterPosition(cell);
         SetIdle();
         SetSpeed();
-        characterInfo.OnHpChanged += OnHpChanged;
+        CharacterInfo.OnHpChanged += OnHpChanged;
         OnHpChanged(null, null);
         ChangeState(ECharacterState.Idle);
         SetPassiveSkills();
@@ -59,8 +66,8 @@ public abstract class Character : MonoBehaviour
 
     public virtual void SetMainCharacter()
     {
-        characterInfo.HandleIncreaseValueActionPoints();
-        characterInfo.ResetBuffBefore();
+        CharacterInfo.HandleIncreaseValueActionPoints();
+        CharacterInfo.ResetBuffBefore();
     }
 
     private void SetPassiveSkills()
@@ -71,34 +78,28 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    #region Set States  
-    
+    #region Set States
+
     private void SetIdle()
     {
         ChangeState(ECharacterState.Idle);
     }
-    
-    public void HandleCastSkill()
+
+    public void HandleCastSkill(SkillStateParams skillStateParams)
     {
-        ChangeState(ECharacterState.Skill);
+        ChangeState(ECharacterState.Skill, skillStateParams);
     }
-    
+
     public void ChangeState(ECharacterState newState, StateParams stateParams = null)
     {
-        PreviousState = CurrentState;
-        CurrentState = newState;
         StateMachine.ChangeState(newState, stateParams);
     }
     
-    public void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
-    {
-        characterAnimationData.PlayAnimation(animationParameterNameType, onEndAnim);
-    }
     #endregion
-    
+
     public void SetCell(Cell cell)
     {
-        characterInfo.Cell = cell;
+        CharacterInfo.Cell = cell;
         cell.OnCharacterRegister(this);
     }
 
@@ -108,12 +109,12 @@ public abstract class Character : MonoBehaviour
         pos.y += characterConfig.characterHeight / 2f;
         transform.position = pos;
     }
-    
+
     private void OnHpChanged(object sender, EventArgs e)
     {
-        var currentHp = characterInfo.CurrentHp;
-        var maxHp = characterInfo.Attributes.health;
-        hpBar.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
+        var currentHp = CharacterInfo.CurrentHp;
+        var maxHp = CharacterInfo.Attributes.health;
+        hpBar.SetValue(currentHp * 1f / maxHp, $"{currentHp} / {maxHp}");
     }
 
     public List<SkillInfo> GetSkillInfos(SkillType skillType)
@@ -123,27 +124,30 @@ public abstract class Character : MonoBehaviour
 
     public virtual void MoveCharacter(List<Cell> cells)
     {
-        ChangeState(ECharacterState.Move, new MoveStateParams(cells));   
+        ChangeState(ECharacterState.Move, new MoveStateParams(cells));
     }
 
     public void MoveCharacter(Vector3 targetPos, float duration)
     {
-        PlayAnim(targetPos.x > transform.position.x ? AnimationParameterNameType.MoveRight : AnimationParameterNameType.MoveLeft);
-        transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
+        // PlayAnim(targetPos.x > transform.position.x
+        //     ? AnimationParameterNameType.MoveRight
+        //     : AnimationParameterNameType.MoveLeft);
+        // transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }
+
     public virtual void OnSelected()
     {
-        characterInfo.Cell.ShowFocus();
+        CharacterInfo.Cell.ShowFocus();
     }
-    
+
     public virtual void OnUnSelected()
     {
-        characterInfo.Cell.HideFocus();
+        CharacterInfo.Cell.HideFocus();
     }
 
     protected virtual void SetSpeed()
     {
-        characterInfo.Speed = Roll.GetSpeed();
+        CharacterInfo.Speed = Roll.GetSpeed();
     }
 
     public void ShowHpBar()
@@ -167,14 +171,13 @@ public abstract class Character : MonoBehaviour
 
     public void OnDie()
     {
-        //AlkawaDebug.Log($"Gameplay: {characterConfig.characterName} die");
-        characterInfo.Cell.CellType = CellType.Walkable;
+        CharacterInfo.Cell.CellType = CellType.Walkable;
         var index = GpManager.Characters.IndexOf(this);
         ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
         GpManager.HandleCharacterDie(this);
         Destroy(gameObject);
     }
-    
+
 #if UNITY_EDITOR
     private void OnValidate()
     {

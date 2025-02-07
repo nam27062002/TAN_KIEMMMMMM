@@ -10,9 +10,9 @@ public enum ELogCategory
 {
     NONE = 0,
     UI,
-    EDITOR,
+    CHARACTER,
     ANIMATION,
-    LOADSAVE,
+    MAP,
     ENGINE,
     AI,
     AUDIO,
@@ -33,9 +33,9 @@ public class AlkawaDebug
     static AlkawaDebug()
     {
         CategoryColors[ELogCategory.UI] = "#2196F3";        
-        CategoryColors[ELogCategory.EDITOR] = "#4CAF50";    
+        CategoryColors[ELogCategory.CHARACTER] = "#4CAF50";    
         CategoryColors[ELogCategory.ANIMATION] = "#9C27B0"; 
-        CategoryColors[ELogCategory.LOADSAVE] = "#FF9800"; 
+        CategoryColors[ELogCategory.MAP] = "#FF9800"; 
         CategoryColors[ELogCategory.ENGINE] = "#607D8B";    
         CategoryColors[ELogCategory.AI] = "#FF5722";      
         CategoryColors[ELogCategory.AUDIO] = "#E91E63";

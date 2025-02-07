@@ -8,7 +8,7 @@
     public override void OnEnter(StateParams stateParams = null)
     {
         base.OnEnter(stateParams);
-        Character.PlayAnim(AnimationParameterNameType.OnDamageTaken, OnFinishAction);
+        PlayAnim(AnimationParameterNameType.OnDamageTaken, OnFinishAction);
     }
 
     public override void OnExit()

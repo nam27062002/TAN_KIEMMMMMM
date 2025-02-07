@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public abstract class CharacterState : IState
 {
@@ -44,7 +45,7 @@ public abstract class CharacterState : IState
 
     protected virtual void OnFinishAction(CharacterState state)
     {
-        Character.ChangeState(Character.PreviousState);
+        Character.ChangeState(ECharacterState.Idle);
         switch (state)
         {
             case MoveState:
@@ -79,6 +80,11 @@ public abstract class CharacterState : IState
     protected virtual void OnFinishAction()
     {
         OnFinishAction(this);
+    }
+    
+    protected void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
+    {
+        Character.AnimationData.PlayAnimation(animationParameterNameType, onEndAnim);
     }
     
 }

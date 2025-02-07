@@ -21,18 +21,18 @@ public class ShowInfoPopup : PopupBase
         if (parameters is ShowInfoCharacterParameters showInfoCharacterParameters)
         {
             characterName.text = showInfoCharacterParameters.Character.characterConfig.characterName;
-            damage.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.atk.ToString();
-            spd.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.spd.ToString();
-            def.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.def.ToString();
-            chiDef.text =  showInfoCharacterParameters.Character.characterInfo.Attributes.chiDef.ToString();
+            damage.text =  showInfoCharacterParameters.Character.CharacterInfo.Attributes.atk.ToString();
+            spd.text =  showInfoCharacterParameters.Character.CharacterInfo.Attributes.spd.ToString();
+            def.text =  showInfoCharacterParameters.Character.CharacterInfo.Attributes.def.ToString();
+            chiDef.text =  showInfoCharacterParameters.Character.CharacterInfo.Attributes.chiDef.ToString();
             avatar.sprite = showInfoCharacterParameters.Character.characterConfig.characterIcon;
             
-            var currentHp = showInfoCharacterParameters.Character.characterInfo.CurrentHp;
-            var maxHp = showInfoCharacterParameters.Character.characterInfo.Attributes.health;
+            var currentHp = showInfoCharacterParameters.Character.CharacterInfo.CurrentHp;
+            var maxHp = showInfoCharacterParameters.Character.CharacterInfo.Attributes.health;
             hpBarUI.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
         
-            var currentMp = showInfoCharacterParameters.Character.characterInfo.CurrentMp;
-            var maxMp = showInfoCharacterParameters.Character.characterInfo.Attributes.mana;
+            var currentMp = showInfoCharacterParameters.Character.CharacterInfo.CurrentMp;
+            var maxMp = showInfoCharacterParameters.Character.CharacterInfo.Attributes.mana;
             mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
         }
     }

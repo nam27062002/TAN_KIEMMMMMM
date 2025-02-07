@@ -165,8 +165,8 @@ public class UI_Ingame : MenuBase
          {
              skillUI[i].SetSkill(index: i + 1, 
                  skillIcon: characterParams.Skills[i].icon, 
-                 unlock: !characterParams.Character.characterInfo.LockSkill, 
-                 enoughMana: characterParams.Character.characterInfo.CanCastSkill(characterParams.Skills[i]),
+                 unlock: !characterParams.Character.CharacterInfo.LockSkill, 
+                 enoughMana: characterParams.Character.CharacterInfo.CanCastSkill(characterParams.Skills[i]),
                  type: characterParams.Character.Type);
          }
 
@@ -175,11 +175,11 @@ public class UI_Ingame : MenuBase
          endTurnButton.gameObject.SetActiveIfNeeded(characterParams.Character.CanEndTurn);
          characterName.text = characterParams.Character.characterConfig.characterName;
          characterIcon.sprite = characterParams.Character.characterConfig.characterIcon;
-         characterParams.Character.characterInfo.OnHpChanged += OnHpChanged;
-         characterParams.Character.characterInfo.OnMpChanged += OnMpChanged;
+         characterParams.Character.CharacterInfo.OnHpChanged += OnHpChanged;
+         characterParams.Character.CharacterInfo.OnMpChanged += OnMpChanged;
          OnHpChanged(null, null);
          OnMpChanged(null, null);
-         actionPointUI.SetActionPoints(characterParams.Character.characterInfo.ActionPoints);
+         actionPointUI.SetActionPoints(characterParams.Character.CharacterInfo.ActionPoints);
          SetRound();
      }
     
@@ -207,15 +207,15 @@ public class UI_Ingame : MenuBase
     
     private void OnHpChanged(object sender, EventArgs e)
     {
-        var currentHp = _characterParams.Character.characterInfo.CurrentHp;
-        var maxHp = _characterParams.Character.characterInfo.Attributes.health;
+        var currentHp = _characterParams.Character.CharacterInfo.CurrentHp;
+        var maxHp = _characterParams.Character.CharacterInfo.Attributes.health;
         hpBar.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
     }
     
     private void OnMpChanged(object sender, EventArgs e)
     {
-        var currentMp = _characterParams.Character.characterInfo.CurrentMp;
-        var maxMp = _characterParams.Character.characterInfo.Attributes.mana;
+        var currentMp = _characterParams.Character.CharacterInfo.CurrentMp;
+        var maxMp = _characterParams.Character.CharacterInfo.Attributes.mana;
         mpBar.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
     }
     

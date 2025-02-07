@@ -35,12 +35,12 @@ public abstract class AICharacter : Character
     
     private bool TryMoving()
     {
-        if (characterInfo.GetMoveRange() <= 0) return false;
-        var cells = GpManager.MapManager.GetCellsWalkableInRange(characterInfo.Cell, characterInfo.GetMoveRange());
+        if (CharacterInfo.GetMoveRange() <= 0) return false;
+        var cells = GpManager.MapManager.GetCellsWalkableInRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange());
         if (cells.Count == 0) return false;
         var random = new System.Random();
         var randomCell = cells[random.Next(cells.Count)];
-        var path = GpManager.MapManager.FindPath(characterInfo.Cell, randomCell);
+        var path = GpManager.MapManager.FindPath(CharacterInfo.Cell, randomCell);
         MoveCharacter(path);
         AlkawaDebug.Log(ELogCategory.AI,$"move to cell: {randomCell.CellPosition}");
         return true;
@@ -54,7 +54,7 @@ public abstract class AICharacter : Character
         
          for (int i = 0; i < skills.Count; i++)
          {
-             if (characterInfo.CanCastSkill(skills[i]) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
+             if (CharacterInfo.CanCastSkill(skills[i]) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
              {
                  var enemiesInRange = GpManager.GetEnemiesInRange(this, skills[i].range);
                  if (enemiesInRange.Count > 0)

@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
 
-[Serializable]
 public class CharacterInfo
 {
     public Cell Cell { get; set; }
@@ -19,8 +18,6 @@ public class CharacterInfo
 
     public int MoveBuff { get; set; } 
     public List<int> ActionPoints { get; set; } = new(){ 3, 3, 3};
-    public SkillInfo SkillInfo { get; set; }
-    
     // Buff & Debuff
     public bool LockSkill { get; set; }
     // Action
@@ -78,11 +75,14 @@ public class CharacterInfo
         return SkillConfig.SkillConfigs[skillType][index];
     }
 
-    public void OnCastSkill(SkillInfo skillInfo)
+    public void OnCastSkill(SkillInfo skillInfo, SkillIndex skillIndex)
     {
-        SkillInfo = skillInfo;
         HandleMpChanged(-skillInfo.mpCost);
-        Character.HandleCastSkill();
+        Character.HandleCastSkill(new SkillStateParams
+        {
+            skillIndex = skillIndex,
+            skillInfo = skillInfo,
+        });
         HandleReduceActionPoints(GetActionPoints(GameplayManager.Instance.GetSkillType(Character)));
     }
     
