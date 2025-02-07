@@ -41,7 +41,7 @@ public abstract class AICharacter : Character
         var random = new System.Random();
         var randomCell = cells[random.Next(cells.Count)];
         var path = GpManager.MapManager.FindPath(CharacterInfo.Cell, randomCell);
-        SetMovement(path);
+        TryMoveToCell(path);
         AlkawaDebug.Log(ELogCategory.AI,$"move to cell: {randomCell.CellPosition}");
         return true;
     }

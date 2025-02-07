@@ -27,7 +27,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public Character SelectedCharacter { get; set; }
     private Character _focusedCharacter;
     private Character _reactTarget;
-    private HashSet<Character> _charactersInRange = new();
 
     public int CurrentRound { get; private set; }
     public int CurrentPlayerIndex { get; private set; }
@@ -179,44 +178,44 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnCharacterClicked(Cell cell)
     {
-        if (_charactersInRange.Contains(cell.Character) && (!IsReact || cell.Character == _reactTarget))
-        {
-            HandleCastSkill(cell.Character);
-            if (IsReact)
-            {
-                _reactTarget = null;
-            }
-        }
-
-        else
-        {
-            if (IsRoundOfPlayer)
-            {
-                if (cell.Character.Type == Type.AI)
-                {
-                    SetSelectedCharacter(cell.Character);
-                }
-                else
-                {
-                    if (cell.Character == SelectedCharacter)
-                    {
-                        UnSelectSkill();
-                        // if (SelectedCharacter.IsMainCharacter) ShowMoveRange();
-                    }
-                    else
-                    {
-                        SetSelectedCharacter(cell.Character);
-                    }
-                }
-            }
-        }
+        SelectedCharacter.OnCharacterClicked(cell);
+        // if (_charactersInRange.Contains(cell.Character) && (!IsReact || cell.Character == _reactTarget))
+        // {
+        //     HandleCastSkill(cell.Character);
+        //     if (IsReact)
+        //     {
+        //         _reactTarget = null;
+        //     }
+        // }
+        //
+        // else
+        // {
+        //     if (IsRoundOfPlayer)
+        //     {
+        //         if (cell.Character.Type == Type.AI)
+        //         {
+        //             SetSelectedCharacter(cell.Character);
+        //         }
+        //         else
+        //         {
+        //             if (cell.Character == SelectedCharacter)
+        //             {
+        //                 UnSelectSkill();
+        //                 // if (SelectedCharacter.IsMainCharacter) ShowMoveRange();
+        //             }
+        //             else
+        //             {
+        //                 SetSelectedCharacter(cell.Character);
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     private void OnWaypointClicked(Cell cell)
     {
-        if (!CanMove(cell)) return;
-        var cellPath = MapManager.FindPath(SelectedCharacter.CharacterInfo.Cell, cell);
-        SelectedCharacter.SetMovement(cellPath);
+        if (!CanMove()) return;
+        SelectedCharacter.TryMoveToCell(cell);
     }
 
     #endregion
@@ -241,11 +240,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public Character GetCharacterByType(CharacterType characterType)
     {
         return Characters.FirstOrDefault(character => character.characterType == characterType);
-    }
-    
-    private SkillInfo GetSkillInfo(int index)
-    {
-        return SelectedCharacter.CharacterInfo.GetSkillInfo(index, GetSkillType(SelectedCharacter));
     }
     
     private void HandleNewRound()
@@ -300,9 +294,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
     }
 
-    private bool CanMove(Cell cell)
+    private bool CanMove()
     {
-        return IsRoundOfPlayer && MainCharacter == SelectedCharacter && MapManager.CanMove(cell);
+        return IsRoundOfPlayer && MainCharacter == SelectedCharacter;
     }
 
     private ShowInfoCharacterParameters GetSelectedCharacterParams()
@@ -341,9 +335,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleSelectSkill(int skillIndex)
     {
-        SelectedCharacter.HandleSelectSkill();
-        // HideMoveRange();
-        // UnSelectSkill();
+        SelectedCharacter.HandleSelectSkill(skillIndex);
         // if (_selectedCharacter.CharacterInfo.SkillInfo != GetSkillInfo(skillIndex))
         // {
         //     HideSkillRange();
@@ -386,39 +378,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HandleCastSkill();
     }
     
-    private void HandleDirectionalSkill()
-    {
-        // show skill range
-        if (SelectedCharacter.CharacterInfo.SkillInfo.range > 0)
-        {
-            //MapManager.ShowSkillRange(SelectedCharacter.CharacterInfo.Cell, SelectedCharacter.CharacterInfo.SkillInfo.range);
-            AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"Gameplay: Show skill range: {SelectedCharacter.CharacterInfo.SkillInfo.range}");
-        }
-
-        //get character can be interact
-        if (SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Self))
-        {
-            Characters.Add(SelectedCharacter);
-        }
-        //
-        // foreach (var cell in MapManager.SkillRange.Where(cell => cell.CellType == CellType.Character))
-        // {
-        //     if (cell.Character.Type == SelectedCharacter.Type
-        //         && SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Team)
-        //        )
-        //     {
-        //         _charactersInRange.Add(cell.Character);
-        //     }
-        //
-        //     if (cell.Character.Type != SelectedCharacter.Type
-        //         && SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Enemies)
-        //        )
-        //     {
-        //         _charactersInRange.Add(cell.Character);
-        //     }
-        // }
-    }
-
     public void OnCastSkillFinished()
     {
         UpdateCharacterInfo();

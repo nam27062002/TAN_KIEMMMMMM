@@ -84,13 +84,7 @@ public class MapManager : MonoBehaviour
     {
         return _pathfinding.FindPath(startCell, endCell);
     }
-
-    public bool CanMove(Cell cell)
-    {
-        // return _moveRange != null && _moveRange.Contains(cell);
-        return true;
-    }
-
+    
     public void DestroyMap()
     {
        Destroy(gameObject);

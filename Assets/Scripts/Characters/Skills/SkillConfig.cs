@@ -28,9 +28,9 @@ public class SkillConfig
     {
         for (var i = 0; i < internalSkill.Count; i++)
         {
-            internalSkill[i].skillIndex = i;
-            movementSkill[i].skillIndex = i;
-            combatSkill[i].skillIndex = i;
+            internalSkill[i].skillIndex = (SkillIndex)i;
+            movementSkill[i].skillIndex = (SkillIndex)i;
+            combatSkill[i].skillIndex = (SkillIndex)i;
         }
     }
 }

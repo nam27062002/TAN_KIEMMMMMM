@@ -13,8 +13,9 @@ public class CharacterInfo
     public HashSet<Cell> SkillRange { get; set; } = new();
     // Skill
     public SkillInfo SkillInfo { get; set; }
+    // Character
+    public HashSet<Character> CharactersInSkillRange { get; set; } = new();
     //
-    
     public int Speed { get; set; }
     public CharacterAttributes Attributes { get; set; }
     
@@ -84,10 +85,8 @@ public class CharacterInfo
 
     public void OnCastSkill(SkillInfo skillInfo, SkillIndex skillIndex)
     {
-        HandleMpChanged(-skillInfo.mpCost);
         Character.SetSkill(new SkillStateParams
         {
-            skillIndex = skillIndex,
             skillInfo = skillInfo,
         });
         HandleReduceActionPoints(GetActionPoints(GameplayManager.Instance.GetSkillType(Character)));

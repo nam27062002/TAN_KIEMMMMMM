@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using NUnit.Framework;
 using Sirenix.OdinInspector;
@@ -92,7 +93,15 @@ public abstract class Character : MonoBehaviour
         ChangeState(ECharacterState.Skill, skillStateParams);
     }
     
-    public virtual void SetMovement(List<Cell> cells)
+    public virtual void TryMoveToCell(Cell cell)
+    {
+        if (CharacterInfo.MoveRange != null && CharacterInfo.MoveRange.Contains(cell))
+        {
+            TryMoveToCell(MapManager.FindPath(CharacterInfo.Cell, cell));
+        }
+    }
+
+    protected virtual void TryMoveToCell(List<Cell> cells)
     {
         ChangeState(ECharacterState.Move, new MoveStateParams(cells));
     }
@@ -106,6 +115,18 @@ public abstract class Character : MonoBehaviour
 
     #region Skills
 
+    public void OnCharacterClicked(Cell cell)
+    {
+        if (CharacterInfo.CharactersInSkillRange.Contains(cell.Character))
+        {
+            HandleCastSkill();   
+        }
+        else
+        {
+            
+        }
+    }
+    
     public List<SkillInfo> GetSkillInfos(SkillType skillType)
     {
         return skillConfig.SkillConfigs[skillType];
@@ -113,16 +134,90 @@ public abstract class Character : MonoBehaviour
 
     public void HandleCastSkill()
     {
-        // CharacterInfo.OnCastSkill();
+        CharacterInfo.HandleMpChanged(-CharacterInfo.SkillInfo.mpCost);
+        SetSkill(new SkillStateParams
+        {
+            skillInfo = CharacterInfo.SkillInfo,
+        });
     }
 
-    public void HandleSelectSkill()
+    public void HandleSelectSkill(int skillIndex)
     {
+        HideMoveRange();
+        UnSelectSkill();
+        if (CharacterInfo.SkillInfo != GetSkillInfo(skillIndex))
+        {
+            UnSelectSkill();
+            CharacterInfo.SkillInfo = GetSkillInfo(skillIndex);
+            if (CharacterInfo.SkillInfo.isDirectionalSkill)
+            {
+                HandleDirectionalSkill();
+            }
+            else
+            {
+                // 
+            }
+        }
+    }
+
+    private void HandleDirectionalSkill()
+    {
+        ShowSkillRange();
+        CharacterInfo.CharactersInSkillRange.Clear();
+        if (CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Self))
+        {
+            CharacterInfo.CharactersInSkillRange.Add(this);
+        }
         
+        foreach (var cell in CharacterInfo.SkillRange.Where(cell => cell.CellType == CellType.Character))
+        {
+            if (cell.Character.Type == Type && CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Team))
+            {
+                CharacterInfo.CharactersInSkillRange.Add(cell.Character);
+            }
+            
+            if (cell.Character.Type != Type && CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
+            {
+                CharacterInfo.CharactersInSkillRange.Add(cell.Character);
+            }
+        }
+    }
+
+    private SkillType GetSkillType()
+    {
+        return GpManager.GetSkillType(this);
+    }
+    
+    private SkillInfo GetSkillInfo(int index)
+    {
+        return CharacterInfo.GetSkillInfo(index, GetSkillType());
+    }
+    
+    private void UnSelectSkill()
+    {
+        CharacterInfo.SkillInfo = null;
+        HideSkillRange();
     }
     #endregion
     
     #region Sub
+
+    private SkillIndex GetSkillIndex(int index)
+    {
+        switch (index)
+        {
+            case 1:
+                return SkillIndex.ActiveSkill1;
+            case 2:
+                return SkillIndex.ActiveSkill2;
+            case 3:
+                return SkillIndex.ActiveSkill3;
+            case 4:
+                return SkillIndex.ActiveSkill4;
+            default:
+                return SkillIndex.ActiveSkill1;
+        }
+    }
     
     public void SetCell(Cell cell)
     {
@@ -183,16 +278,16 @@ public abstract class Character : MonoBehaviour
         CharacterInfo.MoveRange.Clear();
     }
     
-    public void ShowSkillRange(Cell cell, int range)
+    private void ShowSkillRange()
     {
-        CharacterInfo.SkillRange = MapManager.GetHexagonsInAttack(cell, range);
+        CharacterInfo.SkillRange = MapManager.GetHexagonsInAttack(CharacterInfo.Cell, CharacterInfo.SkillInfo.range);
         foreach (var item in CharacterInfo.SkillRange)
         {
             item.ShowSkillRange();
         }
     }
     
-    public void HideSkillRange()
+    private void HideSkillRange()
     {
         if (CharacterInfo.SkillRange == null || CharacterInfo.SkillRange.Count == 0) return;
         foreach (var item in CharacterInfo.SkillRange)

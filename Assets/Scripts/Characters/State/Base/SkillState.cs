@@ -17,8 +17,8 @@ public class SkillState : CharacterState
 
     private void HandleCastSkill()
     {
-        var animName = GetAnimByIndex(_skillStateParams.skillIndex);
-        switch (_skillStateParams.skillIndex)
+        var animName = GetAnimByIndex(_skillStateParams.skillInfo.skillIndex);
+        switch (_skillStateParams.skillInfo.skillIndex)
         {
             case SkillIndex.ActiveSkill1:
                 HandleActiveSkill1();
