@@ -34,7 +34,7 @@ public class SkillState : CharacterState
         _skillStateParams = (SkillStateParams)stateParams;
         if (_skillStateParams != null)
         {
-            foreach (var item in _skillStateParams.targets)
+            foreach (var item in _skillStateParams.Targets)
             {
                 _targetCharacters.Add(item);
             }   
@@ -45,9 +45,9 @@ public class SkillState : CharacterState
 
     private void HandleCastSkill()
     {
-        var animName = GetAnimByIndex(_skillStateParams.skillInfo.skillIndex);
+        var animName = GetAnimByIndex(_skillStateParams.SkillInfo.skillIndex);
         PlayAnim(animName, OnFinishAction);
-        AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} cast skill: {_skillStateParams.skillInfo.name}");
+        AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} cast skill: {_skillStateParams.SkillInfo.name}");
     }
     
     protected override void OnCastSkillFinished()
@@ -70,74 +70,112 @@ public class SkillState : CharacterState
             _ => AnimationParameterNameType.None
         };
     }
-    
+    //=====================SKILL 1=====================================
     protected virtual DamageTakenParams GetDamageParams_Skill1_MyTurn()
     {
-        return new DamageTakenParams();
-    }
-    
-    protected virtual DamageTakenParams GetDamageParams_Skill2_MyTurn()
-    {
-        return new DamageTakenParams();
-    }
-    
-    protected virtual DamageTakenParams GetDamageParams_Skill3_MyTurn()
-    {
-        return new DamageTakenParams();
-    }
-    
-    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn()
-    {
-        return new DamageTakenParams();
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
     }
     
     protected virtual DamageTakenParams GetDamageParams_Skill1_TeammateTurn()
     {
-        return new DamageTakenParams();
-    }
-    
-    protected virtual DamageTakenParams GetDamageParams_Skill2_TeammateTurn()
-    {
-        return new DamageTakenParams();
-    }
-    
-    protected virtual DamageTakenParams GetDamageParams_Skill3_TeammateTurn()
-    {
-        return new DamageTakenParams();
-    }
-    
-    protected virtual DamageTakenParams GetDamageParams_Skill4_TeammateTurn()
-    {
-        return new DamageTakenParams();
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
     }
     
     protected virtual DamageTakenParams GetDamageParams_Skill1_EnemyTurn()
     {
-        return new DamageTakenParams();
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
+    }
+    //=====================SKILL 2=====================================
+    protected virtual DamageTakenParams GetDamageParams_Skill2_MyTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
+    }
+    
+    protected virtual DamageTakenParams GetDamageParams_Skill2_TeammateTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
     }
     
     protected virtual DamageTakenParams GetDamageParams_Skill2_EnemyTurn()
     {
-        return new DamageTakenParams();
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
+    }
+    //=====================SKILL 3=====================================
+    protected virtual DamageTakenParams GetDamageParams_Skill3_MyTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
+    }
+
+    protected virtual DamageTakenParams GetDamageParams_Skill3_TeammateTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
     }
     
     protected virtual DamageTakenParams GetDamageParams_Skill3_EnemyTurn()
     {
-        return new DamageTakenParams();
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
+    }
+    //=====================SKILL 4=====================================
+    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
+    }
+
+    protected virtual DamageTakenParams GetDamageParams_Skill4_TeammateTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
     }
     
     protected virtual DamageTakenParams GetDamageParams_Skill4_EnemyTurn()
     {
-        return new DamageTakenParams();
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
     }
+    
+    //=======================================================================
     
     protected virtual DamageTakenParams GetDamageParams()
     {
-        var key = (_skillStateParams.SkillTurnType, _skillStateParams.skillInfo.skillIndex);
+        var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
         return _damageParamsHandlers.TryGetValue(key, out var handler) ? handler() : new DamageTakenParams();
     }
     
-    private int GetBaseDamage()
+    protected virtual int GetBaseDamage()
     {
         var baseDamage = Info.BaseDamage;
         return baseDamage;
@@ -156,11 +194,11 @@ public class SkillState : CharacterState
     
     private void HandleDodgeDamage()
     {
-        foreach (var target in _skillStateParams.targets)
+        foreach (var target in _skillStateParams.Targets)
         {
             var hitChangeParams = GetHitChangeParams();
             var dodge = target.CharacterInfo.Dodge;
-            AlkawaDebug.Log(ELogCategory.ROLL, $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
+            AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
 
             if (hitChangeParams.HitChangeValue <= dodge)
             {

@@ -16,7 +16,7 @@ public enum ELogCategory
     MAP,
     ENGINE,
     AI,
-    ROLL,
+    CONSOLE,
     GAMEPLAY,
 }
 
@@ -50,7 +50,7 @@ public class AlkawaDebug
         CategoryColors[ELogCategory.MAP] = "#FF9800"; 
         CategoryColors[ELogCategory.ENGINE] = "#607D8B";    
         CategoryColors[ELogCategory.AI] = "#FF5722";      
-        CategoryColors[ELogCategory.ROLL] = "#E91E63";
+        CategoryColors[ELogCategory.CONSOLE] = "#E91E63";
         CategoryColors[ELogCategory.GAMEPLAY] = "#FFEB3B";
     }
 

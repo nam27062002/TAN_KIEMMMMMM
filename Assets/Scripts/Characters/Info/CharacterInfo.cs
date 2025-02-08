@@ -79,7 +79,7 @@ public class CharacterInfo
         }
         else
         {
-            Character.ChangeState(ECharacterState.DamageTaken);
+            Character.ShowMessage(value.ToString());
             OnHpChanged?.Invoke(this, EventArgs.Empty);
         }
     }

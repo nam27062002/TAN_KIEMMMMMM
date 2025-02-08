@@ -130,8 +130,8 @@ public abstract class Character : MonoBehaviour
         CharacterInfo.HandleMpChanged(-CharacterInfo.SkillInfo.mpCost);
         SetSkill(new SkillStateParams
         {
-            skillInfo = CharacterInfo.SkillInfo,
-            targets = targets,
+            SkillInfo = CharacterInfo.SkillInfo,
+            Targets = targets,
             SkillTurnType =  GetSkillTurnType(),
         });
         CharacterInfo.HandleReduceActionPoints();

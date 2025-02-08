@@ -11,12 +11,26 @@
         base.OnEnter(stateParams);
         _damageTakenParams = (DamageTakenParams)stateParams;
         OnDamageTaken();
-        PlayAnim(AnimationParameterNameType.OnDamageTaken, OnFinishAction);
+        PlayAnim(AnimationParameterNameType.Skill2, OnFinishAction);
     }
 
     private void OnDamageTaken()
     {
-        
+        ChangeHp();
+        ChangeMana();
+    }
+
+    private void ChangeHp()
+    {
+        if (_damageTakenParams.Damage > 0)
+        {
+            Character.CharacterInfo.HandleHpChanged(-_damageTakenParams.Damage);
+        }
+    }
+    
+    private void ChangeMana()
+    {
+        if (_damageTakenParams.ReducedMana > 0) Character.CharacterInfo.HandleMpChanged(-_damageTakenParams.ReducedMana);
     }
     
     public override void OnExit()
