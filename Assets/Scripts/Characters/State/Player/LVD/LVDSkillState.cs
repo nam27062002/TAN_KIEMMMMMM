@@ -6,8 +6,4 @@ public class LVDSkillState : SkillState
     {
     }
     
-    protected override void HandleActiveSkill1()
-    {
-        base.HandleActiveSkill1();
-    }
 }

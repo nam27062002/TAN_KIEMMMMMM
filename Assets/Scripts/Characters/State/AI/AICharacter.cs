@@ -49,7 +49,7 @@ public abstract class AICharacter : Character
     private bool TryCastSkill()
     {
         AlkawaDebug.Log(ELogCategory.AI,"TryCastSkill");
-         var skillType = GpManager.GetSkillType(this);
+         var skillType = GpManager.GetSkillTurnType(this);
          List<SkillInfo> skills = GetSkillInfos(skillType);
         
          for (int i = 0; i < skills.Count; i++)

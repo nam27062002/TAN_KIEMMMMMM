@@ -9,5 +9,5 @@ public class CharacterConfig
     public float timeMoveToTarget = 0.5f;
     public Sprite characterIcon;
     public CharacterAttributes characterAttributes;
-    public SerializableDictionary<SkillType, int> actionPoints = new();
+    public SerializableDictionary<SkillTurnType, int> actionPoints = new();
 }

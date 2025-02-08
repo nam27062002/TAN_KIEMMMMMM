@@ -9,17 +9,17 @@ public class SkillConfig
     [TabGroup("Movement Skill")] public List<SkillInfo> movementSkill = new();
     [TabGroup("Combat Skill")] public List<SkillInfo> combatSkill = new();
 
-    public Dictionary<SkillType, List<SkillInfo>> SkillConfigs = new();
+    public Dictionary<SkillTurnType, List<SkillInfo>> SkillConfigs = new();
 
     public void SetSkillConfigs()
     {
         if (SkillConfigs == null || SkillConfigs.Count == 0)
         {
-            SkillConfigs = new Dictionary<SkillType, List<SkillInfo>>
+            SkillConfigs = new Dictionary<SkillTurnType, List<SkillInfo>>
             {
-                [SkillType.InternalSkill] = internalSkill,
-                [SkillType.MovementSkill] = movementSkill,
-                [SkillType.CombatSkill] = combatSkill
+                [SkillTurnType.MyTurn] = internalSkill,
+                [SkillTurnType.TeammateTurn] = movementSkill,
+                [SkillTurnType.EnemyTurn] = combatSkill
             };
         }
     }

@@ -68,8 +68,7 @@ public abstract class CharacterState : IState
 
     protected virtual void OnCastSkillFinished()
     { 
-        GpManager.OnCastSkillFinished();
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} OnCastSkillFinished - {NameState}");
+        GpManager.UpdateCharacterInfo();
     }
 
     protected virtual void SetDamageTakenFinished()

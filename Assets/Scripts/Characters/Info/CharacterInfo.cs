@@ -111,38 +111,16 @@ public class CharacterInfo
         MoveAmount = 0;
     }
 
-    public SkillInfo GetSkillInfo(int index, SkillType skillType)
+    public SkillInfo GetSkillInfo(int index, SkillTurnType skillTurnType)
     {
-        return SkillConfig.SkillConfigs[skillType][index];
+        return SkillConfig.SkillConfigs[skillTurnType][index];
     }
-
-    public void OnCastSkill(SkillInfo skillInfo, SkillIndex skillIndex)
-    {
-        Character.SetSkill(new SkillStateParams
-        {
-            skillInfo = skillInfo,
-        });
-        HandleReduceActionPoints(GetActionPoints(GameplayManager.Instance.GetSkillType(Character)));
-    }
-
+    
     public bool CanCastSkill(SkillInfo skillInfo)
     {
         return CurrentMp >= skillInfo.mpCost && IsEnoughActionPoints();
     }
-
-    public void OnDamageTaken(int damage)
-    {
-        var message = damage == -1 ? "Né" : damage == 0 ? "Apply Debuff" : damage.ToString();
-        if (damage == -1) damage = 0;
-        HandleHpChanged(-damage);
-        ShowMessage(message);
-    }
-
-    public void ShowMessage(string message)
-    {
-        Character.hpBar.ShowMessage(message);
-    }
-
+    
     public void ApplyBuff(SkillInfo skillInfo)
     {
         if (skillInfo.buffType.HasFlag(BuffType.IncreaseMoveRange))
@@ -159,8 +137,8 @@ public class CharacterInfo
         {
             LockSkill = true;
         }
-
-        ShowMessage("Nhận Buff");
+        //
+        // ShowMessage("Nhận Buff");
     }
 
     #region Action Points
@@ -183,13 +161,14 @@ public class CharacterInfo
         return ActionPoints.Any(point => point == 3);
     }
 
-    private int GetActionPoints(SkillType skillType)
+    private int GetActionPoints(SkillTurnType skillTurnType)
     {
-        return Character.characterConfig.actionPoints[skillType];
+        return Character.characterConfig.actionPoints[skillTurnType];
     }
 
-    private void HandleReduceActionPoints(int point)
+    public void HandleReduceActionPoints()
     {
+        var point = GetActionPoints(Character.GetSkillTurnType());
         for (var i = 0; i < ActionPoints.Count; i++)
         {
             if (ActionPoints[i] <= point) continue;

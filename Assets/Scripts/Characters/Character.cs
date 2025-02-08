@@ -13,7 +13,9 @@ public abstract class Character : MonoBehaviour
     [Title("Animation"), Space] [SerializeField]
     private CharacterAnimationData characterAnimationData;
 
-    [Title("References")] public HpBar hpBar;
+    [Title("References")] 
+    public HpBar hpBar;
+    public UIFeedback uiFeedback;
     public GameObject model;
 
     [Title("Settings"), Space(10)] public CharacterConfig characterConfig;
@@ -118,9 +120,9 @@ public abstract class Character : MonoBehaviour
         }
     }
     
-    public List<SkillInfo> GetSkillInfos(SkillType skillType)
+    public List<SkillInfo> GetSkillInfos(SkillTurnType skillTurnType)
     {
-        return skillConfig.SkillConfigs[skillType];
+        return skillConfig.SkillConfigs[skillTurnType];
     }
 
     public void HandleCastSkill(List<Character> targets)
@@ -129,8 +131,10 @@ public abstract class Character : MonoBehaviour
         SetSkill(new SkillStateParams
         {
             skillInfo = CharacterInfo.SkillInfo,
-            targets = targets
+            targets = targets,
+            SkillTurnType =  GetSkillTurnType(),
         });
+        CharacterInfo.HandleReduceActionPoints();
     }
 
     public void HandleSelectSkill(int skillIndex)
@@ -175,14 +179,14 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    private SkillType GetSkillType()
+    public SkillTurnType GetSkillTurnType()
     {
-        return GpManager.GetSkillType(this);
+        return GpManager.GetSkillTurnType(this);
     }
     
     private SkillInfo GetSkillInfo(int index)
     {
-        return CharacterInfo.GetSkillInfo(index, GetSkillType());
+        return CharacterInfo.GetSkillInfo(index, GetSkillTurnType());
     }
     
     private void UnSelectSkill()
@@ -190,26 +194,15 @@ public abstract class Character : MonoBehaviour
         CharacterInfo.SkillInfo = null;
         HideSkillRange();
     }
+
+    public void OnDamageTaken(DamageTakenParams damageTakenParams)
+    {
+        ChangeState(ECharacterState.DamageTaken, damageTakenParams);
+    }
+    
     #endregion
     
     #region Sub
-
-    private SkillIndex GetSkillIndex(int index)
-    {
-        switch (index)
-        {
-            case 1:
-                return SkillIndex.ActiveSkill1;
-            case 2:
-                return SkillIndex.ActiveSkill2;
-            case 3:
-                return SkillIndex.ActiveSkill3;
-            case 4:
-                return SkillIndex.ActiveSkill4;
-            default:
-                return SkillIndex.ActiveSkill1;
-        }
-    }
     
     public void SetCell(Cell cell)
     {
@@ -288,6 +281,11 @@ public abstract class Character : MonoBehaviour
         }
         CharacterInfo.SkillRange.Clear();
     }
+
+    public void ShowMessage(string message)
+    {
+        uiFeedback.ShowMessage(message);
+    }
     #endregion
     
     public void DestroyCharacter()
@@ -324,6 +322,11 @@ public abstract class Character : MonoBehaviour
         if (hpBar == null)
         {
             hpBar = GetComponentInChildren<HpBar>();
+        }
+
+        if (uiFeedback == null)
+        {
+            uiFeedback = GetComponentInChildren<UIFeedback>();
         }
 
         skillConfig.OnValidate();

@@ -304,14 +304,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return new ShowInfoCharacterParameters
         {
             Character = SelectedCharacter,
-            Skills = SelectedCharacter.GetSkillInfos(GetSkillType(SelectedCharacter))
+            Skills = SelectedCharacter.GetSkillInfos(GetSkillTurnType(SelectedCharacter))
         };
     }
 
-    public SkillType GetSkillType(Character character)
+    public SkillTurnType GetSkillTurnType(Character character)
     {
-        if (character == MainCharacter) return SkillType.InternalSkill;
-        return character.Type == MainCharacter.Type ? SkillType.MovementSkill : SkillType.CombatSkill;
+        if (character == MainCharacter) return SkillTurnType.MyTurn;
+        return character.Type == MainCharacter.Type ? SkillTurnType.TeammateTurn : SkillTurnType.EnemyTurn;
     }
 
     public void ShowInfo(Character character)
@@ -319,12 +319,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         var showInfoParams = new ShowInfoCharacterParameters()
         {
             Character = character,
-            Skills = character.GetSkillInfos(GetSkillType(character)),
+            Skills = character.GetSkillInfos(GetSkillTurnType(character)),
         };
         UIManager.Instance.OpenPopup(PopupType.ShowInfo, showInfoParams);
     }
 
-    private void UpdateCharacterInfo()
+    public void UpdateCharacterInfo()
     {
         OnUpdateCharacterInfo?.Invoke(this, GetSelectedCharacterParams());
     }
@@ -336,35 +336,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void HandleSelectSkill(int skillIndex)
     {
         SelectedCharacter.HandleSelectSkill(skillIndex);
-        // if (_selectedCharacter.CharacterInfo.SkillInfo != GetSkillInfo(skillIndex))
-        // {
-        //     HideSkillRange();
-        //     _selectedCharacter.CharacterInfo.SkillInfo = GetSkillInfo(skillIndex);
-        //     if (_selectedCharacter.CharacterInfo.SkillInfo.isDirectionalSkill)
-        //     {
-        //         HandleDirectionalSkill();
-        //     }
-        //     else
-        //     {
-        //         HandleNonDirectionalSkill();
-        //     }
-        // }
-        //
-        // if (_selectedCharacter.CharacterInfo.SkillInfo != null) AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"select skill {_selectedCharacter.CharacterInfo.SkillInfo.name}");
     }
 
     private void HandleCastSkill(Character character)
     {
         SelectedCharacter.HandleCastSkill(new List<Character>(){character});
-        // HideMoveRange();
-        // HideSkillRange();
-        // _focusedCharacter = character;
-        // _selectedCharacter.CharacterInfo.OnCastSkill(SkillInfo, SkillIndex.ActiveSkill1);
     }
 
     private void HandleCastSkill()
     {
-        SelectedCharacter.CharacterInfo.OnCastSkill(SelectedCharacter.CharacterInfo.SkillInfo, SkillIndex.ActiveSkill1);
+        // SelectedCharacter.CharacterInfo.OnCastSkill(SelectedCharacter.CharacterInfo.SkillInfo, SkillIndex.ActiveSkill1);
     }
 
     public void HandleCastSkill(Character character, SkillInfo skillInfo)
@@ -475,15 +456,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void SetDamageTakenFinished()
     {
-        if (_focusedCharacter.Type == Type.Player && MainCharacter.Type == Type.AI) // show react
-        {
-            UIManager.Instance.OpenPopup(PopupType.React);
-        }
-        else if (IsReact)
-        {
-            SelectedCharacter.ChangeState(ECharacterState.Idle);
-            OnEndReact();
-        }
+        Debug.Log("NT - ???????????????????");
+        // if (_focusedCharacter.Type == Type.Player && MainCharacter.Type == Type.AI) // show react
+        // {
+        //     UIManager.Instance.OpenPopup(PopupType.React);
+        // }
+        // else if (IsReact)
+        // {
+        //     SelectedCharacter.ChangeState(ECharacterState.Idle);
+        //     OnEndReact();
+        // }
     }
 
     private void OnEndReact()

@@ -34,10 +34,10 @@ public class FlyingTempest : PassiveSkill
         base.OnTrigger();
         var targets = GameplayManager.Instance.MapManager.GetCharacterInRange(lyVoDanh.CharacterInfo.Cell, 1);
         // lyVoDanh.PlayAnim(AnimationParameterNameType.Skill1, OnEndAnim);
-        foreach (var target in targets)
-        {
-            if (target.Type == Type.AI) target.CharacterInfo.OnDamageTaken(lyVoDanh.CharacterInfo.BaseDamage);
-        }
+        // foreach (var target in targets)
+        // {
+        //     if (target.Type == Type.AI) target.CharacterInfo.OnDamageTaken(lyVoDanh.CharacterInfo.BaseDamage);
+        // }
     }
 
     private void OnEndAnim()
