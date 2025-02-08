@@ -1,6 +1,6 @@
-﻿public class LVDMoveState : PlayerMoveState
+﻿public class LyVoDanh_MoveState : PlayerMoveState
 {
-    public LVDMoveState(Character character) : base(character)
+    public LyVoDanh_MoveState(Character character) : base(character)
     {
     }
     

@@ -6,9 +6,9 @@ public class LyVoDanh : PlayerCharacter
     {
         StateMachine = new CharacterStateMachine(this,
             new IdleState(this),
-            new LVDMoveState(this),
+            new LyVoDanh_MoveState(this),
             new DamageTakenState(this),
-            new LVDSkillState(this));
+            new LyVoDanh_SkillState(this));
     }
 
     public void TryTriggerFlyingTempest()
