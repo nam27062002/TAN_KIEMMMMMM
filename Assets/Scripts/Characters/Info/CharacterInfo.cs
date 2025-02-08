@@ -200,6 +200,7 @@ public class CharacterInfo
 
     private void ApplyIncreaseDamage(int damage)
     {
+        if (damage == 0) return;
         EffectInfo.AddEffect(new ChangeStatEffect
         {
             Value = damage,

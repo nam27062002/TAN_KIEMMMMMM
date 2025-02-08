@@ -56,7 +56,7 @@ public class Roll
         return res;
     }
     
-    private int RollDice(int times, int side, int add)
+    public static int RollDice(int times, int side, int add)
     {
         var res = add;
         for (int i = 0; i < times; i++)

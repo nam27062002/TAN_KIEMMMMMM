@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class SkillState : CharacterState
 {
@@ -147,12 +149,12 @@ public class SkillState : CharacterState
                 }
                 else
                 {
-                    HandleApplyDamage(target);
+                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target));
                 }
             }
             else // Buff cho bản thân hoặc đồng đội
             {
-                HandleApplyDamage(target);
+                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target));
             }
         }
     }
@@ -163,10 +165,11 @@ public class SkillState : CharacterState
         HandleTargetFinish(target);
     }
 
-    private void HandleApplyDamage(Character target)
+    private IEnumerator HandleApplyDamage(Character target)
     {
         if (target != Character)
         {
+            yield return new WaitUntil(target.CanOverrideState);
             target.OnDamageTaken(GetDamageParams());
         }
         else
