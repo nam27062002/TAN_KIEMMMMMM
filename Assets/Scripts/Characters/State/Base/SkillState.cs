@@ -41,16 +41,16 @@ public class SkillState : CharacterState
     public override string NameState { get; set; } = "Skill";
     private readonly Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>> _damageParamsHandlers;
     private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
-    private SkillStateParams _skillStateParams;
+    protected SkillStateParams SkillStateParams;
     protected readonly HashSet<Character> TargetCharacters = new();
 
     public override void OnEnter(StateParams stateParams = null)
     {
         GpManager.SetInteract(false);
         TargetCharacters.Clear();
-        _skillStateParams = (SkillStateParams)stateParams;
+        SkillStateParams = (SkillStateParams)stateParams;
         if (stateParams is not SkillStateParams skillStateParams) return;
-        _skillStateParams = skillStateParams;
+        SkillStateParams = skillStateParams;
         SetTargetCharacters();
         base.OnEnter(stateParams);
         HandleCastSkill();
@@ -58,16 +58,16 @@ public class SkillState : CharacterState
 
     private void SetTargetCharacters()
     {
-        if (_skillStateParams.Targets != null)
+        if (SkillStateParams.Targets is { Count: > 0 })
         {
-            foreach (var item in _skillStateParams.Targets)
+            foreach (var item in SkillStateParams.Targets)
             {
                 TargetCharacters.Add(item);
             }
         }
         else
         {
-            var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
+            var key = (SkillStateParams.SkillTurnType, SkillStateParams.SkillInfo.skillIndex);
         
             if (_targetCharacterActions.TryGetValue(key, out var action))
             {
@@ -76,12 +76,18 @@ public class SkillState : CharacterState
         }
     }
 
+    protected void AddTargetCharacters(Character character)
+    {
+        TargetCharacters.Add(character);
+        SkillStateParams.Targets.Add(character);
+    }
+
     private void HandleCastSkill()
     {
-        var animName = GetAnimByIndex(_skillStateParams.SkillInfo.skillIndex);
+        var animName = GetAnimByIndex(SkillStateParams.SkillInfo.skillIndex);
         PlayAnim(animName, OnCastSkillFinished);
         AlkawaDebug.Log(ELogCategory.CHARACTER,
-            $"{Character.characterConfig.characterName} cast skill: {_skillStateParams.SkillInfo.name}");
+            $"{Character.characterConfig.characterName} cast skill: {SkillStateParams.SkillInfo.name}");
     }
 
     protected virtual void OnCastSkillFinished()
@@ -94,7 +100,7 @@ public class SkillState : CharacterState
 
     protected virtual DamageTakenParams GetDamageParams()
     {
-        var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
+        var key = (SkillStateParams.SkillTurnType, SkillStateParams.SkillInfo.skillIndex);
         var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler)
             ? handler()
             : new DamageTakenParams();
@@ -125,18 +131,25 @@ public class SkillState : CharacterState
 
     private void HandleDodgeDamage()
     {
-        foreach (var target in _skillStateParams.Targets)
+        foreach (var target in SkillStateParams.Targets)
         {
-            var hitChangeParams = GetHitChangeParams();
-            var dodge = target.CharacterInfo.Dodge;
-            AlkawaDebug.Log(ELogCategory.CONSOLE,
-                $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
-
-            if (hitChangeParams.HitChangeValue <= dodge)
+            if (Character.Type != target.Type)
             {
-                HandleDodgeDamageSuccess(target);
+                var hitChangeParams = GetHitChangeParams();
+                var dodge = target.CharacterInfo.Dodge;
+                AlkawaDebug.Log(ELogCategory.CONSOLE,
+                    $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
+
+                if (hitChangeParams.HitChangeValue <= dodge)
+                {
+                    HandleDodgeDamageSuccess(target);
+                }
+                else
+                {
+                    HandleApplyDamage(target);
+                }
             }
-            else
+            else // Buff cho bản thân hoặc đồng đội
             {
                 HandleApplyDamage(target);
             }

@@ -23,10 +23,9 @@ public class LyVoDanh_SkillState : SkillState
     
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn()
     {
-        Debug.Log("HEHEHEHEHEHEHHEHE");
         return new DamageTakenParams
         {
-
+            
         };
     }
 
@@ -34,10 +33,9 @@ public class LyVoDanh_SkillState : SkillState
 
     #region Targets
     
-    protected override void SetTargetCharacters_Skill2_MyTurn()
+    protected override void SetTargetCharacters_Skill3_MyTurn()
     {
-        TargetCharacters.Clear();
-        TargetCharacters.Add(Character);
+        AddTargetCharacters(Character);
     }
     #endregion
 

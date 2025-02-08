@@ -44,8 +44,10 @@ public class CharacterInfo
     public List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
 
     // Buff & Debuff
+    
+    public EffectInfo EffectInfo { get; set; }
+    
     public bool LockSkill { get; set; }
-
     // Action
     public event EventHandler OnHpChanged;
     public event EventHandler OnMpChanged;
@@ -123,20 +125,20 @@ public class CharacterInfo
     
     public void ApplyBuff(SkillInfo skillInfo)
     {
-        if (skillInfo.buffType.HasFlag(BuffType.IncreaseMoveRange))
-        {
-            MoveBuff += 1;
-        }
-
-        if (skillInfo.buffType.HasFlag(BuffType.IncreaseActionPoints))
-        {
-            HandleIncreaseSlotActionPoints();
-        }
-
-        if (skillInfo.buffType.HasFlag(BuffType.BlockSkill))
-        {
-            LockSkill = true;
-        }
+        // if (skillInfo.buffType.HasFlag(BuffType.IncreaseMoveRange))
+        // {
+        //     MoveBuff += 1;
+        // }
+        //
+        // if (skillInfo.buffType.HasFlag(BuffType.IncreaseActionPoints))
+        // {
+        //     HandleIncreaseSlotActionPoints();
+        // }
+        //
+        // if (skillInfo.buffType.HasFlag(BuffType.BlockSkill))
+        // {
+        //     LockSkill = true;
+        // }
         //
         // ShowMessage("Nhận Buff");
     }

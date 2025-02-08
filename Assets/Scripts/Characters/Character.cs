@@ -127,7 +127,7 @@ public abstract class Character : MonoBehaviour
         var skillParams = new SkillStateParams
         {
             SkillInfo = CharacterInfo.SkillInfo,
-            Targets = targets,
+            Targets = targets ?? new List<Character>(),
             SkillTurnType = GetSkillTurnType(),
         };
     
