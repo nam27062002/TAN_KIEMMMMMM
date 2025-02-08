@@ -8,7 +8,6 @@ public class CharacterConfig
     public string characterName;
     public float timeMoveToTarget = 0.5f;
     public Sprite characterIcon;
-    public RollData damageRollData;
     public CharacterAttributes characterAttributes;
     public SerializableDictionary<SkillType, int> actionPoints = new();
 }

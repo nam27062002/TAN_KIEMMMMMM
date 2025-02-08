@@ -355,7 +355,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void HandleCastSkill(Character character)
     {
-        SelectedCharacter.HandleCastSkill();
+        SelectedCharacter.HandleCastSkill(new List<Character>(){character});
         // HideMoveRange();
         // HideSkillRange();
         // _focusedCharacter = character;
@@ -380,23 +380,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void OnCastSkillFinished()
     {
-        UpdateCharacterInfo();
-        if (SelectedCharacter.CharacterInfo.SkillInfo.isDirectionalSkill)
-        {
-            if (SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
-            {
-                TryAttackEnemies(_focusedCharacter);
-            }
-
-            if (SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Team))
-            {
-                ApplyBuff();
-            }
-        }
-        else
-        {
-            UnSelectSkill();
-        }
+        // UpdateCharacterInfo();
+        // if (SelectedCharacter.CharacterInfo.SkillInfo.isDirectionalSkill)
+        // {
+        //     if (SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
+        //     {
+        //         TryAttackEnemies(_focusedCharacter);
+        //     }
+        //
+        //     if (SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Team))
+        //     {
+        //         ApplyBuff();
+        //     }
+        // }
+        // else
+        // {
+        //     UnSelectSkill();
+        // }
     }
     
     private void ApplyBuff()
@@ -406,49 +406,50 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool TryAttackEnemies(Character focusedCharacter)
     {
+        return true;
         // check crit
-        int damage = SelectedCharacter.CharacterInfo.SkillInfo.hasApplyDamage ? SelectedCharacter.CharacterInfo.BaseDamage : 0;
-        var hitChange = SelectedCharacter.Roll.GetHitChange();
-        var isCritical = SelectedCharacter.Roll.IsCritical(hitChange);
-        if (!isCritical)
-        {
-            var dodge = focusedCharacter.CharacterInfo.Dodge;
-            if (dodge > hitChange)
-            {
-                AlkawaDebug.Log(ELogCategory.GAMEPLAY,
-                    $"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
-                focusedCharacter.CharacterInfo.OnDamageTaken(-1);
-            }
-            else
-            {
-                if (SelectedCharacter.CharacterInfo.SkillInfo.hasApplyDamage)
-                {
-                    damage += SelectedCharacter.Roll.RollDice(SelectedCharacter.CharacterInfo.SkillInfo.damageConfig);
-                }
-
-                // 
-                // if (skillInfo.effectIndex != EffectIndex.None)
-                {
-                    // var debuffResistance = RollManager.Instance.GetDebuffResistance(focusedCharacter.Info.CharacterAttributes);
-                    // if (debuffResistance < GameplayManager.EffectConstant
-                    //         .effectData[_skillData.effectConfig.effectIndex].debuffResistance)
-                    // {
-                    //     focusedCharacter.Info.ApplyDeBuff(_skillData.effectConfig, SelectedCharacter);
-                    //     Debug.Log($"[Gameplay] - Damage: {damage}");
-                    // }
-                }
-                focusedCharacter.CharacterInfo.OnDamageTaken(damage);
-            }
-        }
-
-        else
-        {
-            damage *= 2;
-            focusedCharacter.CharacterInfo.OnDamageTaken(damage);
-            //AlkawaDebug.Log($"Gameplay: Get Damage Taken {damage}");
-        }
-
-        return false;
+        // int damage = SelectedCharacter.CharacterInfo.SkillInfo.hasApplyDamage ? SelectedCharacter.CharacterInfo.BaseDamage : 0;
+        // var hitChange = SelectedCharacter.Roll.GetHitChange();
+        // var isCritical = SelectedCharacter.Roll.IsCritical(hitChange);
+        // if (!isCritical)
+        // {
+        //     var dodge = focusedCharacter.CharacterInfo.Dodge;
+        //     if (dodge > hitChange)
+        //     {
+        //         AlkawaDebug.Log(ELogCategory.GAMEPLAY,
+        //             $"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
+        //         focusedCharacter.CharacterInfo.OnDamageTaken(-1);
+        //     }
+        //     else
+        //     {
+        //         if (SelectedCharacter.CharacterInfo.SkillInfo.hasApplyDamage)
+        //         {
+        //             damage += SelectedCharacter.Roll.RollDice(SelectedCharacter.CharacterInfo.SkillInfo.damageConfig);
+        //         }
+        //
+        //         // 
+        //         // if (skillInfo.effectIndex != EffectIndex.None)
+        //         {
+        //             // var debuffResistance = RollManager.Instance.GetDebuffResistance(focusedCharacter.Info.CharacterAttributes);
+        //             // if (debuffResistance < GameplayManager.EffectConstant
+        //             //         .effectData[_skillData.effectConfig.effectIndex].debuffResistance)
+        //             // {
+        //             //     focusedCharacter.Info.ApplyDeBuff(_skillData.effectConfig, SelectedCharacter);
+        //             //     Debug.Log($"[Gameplay] - Damage: {damage}");
+        //             // }
+        //         }
+        //         focusedCharacter.CharacterInfo.OnDamageTaken(damage);
+        //     }
+        // }
+        //
+        // else
+        // {
+        //     damage *= 2;
+        //     focusedCharacter.CharacterInfo.OnDamageTaken(damage);
+        //     //AlkawaDebug.Log($"Gameplay: Get Damage Taken {damage}");
+        // }
+        //
+        // return false;
     }
 
     public void HandleCharacterDie(Character character)

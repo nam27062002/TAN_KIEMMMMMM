@@ -3,6 +3,7 @@
 #endif
 using System.Diagnostics;
 using System.Collections.Generic;
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
@@ -15,7 +16,7 @@ public enum ELogCategory
     MAP,
     ENGINE,
     AI,
-    AUDIO,
+    ROLL,
     GAMEPLAY,
 }
 
@@ -29,7 +30,18 @@ public enum ELogSeverity
 public class AlkawaDebug
 {
     private static readonly Dictionary<ELogCategory, string> CategoryColors = new Dictionary<ELogCategory, string>();
-
+    private static readonly HashSet<ELogCategory> IgnoredCategories = new HashSet<ELogCategory>()
+    {
+        ELogCategory.NONE,
+        ELogCategory.UI,
+        ELogCategory.CHARACTER,
+        ELogCategory.ANIMATION,
+        ELogCategory.MAP,
+        ELogCategory.ENGINE,
+        ELogCategory.AI,
+        ELogCategory.GAMEPLAY,
+    };
+    
     static AlkawaDebug()
     {
         CategoryColors[ELogCategory.UI] = "#2196F3";        
@@ -38,13 +50,14 @@ public class AlkawaDebug
         CategoryColors[ELogCategory.MAP] = "#FF9800"; 
         CategoryColors[ELogCategory.ENGINE] = "#607D8B";    
         CategoryColors[ELogCategory.AI] = "#FF5722";      
-        CategoryColors[ELogCategory.AUDIO] = "#E91E63";
+        CategoryColors[ELogCategory.ROLL] = "#E91E63";
         CategoryColors[ELogCategory.GAMEPLAY] = "#FFEB3B";
     }
 
     [Conditional("USE_DEBUG")]
     public static void Log(ELogCategory cat, string msg, Object context = null)
     {
+        if (IgnoredCategories.Contains(cat)) return;
         InternalLog(cat, ELogSeverity.INFO, msg, context);
     }
 

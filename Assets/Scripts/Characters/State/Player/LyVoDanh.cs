@@ -8,7 +8,7 @@ public class LyVoDanh : PlayerCharacter
             new IdleState(this),
             new LVDMoveState(this),
             new DamageTakenState(this),
-            new SkillState(this));
+            new LVDSkillState(this));
     }
 
     public void TryTriggerFlyingTempest()

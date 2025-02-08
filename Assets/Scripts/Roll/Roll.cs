@@ -3,20 +3,28 @@
 public class Roll
 {
     private readonly CharacterAttributes _attributes;
-
-    public Roll(CharacterAttributes attributes)
+    private string _characterName;
+    
+    public Roll(CharacterAttributes attributes, string characterName)
     {
         _attributes = attributes;
+        _characterName = characterName;
     }
     
-    public int GetBaseDamage(RollData rollData)
+    public int GetBaseDamage()
     {
-        return RollDice(rollData.rollTime, rollData.rollValue, _attributes.atk / 4);
+        var rollData = _attributes.baseDamageRollData; 
+        var baseDamage = RollDice(rollData, _attributes.atk / 4);
+        AlkawaDebug.Log(ELogCategory.ROLL, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_attributes.atk / 4} = {baseDamage}");
+        return baseDamage;
     }
 
-    public int GetHitChange()
+    public HitChangeParams GetHitChange()
     {
-        return RollDice(_attributes.rollValue, _attributes.atk / 2);
+        var rollData = _attributes.hitChangeRollData; 
+        var hitChange = RollDice(_attributes.rollValue, _attributes.atk / 2);
+        AlkawaDebug.Log(ELogCategory.ROLL, $"[{_characterName}] Hit Change = {rollData.rollTime}d{rollData.rollValue} + {_attributes.atk / 2} = {hitChange}");
+        return new HitChangeParams(){HitChangeValue = hitChange, IsCritical = rollData.rollValue == hitChange};
     }
 
     public bool IsCritical(int value)
@@ -34,9 +42,9 @@ public class Roll
         return RollDice(12, _attributes.spd / 2);
     }
 
-    public int RollDice(RollData rollData)
+    public int RollDice(RollData rollData, int add)
     {
-        return RollDice(rollData.rollTime, rollData.rollValue, rollData.add);   
+        return RollDice(rollData.rollTime, rollData.rollValue, add);   
     }
     
     private static int RollDice(int sides, int add)
@@ -51,7 +59,7 @@ public class Roll
         var res = add;
         for (int i = 0; i < times; i++)
         {
-            res = RollDice(side, 0);
+            res += RollDice(side, 0);
         }
         return res;
     }

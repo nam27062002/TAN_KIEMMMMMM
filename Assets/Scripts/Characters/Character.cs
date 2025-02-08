@@ -23,8 +23,7 @@ public abstract class Character : MonoBehaviour
     protected CharacterStateMachine StateMachine { get; set; }
 
     protected HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
-
-    public Roll Roll { get; private set; }
+    
     public CharacterInfo CharacterInfo;
     
     public bool IsMainCharacter => GpManager.MainCharacter == this;
@@ -48,16 +47,8 @@ public abstract class Character : MonoBehaviour
 
     public void Initialize(Cell cell)
     {
-        CharacterInfo = new CharacterInfo
-        {
-            SkillConfig = skillConfig,
-            Attributes = characterConfig.characterAttributes,
-            CurrentHp = characterConfig.characterAttributes.health,
-            CurrentMp = characterConfig.characterAttributes.mana,
-            Character = this,
-        };
+        CharacterInfo = new CharacterInfo(skillConfig, characterConfig.characterAttributes, this);
         skillConfig.SetSkillConfigs();
-        Roll = new Roll(CharacterInfo.Attributes);
         SetCell(cell);
         SetIdle();
         SetSpeed();
@@ -119,7 +110,7 @@ public abstract class Character : MonoBehaviour
     {
         if (CharacterInfo.CharactersInSkillRange.Contains(cell.Character))
         {
-            HandleCastSkill();   
+            HandleCastSkill(new List<Character>(){cell.Character});   
         }
         else
         {
@@ -132,12 +123,13 @@ public abstract class Character : MonoBehaviour
         return skillConfig.SkillConfigs[skillType];
     }
 
-    public void HandleCastSkill()
+    public void HandleCastSkill(List<Character> targets)
     {
         CharacterInfo.HandleMpChanged(-CharacterInfo.SkillInfo.mpCost);
         SetSkill(new SkillStateParams
         {
             skillInfo = CharacterInfo.SkillInfo,
+            targets = targets
         });
     }
 
@@ -227,7 +219,7 @@ public abstract class Character : MonoBehaviour
     
     protected virtual void SetSpeed()
     {
-        CharacterInfo.Speed = Roll.GetSpeed();
+        CharacterInfo.SetSpeed();
     }
     
     private void OnHpChanged(object sender, EventArgs e)

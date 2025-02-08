@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class SkillState : CharacterState
 {
@@ -50,6 +51,7 @@ public class SkillState : CharacterState
     
     protected virtual void HandleActiveSkill1()
     {
+        HandleApplyDamage();
     }
     
     protected virtual void HandleActiveSkill2()
@@ -95,5 +97,36 @@ public class SkillState : CharacterState
             SkillIndex.PassiveSkill3  => AnimationParameterNameType.Skill1,
             _ => AnimationParameterNameType.None
         };
+    }
+
+    protected int GetBaseDamage()
+    {
+        var baseDamage = Info.BaseDamage;
+        return baseDamage;
+    }
+
+    protected HitChangeParams GetHitChangeParams()
+    {
+        var hitChange = Info.HitChangeParams;
+        return hitChange;
+    }
+
+    protected void HandleApplyDamage()
+    {
+        foreach (var target in _skillStateParams.targets)
+        {
+            var hitChangeParams = GetHitChangeParams();
+            var dodge = target.CharacterInfo.Dodge;
+            AlkawaDebug.Log(ELogCategory.ROLL, $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
+
+            if (hitChangeParams.HitChangeValue < dodge)
+            {
+                
+            }
+            else
+            {
+                
+            }
+        }
     }
 }
