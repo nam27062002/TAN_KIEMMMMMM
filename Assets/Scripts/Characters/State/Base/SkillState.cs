@@ -44,7 +44,8 @@ public class SkillState : CharacterState
     private readonly Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>> _damageParamsHandlers;
     private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
     protected SkillStateParams SkillStateParams;
-    protected readonly HashSet<Character> TargetCharacters = new();
+    protected readonly List<Character> TargetCharacters = new();
+    private readonly HashSet<Character> _waitForFeedback = new();
 
     public override void OnEnter(StateParams stateParams = null)
     {
@@ -67,7 +68,7 @@ public class SkillState : CharacterState
                 TargetCharacters.Add(item);
             }
         }
-        else
+        if (CanSetTargetCharactersInternal())
         {
             var key = (SkillStateParams.SkillTurnType, SkillStateParams.SkillInfo.skillIndex);
         
@@ -76,6 +77,12 @@ public class SkillState : CharacterState
                 action.Invoke();
             }
         }
+    }
+
+    private bool CanSetTargetCharactersInternal()
+    {
+        return SkillStateParams.SkillInfo.canOverrideSetTargetCharacters || SkillStateParams.Targets == null ||
+               SkillStateParams.Targets.Count == 0;
     }
 
     protected void AddTargetCharacters(Character character)
@@ -142,14 +149,15 @@ public class SkillState : CharacterState
                 var dodge = target.CharacterInfo.Dodge;
                 AlkawaDebug.Log(ELogCategory.CONSOLE,
                     $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
-
-                if (hitChangeParams.HitChangeValue <= dodge)
+                
+                if (hitChangeParams.HitChangeValue <= dodge && false)
                 {
                     HandleDodgeDamageSuccess(target);
                 }
                 else
                 {
                     CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target));
+                    _waitForFeedback.Add(target);
                 }
             }
             else // Buff cho bản thân hoặc đồng đội
@@ -169,7 +177,8 @@ public class SkillState : CharacterState
     {
         if (target != Character)
         {
-            yield return new WaitUntil(target.CanOverrideState);
+            yield return new WaitUntil(() => !_waitForFeedback.Contains(target));
+            yield return new WaitForSecondsRealtime(0.1f);
             target.OnDamageTaken(GetDamageParams());
         }
         else
@@ -182,6 +191,7 @@ public class SkillState : CharacterState
     private void HandleTargetFinish(Character character)
     {
         TargetCharacters.Remove(character);
+        _waitForFeedback.Remove(character);
         if (TargetCharacters.Count != 0) return;
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);

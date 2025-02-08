@@ -33,6 +33,11 @@ public class SkillInfo
     [ToggleLeft] 
     public bool isDirectionalSkill;
     
+    [VerticalGroup("Skill Info/Details")]
+    [LabelWidth(125)]
+    [ToggleLeft] 
+    public bool canOverrideSetTargetCharacters;
+    
     public DamageTargetType damageType;
     public string description;
 }

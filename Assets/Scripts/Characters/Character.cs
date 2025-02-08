@@ -75,11 +75,7 @@ public abstract class Character : MonoBehaviour
     }
 
     #region Set States
-
-    public bool CanOverrideState()
-    {
-        return StateMachine.CurrentState is IdleState;
-    }
+    
     private void SetIdle()
     {
         ChangeState(ECharacterState.Idle);
