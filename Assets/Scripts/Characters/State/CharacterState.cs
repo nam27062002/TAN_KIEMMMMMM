@@ -43,44 +43,6 @@ public abstract class CharacterState : IState
     {
         Character.SetCell(cell);
     }
-
-    protected virtual void OnFinishAction(CharacterState state)
-    {
-        Character.ChangeState(ECharacterState.Idle);
-        switch (state)
-        {
-            case MoveState:
-                OnReachToTarget();
-                break;
-            case SkillState:
-                OnCastSkillFinished();
-                break;
-            case DamageTakenState:
-                SetDamageTakenFinished();
-                break;
-        }
-    }
-
-    protected virtual void OnReachToTarget()
-    {
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"{Character.characterConfig.characterName} OnReachToTarget - {NameState}");
-    }
-
-    protected virtual void OnCastSkillFinished()
-    { 
-        GpManager.UpdateCharacterInfo();
-    }
-
-    protected virtual void SetDamageTakenFinished()
-    {
-        GpManager.SetDamageTakenFinished();
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"{Character.characterConfig.characterName} SetDamageTakenFinished - {NameState}");
-    }
-    
-    protected virtual void OnFinishAction()
-    {
-        OnFinishAction(this);
-    }
     
     protected void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
     {

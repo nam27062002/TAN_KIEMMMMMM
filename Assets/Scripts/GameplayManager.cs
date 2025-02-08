@@ -178,38 +178,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnCharacterClicked(Cell cell)
     {
-        SelectedCharacter.OnCharacterClicked(cell);
-        // if (_charactersInRange.Contains(cell.Character) && (!IsReact || cell.Character == _reactTarget))
-        // {
-        //     HandleCastSkill(cell.Character);
-        //     if (IsReact)
-        //     {
-        //         _reactTarget = null;
-        //     }
-        // }
-        //
-        // else
-        // {
-        //     if (IsRoundOfPlayer)
-        //     {
-        //         if (cell.Character.Type == Type.AI)
-        //         {
-        //             SetSelectedCharacter(cell.Character);
-        //         }
-        //         else
-        //         {
-        //             if (cell.Character == SelectedCharacter)
-        //             {
-        //                 UnSelectSkill();
-        //                 // if (SelectedCharacter.IsMainCharacter) ShowMoveRange();
-        //             }
-        //             else
-        //             {
-        //                 SetSelectedCharacter(cell.Character);
-        //             }
-        //         }
-        //     }
-        // }
+        if (SelectedCharacter.TryCastSkill(cell)) return;
+        if (!IsRoundOfPlayer) return;
+        if (cell.Character.Type == Type.AI)
+        {
+            SetSelectedCharacter(cell.Character);
+        }
+        else
+        {
+            if (cell.Character == SelectedCharacter)
+            {
+                SelectedCharacter.ShowMoveRange();
+            }
+            else
+            {
+                SetSelectedCharacter(cell.Character);
+            }
+        }
     }
 
     private void OnWaypointClicked(Cell cell)
@@ -337,102 +322,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         SelectedCharacter.HandleSelectSkill(skillIndex);
     }
-
-    private void HandleCastSkill(Character character)
-    {
-        SelectedCharacter.HandleCastSkill(new List<Character>(){character});
-    }
-
-    private void HandleCastSkill()
-    {
-        // SelectedCharacter.CharacterInfo.OnCastSkill(SelectedCharacter.CharacterInfo.SkillInfo, SkillIndex.ActiveSkill1);
-    }
-
-    public void HandleCastSkill(Character character, SkillInfo skillInfo)
-    {
-        SelectedCharacter.CharacterInfo.SkillInfo = skillInfo;
-        HandleCastSkill(character);
-    }
-
-    private void HandleNonDirectionalSkill()
-    {
-        HandleCastSkill();
-    }
     
-    public void OnCastSkillFinished()
-    {
-        // UpdateCharacterInfo();
-        // if (SelectedCharacter.CharacterInfo.SkillInfo.isDirectionalSkill)
-        // {
-        //     if (SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
-        //     {
-        //         TryAttackEnemies(_focusedCharacter);
-        //     }
-        //
-        //     if (SelectedCharacter.CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Team))
-        //     {
-        //         ApplyBuff();
-        //     }
-        // }
-        // else
-        // {
-        //     UnSelectSkill();
-        // }
-    }
-    
-    private void ApplyBuff()
-    {
-        _focusedCharacter.CharacterInfo.ApplyBuff(SelectedCharacter.CharacterInfo.SkillInfo);
-    }
-
-    private bool TryAttackEnemies(Character focusedCharacter)
-    {
-        return true;
-        // check crit
-        // int damage = SelectedCharacter.CharacterInfo.SkillInfo.hasApplyDamage ? SelectedCharacter.CharacterInfo.BaseDamage : 0;
-        // var hitChange = SelectedCharacter.Roll.GetHitChange();
-        // var isCritical = SelectedCharacter.Roll.IsCritical(hitChange);
-        // if (!isCritical)
-        // {
-        //     var dodge = focusedCharacter.CharacterInfo.Dodge;
-        //     if (dodge > hitChange)
-        //     {
-        //         AlkawaDebug.Log(ELogCategory.GAMEPLAY,
-        //             $"[Gameplay] Né skill, dodge = {dodge} - hitChange = {hitChange}");
-        //         focusedCharacter.CharacterInfo.OnDamageTaken(-1);
-        //     }
-        //     else
-        //     {
-        //         if (SelectedCharacter.CharacterInfo.SkillInfo.hasApplyDamage)
-        //         {
-        //             damage += SelectedCharacter.Roll.RollDice(SelectedCharacter.CharacterInfo.SkillInfo.damageConfig);
-        //         }
-        //
-        //         // 
-        //         // if (skillInfo.effectIndex != EffectIndex.None)
-        //         {
-        //             // var debuffResistance = RollManager.Instance.GetDebuffResistance(focusedCharacter.Info.CharacterAttributes);
-        //             // if (debuffResistance < GameplayManager.EffectConstant
-        //             //         .effectData[_skillData.effectConfig.effectIndex].debuffResistance)
-        //             // {
-        //             //     focusedCharacter.Info.ApplyDeBuff(_skillData.effectConfig, SelectedCharacter);
-        //             //     Debug.Log($"[Gameplay] - Damage: {damage}");
-        //             // }
-        //         }
-        //         focusedCharacter.CharacterInfo.OnDamageTaken(damage);
-        //     }
-        // }
-        //
-        // else
-        // {
-        //     damage *= 2;
-        //     focusedCharacter.CharacterInfo.OnDamageTaken(damage);
-        //     //AlkawaDebug.Log($"Gameplay: Get Damage Taken {damage}");
-        // }
-        //
-        // return false;
-    }
-
     public void HandleCharacterDie(Character character)
     {
         Characters.Remove(character);
@@ -454,28 +344,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
     
-    public void SetDamageTakenFinished()
-    {
-        Debug.Log("NT - ???????????????????");
-        // if (_focusedCharacter.Type == Type.Player && MainCharacter.Type == Type.AI) // show react
-        // {
-        //     UIManager.Instance.OpenPopup(PopupType.React);
-        // }
-        // else if (IsReact)
-        // {
-        //     SelectedCharacter.ChangeState(ECharacterState.Idle);
-        //     OnEndReact();
-        // }
-    }
-
     private void OnEndReact()
     {
         HandleEndTurn(true);
-    }
-    
-    private void UnSelectSkill()
-    {
-        SelectedCharacter.CharacterInfo.SkillInfo = null;
     }
     
     public List<Character> GetEnemiesInRange(Character character, int range)

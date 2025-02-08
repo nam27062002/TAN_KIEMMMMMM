@@ -39,10 +39,7 @@ public class MoveState : CharacterState
         
         moveSequence.OnComplete(() =>
         {
-            SetCell(stateParams.MoveCells[^1]);
-            Character.CharacterInfo.Cell.ShowFocus();
-            GpManager.SetInteract(true);
-            OnFinishAction();
+            OnReachToTarget(stateParams.MoveCells[^1]);
         });
         
     }
@@ -50,5 +47,13 @@ public class MoveState : CharacterState
     public override void OnExit()
     {
         
+    }
+    
+    protected virtual void OnReachToTarget(Cell cell)
+    {
+        SetCell(cell);
+        Character.CharacterInfo.Cell.ShowFocus();
+        GpManager.SetInteract(true);
+        Character.ChangeState(ECharacterState.Idle);
     }
 }

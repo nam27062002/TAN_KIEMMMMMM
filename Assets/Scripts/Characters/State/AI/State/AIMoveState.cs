@@ -4,9 +4,9 @@
     {
     }
     
-    protected override void OnReachToTarget()
+    protected override void OnReachToTarget(Cell cell)
     {
-        base.OnReachToTarget();
+        base.OnReachToTarget(cell);
         CoroutineDispatcher.Invoke(HandlePlay, 1f);
     }
 

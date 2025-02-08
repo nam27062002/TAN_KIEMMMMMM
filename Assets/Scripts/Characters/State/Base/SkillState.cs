@@ -30,6 +30,7 @@ public class SkillState : CharacterState
     
     public override void OnEnter(StateParams stateParams = null)
     {
+        GpManager.SetInteract(false);
         _targetCharacters.Clear();
         _skillStateParams = (SkillStateParams)stateParams;
         if (_skillStateParams != null)
@@ -46,14 +47,14 @@ public class SkillState : CharacterState
     private void HandleCastSkill()
     {
         var animName = GetAnimByIndex(_skillStateParams.SkillInfo.skillIndex);
-        PlayAnim(animName, OnFinishAction);
+        PlayAnim(animName, OnCastSkillFinished);
         AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} cast skill: {_skillStateParams.SkillInfo.name}");
     }
     
-    protected override void OnCastSkillFinished()
+    protected virtual void OnCastSkillFinished()
     {
         HandleDamageLogic();
-        base.OnCastSkillFinished();
+        GameplayManager.Instance.UpdateCharacterInfo();
     }
     
     private static AnimationParameterNameType GetAnimByIndex(SkillIndex index)
@@ -172,7 +173,13 @@ public class SkillState : CharacterState
     protected virtual DamageTakenParams GetDamageParams()
     {
         var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
-        return _damageParamsHandlers.TryGetValue(key, out var handler) ? handler() : new DamageTakenParams();
+        var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler) ? handler() : new DamageTakenParams();
+        return new DamageTakenParams()
+        {
+            Damage = damageParams.Damage,
+            ReducedMana = damageParams.ReducedMana,
+            OnSetDamageTakenFinished = HandleTargetFinish,
+        };
     }
     
     protected virtual int GetBaseDamage()
@@ -225,9 +232,8 @@ public class SkillState : CharacterState
     private void HandleTargetFinish(Character character)
     {
         _targetCharacters.Remove(character);
-        if (_targetCharacters.Count == 0)
-        {
-            Debug.Log("NT - HandleTargetFinish");
-        }
+        if (_targetCharacters.Count != 0) return;
+        GpManager.SetInteract(true);
+        Character.ChangeState(ECharacterState.Idle);
     }
 }

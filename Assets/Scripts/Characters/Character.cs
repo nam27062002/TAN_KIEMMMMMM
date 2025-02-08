@@ -108,16 +108,11 @@ public abstract class Character : MonoBehaviour
 
     #region Skills
 
-    public void OnCharacterClicked(Cell cell)
+    public bool TryCastSkill(Cell cell)
     {
-        if (CharacterInfo.CharactersInSkillRange.Contains(cell.Character))
-        {
-            HandleCastSkill(new List<Character>(){cell.Character});   
-        }
-        else
-        {
-            
-        }
+        if (!CharacterInfo.CharactersInSkillRange.Contains(cell.Character)) return false;
+        HandleCastSkill(new List<Character>(){cell.Character});
+        return true;
     }
     
     public List<SkillInfo> GetSkillInfos(SkillTurnType skillTurnType)
@@ -125,34 +120,36 @@ public abstract class Character : MonoBehaviour
         return skillConfig.SkillConfigs[skillTurnType];
     }
 
-    public void HandleCastSkill(List<Character> targets)
+    private void HandleCastSkill(List<Character> targets = null)
     {
         CharacterInfo.HandleMpChanged(-CharacterInfo.SkillInfo.mpCost);
-        SetSkill(new SkillStateParams
+    
+        var skillParams = new SkillStateParams
         {
             SkillInfo = CharacterInfo.SkillInfo,
             Targets = targets,
-            SkillTurnType =  GetSkillTurnType(),
-        });
+            SkillTurnType = GetSkillTurnType(),
+        };
+    
+        SetSkill(skillParams);
         CharacterInfo.HandleReduceActionPoints();
+        UnSelectSkill();
     }
 
     public void HandleSelectSkill(int skillIndex)
     {
         HideMoveRange();
         UnSelectSkill();
-        if (CharacterInfo.SkillInfo != GetSkillInfo(skillIndex))
+        if (CharacterInfo.SkillInfo == GetSkillInfo(skillIndex)) return;
+        UnSelectSkill();
+        CharacterInfo.SkillInfo = GetSkillInfo(skillIndex);
+        if (CharacterInfo.SkillInfo.isDirectionalSkill)
         {
-            UnSelectSkill();
-            CharacterInfo.SkillInfo = GetSkillInfo(skillIndex);
-            if (CharacterInfo.SkillInfo.isDirectionalSkill)
-            {
-                HandleDirectionalSkill();
-            }
-            else
-            {
-                // 
-            }
+            HandleDirectionalSkill();
+        }
+        else
+        {
+            HandleCastSkill();
         }
     }
 
@@ -192,6 +189,8 @@ public abstract class Character : MonoBehaviour
     private void UnSelectSkill()
     {
         CharacterInfo.SkillInfo = null;
+        CharacterInfo.CharactersInSkillRange.Clear();
+        Skill_UI.Selected?.highlightable.Unhighlight();
         HideSkillRange();
     }
 
@@ -240,17 +239,19 @@ public abstract class Character : MonoBehaviour
     public virtual void OnUnSelected()
     {
         CharacterInfo.Cell.HideFocus();
-        HideSkillRange();
+        UnSelectSkill();
         HideMoveRange();
     }
 
     public void ShowMoveRange()
     {
+        if (!IsMainCharacter) return;
         CharacterInfo.MoveRange = MapManager.GetHexagonsInMoveRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange());
         foreach (var item in CharacterInfo.MoveRange)
         {
             item.ShowMoveRange();
         }
+        UnSelectSkill();
     }
     
     public void HideMoveRange()

@@ -9,7 +9,7 @@
         var baseDamage = GetBaseDamage();
         var realDamage = (int)(1.5f * baseDamage);
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] Vấn Truy Lưu: damage = {realDamage} reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] Vấn Truy Lưu: damage = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
