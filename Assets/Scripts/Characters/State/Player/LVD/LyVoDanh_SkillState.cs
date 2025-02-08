@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class LyVoDanh_SkillState : SkillState
+﻿public class LyVoDanh_SkillState : SkillState
 {
     public LyVoDanh_SkillState(Character character) : base(character)
     {
@@ -23,9 +21,11 @@ public class LyVoDanh_SkillState : SkillState
     
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn()
     {
+        var increaseDamage = Character.CharacterInfo.CurrentHp / 10;
+        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp}*10% = {increaseDamage}");
         return new DamageTakenParams
         {
-            
+            IncreaseDamage = increaseDamage,
         };
     }
 

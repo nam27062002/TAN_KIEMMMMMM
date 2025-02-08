@@ -19,24 +19,9 @@
 
     private void OnDamageTaken()
     {
-        ChangeHp();
-        ChangeMana();
+        Info.OnDamageTaken(_damageTakenParams);
     }
-
-    private void ChangeHp()
-    {
-        if (_damageTakenParams.Damage > 0)
-        {
-            Character.CharacterInfo.HandleHpChanged(-_damageTakenParams.Damage);
-        }
-    }
-
-    private void ChangeMana()
-    {
-        if (_damageTakenParams.ReducedMana > 0)
-            Character.CharacterInfo.HandleMpChanged(-_damageTakenParams.ReducedMana);
-    }
-
+    
     protected virtual void SetDamageTakenFinished()
     {
         Character.ChangeState(ECharacterState.Idle);

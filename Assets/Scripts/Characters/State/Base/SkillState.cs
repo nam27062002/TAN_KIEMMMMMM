@@ -108,6 +108,7 @@ public class SkillState : CharacterState
         {
             Damage = damageParams.Damage,
             ReducedMana = damageParams.ReducedMana,
+            IncreaseDamage = damageParams.IncreaseDamage,
             OnSetDamageTakenFinished = HandleTargetFinish,
         };
     }
@@ -164,7 +165,15 @@ public class SkillState : CharacterState
 
     private void HandleApplyDamage(Character target)
     {
-        target.OnDamageTaken(GetDamageParams());
+        if (target != Character)
+        {
+            target.OnDamageTaken(GetDamageParams());
+        }
+        else
+        {
+            Info.OnDamageTaken(GetDamageParams());
+            HandleTargetFinish(target);
+        }
     }
 
     private void HandleTargetFinish(Character character)

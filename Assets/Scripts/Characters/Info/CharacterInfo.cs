@@ -15,7 +15,7 @@ public class CharacterInfo
 
         CurrentHp = characterAttributes.health;
         CurrentMp = characterAttributes.mana;
-        _roll = new Roll(Attributes, Character.characterConfig.characterName);
+        _roll = new Roll(this, Character.characterConfig.characterName);
     }
     
     // Cell
@@ -30,22 +30,20 @@ public class CharacterInfo
     // Character
     public HashSet<Character> CharactersInSkillRange { get; set; } = new();
 
-    //
+    // Stat
     public int Speed { get; set; }
     public CharacterAttributes Attributes { get; set; }
-
     public int CurrentHp { get; set; }
     public int CurrentMp { get; set; }
 
     public int MoveAmount { get; set; }
-
     public int MoveBuff { get; set; }
 
     public List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
 
     // Buff & Debuff
-    
-    public EffectInfo EffectInfo { get; set; }
+
+    public EffectInfo EffectInfo { get; set; } = new();
     
     public bool LockSkill { get; set; }
     // Action
@@ -73,6 +71,7 @@ public class CharacterInfo
     
     public void HandleHpChanged(int value)
     {
+        if (value == 0) return;
         CurrentHp += value;
         CurrentHp = math.max(0, CurrentHp);
         if (CurrentHp <= 0)
@@ -88,6 +87,7 @@ public class CharacterInfo
 
     public void HandleMpChanged(int value)
     {
+        if (value == 0) return;
         CurrentMp += value;
         OnMpChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -123,26 +123,6 @@ public class CharacterInfo
         return CurrentMp >= skillInfo.mpCost && IsEnoughActionPoints();
     }
     
-    public void ApplyBuff(SkillInfo skillInfo)
-    {
-        // if (skillInfo.buffType.HasFlag(BuffType.IncreaseMoveRange))
-        // {
-        //     MoveBuff += 1;
-        // }
-        //
-        // if (skillInfo.buffType.HasFlag(BuffType.IncreaseActionPoints))
-        // {
-        //     HandleIncreaseSlotActionPoints();
-        // }
-        //
-        // if (skillInfo.buffType.HasFlag(BuffType.BlockSkill))
-        // {
-        //     LockSkill = true;
-        // }
-        //
-        // ShowMessage("Nhận Buff");
-    }
-
     #region Action Points
 
     public void HandleIncreaseSlotActionPoints()
@@ -194,5 +174,39 @@ public class CharacterInfo
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} reset action points");
     }
 
+    #endregion
+
+    #region Damage Logic
+
+    public int GetCurrentDamage()
+    {
+        var damage = Attributes.atk;
+        foreach (var effectData in EffectInfo.Effects)
+        {
+            if (effectData.EffectType == EffectType.IncreaseDamage && effectData is ChangeStatEffect changeStatEffect)
+            {
+                damage += changeStatEffect.Value;
+            }
+        }
+        return damage;
+    }
+    
+    public void OnDamageTaken(DamageTakenParams damageTakenParams)
+    {
+        HandleHpChanged(-damageTakenParams.Damage);
+        HandleMpChanged(-damageTakenParams.ReducedMana);
+        ApplyIncreaseDamage(damageTakenParams.IncreaseDamage);
+    }
+
+    private void ApplyIncreaseDamage(int damage)
+    {
+        EffectInfo.AddEffect(new ChangeStatEffect
+        {
+            Value = damage,
+            Duration = EffectConfig.BuffRound,
+            EffectType = EffectType.IncreaseDamage,
+        });
+        Character.ShowMessage($"Tăng {damage} sát thương");
+    }
     #endregion
 }

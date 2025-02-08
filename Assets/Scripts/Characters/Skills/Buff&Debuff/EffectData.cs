@@ -1,12 +1,12 @@
 ﻿public class EffectData
 {
-    public EffectType effectType;
-    public int duration;
+    public EffectType EffectType;
+    public int Duration;
 }
 
 public enum EffectType
 {
     None = 0,
-    Increase = 1,
+    IncreaseDamage = 1,
     BlockSkill = 2,
 }
