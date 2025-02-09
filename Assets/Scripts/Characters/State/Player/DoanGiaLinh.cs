@@ -1,5 +1,14 @@
 ﻿public class DoanGiaLinh : PlayerCharacter
 {
+    protected override void SetStateMachine()
+    {
+        StateMachine = new CharacterStateMachine(this,
+            new IdleState(this),
+            new MoveState(this),
+            new DamageTakenState(this),
+            new DoanGiaLinh_SkillState(this));
+    }
+    
     protected override void SetSpeed()
     {
         if (GpManager.IsTutorialLevel)
