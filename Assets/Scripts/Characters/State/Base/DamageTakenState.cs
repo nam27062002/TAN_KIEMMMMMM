@@ -44,15 +44,14 @@
         });
     }
 
-    public void OnConFirmReact()
+    private void OnConFirmReact()
     {
-        // SetCharacterReact(_focusedCharacter);
+        GpManager.SetCharacterReact(Character, _damageTakenParams);
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"OnConFirmClick");
     }
 
-    public void OnCancelReact()
+    private void OnCancelReact()
     {
-        // OnEndReact();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
     }
     

@@ -142,7 +142,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
 
-    private void SetCharacterReact(Character character)
+    public void SetCharacterReact(Character character, DamageTakenParams damageTakenParams)
     {
         _reactTarget = SelectedCharacter;
         SetSelectedCharacter(character);
