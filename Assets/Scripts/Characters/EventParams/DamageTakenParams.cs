@@ -8,4 +8,5 @@ public class DamageTakenParams : StateParams
     public int ReducedMana;
     public Dictionary<EffectType, int> Effects = new();
     public Action<Character> OnSetDamageTakenFinished;
+    public Character ReceiveFromCharacter;
 }

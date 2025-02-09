@@ -31,7 +31,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public int CurrentRound { get; private set; }
     public int CurrentPlayerIndex { get; private set; }
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
-    private bool IsReact => MainCharacter.Type != SelectedCharacter.Type;
     private bool _canInteract;
     public LevelConfig LevelConfig => levelConfig;
 
@@ -169,14 +168,22 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void HandleEndTurn(bool force = false)
     {
         if (!_canInteract && !force) return;
-        MainCharacter.CharacterInfo.ResetBuffAfter();
-        CurrentPlayerIndex++;
-        if (CurrentPlayerIndex >= Characters.Count)
+        if (SelectedCharacter.IsReact)
         {
-            CurrentPlayerIndex = 0;
-            HandleNewRound();
+            SelectedCharacter.HandleEndReact();
         }
-        SetMainCharacter();
+        else
+        {
+            if (SelectedCharacter)
+                MainCharacter.CharacterInfo.ResetBuffAfter();
+            CurrentPlayerIndex++;
+            if (CurrentPlayerIndex >= Characters.Count)
+            {
+                CurrentPlayerIndex = 0;
+                HandleNewRound();
+            }
+            SetMainCharacter();
+        }
     }
 
     private void OnCharacterClicked(Cell cell)

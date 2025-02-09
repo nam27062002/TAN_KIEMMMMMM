@@ -52,6 +52,7 @@
 
     private void OnCancelReact()
     {
+        OnDamageTaken();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
     }
     
@@ -64,6 +65,7 @@
     {
         Character.ChangeState(ECharacterState.Idle);
         _damageTakenParams.OnSetDamageTakenFinished?.Invoke(Character);
+        AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} set DamageTakenFinished");
     }
     
     public override void OnExit()

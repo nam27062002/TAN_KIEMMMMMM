@@ -44,7 +44,7 @@ public class SkillState : CharacterState
     public override string NameState { get; set; } = "Skill";
     private readonly Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>> _damageParamsHandlers;
     private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
-    protected SkillStateParams SkillStateParams;
+    private SkillStateParams _skillStateParams;
     protected readonly List<Character> TargetCharacters = new();
     private bool _waitForFeedback = false;
 
@@ -52,26 +52,35 @@ public class SkillState : CharacterState
     {
         GpManager.SetInteract(false);
         TargetCharacters.Clear();
-        SkillStateParams = (SkillStateParams)stateParams;
+        _skillStateParams = (SkillStateParams)stateParams;
         if (stateParams is not SkillStateParams skillStateParams) return;
-        SkillStateParams = skillStateParams;
-        SetTargetCharacters();
-        base.OnEnter(stateParams);
-        HandleCastSkill();
+        _skillStateParams = skillStateParams;
+        
+        // check xem có counter trước không
+        if (_skillStateParams.IdleStateParams != null)
+        {
+            Character.HandleCounterLogic(_skillStateParams);
+        }
+        else
+        {
+            SetTargetCharacters();
+            base.OnEnter(stateParams);
+            HandleCastSkill();
+        }
     }
 
     private void SetTargetCharacters()
     {
-        if (SkillStateParams.Targets is { Count: > 0 })
+        if (_skillStateParams.Targets is { Count: > 0 })
         {
-            foreach (var item in SkillStateParams.Targets)
+            foreach (var item in _skillStateParams.Targets)
             {
                 TargetCharacters.Add(item);
             }
         }
         if (CanSetTargetCharactersInternal())
         {
-            var key = (SkillStateParams.SkillTurnType, SkillStateParams.SkillInfo.skillIndex);
+            var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
         
             if (_targetCharacterActions.TryGetValue(key, out var action))
             {
@@ -82,22 +91,22 @@ public class SkillState : CharacterState
 
     private bool CanSetTargetCharactersInternal()
     {
-        return SkillStateParams.SkillInfo.canOverrideSetTargetCharacters || SkillStateParams.Targets == null ||
-               SkillStateParams.Targets.Count == 0;
+        return _skillStateParams.SkillInfo.canOverrideSetTargetCharacters || _skillStateParams.Targets == null ||
+               _skillStateParams.Targets.Count == 0;
     }
 
     protected void AddTargetCharacters(Character character)
     {
         TargetCharacters.Add(character);
-        SkillStateParams.Targets.Add(character);
+        _skillStateParams.Targets.Add(character);
     }
 
     private void HandleCastSkill()
     {
-        var animName = GetAnimByIndex(SkillStateParams.SkillInfo.skillIndex);
+        var animName = GetAnimByIndex(_skillStateParams.SkillInfo.skillIndex);
         PlayAnim(animName, OnCastSkillFinished);
         AlkawaDebug.Log(ELogCategory.CHARACTER,
-            $"{Character.characterConfig.characterName} cast skill: {SkillStateParams.SkillInfo.name}");
+            $"{Character.characterConfig.characterName} cast skill: {_skillStateParams.SkillInfo.name}");
     }
 
     protected virtual void OnCastSkillFinished()
@@ -110,7 +119,7 @@ public class SkillState : CharacterState
 
     protected virtual DamageTakenParams GetDamageParams()
     {
-        var key = (SkillStateParams.SkillTurnType, SkillStateParams.SkillInfo.skillIndex);
+        var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
         var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler)
             ? handler()
             : new DamageTakenParams();
@@ -120,6 +129,7 @@ public class SkillState : CharacterState
             ReducedMana = damageParams.ReducedMana,
             Effects = damageParams.Effects,
             OnSetDamageTakenFinished = HandleTargetFinish,
+            ReceiveFromCharacter = Character,
         };
     }
     
@@ -142,7 +152,7 @@ public class SkillState : CharacterState
 
     private void HandleDodgeDamage()
     {
-        foreach (var target in SkillStateParams.Targets)
+        foreach (var target in _skillStateParams.Targets)
         {
             if (Character.Type != target.Type)
             {
@@ -153,7 +163,12 @@ public class SkillState : CharacterState
                 
                 if (hitChangeParams.HitChangeValue <= dodge)
                 {
-                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, new DamageTakenParams{CanDodge = true}));
+                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, 
+                        new DamageTakenParams
+                        {
+                            CanDodge = true,
+                            ReceiveFromCharacter = Character,
+                        }));
                     _waitForFeedback = true;
                 }
                 else
@@ -183,7 +198,7 @@ public class SkillState : CharacterState
             HandleTargetFinish(target);
         }
     }
-
+    
     private void HandleTargetFinish(Character character)
     {
         TargetCharacters.Remove(character);
@@ -196,6 +211,7 @@ public class SkillState : CharacterState
     {
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
+        AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} HandleAllTargetFinish");
     }
 
     #region Skill

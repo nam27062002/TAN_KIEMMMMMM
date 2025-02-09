@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using DG.Tweening;
-using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -39,7 +36,7 @@ public abstract class Character : MonoBehaviour
     // public vitual function
     public virtual Type Type => Type.None;
     public virtual bool CanEndTurn => false;
-    
+    public bool IsReact => GetIdleStateParams() != null;
     private void Awake()
     {
         SetStateMachine();
@@ -103,6 +100,18 @@ public abstract class Character : MonoBehaviour
     {
         StateMachine.ChangeState(newState, stateParams);
     }
+
+    public void HandleCounterLogic(SkillStateParams skillStateParams)
+    {
+        SetIdle();
+        OnDamageTaken(skillStateParams.IdleStateParams.DamageTakenParams);
+    }
+
+    private void HandleCounterLogic()
+    {
+        SetIdle();
+        OnDamageTaken(GetIdleStateParams().DamageTakenParams);
+    }
     
     #endregion
 
@@ -126,6 +135,7 @@ public abstract class Character : MonoBehaviour
     
         var skillParams = new SkillStateParams
         {
+            IdleStateParams = GetIdleStateParams(),
             SkillInfo = CharacterInfo.SkillInfo,
             Targets = targets ?? new List<Character>(),
             SkillTurnType = GetSkillTurnType(),
@@ -163,25 +173,49 @@ public abstract class Character : MonoBehaviour
     {
         ShowSkillRange();
         CharacterInfo.CharactersInSkillRange.Clear();
-        if (CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Self))
+        var damageType = CharacterInfo.SkillInfo.damageType;
+        if (damageType.HasFlag(DamageTargetType.Self))
         {
             CharacterInfo.CharactersInSkillRange.Add(this);
         }
         
-        foreach (var cell in CharacterInfo.SkillRange.Where(cell => cell.CellType == CellType.Character))
+        foreach (var cell in CharacterInfo.SkillRange.Where(cell => cell.CellType == CellType.Character).Where(cell => IsValidTarget(cell.Character, damageType)))
         {
-            if (cell.Character.Type == Type && CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Team))
-            {
-                CharacterInfo.CharactersInSkillRange.Add(cell.Character);
-            }
-            
-            if (cell.Character.Type != Type && CharacterInfo.SkillInfo.damageType.HasFlag(DamageTargetType.Enemies))
-            {
-                CharacterInfo.CharactersInSkillRange.Add(cell.Character);
-            }
+            CharacterInfo.CharactersInSkillRange.Add(cell.Character);
+        }
+        
+        var counterCharacter = GetCounterCharacter();
+        if (counterCharacter == null) return;
+        var isValidCounter = CharacterInfo.CharactersInSkillRange.Contains(counterCharacter);
+        CharacterInfo.CharactersInSkillRange.Clear();
+        if (isValidCounter)
+        {
+            CharacterInfo.CharactersInSkillRange.Add(counterCharacter);
         }
     }
+    
+    private bool IsValidTarget(Character target, DamageTargetType damageType)
+    {
+        return damageType.HasFlag(target.Type == Type ? DamageTargetType.Team : DamageTargetType.Enemies);
+    }
+    
+    private Character GetCounterCharacter()
+    {
+        if (StateMachine.CurrentState is IdleState { IdleStateParams: not null } idleState)
+        {
+            return idleState.IdleStateParams.DamageTakenParams.ReceiveFromCharacter;
+        }
+        return null;
+    }
 
+    protected IdleStateParams GetIdleStateParams()
+    {
+        if (StateMachine.CurrentState is IdleState idleState)
+        {
+            return idleState.IdleStateParams;
+        }
+        return null;
+    }
     public SkillTurnType GetSkillTurnType()
     {
         return GpManager.GetSkillTurnType(this);
@@ -200,6 +234,11 @@ public abstract class Character : MonoBehaviour
         HideSkillRange();
     }
 
+    public void HandleEndReact()
+    {
+        HandleCounterLogic();
+    }
+    
     public void OnDamageTaken(DamageTakenParams damageTakenParams)
     {
         ChangeState(ECharacterState.DamageTaken, damageTakenParams);

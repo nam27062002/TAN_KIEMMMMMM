@@ -6,12 +6,12 @@
 
     public override string NameState { get; set; } = "Idle";
 
-    private IdleStateParams _idleStateParams;
+    public IdleStateParams IdleStateParams { get; set; }
 
     public override void OnEnter(StateParams stateParams = null)
     {
         base.OnEnter(stateParams);
-        _idleStateParams = stateParams as IdleStateParams;
+        IdleStateParams = stateParams as IdleStateParams;
         PlayAnim(AnimationParameterNameType.Idle);
         SetCharacterPosition();
         SetFacing();
@@ -19,6 +19,7 @@
 
     public override void OnExit()
     {
-        
+        base.OnExit();
+        IdleStateParams = null;
     }
 }

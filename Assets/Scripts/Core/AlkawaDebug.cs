@@ -34,12 +34,12 @@ public class AlkawaDebug
     {
         ELogCategory.NONE,
         ELogCategory.UI,
-        ELogCategory.CHARACTER,
+        // ELogCategory.CHARACTER,
         ELogCategory.ANIMATION,
         ELogCategory.MAP,
         ELogCategory.ENGINE,
         ELogCategory.AI,
-        // ELogCategory.GAMEPLAY,
+        ELogCategory.GAMEPLAY,
     };
     
     static AlkawaDebug()
