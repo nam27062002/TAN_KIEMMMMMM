@@ -77,9 +77,23 @@ public class MapManager : MonoBehaviour
         var allCells = _pathfinding.GetHexagonsInAttack(cell, range);
         return (from item in allCells where item.CellType == CellType.Character select item.Character).ToList();
     }
+
+    public HashSet<Character> GetCharactersInRange(Cell cell, SkillInfo info)
+    {
+        if (cell?.Character == null || info == null) 
+            return new HashSet<Character>();
+
+        var self = cell.Character;
+        return GetCharacterInRange(cell, info.range).Where(c => CheckDamageTarget(c, self, info.damageType)).ToHashSet();
+    }
+
+    private static bool CheckDamageTarget(Character target, Character self, DamageTargetType damageType)
+    {
+        return (damageType.HasFlag(DamageTargetType.Self) && target == self) ||
+               (damageType.HasFlag(DamageTargetType.Team) && target.Type == self.Type) ||
+               (damageType.HasFlag(DamageTargetType.Enemies) && target.Type != self.Type);
+    }
     
-
-
     public List<Cell> FindPath(Cell startCell, Cell endCell)
     {
         return _pathfinding.FindPath(startCell, endCell);

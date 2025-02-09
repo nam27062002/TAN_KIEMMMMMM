@@ -13,6 +13,7 @@ public class SkillState : CharacterState
             { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill2), GetDamageParams_Skill2_MyTurn },
             { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill3), GetDamageParams_Skill3_MyTurn },
             { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill4), GetDamageParams_Skill4_MyTurn },
+            { (SkillTurnType.MyTurn, SkillIndex.PassiveSkill2), GetDamageParams_PassiveSkill2_MyTurn },
             { (SkillTurnType.TeammateTurn, SkillIndex.ActiveSkill1), GetDamageParams_Skill1_TeammateTurn },
             { (SkillTurnType.TeammateTurn, SkillIndex.ActiveSkill2), GetDamageParams_Skill2_TeammateTurn },
             { (SkillTurnType.TeammateTurn, SkillIndex.ActiveSkill3), GetDamageParams_Skill3_TeammateTurn },
@@ -150,7 +151,7 @@ public class SkillState : CharacterState
                 AlkawaDebug.Log(ELogCategory.CONSOLE,
                     $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
                 
-                if (hitChangeParams.HitChangeValue <= dodge && false)
+                if (hitChangeParams.HitChangeValue <= dodge)
                 {
                     HandleDodgeDamageSuccess(target);
                 }
@@ -298,7 +299,14 @@ public class SkillState : CharacterState
             Damage = GetBaseDamage()
         };
     }
-
+    //=====================SKILL 2=====================================
+    protected virtual DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage()
+        };
+    }
     #endregion
 
     #region Set Target

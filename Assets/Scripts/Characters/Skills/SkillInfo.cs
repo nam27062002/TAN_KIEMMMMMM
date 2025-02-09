@@ -16,7 +16,7 @@ public class SkillInfo
 
     [HorizontalGroup("Skill Info")]
     [VerticalGroup("Skill Info/Details")] 
-    [LabelWidth(75), ReadOnly] 
+    [LabelWidth(75)] 
     public SkillIndex skillIndex;
     
     [VerticalGroup("Skill Info/Details")]

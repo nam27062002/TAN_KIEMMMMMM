@@ -47,8 +47,8 @@ public class CharacterInfo
     
     public bool LockSkill { get; set; }
     // Action
-    public event EventHandler OnHpChanged;
-    public event EventHandler OnMpChanged;
+    public event EventHandler<int> OnHpChanged;
+    public event EventHandler<int> OnMpChanged;
     public event EventHandler<int> OnMoveAmount;
 
     public SkillConfig SkillConfig { get; set; }
@@ -81,7 +81,7 @@ public class CharacterInfo
         else
         {
             Character.ShowMessage(value.ToString());
-            OnHpChanged?.Invoke(this, EventArgs.Empty);
+            OnHpChanged?.Invoke(this, value);
         }
     }
 
@@ -89,7 +89,7 @@ public class CharacterInfo
     {
         if (value == 0) return;
         CurrentMp += value;
-        OnMpChanged?.Invoke(this, EventArgs.Empty);
+        OnMpChanged?.Invoke(this, value);
     }
 
     public void HandleMoveAmountChanged(int value)

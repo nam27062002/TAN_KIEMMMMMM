@@ -67,6 +67,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1068771806723808600}
+    - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2363098181572934608}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
 --- !u!1 &959730211588684647 stripped
 GameObject:
@@ -265,8 +268,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd842022c824dfda4b76f9eadff71c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lyVoDanh: {fileID: 8476363159216195691}
+  character: {fileID: 8476363159216195691}
   triggerCondition: 5
+  info:
+    icon: {fileID: 0}
+    name: 
+    skillIndex: 101
+    mpCost: 0
+    range: 1
+    isDirectionalSkill: 0
+    canOverrideSetTargetCharacters: 0
+    damageType: 4
+    description: 
+--- !u!114 &2363098181572934608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959730211588684647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77692935aab4058b50df834df0139c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 8476363159216195691}
+  increasedDamageValue: 1
+  hpDamageThreshold: 4
+  maxDamageTriggers: 5
+  hpCritThreshold: 8
+  critThresholdReduction: 1
+  maxCritTriggers: 3
+  internalForceThreshold: 2
+  increasedDamageTaken: 2
+  increasedMovement: 1
+  maxInternalForceTriggers: 5
 --- !u!1 &1430476920419069654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

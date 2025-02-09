@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-public class LyVoDanh : PlayerCharacter
+﻿public class LyVoDanh : PlayerCharacter
 {
     protected override void SetStateMachine()
     {

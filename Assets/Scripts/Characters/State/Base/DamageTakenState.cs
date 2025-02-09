@@ -14,7 +14,7 @@
         if (stateParams is not DamageTakenParams damageTakenParams) return;
         _damageTakenParams = damageTakenParams;
         OnDamageTaken();
-        PlayAnim(AnimationParameterNameType.Skill2, SetDamageTakenFinished);
+        PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished);
     }
 
     private void OnDamageTaken()

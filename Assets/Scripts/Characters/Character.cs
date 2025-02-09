@@ -24,7 +24,7 @@ public abstract class Character : MonoBehaviour
 
     protected CharacterStateMachine StateMachine { get; set; }
 
-    protected HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new HashSet<PassiveSkill>();
+    public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
     
     public CharacterInfo CharacterInfo;
     
@@ -55,7 +55,7 @@ public abstract class Character : MonoBehaviour
         SetIdle();
         SetSpeed();
         CharacterInfo.OnHpChanged += OnHpChanged;
-        OnHpChanged(null, null);
+        OnHpChanged(null);
         ChangeState(ECharacterState.Idle);
         SetPassiveSkills();
     }
@@ -214,7 +214,7 @@ public abstract class Character : MonoBehaviour
         CharacterInfo.SetSpeed();
     }
     
-    private void OnHpChanged(object sender, EventArgs e)
+    private void OnHpChanged(object sender, int value = 0)
     {
         var currentHp = CharacterInfo.CurrentHp;
         var maxHp = CharacterInfo.Attributes.health;
@@ -310,26 +310,28 @@ public abstract class Character : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (characterAnimationData == null)
+        if(characterAnimationData == null)
         {
             characterAnimationData = GetComponentInChildren<CharacterAnimationData>();
         }
 
-        if (model == null)
+        if(model == null)
         {
             model = gameObject.FindChildByName("Model");
         }
 
-        if (hpBar == null)
+        if(hpBar == null)
         {
             hpBar = GetComponentInChildren<HpBar>();
         }
 
-        if (uiFeedback == null)
+        if(uiFeedback == null)
         {
             uiFeedback = GetComponentInChildren<UIFeedback>();
         }
 
+        passiveSkills = GetComponents<PassiveSkill>().ToList();
+        
         skillConfig.OnValidate();
     }
 #endif

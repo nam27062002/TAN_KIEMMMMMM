@@ -177,8 +177,8 @@ public class UI_Ingame : MenuBase
          characterIcon.sprite = characterParams.Character.characterConfig.characterIcon;
          characterParams.Character.CharacterInfo.OnHpChanged += OnHpChanged;
          characterParams.Character.CharacterInfo.OnMpChanged += OnMpChanged;
-         OnHpChanged(null, null);
-         OnMpChanged(null, null);
+         OnHpChanged(null);
+         OnMpChanged(null);
          actionPointUI.SetActionPoints(characterParams.Character.CharacterInfo.ActionPoints);
          SetRound();
      }
@@ -205,14 +205,14 @@ public class UI_Ingame : MenuBase
          _avtSpdUI.RemoveAt(index);   
      }
     
-    private void OnHpChanged(object sender, EventArgs e)
+    private void OnHpChanged(object sender, int _ = 0)
     {
         var currentHp = _characterParams.Character.CharacterInfo.CurrentHp;
         var maxHp = _characterParams.Character.CharacterInfo.Attributes.health;
         hpBar.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
     }
     
-    private void OnMpChanged(object sender, EventArgs e)
+    private void OnMpChanged(object sender, int _ = 0)
     {
         var currentMp = _characterParams.Character.CharacterInfo.CurrentMp;
         var maxMp = _characterParams.Character.CharacterInfo.Attributes.mana;
