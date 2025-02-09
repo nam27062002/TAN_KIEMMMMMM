@@ -136,6 +136,12 @@ public abstract class Character : MonoBehaviour
         UnSelectSkill();
     }
 
+    protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null)
+    {
+        CharacterInfo.SkillInfo = skillInfo;
+        HandleCastSkill(targets);
+    }
+
     public void HandleSelectSkill(int skillIndex)
     {
         HideMoveRange();

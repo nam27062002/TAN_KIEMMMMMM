@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sirenix.OdinInspector;
 using Unity.Mathematics;
-using UnityEngine;
 
 public class CharacterInfo
 {
@@ -17,7 +15,7 @@ public class CharacterInfo
         CurrentMp = characterAttributes.mana;
         _roll = new Roll(this, Character.characterConfig.characterName);
     }
-    
+
     // Cell
     public Cell Cell { get; set; }
     public HashSet<Cell> MoveRange { get; set; } = new();
@@ -35,17 +33,16 @@ public class CharacterInfo
     public CharacterAttributes Attributes { get; set; }
     public int CurrentHp { get; set; }
     public int CurrentMp { get; set; }
-
     public int MoveAmount { get; set; }
-    public int MoveBuff { get; set; }
 
-    public List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
+    private List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
 
     // Buff & Debuff
 
-    public EffectInfo EffectInfo { get; set; } = new();
-    
-    public bool LockSkill { get; set; }
+    private EffectInfo EffectInfo { get; } = new();
+
+    public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.EffectType == EffectType.BlockSkill);
+
     // Action
     public event EventHandler<int> OnHpChanged;
     public event EventHandler<int> OnMpChanged;
@@ -53,22 +50,8 @@ public class CharacterInfo
 
     public SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
-    public int Dodge => _roll.GetDodge();
-
-    #region Roll
-
-    private readonly Roll _roll;
-    public int BaseDamage => _roll.GetBaseDamage();
-    public HitChangeParams HitChangeParams => _roll.GetHitChange();
-    #endregion
 
     //
-
-    public void SetSpeed()
-    {
-        Speed = _roll.GetSpeed();
-    }
-    
     public void HandleHpChanged(int value)
     {
         if (value == 0) return;
@@ -99,7 +82,9 @@ public class CharacterInfo
 
     public int GetMoveRange()
     {
-        return Attributes.maxMoveRange + MoveBuff - MoveAmount;
+        return Attributes.maxMoveRange - MoveAmount + EffectInfo.Effects
+            .Where(effect => effect.EffectType == EffectType.IncreaseMoveRange)
+            .Sum(effect => ((ChangeStatEffect)effect).Value);
     }
 
     public void ResetBuffAfter()
@@ -109,7 +94,6 @@ public class CharacterInfo
 
     public void ResetBuffBefore()
     {
-        LockSkill = false;
         MoveAmount = 0;
     }
 
@@ -117,13 +101,26 @@ public class CharacterInfo
     {
         return SkillConfig.SkillConfigs[skillTurnType][index];
     }
-    
+
     public bool CanCastSkill(SkillInfo skillInfo)
     {
         return CurrentMp >= skillInfo.mpCost && IsEnoughActionPoints();
     }
-    
+
     #region Action Points
+
+    public List<int> GetActionPoints()
+    {
+        var actionPoints = new List<int>(ActionPoints);
+        foreach (var effect in EffectInfo.Effects.Where(effect => effect.EffectType == EffectType.IncreaseActionPoints))
+        {
+            if (effect is ActionPointEffect actionPointEffect)
+            {
+                actionPoints.AddRange(actionPointEffect.ActionPoints);
+            }
+        }
+        return actionPoints;
+    }
 
     public void HandleIncreaseSlotActionPoints()
     {
@@ -188,14 +185,38 @@ public class CharacterInfo
                 damage += changeStatEffect.Value;
             }
         }
+
         return damage;
     }
-    
+
     public void OnDamageTaken(DamageTakenParams damageTakenParams)
     {
         HandleHpChanged(-damageTakenParams.Damage);
         HandleMpChanged(-damageTakenParams.ReducedMana);
-        ApplyIncreaseDamage(damageTakenParams.IncreaseDamage);
+        ApplyEffect(damageTakenParams.Effects);
+    }
+
+    private void ApplyEffect(Dictionary<EffectType, int> effects)
+    {
+        if (effects.TryGetValue(EffectType.IncreaseDamage, out var damage))
+        {
+            ApplyIncreaseDamage(damage);
+        }
+
+        if (effects.TryGetValue(EffectType.BlockSkill, out var _))
+        {
+            ApplyBlockSkill();
+        }
+
+        if (effects.TryGetValue(EffectType.IncreaseMoveRange, out var moveRange))
+        {
+            ApplyIncreaseMoveRange(moveRange);
+        }
+
+        if (effects.TryGetValue(EffectType.IncreaseActionPoints, out var actionPoints))
+        {
+            ApplyIncreaseActionPoints(actionPoints);
+        }
     }
 
     private void ApplyIncreaseDamage(int damage)
@@ -209,5 +230,54 @@ public class CharacterInfo
         });
         Character.ShowMessage($"Tăng {damage} sát thương");
     }
+
+    private void ApplyBlockSkill()
+    {
+        EffectInfo.AddEffect(new EffectData()
+        {
+            Duration = 1,
+            EffectType = EffectType.BlockSkill,
+        });
+    }
+
+    private void ApplyIncreaseMoveRange(int moveRange)
+    {
+        EffectInfo.AddEffect(new ChangeStatEffect()
+        {
+            Value = moveRange,
+            Duration = 1,
+            EffectType = EffectType.IncreaseMoveRange,
+        });
+    }
+
+    private void ApplyIncreaseActionPoints(int actionPoints)
+    {
+        var actionPoint = new List<int>();
+        for (var i = 0; i < actionPoints; i++)
+        {
+            actionPoint.Add(3);
+        }
+        EffectInfo.AddEffect(new ActionPointEffect()
+        {
+            ActionPoints = actionPoint,
+            Duration = 1,
+            EffectType = EffectType.IncreaseActionPoints,
+        });
+    }
+
+    #endregion
+
+    #region Roll
+
+    private readonly Roll _roll;
+    public int BaseDamage => _roll.GetBaseDamage();
+    public HitChangeParams HitChangeParams => _roll.GetHitChange();
+    public int Dodge => _roll.GetDodge();
+
+    public void SetSpeed()
+    {
+        Speed = _roll.GetSpeed();
+    }
+
     #endregion
 }

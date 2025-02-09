@@ -9,4 +9,6 @@ public enum EffectType
     None = 0,
     IncreaseDamage = 1,
     BlockSkill = 2,
+    IncreaseMoveRange = 3,
+    IncreaseActionPoints = 4,
 }

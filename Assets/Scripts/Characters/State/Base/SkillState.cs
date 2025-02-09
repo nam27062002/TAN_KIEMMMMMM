@@ -118,7 +118,7 @@ public class SkillState : CharacterState
         {
             Damage = damageParams.Damage,
             ReducedMana = damageParams.ReducedMana,
-            IncreaseDamage = damageParams.IncreaseDamage,
+            Effects = damageParams.Effects,
             OnSetDamageTakenFinished = HandleTargetFinish,
         };
     }
@@ -182,7 +182,7 @@ public class SkillState : CharacterState
             yield return new WaitForSecondsRealtime(0.1f);
             target.OnDamageTaken(GetDamageParams());
         }
-        else
+        else // self
         {
             Info.OnDamageTaken(GetDamageParams());
             HandleTargetFinish(target);
@@ -194,6 +194,11 @@ public class SkillState : CharacterState
         TargetCharacters.Remove(character);
         _waitForFeedback.Remove(character);
         if (TargetCharacters.Count != 0) return;
+        HandleAllTargetFinish();
+    }
+
+    protected virtual void HandleAllTargetFinish()
+    {
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
     }

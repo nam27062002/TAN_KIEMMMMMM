@@ -165,7 +165,7 @@ public class UI_Ingame : MenuBase
          {
              skillUI[i].SetSkill(index: i + 1, 
                  skillIcon: characterParams.Skills[i].icon, 
-                 unlock: !characterParams.Character.CharacterInfo.LockSkill, 
+                 unlock: !characterParams.Character.CharacterInfo.IsLockSkill, 
                  enoughMana: characterParams.Character.CharacterInfo.CanCastSkill(characterParams.Skills[i]),
                  type: characterParams.Character.Type);
          }
@@ -179,7 +179,7 @@ public class UI_Ingame : MenuBase
          characterParams.Character.CharacterInfo.OnMpChanged += OnMpChanged;
          OnHpChanged(null);
          OnMpChanged(null);
-         actionPointUI.SetActionPoints(characterParams.Character.CharacterInfo.ActionPoints);
+         actionPointUI.SetActionPoints(characterParams.Character.CharacterInfo.GetActionPoints());
          SetRound();
      }
     
@@ -224,7 +224,7 @@ public class UI_Ingame : MenuBase
          roundIndex.text = $"Vòng " + GameplayManager.Instance.CurrentRound;
      }
      
-     public void SetLevelName()
+     private void SetLevelName()
      {
          levelName.text = GameplayManager.LevelConfig.levelName;
      }

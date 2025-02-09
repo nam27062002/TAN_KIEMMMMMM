@@ -27,7 +27,10 @@ public class LyVoDanh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp}*10% = {increaseDamage}");
         return new DamageTakenParams
         {
-            IncreaseDamage = increaseDamage,
+            Effects = new Dictionary<EffectType, int>()
+            {
+                {EffectType.IncreaseDamage, increaseDamage },
+            },
         };
     }
     //=====================SKILL 4=====================================

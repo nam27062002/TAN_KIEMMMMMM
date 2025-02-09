@@ -12,7 +12,7 @@ public abstract class AICharacter : Character
             new IdleState(this),
             new AIMoveState(this),
             new DamageTakenState(this),
-            new SkillState(this));
+            new AISkillState(this));
     }
     
     public override void SetMainCharacter()
@@ -60,7 +60,7 @@ public abstract class AICharacter : Character
                  if (enemiesInRange.Count > 0)
                  {
                      _enemy = enemiesInRange[0];
-                     // GameplayManager.Instance.HandleCastSkill(_enemy, skills[i]);
+                     HandleCastSkill(skills[i], new List<Character> {_enemy});
                      AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {skills[i].name}");
                      return true;
                  }

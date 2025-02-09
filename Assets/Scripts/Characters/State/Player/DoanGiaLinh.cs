@@ -19,5 +19,7 @@
         {
             base.SetSpeed();
         }
+        
+        CharacterInfo.Speed = 60;
     }  
 }
