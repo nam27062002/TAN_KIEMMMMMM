@@ -133,11 +133,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
-    private void SetSelectedCharacter(Character character)
+    private void SetSelectedCharacter(Character character, IdleStateParams idleParams = null)
     {
         SelectedCharacter?.OnUnSelected();
         SelectedCharacter = character;
-        character.OnSelected();
+        SelectedCharacter.SetSelectedCharacter(idleParams);
         UpdateCharacterInfo();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
@@ -145,7 +145,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void SetCharacterReact(Character character, DamageTakenParams damageTakenParams)
     {
         _reactTarget = SelectedCharacter;
-        SetSelectedCharacter(character);
+        SetSelectedCharacter(character, new IdleStateParams
+        {
+            DamageTakenParams = damageTakenParams,
+        });
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetCharacterReact: {character.characterConfig.characterName}");
     }
 
@@ -342,11 +345,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 // Invoke(nameof(OnLose), 1f);
             }
         }
-    }
-    
-    private void OnEndReact()
-    {
-        HandleEndTurn(true);
     }
     
     public List<Character> GetEnemiesInRange(Character character, int range)

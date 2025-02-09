@@ -76,12 +76,12 @@ public abstract class Character : MonoBehaviour
 
     #region Set States
     
-    private void SetIdle()
+    private void SetIdle(IdleStateParams idleStateParams = null)
     {
-        ChangeState(ECharacterState.Idle);
+        ChangeState(ECharacterState.Idle, idleStateParams);
     }
 
-    public void SetSkill(SkillStateParams skillStateParams)
+    private void SetSkill(SkillStateParams skillStateParams)
     {
         ChangeState(ECharacterState.Skill, skillStateParams);
     }
@@ -208,6 +208,12 @@ public abstract class Character : MonoBehaviour
     #endregion
     
     #region Sub
+
+    public void SetSelectedCharacter(IdleStateParams idleStateParams = null)
+    {
+        OnSelected();
+        SetIdle(idleStateParams);
+    }
     
     public void SetCell(Cell cell)
     {
