@@ -9,4 +9,5 @@ public class DamageTakenParams : StateParams
     public Dictionary<EffectType, int> Effects = new();
     public Action<Character> OnSetDamageTakenFinished;
     public Character ReceiveFromCharacter;
+    public bool CanCounter = true;
 }

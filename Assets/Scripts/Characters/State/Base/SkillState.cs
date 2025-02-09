@@ -56,7 +56,6 @@ public class SkillState : CharacterState
         if (stateParams is not SkillStateParams skillStateParams) return;
         _skillStateParams = skillStateParams;
         
-        // check xem có counter trước không
         if (_skillStateParams.IdleStateParams != null)
         {
             Character.HandleCounterLogic(_skillStateParams);
@@ -130,6 +129,7 @@ public class SkillState : CharacterState
             Effects = damageParams.Effects,
             OnSetDamageTakenFinished = HandleTargetFinish,
             ReceiveFromCharacter = Character,
+            CanCounter = true,
         };
     }
     
@@ -168,6 +168,8 @@ public class SkillState : CharacterState
                         {
                             CanDodge = true,
                             ReceiveFromCharacter = Character,
+                            CanCounter = true,
+                            OnSetDamageTakenFinished = HandleTargetFinish,
                         }));
                     _waitForFeedback = true;
                 }

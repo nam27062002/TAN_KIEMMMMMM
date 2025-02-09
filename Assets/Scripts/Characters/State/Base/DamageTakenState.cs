@@ -24,14 +24,13 @@
         {
             Character.ShowMessage("Né");
         }
-        if (CanCounter)
+        if (CanCounter && _damageTakenParams.CanCounter)
         {
             HandleCounter();
         }
         else
         {
             OnDamageTaken();
-            PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
         }
     }
 
@@ -58,13 +57,14 @@
     
     private void OnDamageTaken()
     {
-        Info.OnDamageTaken(_damageTakenParams);
+        Character.OnDamageTaken(_damageTakenParams);
+        PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
     }
     
     protected virtual void SetDamageTakenFinished()
     {
-        Character.ChangeState(ECharacterState.Idle);
         _damageTakenParams.OnSetDamageTakenFinished?.Invoke(Character);
+        Character.ChangeState(ECharacterState.Idle);
         AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} set DamageTakenFinished");
     }
     

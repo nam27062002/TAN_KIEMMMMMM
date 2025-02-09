@@ -103,13 +103,14 @@ public abstract class Character : MonoBehaviour
 
     public void HandleCounterLogic(SkillStateParams skillStateParams)
     {
-        SetIdle();
-        OnDamageTaken(skillStateParams.IdleStateParams.DamageTakenParams);
+        HandleCounterLogic();
     }
 
     private void HandleCounterLogic()
     {
         SetIdle();
+        var damageTakenParams = GetIdleStateParams().DamageTakenParams;
+        damageTakenParams.CanCounter = false;
         OnDamageTaken(GetIdleStateParams().DamageTakenParams);
     }
     
