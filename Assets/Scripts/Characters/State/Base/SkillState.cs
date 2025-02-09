@@ -46,7 +46,7 @@ public class SkillState : CharacterState
     private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
     protected SkillStateParams SkillStateParams;
     protected readonly List<Character> TargetCharacters = new();
-    private readonly HashSet<Character> _waitForFeedback = new();
+    private bool _waitForFeedback = false;
 
     public override void OnEnter(StateParams stateParams = null)
     {
@@ -153,38 +153,33 @@ public class SkillState : CharacterState
                 
                 if (hitChangeParams.HitChangeValue <= dodge)
                 {
-                    HandleDodgeDamageSuccess(target);
+                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, new DamageTakenParams{CanDodge = true}));
+                    _waitForFeedback = true;
                 }
                 else
                 {
-                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target));
-                    _waitForFeedback.Add(target);
+                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams()));
+                    _waitForFeedback = true;
                 }
             }
             else // Buff cho bản thân hoặc đồng đội
             {
-                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target));
+                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams()));
             }
         }
     }
-
-    private void HandleDodgeDamageSuccess(Character target)
-    {
-        target.ShowMessage("Né");
-        HandleTargetFinish(target);
-    }
-
-    private IEnumerator HandleApplyDamage(Character target)
+    
+    private IEnumerator HandleApplyDamage(Character target, DamageTakenParams damageTakenParams)
     {
         if (target != Character)
         {
-            yield return new WaitUntil(() => !_waitForFeedback.Contains(target));
+            yield return new WaitUntil(() => !_waitForFeedback);
             yield return new WaitForSecondsRealtime(0.1f);
-            target.OnDamageTaken(GetDamageParams());
+            target.OnDamageTaken(damageTakenParams);
         }
         else // self
         {
-            Info.OnDamageTaken(GetDamageParams());
+            Info.OnDamageTaken(damageTakenParams);
             HandleTargetFinish(target);
         }
     }
@@ -192,7 +187,7 @@ public class SkillState : CharacterState
     private void HandleTargetFinish(Character character)
     {
         TargetCharacters.Remove(character);
-        _waitForFeedback.Remove(character);
+        _waitForFeedback = false;
         if (TargetCharacters.Count != 0) return;
         HandleAllTargetFinish();
     }

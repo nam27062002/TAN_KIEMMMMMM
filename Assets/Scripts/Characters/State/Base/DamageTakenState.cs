@@ -7,16 +7,55 @@
     public override string NameState { get; set; } = "Damage Taken";
     private DamageTakenParams _damageTakenParams;
 
+    protected virtual bool CanCounter => false;
+
     public override void OnEnter(StateParams stateParams = null)
     {
         base.OnEnter(stateParams);
         _damageTakenParams = (DamageTakenParams)stateParams;
         if (stateParams is not DamageTakenParams damageTakenParams) return;
         _damageTakenParams = damageTakenParams;
-        OnDamageTaken();
-        PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished);
+        HandleDamageTaken();
     }
 
+    private void HandleDamageTaken()
+    {
+        if (_damageTakenParams.CanDodge)
+        {
+            Character.ShowMessage("Né");
+        }
+        if (CanCounter)
+        {
+            HandleCounter();
+        }
+        else
+        {
+            OnDamageTaken();
+            PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
+        }
+    }
+
+    private void HandleCounter()
+    {
+        UIManager.Instance.OpenPopup(PopupType.React, new ReactPopupParameters()
+        {
+            OnConfirm = OnConFirmReact,
+            OnCancel = OnCancelReact,
+        });
+    }
+
+    public void OnConFirmReact()
+    {
+        // SetCharacterReact(_focusedCharacter);
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"OnConFirmClick");
+    }
+
+    public void OnCancelReact()
+    {
+        // OnEndReact();
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
+    }
+    
     private void OnDamageTaken()
     {
         Info.OnDamageTaken(_damageTakenParams);

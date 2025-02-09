@@ -355,20 +355,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return characters.Where(c => c.Type != character.Type).ToList();
     }
     
-    public void OnConFirmReact()
-    {
-        SetCharacterReact(_focusedCharacter);
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"OnConFirmClick");
-    }
-
-    public void OnCancelReact()
-    {
-        OnEndReact();
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
-    }
-    
-
-
     #endregion
     
     #region Tutorial

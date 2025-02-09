@@ -39,7 +39,7 @@ public class AlkawaDebug
         ELogCategory.MAP,
         ELogCategory.ENGINE,
         ELogCategory.AI,
-        ELogCategory.GAMEPLAY,
+        // ELogCategory.GAMEPLAY,
     };
     
     static AlkawaDebug()

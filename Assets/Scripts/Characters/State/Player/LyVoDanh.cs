@@ -5,7 +5,7 @@
         StateMachine = new CharacterStateMachine(this,
             new IdleState(this),
             new LyVoDanh_MoveState(this),
-            new DamageTakenState(this),
+            new PlayerDamageTakenState(this),
             new LyVoDanh_SkillState(this));
     }
 
