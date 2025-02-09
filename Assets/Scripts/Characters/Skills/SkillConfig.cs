@@ -5,9 +5,9 @@ using Sirenix.OdinInspector;
 [Serializable]
 public class SkillConfig
 {
-    [TabGroup("Internal Skill")] public List<SkillInfo> internalSkill = new();
-    [TabGroup("Movement Skill")] public List<SkillInfo> movementSkill = new();
-    [TabGroup("Combat Skill")] public List<SkillInfo> combatSkill = new();
+    [TabGroup("My Turn Skill")] public List<SkillInfo> internalSkill = new();
+    [TabGroup("Teammate Skill")] public List<SkillInfo> movementSkill = new();
+    [TabGroup("Enemy Skill")] public List<SkillInfo> combatSkill = new();
 
     public Dictionary<SkillTurnType, List<SkillInfo>> SkillConfigs = new();
 
