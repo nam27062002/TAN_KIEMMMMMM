@@ -52,7 +52,7 @@ public class CharacterInfo
     public Character Character { get; set; }
 
     //
-    public void HandleHpChanged(int value)
+    private void HandleHpChanged(int value)
     {
         if (value == 0) return;
         CurrentHp += value;
@@ -63,7 +63,7 @@ public class CharacterInfo
         }
         else
         {
-            Character.ShowMessage(value.ToString());
+            Character.ShowMessage($"{-value}");
             OnHpChanged?.Invoke(this, value);
         }
     }

@@ -283,7 +283,7 @@ public abstract class Character : MonoBehaviour
         hpBar.gameObject.SetActiveIfNeeded(false);
     }
     
-    public virtual void OnSelected()
+    protected virtual void OnSelected()
     {
         CharacterInfo.Cell.ShowFocus();
     }
