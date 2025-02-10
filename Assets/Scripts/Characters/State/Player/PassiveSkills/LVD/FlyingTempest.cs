@@ -16,7 +16,7 @@ public class FlyingTempest : PassiveSkill
     public override void UnregisterEvents()
     {
         base.UnregisterEvents();
-        character.CharacterInfo.OnMoveAmount -= OnMoveAmount;
+        if (character.CharacterInfo != null) character.CharacterInfo.OnMoveAmount -= OnMoveAmount;
     }
 
     private void OnMoveAmount(object sender, int moveAmount)

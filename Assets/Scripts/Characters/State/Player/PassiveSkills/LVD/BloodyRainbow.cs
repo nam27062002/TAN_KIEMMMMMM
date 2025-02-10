@@ -43,8 +43,11 @@ public class BloodyRainbow : PassiveSkill
     public override void UnregisterEvents()
     {
         base.UnregisterEvents();
-        character.CharacterInfo.OnHpChanged -= OnHpChanged;
-        character.CharacterInfo.OnMpChanged -= OnMPChanged;
+        if (character.CharacterInfo != null)
+        {
+            character.CharacterInfo.OnHpChanged -= OnHpChanged;
+            character.CharacterInfo.OnMpChanged -= OnMPChanged;
+        }
     }
 
     private void OnHpChanged(object sender, int value)
