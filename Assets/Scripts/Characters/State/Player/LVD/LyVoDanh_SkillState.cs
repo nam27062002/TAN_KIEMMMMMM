@@ -12,7 +12,7 @@ public class LyVoDanh_SkillState : SkillState
     {
         var baseDamage = GetBaseDamage();
         var skillDamage = (int)(Roll.RollDice(1,6, 3) * 1.5f);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * 1d6 + 3 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * (1d6 + 3) = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Vấn Truy Lưu: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");

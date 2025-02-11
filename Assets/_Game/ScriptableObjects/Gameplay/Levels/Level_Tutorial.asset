@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_Tutorial
   m_EditorClassIdentifier: 
   levelName: "M\xE0n h\u01B0\u1EDBng d\u1EABn"
-  levelType: 1
+  levelType: 0
   spawnerConfig:
     spawnPoints:
       m_keys: 000000000100000002000000

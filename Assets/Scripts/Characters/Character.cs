@@ -117,8 +117,8 @@ public abstract class Character : MonoBehaviour
         {
             damageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
         }
-
-        if (_skillStateParams.SkillInfo.canBlockDamage)
+        
+        if (_skillStateParams != null && _skillStateParams.SkillInfo.canBlockDamage)
         {
             damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams
             {
@@ -390,6 +390,10 @@ public abstract class Character : MonoBehaviour
         var index = GpManager.Characters.IndexOf(this);
         ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
         GpManager.HandleCharacterDie(this);
+        if (IsMainCharacter)
+        {
+            GpManager.HandleEndTurn();
+        }
         Destroy(gameObject);
     }
 

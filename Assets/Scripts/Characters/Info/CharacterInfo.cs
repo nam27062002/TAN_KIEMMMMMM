@@ -198,7 +198,7 @@ public class CharacterInfo
             {
                 for (int i = 0; i < actionPointEffect.ActionPoints.Count; i++)
                 {
-                    if (ActionPoints[i] <= point && ActionPoints[i] != 3) continue;
+                    if (ActionPoints[i] != 3) continue;
                     actionPointEffect.ActionPoints[i] -= point;
                     return;
                 }
@@ -207,7 +207,7 @@ public class CharacterInfo
         
         for (var i = 0; i < ActionPoints.Count; i++)
         {
-            if (ActionPoints[i] <= point && ActionPoints[i] != 3) continue;
+            if (ActionPoints[i] != 3) continue;
             ActionPoints[i] -= point;
             return;
         }

@@ -102,7 +102,7 @@ MonoBehaviour:
       maxMoveRange: 5
       health: 40
       mana: 24
-      atk: 1200
+      atk: 12
       def: 12
       chiDef: 12
       spd: 8
