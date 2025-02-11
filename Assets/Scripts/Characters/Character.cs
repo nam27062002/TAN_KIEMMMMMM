@@ -386,6 +386,7 @@ public abstract class Character : MonoBehaviour
 
     public void OnDie()
     {
+        Debug.Log("NT - On Die");
         CharacterInfo.Cell.CellType = CellType.Walkable;
         var index = GpManager.Characters.IndexOf(this);
         ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);

@@ -36,6 +36,8 @@ public class CharacterInfo
     public int CurrentMp { get; set; }
     public int MoveAmount { get; set; }
 
+    public bool IsDie => CurrentHp <= 0;
+
     private List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
 
     // Buff & Debuff
@@ -59,7 +61,7 @@ public class CharacterInfo
         if (damage == 0) return;
         CurrentHp += damage;
         CurrentHp = math.max(0, CurrentHp);
-        if (CurrentHp <= 0)
+        if (IsDie)
         {
             damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
             {
@@ -80,7 +82,7 @@ public class CharacterInfo
         if (damage == 0) return;
         CurrentHp += damage;
         CurrentHp = math.max(0, CurrentHp);
-        if (CurrentHp <= 0)
+        if (IsDie)
         {
             Character.OnDie();
         }
@@ -338,7 +340,7 @@ public class CharacterInfo
             EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.BloodSealEffect);
             var hpDecreased = Attributes.health - CurrentHp;
             var damage = hpDecreased / 10;
-            HandleHpChanged(-damage);
+            if (CurrentHp > 0) HandleHpChanged(-damage);
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
         }
     }

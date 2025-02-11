@@ -7,6 +7,43 @@ public class LyVoDanh_SkillState : SkillState
     }
 
     #region Skill
+    
+    //=====================SKILL 1=====================================
+    protected override DamageTakenParams GetDamageParams_Skill1_MyTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage(),
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.BloodSealEffect , 1}
+            }
+        };
+    }
+
+    protected override DamageTakenParams GetDamageParams_Skill1_TeammateTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage(),
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.BloodSealEffect , 1}
+            }
+        };
+    }
+
+    protected override DamageTakenParams GetDamageParams_Skill1_EnemyTurn()
+    {
+        return new DamageTakenParams
+        {
+            Damage = GetBaseDamage(),
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.BloodSealEffect , 1}
+            }
+        };
+    }
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn()
     {
@@ -132,6 +169,10 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = baseDamage,
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.BreakBloodSealDamage , 1}
+            }
         };
     }
     

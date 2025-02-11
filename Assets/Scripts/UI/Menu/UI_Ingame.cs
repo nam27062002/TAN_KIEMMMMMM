@@ -152,6 +152,7 @@ public class UI_Ingame : MenuBase
     
     private void SetCharacterFocus(ShowInfoCharacterParameters characterParams)
      {
+         if (characterParams.Character == null) return;
          SetObjectActiveWhenCharacterFocus();
          _characterParams = characterParams;
          
@@ -203,6 +204,7 @@ public class UI_Ingame : MenuBase
      {
          _avtSpdUI[index].DestroyObject();
          _avtSpdUI.RemoveAt(index);   
+         Debug.Log($"NT - OnCharacterDeath: {index}");
      }
     
     private void OnHpChanged(object sender, int _ = 0)

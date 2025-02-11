@@ -202,7 +202,18 @@ public class SkillState : CharacterState
         {
             yield return new WaitUntil(() => !_waitForFeedback);
             yield return new WaitForSecondsRealtime(0.1f);
-            target.OnDamageTaken(damageTakenParams);
+            if (!target.CharacterInfo.IsDie)
+            {
+                target.OnDamageTaken(damageTakenParams);
+            }
+            else
+            {
+                damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
+                {
+                    Character = target,
+                    WaitForCounter = false,
+                });
+            }
         }
         else // self
         {

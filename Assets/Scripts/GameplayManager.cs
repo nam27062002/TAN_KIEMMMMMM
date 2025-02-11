@@ -6,12 +6,16 @@ using UnityEngine;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
-    [Title("Scriptable Objects")] [SerializeField] private LevelConfig levelConfig;
+    [Title("Scriptable Objects")] [SerializeField]
+    private LevelConfig levelConfig;
 
-    [Title("Characters")] [SerializeField] private SerializableDictionary<CharacterType, Character> allCharacter = new();
+    [Title("Characters")] [SerializeField]
+    private SerializableDictionary<CharacterType, Character> allCharacter = new();
 
     [Title("Tutorials")] [SerializeField] private GameObject tutorialPrefab;
+
     public bool IsTutorialLevel { get; set; }
+
     /*--------------------events-------------------------*/
     public event EventHandler OnLoadCharacterFinished;
     public event EventHandler<ShowInfoCharacterParameters> OnUpdateCharacterInfo;
@@ -19,11 +23,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler OnNewRound;
 
     /*---------------------------------------------------*/
-    public MapManager MapManager {get; private set;}
+    public MapManager MapManager { get; private set; }
     private readonly List<Character> _players = new();
     private readonly List<Character> _enemies = new();
     public List<Character> Characters { get; private set; } = new();
-    public Character MainCharacter => Characters[CurrentPlayerIndex];
+    public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? null : Characters[CurrentPlayerIndex];
+
     public Character SelectedCharacter { get; set; }
     private Character _focusedCharacter;
     private Character _reactTarget;
@@ -50,7 +55,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     protected override void UnRegisterEvents()
     {
         base.UnRegisterEvents();
-        if(MapManager) MapManager.OnLoadMapFinished -= OnLoadMapFinished;
+        if (MapManager) MapManager.OnLoadMapFinished -= OnLoadMapFinished;
     }
 
     #region Main
@@ -106,7 +111,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HandleNewRound();
         ShowLevelName();
     }
-    
+
     public void SetMainCharacter()
     {
         Debug.Log("======================================================================");
@@ -120,16 +125,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
         else
         {
-             if (MainCharacter.CharacterInfo.CurrentHp <= 0)
-             {
-                 HandleEndTurn();
-             }
-             else
-             {
-                 MainCharacter.SetMainCharacter();
-                 SetSelectedCharacter(MainCharacter);
-                 OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
-             }
+            if (MainCharacter == null || MainCharacter.CharacterInfo.IsDie)
+            {
+                HandleEndTurn();
+            }
+            else
+            {
+                MainCharacter.SetMainCharacter();
+                SetSelectedCharacter(MainCharacter);
+                OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 
@@ -165,7 +170,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 break;
         }
     }
-    
+
     public void HandleEndTurn(bool force = false)
     {
         if (!_canInteract && !force) return;
@@ -176,13 +181,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         else
         {
             if (SelectedCharacter)
-                MainCharacter.CharacterInfo.ResetBuffAfter();
+                MainCharacter?.CharacterInfo.ResetBuffAfter();
             CurrentPlayerIndex++;
             if (CurrentPlayerIndex >= Characters.Count)
             {
                 CurrentPlayerIndex = 0;
                 HandleNewRound();
             }
+
             SetMainCharacter();
         }
     }
@@ -227,23 +233,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     #endregion
 
     #region Sub
-    
+
     public void ShowLevelName()
     {
         OnLoadCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
-    
+
     public Character GetCharacterByType(CharacterType characterType)
     {
         return Characters.FirstOrDefault(character => character.characterType == characterType);
     }
-    
+
     private void HandleNewRound()
     {
         CurrentRound++;
         OnNewRound?.Invoke(this, EventArgs.Empty);
     }
-    
+
     public void SetInteract(bool active)
     {
         _canInteract = active;
@@ -254,7 +260,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         Characters = Characters.OrderByDescending(c => c.CharacterInfo.Speed).ToList();
     }
-    
+
     public void DestroyGameplay()
     {
         ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
@@ -306,6 +312,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public SkillTurnType GetSkillTurnType(Character character)
     {
+        if (MainCharacter == null) return SkillTurnType.MyTurn;
         if (character == MainCharacter) return SkillTurnType.MyTurn;
         return character.Type == MainCharacter.Type ? SkillTurnType.TeammateTurn : SkillTurnType.EnemyTurn;
     }
@@ -324,7 +331,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         OnUpdateCharacterInfo?.Invoke(this, GetSelectedCharacterParams());
     }
-    
+
     #endregion
 
     #region Skills
@@ -333,11 +340,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         SelectedCharacter.HandleSelectSkill(skillIndex);
     }
-    
+
     public void HandleCharacterDie(Character character)
     {
         Characters.Remove(character);
-        if (character is AICharacter)
+        if (character.Type == Type.AI)
         {
             _enemies.Remove(character);
             if (_enemies.Count == 0)
@@ -347,22 +354,22 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
         else
         {
-            _enemies.Remove(character);
-            if (_enemies.Count == 0)
+            _players.Remove(character);
+            if (_players.Count == 0)
             {
                 // Invoke(nameof(OnLose), 1f);
             }
         }
     }
-    
+
     public List<Character> GetEnemiesInRange(Character character, int range)
     {
         var characters = MapManager.GetCharacterInRange(character.CharacterInfo.Cell, range);
         return characters.Where(c => c.Type != character.Type).ToList();
     }
-    
+
     #endregion
-    
+
     #region Tutorial
 
     private void SetupTutorial()
@@ -373,21 +380,22 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             tutorialPrefab.SetActive(true);
         }
     }
-    
+
     public void HandleEndSecondConversation()
     {
         ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
         ShowAllHpBar();
         SetMainCharacter();
     }
-    
+
     private void ShowAllHpBar()
-    { 
-         foreach (var character in Characters)
-         {
-             character.ShowHpBar();
-         }
+    {
+        foreach (var character in Characters)
+        {
+            character.ShowHpBar();
+        }
     }
+
     #endregion
 }
 
