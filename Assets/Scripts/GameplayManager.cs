@@ -109,6 +109,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     
     public void SetMainCharacter()
     {
+        Debug.Log("======================================================================");
         if (TutorialManager.Instance != null
             && CurrentRound == 2
             && MainCharacter == Characters[0]

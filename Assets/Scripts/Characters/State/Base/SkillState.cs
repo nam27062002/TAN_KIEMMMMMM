@@ -161,7 +161,7 @@ public class SkillState : CharacterState
                 {
                     var hitChangeParams = GetHitChangeParams();
                     var dodge = target.CharacterInfo.Dodge;
-                    AlkawaDebug.Log(ELogCategory.CONSOLE,
+                    AlkawaDebug.Log(ELogCategory.SKILL,
                         $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
                 
                     if (hitChangeParams.HitChangeValue <= dodge)

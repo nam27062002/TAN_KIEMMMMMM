@@ -59,7 +59,6 @@ public abstract class Character : MonoBehaviour
 
     public virtual void SetMainCharacter()
     {
-        CharacterInfo.HandleIncreaseValueActionPoints();
         CharacterInfo.ResetBuffBefore();
     }
 
@@ -118,10 +117,24 @@ public abstract class Character : MonoBehaviour
         {
             damageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
         }
-        OnDamageTaken(damageTakenParams); 
+
+        if (_skillStateParams.SkillInfo.canBlockDamage)
+        {
+            damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams
+            {
+                Character = this,
+                WaitForCounter = true,
+            });
+            ShowMessage("Chặn sát thương");
+        }
+        else
+        {
+            OnDamageTaken(damageTakenParams); 
+        }
+        
     }
 
-    private void OnDamageTakenCounterFinished(FinishApplySkillParams finishApplySkillParams)
+    private void OnDamageTakenCounterFinished(FinishApplySkillParams _)
     {
         _skillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
         CoroutineDispatcher.Invoke(HandleCounter, 1f);

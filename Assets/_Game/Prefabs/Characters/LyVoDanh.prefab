@@ -102,7 +102,7 @@ MonoBehaviour:
       maxMoveRange: 5
       health: 40
       mana: 24
-      atk: 12
+      atk: 1200
       def: 12
       chiDef: 12
       spd: 8
@@ -127,6 +127,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: f8c6300edbc219b4099992fb8366474e, type: 3}
@@ -136,6 +137,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "V\u1EA5n truy l\u01B0u (Questioning the Monks in Black): g\xE2y
         1,5*s\xE1t th\u01B0\u01A1ng c\u01A1 b\u1EA3n c\u1EE7a v\xF5 k\u1EF9. \u0110\u1ED3ng
@@ -148,6 +150,7 @@ MonoBehaviour:
       range: 0
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 1
       description: "Nh\u1EA5t Giang Y\xEAn Tr\xFAc (By the Misty Bamboo Riverside):
         u\u1ED1ng r\u01B0\u1EE3u m\u1EA1nh V\xE2n Thi\xEAu, t\u0103ng s\xE1t th\u01B0\u01A1ng
@@ -160,6 +163,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 1
+      canBlockDamage: 0
       damageType: 4
       description: "Th\u1EA5t Ca ng\xE2m (The Seven songs): hai nh\xE1t ch\xE9m g\xE2y
         \u201Cch\u1EA3y m\xE1u\u201D. (apply debuff 8)"
@@ -171,6 +175,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: 66c1d166a644d474aa81ba1e38e8b0ff, type: 3}
@@ -180,6 +185,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "Hu\u1EC1 h\u1ED3 vi\u1EC5n du (A Drunkard wanders toward the
         Monastery): g\xE2y cho\xE1ng, \u0111\u1ED3ng th\u1EDDi t\u0103ng t\u1EC9
@@ -192,6 +198,7 @@ MonoBehaviour:
       range: 0
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 1
       description: "Li\xEAn V\u1EA5n (Face redder than a Lotus): u\u1ED1ng c\u1EA3
         hai lo\u1EA1i r\u01B0\u1EE3u pha v\xE0o nhau, t\u0103ng m\u1EA1nh kh\u1EA3
@@ -206,6 +213,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 1
+      canBlockDamage: 0
       damageType: 4
       description: "B\u1EA5t th\xE0nh danh (Not Anybody Important): hai nh\xE1t ch\xE9m
         ch\u1EA5n \u0111\u1ED9ng ph\u1EE7 t\u1EA1ng, v\xF4 hi\u1EC7u h\xF3a ph\xF2ng
@@ -219,6 +227,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: f1127bb72f6e3fe44ad3741940e4a4cb, type: 3}
@@ -228,6 +237,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 1
       damageType: 4
       description: "S\u1EA1 b\u1EA5t ki\u1EBFn (Sudden Spell of Dizziness): ch\u1EB7n
         s\xE1t th\u01B0\u01A1ng t\u1EEB k\u1EBB th\xF9, \u0111\u1ED3ng th\u1EDDi
@@ -240,6 +250,7 @@ MonoBehaviour:
       range: 0
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 1
       description: "M\xEDnh \u0110\xEDnh Quy Lai (Walking Home Drunk): u\u1ED1ng
         r\u01B0\u1EE3u nh\u1EB9 M\xF4ng V\u0169, gia t\u0103ng kh\u1EA3 n\u0103ng
@@ -251,11 +262,13 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 1
+      canBlockDamage: 0
       damageType: 4
       description: "\u0110\u1EA1p thi\xEAn nhai (Sorrowful Journey): hai nh\xE1t
         ch\xE9m \u0111\xE1nh ng\xE3 \u0111\u1ED1i th\u1EE7. (apply debuff 9)"
   passiveSkills:
   - {fileID: 1068771806723808600}
+  - {fileID: 2363098181572934608}
 --- !u!114 &1068771806723808600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,6 +291,7 @@ MonoBehaviour:
     range: 1
     isDirectionalSkill: 0
     canOverrideSetTargetCharacters: 0
+    canBlockDamage: 0
     damageType: 4
     description: 
 --- !u!114 &2363098181572934608

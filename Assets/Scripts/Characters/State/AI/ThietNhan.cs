@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ThietNhan : AICharacter
 {
@@ -13,4 +14,15 @@ public class ThietNhan : AICharacter
             base.SetSpeed();
         }
     }
+    
+#if UNITY_EDITOR
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P) && CharacterInfo.Cell.CellPosition == new Vector2Int(6,8))
+        {
+            OnDie();
+        }
+    }
+#endif
 }

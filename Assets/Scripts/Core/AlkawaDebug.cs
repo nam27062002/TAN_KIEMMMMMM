@@ -3,7 +3,6 @@
 #endif
 using System.Diagnostics;
 using System.Collections.Generic;
-using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
@@ -16,7 +15,8 @@ public enum ELogCategory
     MAP,
     ENGINE,
     AI,
-    CONSOLE,
+    SKILL,
+    EFFECT,
     GAMEPLAY,
 }
 
@@ -29,12 +29,12 @@ public enum ELogSeverity
 
 public class AlkawaDebug
 {
-    private static readonly Dictionary<ELogCategory, string> CategoryColors = new Dictionary<ELogCategory, string>();
-    private static readonly HashSet<ELogCategory> IgnoredCategories = new HashSet<ELogCategory>()
+    private static readonly Dictionary<ELogCategory, string> CategoryColors = new();
+    private static readonly HashSet<ELogCategory> IgnoredCategories = new()
     {
         ELogCategory.NONE,
         ELogCategory.UI,
-        // ELogCategory.CHARACTER,
+        ELogCategory.CHARACTER,
         ELogCategory.ANIMATION,
         ELogCategory.MAP,
         ELogCategory.ENGINE,
@@ -46,12 +46,13 @@ public class AlkawaDebug
     {
         CategoryColors[ELogCategory.UI] = "#2196F3";        
         CategoryColors[ELogCategory.CHARACTER] = "#4CAF50";    
-        CategoryColors[ELogCategory.ANIMATION] = "#9C27B0"; 
-        CategoryColors[ELogCategory.MAP] = "#FF9800"; 
+        CategoryColors[ELogCategory.ANIMATION] = "#E9E9E9"; 
+        CategoryColors[ELogCategory.MAP] = "#9C27B0"; 
         CategoryColors[ELogCategory.ENGINE] = "#607D8B";    
         CategoryColors[ELogCategory.AI] = "#FF5722";      
-        CategoryColors[ELogCategory.CONSOLE] = "#E91E63";
+        CategoryColors[ELogCategory.SKILL] = "#E91E63";
         CategoryColors[ELogCategory.GAMEPLAY] = "#FFEB3B";
+        CategoryColors[ELogCategory.EFFECT] = "#FF9800";
     }
 
     [Conditional("USE_DEBUG")]

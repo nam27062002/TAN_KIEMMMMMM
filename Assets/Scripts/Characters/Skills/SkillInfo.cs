@@ -37,7 +37,10 @@ public class SkillInfo
     [LabelWidth(125)]
     [ToggleLeft] 
     public bool canOverrideSetTargetCharacters;
-    
+    [VerticalGroup("Skill Info/Details")]
+    [LabelWidth(125)]
+    [ToggleLeft] 
+    public bool canBlockDamage;
     public DamageTargetType damageType;
     public string description;
 }

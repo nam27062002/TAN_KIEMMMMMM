@@ -11,4 +11,6 @@ public enum EffectType
     BlockSkill = 2,
     IncreaseMoveRange = 3,
     IncreaseActionPoints = 4,
+    BloodSealEffect = 5,
+    BreakBloodSealDamage = 6,
 }

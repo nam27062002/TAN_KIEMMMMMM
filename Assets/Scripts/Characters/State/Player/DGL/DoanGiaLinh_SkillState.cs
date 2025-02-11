@@ -8,14 +8,14 @@ public class DoanGiaLinh_SkillState : SkillState
     
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn()
     {
-        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] Nhiên Huyết");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Nhiên Huyết");
         return new DamageTakenParams
         {
             Effects = new Dictionary<EffectType, int>()
             {
-                // { EffectType.BlockSkill , 0},
-                // { EffectType.IncreaseActionPoints , 1},
-                // { EffectType.IncreaseMoveRange , 2},
+                { EffectType.BlockSkill , 0},
+                { EffectType.IncreaseActionPoints , 1},
+                { EffectType.IncreaseMoveRange , 2},
             }
         };
     }

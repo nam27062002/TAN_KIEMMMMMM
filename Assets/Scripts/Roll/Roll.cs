@@ -17,7 +17,7 @@ public class Roll
     {
         var rollData = _attributes.baseDamageRollData; 
         var baseDamage = RollDice(rollData, _characterInfo.GetCurrentDamage() / 4);
-        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 4} = {baseDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 4} = {baseDamage}");
         return baseDamage;
     }
 
@@ -25,7 +25,7 @@ public class Roll
     {
         var rollData = _attributes.hitChangeRollData; 
         var hitChange = RollDice(_attributes.rollValue, _characterInfo.GetCurrentDamage() / 2);
-        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{_characterName}] Hit Change = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 2} = {hitChange}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Hit Change = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 2} = {hitChange}");
         return new HitChangeParams(){HitChangeValue = hitChange, IsCritical = rollData.rollValue == hitChange};
     }
 

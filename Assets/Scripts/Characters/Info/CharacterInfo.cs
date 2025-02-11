@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using UnityEngine;
 
 public class CharacterInfo
 {
@@ -52,10 +53,32 @@ public class CharacterInfo
     public Character Character { get; set; }
 
     //
-    private void HandleHpChanged(int value)
+    private void HandleHpChanged(DamageTakenParams damageTakenParams)
     {
-        if (value == 0) return;
-        CurrentHp += value;
+        var damage = -damageTakenParams.Damage;
+        if (damage == 0) return;
+        CurrentHp += damage;
+        CurrentHp = math.max(0, CurrentHp);
+        if (CurrentHp <= 0)
+        {
+            damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
+            {
+                Character = Character,
+                WaitForCounter = false,
+            });
+            Character.OnDie();
+        }
+        else
+        {
+            Character.ShowMessage($"{-damage}");
+            OnHpChanged?.Invoke(this, damageTakenParams.Damage);
+        }
+    }
+    
+    private void HandleHpChanged(int damage)
+    {
+        if (damage == 0) return;
+        CurrentHp += damage;
         CurrentHp = math.max(0, CurrentHp);
         if (CurrentHp <= 0)
         {
@@ -63,8 +86,8 @@ public class CharacterInfo
         }
         else
         {
-            Character.ShowMessage($"{-value}");
-            OnHpChanged?.Invoke(this, value);
+            Character.ShowMessage($"{-damage}");
+            OnHpChanged?.Invoke(this, damage);
         }
     }
 
@@ -89,14 +112,28 @@ public class CharacterInfo
 
     public void ResetBuffAfter()
     {
-        ResetActionPoints();
+        foreach (var effect in EffectInfo.Effects.ToList().Where(effect => EffectInfo.TriggerAtEnd.Contains(effect.EffectType)))
+        {
+            effect.Duration--;
+            if (effect.Duration != 0) continue;
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+            EffectInfo.Effects.Remove(effect);
+        }
     }
-
+    
     public void ResetBuffBefore()
     {
         MoveAmount = 0;
+        HandleIncreaseValueActionPoints();
+        foreach (var effect in EffectInfo.Effects.ToList().Where(effect => EffectInfo.TriggerAtStart.Contains(effect.EffectType)))
+        {
+            effect.Duration--;
+            if (effect.Duration != 0) continue;
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+            EffectInfo.Effects.Remove(effect);
+        }
     }
-
+    
     public SkillInfo GetSkillInfo(int index, SkillTurnType skillTurnType)
     {
         return SkillConfig.SkillConfigs[skillTurnType][index];
@@ -122,17 +159,28 @@ public class CharacterInfo
         return actionPoints;
     }
     
-    public void HandleIncreaseValueActionPoints()
+    private void HandleIncreaseValueActionPoints()
     {
         for (int i = 0; i < ActionPoints.Count; i++)
         {
             ActionPoints[i] = Math.Min(ActionPoints[i] + 1, 3);
         }
+        foreach (var effect in EffectInfo.Effects.Where(effect => effect.EffectType == EffectType.IncreaseActionPoints))
+        {
+            if (effect is ActionPointEffect actionPointEffect)
+            {
+                for (int i = 0; i < actionPointEffect.ActionPoints.Count; i++)
+                {
+                    actionPointEffect.ActionPoints[i] = Math.Min(actionPointEffect.ActionPoints[i] + 1, 3);
+                }
+            }
+        }
     }
 
     private bool IsEnoughActionPoints()
     {
-        return ActionPoints.Any(point => point == 3);
+        var actionPoints = GetActionPoints();
+        return actionPoints.Any(point => point == 3);
     }
 
     private int GetActionPoints(SkillTurnType skillTurnType)
@@ -143,27 +191,26 @@ public class CharacterInfo
     public void HandleReduceActionPoints()
     {
         var point = GetActionPoints(Character.GetSkillTurnType());
+        
+        foreach (var effect in EffectInfo.Effects.Where(effect => effect.EffectType == EffectType.IncreaseActionPoints))
+        {
+            if (effect is ActionPointEffect actionPointEffect)
+            {
+                for (int i = 0; i < actionPointEffect.ActionPoints.Count; i++)
+                {
+                    if (ActionPoints[i] <= point && ActionPoints[i] != 3) continue;
+                    actionPointEffect.ActionPoints[i] -= point;
+                    return;
+                }
+            }
+        }
+        
         for (var i = 0; i < ActionPoints.Count; i++)
         {
-            if (ActionPoints[i] <= point) continue;
+            if (ActionPoints[i] <= point && ActionPoints[i] != 3) continue;
             ActionPoints[i] -= point;
-            break;
+            return;
         }
-    }
-
-    private void ResetActionPoints()
-    {
-        while (ActionPoints.Count > 3)
-        {
-            ActionPoints.RemoveAt(ActionPoints.Count - 1);
-        }
-
-        while (ActionPoints.Count < 3)
-        {
-            ActionPoints.Add(3);
-        }
-
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} reset action points");
     }
 
     #endregion
@@ -186,7 +233,7 @@ public class CharacterInfo
 
     public void OnDamageTaken(DamageTakenParams damageTakenParams)
     {
-        HandleHpChanged(-damageTakenParams.Damage);
+        HandleHpChanged(damageTakenParams);
         HandleMpChanged(-damageTakenParams.ReducedMana);
         ApplyEffect(damageTakenParams.Effects);
     }
@@ -212,6 +259,16 @@ public class CharacterInfo
         {
             ApplyIncreaseActionPoints(actionPoints);
         }
+
+        if (effects.TryGetValue(EffectType.BloodSealEffect, out var _))
+        {
+            ApplyBloodSealEffect();
+        }
+
+        if (effects.TryGetValue(EffectType.BreakBloodSealDamage, out var _))
+        {
+            ApplyBloodSealDamage();
+        }
     }
 
     private void ApplyIncreaseDamage(int damage)
@@ -224,6 +281,7 @@ public class CharacterInfo
             EffectType = EffectType.IncreaseDamage,
         });
         Character.ShowMessage($"Tăng {damage} sát thương");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseDamage}");
     }
 
     private void ApplyBlockSkill()
@@ -233,6 +291,7 @@ public class CharacterInfo
             Duration = 1,
             EffectType = EffectType.BlockSkill,
         });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BlockSkill}");
     }
 
     private void ApplyIncreaseMoveRange(int moveRange)
@@ -243,6 +302,8 @@ public class CharacterInfo
             Duration = 1,
             EffectType = EffectType.IncreaseMoveRange,
         });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseMoveRange}");
+
     }
 
     private void ApplyIncreaseActionPoints(int actionPoints)
@@ -258,8 +319,30 @@ public class CharacterInfo
             Duration = 1,
             EffectType = EffectType.IncreaseActionPoints,
         });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseActionPoints}");
     }
 
+    private void ApplyBloodSealEffect()
+    {
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.BloodSealEffect,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BloodSealEffect}");
+    }
+
+    private void ApplyBloodSealDamage()
+    {
+        if (EffectInfo.Effects.Any(p => p.EffectType == EffectType.BloodSealEffect))
+        {
+            EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.BloodSealEffect);
+            var hpDecreased = Attributes.health - CurrentHp;
+            var damage = hpDecreased / 10;
+            HandleHpChanged(-damage);
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
+        }
+    }
+    
     #endregion
 
     #region Roll
