@@ -67,6 +67,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
             var characterComponent = go.GetComponent<Character>();
             charactersDict[character.Key] = characterComponent;
             characterComponent.HideHpBar();
+            go.transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 
@@ -112,6 +113,8 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         charactersDict[CharacterType.DoanGiaLinh].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.ThietNhan].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.ThietNhan].transform.localScale = new Vector3(-1, 1, 1);
+        charactersDict[CharacterType.LyVoDanh].transform.localScale = new Vector3(1, 1, 1);
+        charactersDict[CharacterType.DoanGiaLinh].transform.localScale = new Vector3(1, 1, 1);
     }
 
     private void OnLoadCharacterFinished(object sender, EventArgs e)
@@ -151,7 +154,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         character.AnimationData.PlayAnimation(targetPos.x > transform.position.x
             ? AnimationParameterNameType.MoveRight
             : AnimationParameterNameType.MoveLeft);
-        transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
+        character.transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
     }
 
     private void OnEndFinal()

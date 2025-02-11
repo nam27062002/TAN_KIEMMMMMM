@@ -50,7 +50,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     protected override void UnRegisterEvents()
     {
         base.UnRegisterEvents();
-        MapManager.OnLoadMapFinished -= OnLoadMapFinished;
+        if(MapManager) MapManager.OnLoadMapFinished -= OnLoadMapFinished;
     }
 
     #region Main

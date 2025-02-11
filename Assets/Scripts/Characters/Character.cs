@@ -103,15 +103,35 @@ public abstract class Character : MonoBehaviour
 
     public void HandleCounterLogic(SkillStateParams skillStateParams)
     {
-        HandleCounterLogic();
+        _skillStateParams = skillStateParams;
+        HandleCounterLogic(skillStateParams.IdleStateParams.DamageTakenParams, true);
     }
 
-    private void HandleCounterLogic()
+    private SkillStateParams _skillStateParams;
+    private void HandleCounterLogic(DamageTakenParams damageTaken = null, bool waitCounter = false) // 
     {
         SetIdle();
-        var damageTakenParams = GetIdleStateParams().DamageTakenParams;
+        var damageTakenParams = damageTaken ?? GetIdleStateParams().DamageTakenParams;
         damageTakenParams.CanCounter = false;
-        OnDamageTaken(GetIdleStateParams().DamageTakenParams);
+        damageTakenParams.WaitCounter = waitCounter;
+        if (damageTakenParams.WaitCounter)
+        {
+            damageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
+        }
+        OnDamageTaken(damageTakenParams); 
+    }
+
+    private void OnDamageTakenCounterFinished(FinishApplySkillParams finishApplySkillParams)
+    {
+        _skillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
+        CoroutineDispatcher.Invoke(HandleCounter, 1f);
+    }
+
+    private void HandleCounter()
+    {
+        _skillStateParams.IdleStateParams = null;
+        _skillStateParams.EndTurnAfterFinish = true;
+        SetSkill(_skillStateParams);
     }
     
     #endregion
@@ -217,6 +237,7 @@ public abstract class Character : MonoBehaviour
         }
         return null;
     }
+    
     public SkillTurnType GetSkillTurnType()
     {
         return GpManager.GetSkillTurnType(this);

@@ -47,6 +47,7 @@ public class SkillState : CharacterState
     private SkillStateParams _skillStateParams;
     protected readonly List<Character> TargetCharacters = new();
     private bool _waitForFeedback = false;
+    protected bool WaitForReact = false;
 
     public override void OnEnter(StateParams stateParams = null)
     {
@@ -152,37 +153,46 @@ public class SkillState : CharacterState
 
     private void HandleDodgeDamage()
     {
-        foreach (var target in _skillStateParams.Targets)
+        if (_skillStateParams.Targets.Count > 0)
         {
-            if (Character.Type != target.Type)
+            foreach (var target in _skillStateParams.Targets)
             {
-                var hitChangeParams = GetHitChangeParams();
-                var dodge = target.CharacterInfo.Dodge;
-                AlkawaDebug.Log(ELogCategory.CONSOLE,
-                    $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
+                if (Character.Type != target.Type)
+                {
+                    var hitChangeParams = GetHitChangeParams();
+                    var dodge = target.CharacterInfo.Dodge;
+                    AlkawaDebug.Log(ELogCategory.CONSOLE,
+                        $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
                 
-                if (hitChangeParams.HitChangeValue <= dodge)
-                {
-                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, 
-                        new DamageTakenParams
-                        {
-                            CanDodge = true,
-                            ReceiveFromCharacter = Character,
-                            CanCounter = true,
-                            OnSetDamageTakenFinished = HandleTargetFinish,
-                        }));
-                    _waitForFeedback = true;
+                    if (hitChangeParams.HitChangeValue <= dodge)
+                    {
+                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, 
+                            new DamageTakenParams
+                            {
+                                CanDodge = true,
+                                ReceiveFromCharacter = Character,
+                                CanCounter = true,
+                                OnSetDamageTakenFinished = HandleTargetFinish,
+                            }));
+                        _waitForFeedback = true;
+                    }
+                    else
+                    {
+                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams()));
+                        _waitForFeedback = true;
+                    }
                 }
-                else
-                {
-                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams()));
-                    _waitForFeedback = true;
+                else // Buff cho bản thân hoặc đồng đội
+                { 
+                    var damageParams = GetDamageParams();
+                    damageParams.CanCounter = false;
+                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
                 }
             }
-            else // Buff cho bản thân hoặc đồng đội
-            {
-                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams()));
-            }
+        }
+        else
+        {
+            HandleAllTargetFinish();
         }
     }
     
@@ -197,14 +207,19 @@ public class SkillState : CharacterState
         else // self
         {
             Info.OnDamageTaken(damageTakenParams);
-            HandleTargetFinish(target);
+            HandleTargetFinish(new FinishApplySkillParams
+            {
+                Character = target,
+                WaitForCounter = false,
+            });
         }
     }
     
-    private void HandleTargetFinish(Character character)
+    private void HandleTargetFinish(FinishApplySkillParams applySkillParams)
     {
-        TargetCharacters.Remove(character);
+        TargetCharacters.Remove(applySkillParams.Character);
         _waitForFeedback = false;
+        WaitForReact = applySkillParams.WaitForCounter;
         if (TargetCharacters.Count != 0) return;
         HandleAllTargetFinish();
     }
@@ -213,6 +228,10 @@ public class SkillState : CharacterState
     {
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
+        if (_skillStateParams.EndTurnAfterFinish)
+        {
+            GpManager.HandleEndTurn();
+        }
         AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} HandleAllTargetFinish");
     }
 

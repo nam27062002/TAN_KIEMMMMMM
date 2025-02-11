@@ -8,7 +8,7 @@ public class ReactPopup : PopupBase
     public Action OnConfirm;
     public Action OnCancel;
     protected override bool ShowGreyBackground => false;
-
+    private ReactPopupParameters _reactPopupParameters;
     protected override void RegisterEvents()
     {
         base.RegisterEvents();
@@ -27,6 +27,7 @@ public class ReactPopup : PopupBase
     {
         base.Open(parameters);
         if (parameters is not ReactPopupParameters reactPopupParameters) return;
+        _reactPopupParameters = reactPopupParameters;
         OnConfirm += reactPopupParameters.OnConfirm;
         OnCancel += reactPopupParameters.OnCancel;
     }
@@ -43,5 +44,7 @@ public class ReactPopup : PopupBase
         if (GameplayManager.Instance.IsTutorialLevel) return;
         OnCancel?.Invoke();
         Close();
+        OnConfirm -= _reactPopupParameters.OnConfirm;
+        OnCancel -= _reactPopupParameters.OnCancel;
     }
 }

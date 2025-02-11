@@ -7,6 +7,11 @@
     protected override void HandleAllTargetFinish()
     {
         base.HandleAllTargetFinish();
-        GameplayManager.Instance.HandleEndTurn();
+        HandleEndTurn();
+    }
+
+    private void HandleEndTurn()
+    {
+        if (!WaitForReact) GameplayManager.Instance.HandleEndTurn();
     }
 }

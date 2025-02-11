@@ -121,12 +121,7 @@ public class CharacterInfo
         }
         return actionPoints;
     }
-
-    public void HandleIncreaseSlotActionPoints()
-    {
-        ActionPoints.Add(3);
-    }
-
+    
     public void HandleIncreaseValueActionPoints()
     {
         for (int i = 0; i < ActionPoints.Count; i++)

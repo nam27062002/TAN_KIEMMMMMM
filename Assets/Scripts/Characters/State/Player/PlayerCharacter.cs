@@ -12,7 +12,7 @@
             new SkillState(this));
     }
     
-    public override void OnSelected()
+    protected override void OnSelected()
     {
         base.OnSelected();
         

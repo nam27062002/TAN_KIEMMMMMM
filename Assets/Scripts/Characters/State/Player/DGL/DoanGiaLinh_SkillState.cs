@@ -13,9 +13,9 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             Effects = new Dictionary<EffectType, int>()
             {
-                { EffectType.BlockSkill , 0},
-                { EffectType.IncreaseActionPoints , 1},
-                { EffectType.IncreaseMoveRange , 2},
+                // { EffectType.BlockSkill , 0},
+                // { EffectType.IncreaseActionPoints , 1},
+                // { EffectType.IncreaseMoveRange , 2},
             }
         };
     }

@@ -57,13 +57,17 @@
     
     private void OnDamageTaken()
     {
-        Character.OnDamageTaken(_damageTakenParams);
+        Character.CharacterInfo.OnDamageTaken(_damageTakenParams);
         PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
     }
     
     protected virtual void SetDamageTakenFinished()
     {
-        _damageTakenParams.OnSetDamageTakenFinished?.Invoke(Character);
+        _damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
+        {
+            Character = Character,
+            WaitForCounter = _damageTakenParams.WaitCounter,
+        });
         Character.ChangeState(ECharacterState.Idle);
         AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} set DamageTakenFinished");
     }

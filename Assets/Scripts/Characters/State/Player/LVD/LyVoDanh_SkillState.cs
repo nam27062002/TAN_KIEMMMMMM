@@ -11,9 +11,10 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn()
     {
         var baseDamage = GetBaseDamage();
-        var realDamage = (int)(1.5f * baseDamage);
+        var skillDamage = (int)(1.5f * Roll.RollDice(1,6, 0));
+        var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] Vấn Truy Lưu: damage = {realDamage} | reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.CONSOLE, $"[{Character.characterConfig.characterName}] Vấn Truy Lưu: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
