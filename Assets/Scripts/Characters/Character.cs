@@ -176,7 +176,7 @@ public abstract class Character : MonoBehaviour
         };
     
         SetSkill(skillParams);
-        CharacterInfo.HandleReduceActionPoints();
+        CharacterInfo.ReduceActionPoints();
         UnSelectSkill();
     }
 

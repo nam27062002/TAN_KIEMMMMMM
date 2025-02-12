@@ -180,7 +180,7 @@ public class UI_Ingame : MenuBase
          characterParams.Character.CharacterInfo.OnMpChanged += OnMpChanged;
          OnHpChanged(null);
          OnMpChanged(null);
-         actionPointUI.SetActionPoints(characterParams.Character.CharacterInfo.GetActionPoints());
+         actionPointUI.SetActionPoints(characterParams.Character.CharacterInfo.ActionPointsList);
          SetRound();
      }
     

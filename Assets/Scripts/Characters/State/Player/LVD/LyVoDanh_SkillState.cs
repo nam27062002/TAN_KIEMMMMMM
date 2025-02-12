@@ -16,7 +16,7 @@ public class LyVoDanh_SkillState : SkillState
             Damage = GetBaseDamage(),
             Effects = new Dictionary<EffectType, int>()
             {
-                { EffectType.BloodSealEffect , 1}
+                { EffectType.BreakBloodSealDamage , 1}
             }
         };
     }
@@ -28,7 +28,7 @@ public class LyVoDanh_SkillState : SkillState
             Damage = GetBaseDamage(),
             Effects = new Dictionary<EffectType, int>()
             {
-                { EffectType.BloodSealEffect , 1}
+                { EffectType.BreakBloodSealDamage , 1}
             }
         };
     }
@@ -40,7 +40,7 @@ public class LyVoDanh_SkillState : SkillState
             Damage = GetBaseDamage(),
             Effects = new Dictionary<EffectType, int>()
             {
-                { EffectType.BloodSealEffect , 1}
+                { EffectType.BreakBloodSealDamage , 1}
             }
         };
     }

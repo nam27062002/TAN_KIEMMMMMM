@@ -126,7 +126,7 @@ public class CharacterInfo
     public void ResetBuffBefore()
     {
         MoveAmount = 0;
-        HandleIncreaseValueActionPoints();
+        IncreaseActionPointsValue();
         foreach (var effect in EffectInfo.Effects.ToList().Where(effect => EffectInfo.TriggerAtStart.Contains(effect.EffectType)))
         {
             effect.Duration--;
@@ -143,75 +143,73 @@ public class CharacterInfo
 
     public bool CanCastSkill(SkillInfo skillInfo)
     {
-        return CurrentMp >= skillInfo.mpCost && IsEnoughActionPoints();
+        return CurrentMp >= skillInfo.mpCost && HasEnoughActionPoints;
     }
 
     #region Action Points
 
-    public List<int> GetActionPoints()
+    public List<int> ActionPointsList => new List<int>(ActionPoints)
+        .Concat(GetActionPointEffects()
+            .SelectMany(e => e.ActionPoints))
+        .ToList();
+
+    private IEnumerable<ActionPointEffect> GetActionPointEffects() => 
+        EffectInfo.Effects
+            .OfType<ActionPointEffect>()
+            .Where(e => e.EffectType == EffectType.IncreaseActionPoints);
+
+    private void IncreaseActionPointsValue()
     {
-        var actionPoints = new List<int>(ActionPoints);
-        foreach (var effect in EffectInfo.Effects.Where(effect => effect.EffectType == EffectType.IncreaseActionPoints))
+        IncreasePoints(ActionPoints);
+    
+        foreach (var effect in GetActionPointEffects())
         {
-            if (effect is ActionPointEffect actionPointEffect)
+            IncreasePoints(effect.ActionPoints);
+        }
+    
+        void IncreasePoints(IList<int> points)
+        {
+            for (int i = 0; i < points.Count; i++)
             {
-                actionPoints.AddRange(actionPointEffect.ActionPoints);
+                points[i] = Math.Min(points[i] + 1, 3);
             }
         }
-        return actionPoints;
     }
-    
-    private void HandleIncreaseValueActionPoints()
+
+    private bool HasEnoughActionPoints => ActionPointsList.Any(point => point == 3);
+
+    private int GetSkillActionPoints(SkillTurnType skillTurnType) => 
+        Character.characterConfig.actionPoints[skillTurnType];
+
+    public void ReduceActionPoints()
     {
+        var pointsToReduce = GetSkillActionPoints(Character.GetSkillTurnType());
+    
+        bool TryReducePoints(IEnumerable<ActionPointEffect> effects)
+        {
+            foreach (var effect in effects)
+            {
+                for (int i = 0; i < effect.ActionPoints.Count; i++)
+                {
+                    if (effect.ActionPoints[i] == 3)
+                    {
+                        effect.ActionPoints[i] -= pointsToReduce;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        if (TryReducePoints(GetActionPointEffects())) return;
+    
         for (int i = 0; i < ActionPoints.Count; i++)
         {
-            ActionPoints[i] = Math.Min(ActionPoints[i] + 1, 3);
-        }
-        foreach (var effect in EffectInfo.Effects.Where(effect => effect.EffectType == EffectType.IncreaseActionPoints))
-        {
-            if (effect is ActionPointEffect actionPointEffect)
+            if (ActionPoints[i] == 3)
             {
-                for (int i = 0; i < actionPointEffect.ActionPoints.Count; i++)
-                {
-                    actionPointEffect.ActionPoints[i] = Math.Min(actionPointEffect.ActionPoints[i] + 1, 3);
-                }
+                ActionPoints[i] -= pointsToReduce;
+                return;
             }
-        }
-    }
-
-    private bool IsEnoughActionPoints()
-    {
-        var actionPoints = GetActionPoints();
-        return actionPoints.Any(point => point == 3);
-    }
-
-    private int GetActionPoints(SkillTurnType skillTurnType)
-    {
-        return Character.characterConfig.actionPoints[skillTurnType];
-    }
-
-    public void HandleReduceActionPoints()
-    {
-        var point = GetActionPoints(Character.GetSkillTurnType());
-        
-        foreach (var effect in EffectInfo.Effects.Where(effect => effect.EffectType == EffectType.IncreaseActionPoints))
-        {
-            if (effect is ActionPointEffect actionPointEffect)
-            {
-                for (int i = 0; i < actionPointEffect.ActionPoints.Count; i++)
-                {
-                    if (ActionPoints[i] != 3) continue;
-                    actionPointEffect.ActionPoints[i] -= point;
-                    return;
-                }
-            }
-        }
-        
-        for (var i = 0; i < ActionPoints.Count; i++)
-        {
-            if (ActionPoints[i] != 3) continue;
-            ActionPoints[i] -= point;
-            return;
         }
     }
 
