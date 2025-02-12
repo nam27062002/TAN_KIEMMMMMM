@@ -12,4 +12,7 @@ public class CharacterAttributes
     public int rollValue;
     public RollData baseDamageRollData = new() { rollTime = 1, rollValue = 8 };
     public RollData hitChangeRollData = new() { rollTime = 1, rollValue = 20 };
+    public RollData effectResistanceRollData = new() { rollTime = 1, rollValue = 20 };
+    public RollData effectEffectCleanseRollData = new() { rollTime = 1, rollValue = 20 };
+
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class Utils
@@ -59,5 +60,20 @@ public static class Utils
             }
         }
         return null;
+    }
+    
+    public static int RoundNumber(double number)
+    {
+        double integerPart = Math.Floor(number);
+        
+        double decimalPart = number - integerPart;
+        if(decimalPart >= 0.5)
+        {
+            return (int)(integerPart + 1);
+        }
+        else
+        {
+            return (int)integerPart;
+        }
     }
 }

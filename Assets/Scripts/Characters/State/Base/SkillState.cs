@@ -161,7 +161,7 @@ public class SkillState : CharacterState
                         $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
                         $"[{target.characterConfig.characterName}] Dodge = {dodge}");
 
-                    if (hitChangeParams.HitChangeValue < dodge)
+                    if (hitChangeParams.HitChangeValue < dodge && false)
                     {
                         var dodgeDamageParams = new DamageTakenParams
                         {

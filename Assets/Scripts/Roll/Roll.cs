@@ -3,8 +3,8 @@
 public class Roll
 {
     private readonly CharacterInfo _characterInfo;
-    private string _characterName;
-    private CharacterAttributes _attributes;
+    private readonly string _characterName;
+    private readonly CharacterAttributes _attributes;
     
     public Roll(CharacterInfo characterInfo, string characterName)
     {
@@ -29,6 +29,22 @@ public class Roll
         return new HitChangeParams(){HitChangeValue = hitChange, IsCritical = rollData.rollValue == hitChange};
     }
 
+    public int GetEffectResistance()
+    {
+        var rollData = _attributes.effectResistanceRollData; 
+        var effectResistance = RollDice(rollData, _characterInfo.Attributes.chiDef / 4 + 5);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} + 5 = {effectResistance}");
+        return effectResistance;
+    }
+
+    public int GetEffectCleanse()
+    {
+        var rollData = _attributes.effectEffectCleanseRollData; 
+        var effectCleanse = RollDice(rollData, _characterInfo.Attributes.chiDef / 4);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} = {effectCleanse}");
+        return effectCleanse;
+    }
+    
     public bool IsCritical(int value)
     {
         return _attributes.rollValue == value;
@@ -44,7 +60,7 @@ public class Roll
         return RollDice(12, _attributes.spd / 2);
     }
 
-    public int RollDice(RollData rollData, int add)
+    private int RollDice(RollData rollData, int add)
     {
         return RollDice(rollData.rollTime, rollData.rollValue, add);   
     }

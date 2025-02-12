@@ -107,9 +107,46 @@ public class CharacterInfo
 
     public int GetMoveRange()
     {
-        return Attributes.maxMoveRange - MoveAmount + EffectInfo.Effects
-            .Where(effect => effect.EffectType == EffectType.IncreaseMoveRange)
-            .Sum(effect => ((ChangeStatEffect)effect).Value);
+        if (IsImmobilized())
+            return 0;
+
+        var baseMovement = CalculateBaseMovement();
+        var totalReduction = CalculateMoveReduction();
+    
+        return Mathf.Max(0, baseMovement - totalReduction);
+    }
+
+    private bool IsImmobilized()
+    {
+        return EffectInfo.Effects
+            .Any(effect => effect.EffectType == EffectType.Immobilize);
+    }
+
+    private int CalculateBaseMovement()
+    {
+        var baseValue = Attributes.maxMoveRange - MoveAmount;
+        var moveBuff = EffectInfo.Effects
+            .Where(e => e.EffectType == EffectType.IncreaseMoveRange)
+            .Sum(e => ((ChangeStatEffect)e).Value);
+        return baseValue + moveBuff;
+    }
+
+    private int CalculateMoveReduction()
+    {
+        var totalReduction = 0;
+    
+        foreach (var unused in EffectInfo.Effects
+                     .Where(e => e.EffectType == EffectType.ReduceMoveRange))
+        {
+            var reduction = Roll.RollDice(1, 4, 0);
+            AlkawaDebug.Log(
+                ELogCategory.EFFECT,
+                $"Apply debuff 16: giảm di chuyển = 1d4 = {reduction}"
+            );
+            totalReduction += reduction;
+        }
+    
+        return totalReduction;
     }
 
     public void ResetBuffAfter()
@@ -274,6 +311,16 @@ public class CharacterInfo
         {
             ApplyBloodSealDamage();
         }
+
+        if (effects.TryGetValue(EffectType.Immobilize, out var duration))
+        {
+            ApplyImmobilize(duration);
+        }
+
+        if (effects.TryGetValue(EffectType.ReduceMoveRange, out duration))
+        {
+            ApplyReduceMoveRange(duration);
+        }
     }
 
     private void ApplyIncreaseDamage(int damage)
@@ -352,6 +399,34 @@ public class CharacterInfo
             AlkawaDebug.Log(ELogCategory.SKILL,
                 $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
         }
+    }
+
+    private void ApplyImmobilize(int duration)
+    {
+        var effectResistance = _roll.GetEffectResistance();
+        var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Immobilize].Item1;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+        if (effectResistance < baseEffectResistance)
+        {
+            EffectInfo.AddEffect(new EffectData()
+            {
+                EffectType = EffectType.Immobilize,
+                Duration = duration
+            });
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Immobilize}");
+        }
+    }
+
+    private void ApplyReduceMoveRange(int duration)
+    {
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.ReduceMoveRange,
+            Duration = duration
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.ReduceMoveRange}");
     }
 
     #endregion

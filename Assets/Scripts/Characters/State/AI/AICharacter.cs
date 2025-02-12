@@ -24,6 +24,7 @@ public abstract class AICharacter : Character
     public void HandleAIPlay()
     {
         AlkawaDebug.Log(ELogCategory.AI,"HandleAIPlay");
+        CharacterInfo.GetMoveRange(); // TODO: Clean code
         if (!TryCastSkill())
         {
             if (!TryMoving())
