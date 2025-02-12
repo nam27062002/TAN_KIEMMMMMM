@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class SkillState : CharacterState
 {
+    public override string NameState { get; set; } = "Skill";
+
+    private readonly Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>> _damageParamsHandlers;
+    private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
+    private SkillStateParams _skillStateParams;
+    protected readonly List<Character> TargetCharacters = new();
+    private bool _waitForFeedback = false;
+    protected bool WaitForReact = false;
+
     public SkillState(Character character) : base(character)
     {
         _damageParamsHandlers = new Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>>
@@ -41,22 +50,18 @@ public class SkillState : CharacterState
         };
     }
 
-    public override string NameState { get; set; } = "Skill";
-    private readonly Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>> _damageParamsHandlers;
-    private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
-    private SkillStateParams _skillStateParams;
-    protected readonly List<Character> TargetCharacters = new();
-    private bool _waitForFeedback = false;
-    protected bool WaitForReact = false;
-
     public override void OnEnter(StateParams stateParams = null)
     {
         GpManager.SetInteract(false);
         TargetCharacters.Clear();
-        _skillStateParams = (SkillStateParams)stateParams;
-        if (stateParams is not SkillStateParams skillStateParams) return;
+
+        if (!(stateParams is SkillStateParams skillStateParams))
+        {
+            return;
+        }
+
         _skillStateParams = skillStateParams;
-        
+
         if (_skillStateParams.IdleStateParams != null)
         {
             Character.HandleCounterLogic(_skillStateParams);
@@ -78,10 +83,10 @@ public class SkillState : CharacterState
                 TargetCharacters.Add(item);
             }
         }
+
         if (CanSetTargetCharactersInternal())
         {
             var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
-        
             if (_targetCharacterActions.TryGetValue(key, out var action))
             {
                 action.Invoke();
@@ -91,7 +96,8 @@ public class SkillState : CharacterState
 
     private bool CanSetTargetCharactersInternal()
     {
-        return _skillStateParams.SkillInfo.canOverrideSetTargetCharacters || _skillStateParams.Targets == null ||
+        return _skillStateParams.SkillInfo.canOverrideSetTargetCharacters ||
+               _skillStateParams.Targets == null ||
                _skillStateParams.Targets.Count == 0;
     }
 
@@ -114,16 +120,17 @@ public class SkillState : CharacterState
         HandleDamageLogic();
         GameplayManager.Instance.UpdateCharacterInfo();
     }
-    
-    //=======================================================================
 
+    //=======================================================================
+    // Damage & Damage Params
     protected virtual DamageTakenParams GetDamageParams()
     {
         var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
         var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler)
             ? handler()
             : new DamageTakenParams();
-        return new DamageTakenParams()
+
+        return new DamageTakenParams
         {
             Damage = damageParams.Damage,
             ReducedMana = damageParams.ReducedMana,
@@ -133,23 +140,12 @@ public class SkillState : CharacterState
             CanCounter = true,
         };
     }
-    
-    protected virtual int GetBaseDamage()
-    {
-        var baseDamage = Info.BaseDamage;
-        return baseDamage;
-    }
 
-    private HitChangeParams GetHitChangeParams()
-    {
-        var hitChange = Info.HitChangeParams;
-        return hitChange;
-    }
+    protected virtual int GetBaseDamage() => Info.BaseDamage;
 
-    private void HandleDamageLogic()
-    {
-        HandleDodgeDamage();
-    }
+    private HitChangeParams GetHitChangeParams() => Info.HitChangeParams;
+
+    private void HandleDamageLogic() => HandleDodgeDamage();
 
     private void HandleDodgeDamage()
     {
@@ -162,18 +158,19 @@ public class SkillState : CharacterState
                     var hitChangeParams = GetHitChangeParams();
                     var dodge = target.CharacterInfo.Dodge;
                     AlkawaDebug.Log(ELogCategory.SKILL,
-                        $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | [{target.characterConfig.characterName}] Dodge = {dodge}");
-                
-                    if (hitChangeParams.HitChangeValue <= dodge)
+                        $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
+                        $"[{target.characterConfig.characterName}] Dodge = {dodge}");
+
+                    if (hitChangeParams.HitChangeValue < dodge)
                     {
-                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, 
-                            new DamageTakenParams
-                            {
-                                CanDodge = true,
-                                ReceiveFromCharacter = Character,
-                                CanCounter = true,
-                                OnSetDamageTakenFinished = HandleTargetFinish,
-                            }));
+                        var dodgeDamageParams = new DamageTakenParams
+                        {
+                            CanDodge = true,
+                            ReceiveFromCharacter = Character,
+                            CanCounter = true,
+                            OnSetDamageTakenFinished = HandleTargetFinish,
+                        };
+                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
                         _waitForFeedback = true;
                     }
                     else
@@ -182,8 +179,8 @@ public class SkillState : CharacterState
                         _waitForFeedback = true;
                     }
                 }
-                else // Buff cho bản thân hoặc đồng đội
-                { 
+                else
+                {
                     var damageParams = GetDamageParams();
                     damageParams.CanCounter = false;
                     CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
@@ -195,27 +192,28 @@ public class SkillState : CharacterState
             HandleAllTargetFinish();
         }
     }
-    
+
     private IEnumerator HandleApplyDamage(Character target, DamageTakenParams damageTakenParams)
     {
         if (target != Character)
         {
             yield return new WaitUntil(() => !_waitForFeedback);
             yield return new WaitForSecondsRealtime(0.1f);
+
             if (!target.CharacterInfo.IsDie)
             {
                 target.OnDamageTaken(damageTakenParams);
             }
             else
             {
-                damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
+                damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams
                 {
                     Character = target,
                     WaitForCounter = false,
                 });
             }
         }
-        else // self
+        else // Xử lý damage cho chính bản thân
         {
             Info.OnDamageTaken(damageTakenParams);
             HandleTargetFinish(new FinishApplySkillParams
@@ -225,206 +223,113 @@ public class SkillState : CharacterState
             });
         }
     }
-    
+
     private void HandleTargetFinish(FinishApplySkillParams applySkillParams)
     {
         TargetCharacters.Remove(applySkillParams.Character);
         _waitForFeedback = false;
         WaitForReact = applySkillParams.WaitForCounter;
-        if (TargetCharacters.Count != 0) return;
-        HandleAllTargetFinish();
+
+        if (TargetCharacters.Count == 0)
+        {
+            HandleAllTargetFinish();
+        }
     }
 
     protected virtual void HandleAllTargetFinish()
     {
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
+
         if (_skillStateParams.EndTurnAfterFinish)
         {
             GpManager.HandleEndTurn();
         }
-        AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} HandleAllTargetFinish");
+
+        AlkawaDebug.Log(ELogCategory.CHARACTER,
+            $"{Character.characterConfig.characterName} HandleAllTargetFinish");
     }
 
-    #region Skill
+    #region Skill Damage Params
 
-    //=====================SKILL 1=====================================
-    protected virtual DamageTakenParams GetDamageParams_Skill1_MyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    //===================== SKILL 1 =====================
+    protected virtual DamageTakenParams GetDamageParams_Skill1_MyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill1_TeammateTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill1_TeammateTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill1_EnemyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill1_EnemyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    //=====================SKILL 2=====================================
-    protected virtual DamageTakenParams GetDamageParams_Skill2_MyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    //===================== SKILL 2 =====================
+    protected virtual DamageTakenParams GetDamageParams_Skill2_MyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill2_TeammateTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill2_TeammateTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill2_EnemyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill2_EnemyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    //=====================SKILL 3=====================================
-    protected virtual DamageTakenParams GetDamageParams_Skill3_MyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    //===================== SKILL 3 =====================
+    protected virtual DamageTakenParams GetDamageParams_Skill3_MyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill3_TeammateTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill3_TeammateTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill3_EnemyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill3_EnemyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    //=====================SKILL 4=====================================
-    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    //===================== SKILL 4 =====================
+    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill4_TeammateTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill4_TeammateTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill4_EnemyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
-    //=====================SKILL 2=====================================
-    protected virtual DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn()
-    {
-        return new DamageTakenParams
-        {
-            Damage = GetBaseDamage()
-        };
-    }
+    protected virtual DamageTakenParams GetDamageParams_Skill4_EnemyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
+
+    //===================== PASSIVE SKILL 2 =====================
+    protected virtual DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn() =>
+        new DamageTakenParams { Damage = GetBaseDamage() };
+
     #endregion
 
-    #region Set Target
+    #region Set Target Characters
 
-    //=====================SKILL 1=====================================
-    protected virtual void SetTargetCharacters_Skill1_MyTurn()
-    {
-        
-    }
+    //===================== SKILL 1 =====================
+    protected virtual void SetTargetCharacters_Skill1_MyTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill1_TeammateTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill1_TeammateTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill1_EnemyTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill1_EnemyTurn() { }
 
-    //=====================SKILL 2=====================================
-    protected virtual void SetTargetCharacters_Skill2_MyTurn()
-    {
-        
-    }
+    //===================== SKILL 2 =====================
+    protected virtual void SetTargetCharacters_Skill2_MyTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill2_TeammateTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill2_TeammateTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill2_EnemyTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill2_EnemyTurn() { }
 
-    //=====================SKILL 3=====================================
-    protected virtual void SetTargetCharacters_Skill3_MyTurn()
-    {
-        
-    }
+    //===================== SKILL 3 =====================
+    protected virtual void SetTargetCharacters_Skill3_MyTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill3_TeammateTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill3_TeammateTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill3_EnemyTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill3_EnemyTurn() { }
 
-    //=====================SKILL 4=====================================
-    protected virtual void SetTargetCharacters_Skill4_MyTurn()
-    {
-        
-    }
+    //===================== SKILL 4 =====================
+    protected virtual void SetTargetCharacters_Skill4_MyTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill4_TeammateTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill4_TeammateTurn() { }
 
-    protected virtual void SetTargetCharacters_Skill4_EnemyTurn()
-    {
-        
-    }
+    protected virtual void SetTargetCharacters_Skill4_EnemyTurn() { }
 
     #endregion
-    
+
     private static AnimationParameterNameType GetAnimByIndex(SkillIndex index)
     {
         return index switch
@@ -436,7 +341,7 @@ public class SkillState : CharacterState
             SkillIndex.PassiveSkill1 => AnimationParameterNameType.Skill1,
             SkillIndex.PassiveSkill2 => AnimationParameterNameType.Skill1,
             SkillIndex.PassiveSkill3 => AnimationParameterNameType.Skill1,
-            _ => AnimationParameterNameType.None
+            _ => AnimationParameterNameType.None,
         };
     }
 }

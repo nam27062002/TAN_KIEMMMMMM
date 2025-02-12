@@ -46,13 +46,11 @@
     private void OnConFirmReact()
     {
         GpManager.SetCharacterReact(Character, _damageTakenParams);
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"OnConFirmClick");
     }
 
     private void OnCancelReact()
     {
         OnDamageTaken();
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,"OnCancelClick");
     }
     
     private void OnDamageTaken()
@@ -75,5 +73,4 @@
     public override void OnExit()
     {
     }
-    
 }

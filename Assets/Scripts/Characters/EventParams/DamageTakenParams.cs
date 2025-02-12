@@ -11,7 +11,4 @@ public class DamageTakenParams : StateParams
     public Character ReceiveFromCharacter;
     public bool CanCounter = true;
     public bool WaitCounter;
-    
-    // params
-    public SkillStateParams SkillStateParams;
 }
