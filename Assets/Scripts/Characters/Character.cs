@@ -24,7 +24,7 @@ public abstract class Character : MonoBehaviour
     public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
     
     public CharacterInfo CharacterInfo;
-    
+    private SkillStateParams _skillStateParams;
     public bool IsMainCharacter => GpManager.MainCharacter == this;
     // protected function
     protected GameplayManager GpManager => GameplayManager.Instance;
@@ -105,8 +105,7 @@ public abstract class Character : MonoBehaviour
         _skillStateParams = skillStateParams;
         HandleCounterLogic(skillStateParams.IdleStateParams.DamageTakenParams, true);
     }
-
-    private SkillStateParams _skillStateParams;
+    
     private void HandleCounterLogic(DamageTakenParams damageTaken = null, bool waitCounter = false) // 
     {
         SetIdle();

@@ -76,7 +76,7 @@ public class CharacterInfo
             OnHpChanged?.Invoke(this, damageTakenParams.Damage);
         }
     }
-    
+
     private void HandleHpChanged(int damage)
     {
         if (damage == 0) return;
@@ -114,28 +114,32 @@ public class CharacterInfo
 
     public void ResetBuffAfter()
     {
-        foreach (var effect in EffectInfo.Effects.ToList().Where(effect => EffectInfo.TriggerAtEnd.Contains(effect.EffectType)))
+        foreach (var effect in EffectInfo.Effects.ToList()
+                     .Where(effect => EffectInfo.TriggerAtEnd.Contains(effect.EffectType)))
         {
             effect.Duration--;
             if (effect.Duration != 0) continue;
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
             EffectInfo.Effects.Remove(effect);
         }
     }
-    
+
     public void ResetBuffBefore()
     {
         MoveAmount = 0;
         IncreaseActionPointsValue();
-        foreach (var effect in EffectInfo.Effects.ToList().Where(effect => EffectInfo.TriggerAtStart.Contains(effect.EffectType)))
+        foreach (var effect in EffectInfo.Effects.ToList()
+                     .Where(effect => EffectInfo.TriggerAtStart.Contains(effect.EffectType)))
         {
             effect.Duration--;
             if (effect.Duration != 0) continue;
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
             EffectInfo.Effects.Remove(effect);
         }
     }
-    
+
     public SkillInfo GetSkillInfo(int index, SkillTurnType skillTurnType)
     {
         return SkillConfig.SkillConfigs[skillTurnType][index];
@@ -153,7 +157,7 @@ public class CharacterInfo
             .SelectMany(e => e.ActionPoints))
         .ToList();
 
-    private IEnumerable<ActionPointEffect> GetActionPointEffects() => 
+    private IEnumerable<ActionPointEffect> GetActionPointEffects() =>
         EffectInfo.Effects
             .OfType<ActionPointEffect>()
             .Where(e => e.EffectType == EffectType.IncreaseActionPoints);
@@ -161,12 +165,12 @@ public class CharacterInfo
     private void IncreaseActionPointsValue()
     {
         IncreasePoints(ActionPoints);
-    
+
         foreach (var effect in GetActionPointEffects())
         {
             IncreasePoints(effect.ActionPoints);
         }
-    
+
         void IncreasePoints(IList<int> points)
         {
             for (int i = 0; i < points.Count; i++)
@@ -178,13 +182,13 @@ public class CharacterInfo
 
     private bool HasEnoughActionPoints => ActionPointsList.Any(point => point == 3);
 
-    private int GetSkillActionPoints(SkillTurnType skillTurnType) => 
+    private int GetSkillActionPoints(SkillTurnType skillTurnType) =>
         Character.characterConfig.actionPoints[skillTurnType];
 
     public void ReduceActionPoints()
     {
         var pointsToReduce = GetSkillActionPoints(Character.GetSkillTurnType());
-    
+
         bool TryReducePoints(IEnumerable<ActionPointEffect> effects)
         {
             foreach (var effect in effects)
@@ -198,11 +202,12 @@ public class CharacterInfo
                     }
                 }
             }
+
             return false;
         }
 
         if (TryReducePoints(GetActionPointEffects())) return;
-    
+
         for (int i = 0; i < ActionPoints.Count; i++)
         {
             if (ActionPoints[i] == 3)
@@ -281,7 +286,8 @@ public class CharacterInfo
             EffectType = EffectType.IncreaseDamage,
         });
         Character.ShowMessage($"Tăng {damage} sát thương");
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseDamage}");
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseDamage}");
     }
 
     private void ApplyBlockSkill()
@@ -291,7 +297,8 @@ public class CharacterInfo
             Duration = 1,
             EffectType = EffectType.BlockSkill,
         });
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BlockSkill}");
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BlockSkill}");
     }
 
     private void ApplyIncreaseMoveRange(int moveRange)
@@ -302,8 +309,8 @@ public class CharacterInfo
             Duration = 1,
             EffectType = EffectType.IncreaseMoveRange,
         });
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseMoveRange}");
-
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseMoveRange}");
     }
 
     private void ApplyIncreaseActionPoints(int actionPoints)
@@ -313,13 +320,15 @@ public class CharacterInfo
         {
             actionPoint.Add(3);
         }
+
         EffectInfo.AddEffect(new ActionPointEffect()
         {
             ActionPoints = actionPoint,
             Duration = 1,
             EffectType = EffectType.IncreaseActionPoints,
         });
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseActionPoints}");
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseActionPoints}");
     }
 
     private void ApplyBloodSealEffect()
@@ -328,7 +337,8 @@ public class CharacterInfo
         {
             EffectType = EffectType.BloodSealEffect,
         });
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BloodSealEffect}");
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BloodSealEffect}");
     }
 
     private void ApplyBloodSealDamage()
@@ -339,10 +349,11 @@ public class CharacterInfo
             var hpDecreased = Attributes.health - CurrentHp;
             var damage = hpDecreased / 10;
             if (CurrentHp > 0) HandleHpChanged(-damage);
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
+            AlkawaDebug.Log(ELogCategory.SKILL,
+                $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
         }
     }
-    
+
     #endregion
 
     #region Roll
