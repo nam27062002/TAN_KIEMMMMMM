@@ -6,10 +6,27 @@ public class DoanGiaLinh_SkillState : SkillState
     {
     }
 
+    private void ApplyPoisonPowder()
+    {
+        var allCharacters = new List<Character>(GpManager.Characters);
+        allCharacters.Remove(Character);
+        foreach (var item in allCharacters)
+        {
+            item.CharacterInfo.OnDamageTaken(new DamageTakenParams()
+            {
+                Effects = new Dictionary<EffectType, int>()
+                {
+                    { EffectType.PoisonPowder , 0},
+                }
+            });
+        }
+    }
+
     //===================== SKILL 1 =====================
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn()
     {
+        ApplyPoisonPowder();
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Nhiên Huyết");
         return new DamageTakenParams
         {
@@ -24,6 +41,7 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn()
     {
+        ApplyPoisonPowder();
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Mộng Yểm");
         return new DamageTakenParams
         {
@@ -36,6 +54,7 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn()
     {
+        ApplyPoisonPowder();
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Băng Hoại");
         return new DamageTakenParams
         {
@@ -49,6 +68,7 @@ public class DoanGiaLinh_SkillState : SkillState
     //===================== SKILL 2 =====================
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn()
     {
+        ApplyPoisonPowder();
         var baseDamage = GetBaseDamage();
         var skillDamage = Roll.RollDice(1, 4, 2);
         var realDamage = baseDamage + skillDamage;
@@ -70,12 +90,16 @@ public class DoanGiaLinh_SkillState : SkillState
             Damage = realDamage,
         };
     }
-    
-    protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn() =>
-        new DamageTakenParams { Damage = GetBaseDamage() };
+
+    protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn()
+    {
+        ApplyPoisonPowder();
+        return new DamageTakenParams { Damage = GetBaseDamage() };
+    }
 
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn()
     {
+        ApplyPoisonPowder();
         var baseDamage = GetBaseDamage();
         var skillDamage = Roll.RollDice(1, 4, 2);
         var realDamage = baseDamage + skillDamage;

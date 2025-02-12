@@ -321,6 +321,11 @@ public class CharacterInfo
         {
             ApplyReduceMoveRange(duration);
         }
+
+        if (effects.TryGetValue(EffectType.PoisonPowder, out var _))
+        {
+            ApplyPoisonPowder();
+        }
     }
 
     private void ApplyIncreaseDamage(int damage)
@@ -427,6 +432,22 @@ public class CharacterInfo
         });
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Added effect: {EffectType.ReduceMoveRange}");
+    }
+
+    private void ApplyPoisonPowder()
+    {
+        var rollData = Roll.RollDice(1, 20, 0);
+        if (rollData < 10)
+        {
+            EffectInfo.AddEffect(new EffectData()
+            {
+                EffectType = EffectType.PoisonPowder
+            });
+        }
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            rollData < 10
+                ? $"[{Character.characterConfig.characterName}] roll data = {rollData} < 10 => Added effect: Độc Phấn"
+                : $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Độc Phấn");
     }
 
     #endregion

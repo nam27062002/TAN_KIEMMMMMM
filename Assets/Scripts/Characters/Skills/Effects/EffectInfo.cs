@@ -44,4 +44,5 @@ public enum EffectType
     ReduceMoveRange = 8,
     Stun = 9,
     Sleep = 10,
+    PoisonPowder = 11,
 }
