@@ -48,6 +48,7 @@ public class DoanGiaLinh_SkillState : SkillState
             Effects = new Dictionary<EffectType, int>()
             {
                 { EffectType.Immobilize, EffectConfig.DebuffRound },
+                { EffectType.NightCactus , 0}
             }
         };
     }
@@ -72,29 +73,37 @@ public class DoanGiaLinh_SkillState : SkillState
         var baseDamage = GetBaseDamage();
         var skillDamage = Roll.RollDice(1, 4, 2);
         var realDamage = baseDamage + skillDamage;
-        var increaseDamage = Utils.RoundNumber(Info.CurrentHp * 1f / 10);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Thược Dược Đỏ: skill damage = 1d4 + 2 = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Thược Dược Đỏ: damage = {baseDamage} + {skillDamage} = {realDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Apply buff 6: tăng damage = {Info.CurrentHp} / 10 = {increaseDamage}");
-
-        Info.OnDamageTaken(new DamageTakenParams()
-        {
-            Effects = new Dictionary<EffectType, int>()
-            {
-                { EffectType.IncreaseDamage, increaseDamage},
-            }
-        });
         
         return new DamageTakenParams()
         {
             Damage = realDamage,
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.RedDahlia, 0 },
+            }
         };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn()
     {
         ApplyPoisonPowder();
-        return new DamageTakenParams { Damage = GetBaseDamage() };
+        var baseDamage = GetBaseDamage();
+        var skillDamage = Roll.RollDice(1, 4, 2);
+        var realDamage = baseDamage + skillDamage;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Sen Trắng: skill damage = 1d4 + 2 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Sen Trắng: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        
+        return new DamageTakenParams()
+        {
+            Damage = realDamage,
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.WhiteLotus, 0 },
+                { EffectType.Sleep , 0},
+            }
+        };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn()
@@ -112,6 +121,7 @@ public class DoanGiaLinh_SkillState : SkillState
             Effects = new Dictionary<EffectType, int>()
             {
                 { EffectType.Stun , 0},
+                { EffectType.Marigold , 0}
             }
         };
     }

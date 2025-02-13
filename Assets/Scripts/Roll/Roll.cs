@@ -33,7 +33,7 @@ public class Roll
     {
         var rollData = _attributes.effectResistanceRollData; 
         var effectResistance = RollDice(rollData, _characterInfo.Attributes.chiDef / 4 + 5);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} + 5 = {effectResistance}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} + 5 = {effectResistance}");
         return effectResistance;
     }
 
@@ -41,7 +41,7 @@ public class Roll
     {
         var rollData = _attributes.effectEffectCleanseRollData; 
         var effectCleanse = RollDice(rollData, _characterInfo.Attributes.chiDef / 4);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} = {effectCleanse}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Giải hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} = {effectCleanse}");
         return effectCleanse;
     }
     

@@ -21,6 +21,6 @@ public abstract class PassiveSkill : MonoBehaviour
     
     private void OnValidate()
     {
-        character ??= GetComponent<LyVoDanh>();
+        character ??= GetComponent<Character>();
     }
 }

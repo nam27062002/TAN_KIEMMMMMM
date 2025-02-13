@@ -11,7 +11,7 @@ public class CharacterAnimationData : MonoBehaviour
 
     public void PlayAnimation(AnimationParameterNameType animationParameterNameType, Action callback = null)
     {
-        if (_lastParameter == animationParameterNameType) return;
+        if (_lastParameter == animationParameterNameType || anim == null) return;
         if (_lastParameter != AnimationParameterNameType.None)
         {
             anim.SetBool(_lastParameter.ToString(), false);

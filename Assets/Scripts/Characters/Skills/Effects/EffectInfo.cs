@@ -16,6 +16,9 @@ public class EffectInfo
         EffectType.IncreaseActionPoints,
         EffectType.IncreaseMoveRange,
         EffectType.ReduceMoveRange,
+        EffectType.Immobilize,
+        EffectType.Stun,
+        EffectType.Sleep,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -45,4 +48,8 @@ public enum EffectType
     Stun = 9,
     Sleep = 10,
     PoisonPowder = 11,
+    RedDahlia = 12,
+    Marigold = 13,
+    WhiteLotus = 14,
+    NightCactus = 15,
 }

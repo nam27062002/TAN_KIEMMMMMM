@@ -72,6 +72,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2203334176055078997}
+    - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3033158562719900191}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
 --- !u!1 &613759459630214279 stripped
 GameObject:
@@ -103,7 +106,6 @@ MonoBehaviour:
   characterConfig:
     characterHeight: 1
     characterName: "\u0110o\xE0n Gia Linh"
-    timeMoveToTarget: 0.5
     characterIcon: {fileID: 21300000, guid: e6389fba37d1c3241bcb9529c9a99783, type: 3}
     characterAttributes:
       maxMoveRange: 6
@@ -122,6 +124,14 @@ MonoBehaviour:
         rollTime: 1
         rollValue: 20
         add: 0
+      effectResistanceRollData:
+        rollTime: 1
+        rollValue: 20
+        add: 0
+      effectEffectCleanseRollData:
+        rollTime: 1
+        rollValue: 20
+        add: 0
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
@@ -134,6 +144,7 @@ MonoBehaviour:
       range: 1
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: 40119a4d7c6def14490a64bcd642c753, type: 3}
@@ -143,6 +154,7 @@ MonoBehaviour:
       range: 4
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 2
       description: "Nhi\xEAn huy\u1EBFt (Boiling Blood): \xE2m thanh v\xE0 ch\u1EA5t
         \u0111\u1ED9c k\xEDch th\xEDch ti\u1EC1m l\u1EF1c c\u1EE7a \u0111\u1ED3ng
@@ -159,6 +171,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "Th\u01B0\u1EE3c d\u01B0\u1EE3c \u0111\u1ECF (Red Dahlia): ch\u1EA5t
         \u0111\u1ED9c g\xE2y m\u1EDD m\u1EAFt, khi\u1EBFn \u0111\u1ED1i ph\u01B0\u01A1ng
@@ -173,6 +186,7 @@ MonoBehaviour:
       range: 6
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "Thi\u1EBFt Kho\xE1i T\u1EED (Winter Rose): thu h\u1ED3i \u0111\u1ED9c
         ph\u1EA5n t\u1EEB to\xE0n b\u1ED9 k\u1EBB \u0111\u1ECBch, gi\u1EA3m h\u1ED9
@@ -187,6 +201,7 @@ MonoBehaviour:
       range: 1
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "M\u1ED9ng y\u1EC3m (Haunting Nightmares): \xE2m thanh v\xE0 ch\u1EA5t
         \u0111\u1ED9c g\xE2y \u1EA3o gi\xE1c, khi\u1EBFn m\u1EE5c ti\xEAu kh\xF4ng
@@ -201,6 +216,7 @@ MonoBehaviour:
       range: 8
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "B\u0103ng ho\u1EA1i (Lingering Paralysis): \xE2m thanh v\xE0
         ch\u1EA5t \u0111\u1ED9c g\xE2y t\xEA, khi\u1EBFn ph\u1EA3n \u1EE9ng c\u1EE7a
@@ -215,6 +231,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "Sen tr\u1EAFng (White Lotus): ch\u1EA5t \u0111\u1ED9c g\xE2y
         bu\u1ED3n ng\u1EE7. Sau khi k\u1EBFt th\xFAc tr\xEAn ng\u01B0\u1EDDi m\u1EE5c
@@ -227,6 +244,7 @@ MonoBehaviour:
       range: 6
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 2
       description: "H\u1ED3ng Ti (Red Dodder): thu h\u1ED3i \u0111\u1ED9c ph\u1EA5n
         t\u1EEB \u0111\u1ED3ng \u0111\u1ED9i, c\u1ED9ng 1 h\xFAt m\xE1u t\u1EEB m\u1ED7i
@@ -241,6 +259,7 @@ MonoBehaviour:
       range: 1
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: 025694a806a682f4cbb7ade780ba78ee, type: 3}
@@ -250,6 +269,7 @@ MonoBehaviour:
       range: 8
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "M\u1ED9ng y\u1EC3m (Haunting Nightmares): \xE2m thanh v\xE0 ch\u1EA5t
         \u0111\u1ED9c g\xE2y \u1EA3o gi\xE1c, khi\u1EBFn m\u1EE5c ti\xEAu kh\xF4ng
@@ -264,6 +284,7 @@ MonoBehaviour:
       range: 2
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "C\xFAc v\u1EA1n th\u1ECD (Marigold): ch\u1EA5t \u0111\u1ED9c
         g\xE2y t\xEA c\u01A1, g\xE2y cho\xE1ng. Sau khi k\u1EBFt th\xFAc tr\xEAn
@@ -276,12 +297,27 @@ MonoBehaviour:
       range: 6
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
       description: "Kim T\u01B0\u1EDBc Mai (Sundews): thu h\u1ED3i \u0111\u1ED9c
         ph\u1EA5n t\u1EEB k\u1EBB \u0111ang t\u1EA5n c\xF4ng m\xECnh, gi\u1EA3m to\xE0n
         b\u1ED9 s\xE1t th\u01B0\u01A1ng v\u1EADt l\xFD m\xE0 b\u1EA3n th\xE2n \u0111\xE1ng
         l\u1EBD ph\u1EA3i nh\u1EADn. (apply debuff 21)"
-  passiveSkills: []
+  passiveSkills:
+  - {fileID: 3033158562719900191}
+--- !u!114 &3033158562719900191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589546775872960822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8824d726107849fa930c102ddef32a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 2203334176055078997}
 --- !u!114 &4460552136440462341 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2868514981145055145, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

@@ -42,9 +42,10 @@ public class CharacterInfo
 
     // Buff & Debuff
 
-    private EffectInfo EffectInfo { get; } = new();
+    public EffectInfo EffectInfo { get; } = new();
 
     public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.EffectType == EffectType.BlockSkill);
+    private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep);
 
     // Action
     public event EventHandler<int> OnHpChanged;
@@ -160,6 +161,8 @@ public class CharacterInfo
                 $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
             EffectInfo.Effects.Remove(effect);
         }
+        
+        Character.uiFeedback.UpdateEffectIcons();
     }
 
     public void ResetBuffBefore()
@@ -175,6 +178,8 @@ public class CharacterInfo
                 $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
             EffectInfo.Effects.Remove(effect);
         }
+        HandleEffectCleanse();
+        Character.uiFeedback.UpdateEffectIcons();
     }
 
     public SkillInfo GetSkillInfo(int index, SkillTurnType skillTurnType)
@@ -278,8 +283,38 @@ public class CharacterInfo
         HandleHpChanged(damageTakenParams);
         HandleMpChanged(-damageTakenParams.ReducedMana);
         ApplyEffect(damageTakenParams.Effects);
+        Character.uiFeedback.UpdateEffectIcons();
     }
 
+    public void CheckEffectAfterReceiveDamage()
+    {
+        // check sleep
+        HandleSleepEffect();
+    }
+
+    private void HandleSleepEffect()
+    {
+        if (HasSleepEffect)
+        {
+            //
+        }
+    }
+
+    private void HandleEffectCleanse()
+    {
+        foreach (var item in EffectInfo.Effects.ToList())
+        {
+            if (!EffectInfo.AppliedEffect.TryGetValue(item.EffectType, out var value)) continue;
+            var effectCleanse = _roll.GetEffectCleanse();
+            var baseEffectCleanse = value.Item2;
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{item.EffectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
+            if (effectCleanse >= baseEffectCleanse) continue;
+            EffectInfo.Effects.Remove(item);
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Removed effect: {item.EffectType}");
+        }    
+    }
+    
     private void ApplyEffect(Dictionary<EffectType, int> effects)
     {
         if (effects.TryGetValue(EffectType.IncreaseDamage, out var damage))
@@ -325,6 +360,31 @@ public class CharacterInfo
         if (effects.TryGetValue(EffectType.PoisonPowder, out var _))
         {
             ApplyPoisonPowder();
+        }
+
+        if (effects.TryGetValue(EffectType.Sleep, out var _))
+        {
+            ApplySleep();
+        }
+
+        if (effects.TryGetValue(EffectType.RedDahlia, out var _))
+        {
+            ApplyRedDahlia();
+        }
+        
+        if (effects.TryGetValue(EffectType.WhiteLotus, out var _))
+        {
+            ApplyWhiteLotus();
+        }
+        
+        if (effects.TryGetValue(EffectType.Marigold, out var _))
+        {
+            ApplyMarigold();
+        }
+
+        if (effects.TryGetValue(EffectType.NightCactus, out var _))
+        {
+            ApplyNightCactus();
         }
     }
 
@@ -410,7 +470,7 @@ public class CharacterInfo
     {
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Immobilize].Item1;
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 15: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
         if (effectResistance < baseEffectResistance)
         {
             EffectInfo.AddEffect(new EffectData()
@@ -450,6 +510,56 @@ public class CharacterInfo
                 : $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Độc Phấn");
     }
 
+    private void ApplyRedDahlia()
+    {
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.RedDahlia,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Thược Dược");
+    }
+
+    private void ApplyWhiteLotus()
+    {
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.WhiteLotus,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Sen Trắng");
+    }
+
+    private void ApplyMarigold()
+    {
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.Marigold,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Cúc Vạn Thọ");
+    }
+
+    private void ApplyNightCactus()
+    {
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.NightCactus,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Quỳnh");   
+    }
+
+    private void ApplySleep()
+    {
+        var effectResistance = _roll.GetEffectResistance();
+        var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Sleep].Item1;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff4: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+        // if (effectResistance >= baseEffectResistance) return;
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.Sleep,
+            Duration = EffectConfig.DebuffRound,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Sleep}");
+    }
     #endregion
 
     #region Roll
