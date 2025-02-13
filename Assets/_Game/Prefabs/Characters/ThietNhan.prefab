@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 29e26b50d834734459c451daccb7da7e, type: 2}
+    - target: {fileID: 5687476869882378970, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 1236668399952266962}
     - target: {fileID: 7330223302066570300, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.981
@@ -93,16 +97,12 @@ MonoBehaviour:
   characterType: 2
   characterAnimationData: {fileID: 4811324158122557611}
   hpBar: {fileID: 2651813540610510734}
+  uiFeedback: {fileID: 5615948485166004989}
   model: {fileID: 1274149462394461964}
   characterConfig:
     characterHeight: 0.55
     characterName: "Thi\u1EBFt Nh\xE2n"
-    timeMoveToTarget: 0.5
     characterIcon: {fileID: 21300000, guid: 177a247f955219b40b307348ba3c6abc, type: 3}
-    damageRollData:
-      rollTime: 1
-      rollValue: 6
-      add: 0
     characterAttributes:
       maxMoveRange: 5
       health: 40
@@ -112,6 +112,22 @@ MonoBehaviour:
       chiDef: 16
       spd: 6
       rollValue: 20
+      baseDamageRollData:
+        rollTime: 1
+        rollValue: 6
+        add: 0
+      hitChangeRollData:
+        rollTime: 1
+        rollValue: 20
+        add: 0
+      effectResistanceRollData:
+        rollTime: 1
+        rollValue: 20
+        add: 0
+      effectEffectCleanseRollData:
+        rollTime: 1
+        rollValue: 20
+        add: 0
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
@@ -123,14 +139,9 @@ MonoBehaviour:
       mpCost: 0
       range: 1
       isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: 
     - icon: {fileID: 21300000, guid: 2d0b910c24d834a48bcf21d1e71e5cae, type: 3}
       name: "N\xE9m \u0110\xE1"
@@ -138,14 +149,9 @@ MonoBehaviour:
       mpCost: 0
       range: 8
       isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: "Khi\u1EBFn thi\u1EBFt nh\xE2n \u0111\u1EE9ng ngay s\xE1t c\xF9ng
         t\u1EA5n c\xF4ng k\u1EBB \u0111\u1ECBch b\u1EB1ng c\xE1ch n\xE9m \u0111\xE1
         (roll 1d20. >= 10 th\xEC n\xE9m \u0111\xE1.)"
@@ -155,14 +161,9 @@ MonoBehaviour:
       mpCost: 6
       range: 2
       isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: "T\xF3m l\u1EA5y k\u1EBB \u0111\u1ECBch, sau \u0111\xF3 nh\u1ED5
         m\u1ED9t h\u1EA1t nh\xE2n v\xE0o mi\u1EC7ng \u0111\u1ED1i ph\u01B0\u01A1ng.
         C\xE1c thi\u1EBFt nh\xE2n \u0111\u1EE9ng c\u1EA1nh c\xF3 c\u01A1 h\u1ED9i
@@ -174,14 +175,9 @@ MonoBehaviour:
       mpCost: 0
       range: 0
       isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: 
     - icon: {fileID: 21300000, guid: 490dcf1da86c8754e8e730f264d4fe25, type: 3}
       name: "N\xE9m \u0110\xE1"
@@ -189,14 +185,9 @@ MonoBehaviour:
       mpCost: 0
       range: 0
       isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: 
     - icon: {fileID: 21300000, guid: 096d26e94d1059447814c91e19e64908, type: 3}
       name: 
@@ -204,14 +195,9 @@ MonoBehaviour:
       mpCost: 0
       range: 0
       isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: 
     combatSkill:
     - icon: {fileID: 21300000, guid: 9bf0eafd57dc5c5489f2b349bb9e4af8, type: 3}
@@ -220,14 +206,9 @@ MonoBehaviour:
       mpCost: 0
       range: 1
       isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: 
     - icon: {fileID: 21300000, guid: 1bfc139fd02cce54e893d0a7c16f72d3, type: 3}
       name: "N\xE9m \u0110\xE1"
@@ -235,14 +216,9 @@ MonoBehaviour:
       mpCost: 0
       range: 3
       isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: "Tr\xF3i \u0111\u1ED1i th\u1EE7 b\u1EB1ng t\u01A1 th\u1ECBt, khi\u1EBFn
         \u0111\u1ED1i ph\u01B0\u01A1ng b\u1EA5t \u0111\u1ED9ng. G\xE2y s\xE1t th\u01B0\u01A1ng
         d\u1EF1a tr\xEAn s\u1ED1 thi\u1EBFt nh\xE2n \u0111\u1EE9ng c\u1EA1nh. C\xE1c
@@ -256,14 +232,9 @@ MonoBehaviour:
       mpCost: 6
       range: 0
       isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
       damageType: 4
-      effectIndex: 0
-      buffType: 0
-      hasApplyDamage: 1
-      damageConfig:
-        rollTime: 0
-        rollValue: 0
-        add: 0
       description: "Nh\u1ED5 h\u1EA1t nh\xE2n v\u1EC1 ph\xEDa \u0111\u1ECBch, ch\u1EB7n
         \u0111\xF2n \u0111\xE1nh c\u1EE7a \u0111\u1ED1i th\u1EE7. M\xE1u \u0111\u1ED9c
         c\u1EE7a Thi\u1EBFt Nh\xE2n v\u1EA3y ra ngo\xE0i g\xE2y b\u1ECFng, v\xE0
@@ -295,5 +266,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8c6a644fad47c0ab8aa0cd8d58090c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5615948485166004989 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5687476869882378970, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 216772500856537127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1091285681089268413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1993e832f614006b2d94a622ea69097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

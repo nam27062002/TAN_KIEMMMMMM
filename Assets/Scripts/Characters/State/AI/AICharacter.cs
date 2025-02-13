@@ -18,6 +18,10 @@ public abstract class AICharacter : Character
     public override void SetMainCharacter()
     {
         base.SetMainCharacter();
+    }
+
+    public void HandleAIPlayCoroutine()
+    {
         Invoke(nameof(HandleAIPlay), 1f);
     }
 

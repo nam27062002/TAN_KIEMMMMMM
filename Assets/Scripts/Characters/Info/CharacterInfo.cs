@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class CharacterInfo
 {
@@ -46,6 +47,9 @@ public class CharacterInfo
 
     public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.EffectType == EffectType.BlockSkill);
     private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep);
+    private bool HasStunEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Stun);
+    
+    private bool MustEndTurn => HasSleepEffect || HasStunEffect;
 
     // Action
     public event EventHandler<int> OnHpChanged;
@@ -179,6 +183,7 @@ public class CharacterInfo
             EffectInfo.Effects.Remove(effect);
         }
         HandleEffectCleanse();
+        HandleApplyEffectBeforeNewRound();
         Character.uiFeedback.UpdateEffectIcons();
     }
 
@@ -288,18 +293,9 @@ public class CharacterInfo
 
     public void CheckEffectAfterReceiveDamage()
     {
-        // check sleep
-        HandleSleepEffect();
-    }
 
-    private void HandleSleepEffect()
-    {
-        if (HasSleepEffect)
-        {
-            //
-        }
     }
-
+    
     private void HandleEffectCleanse()
     {
         foreach (var item in EffectInfo.Effects.ToList())
@@ -308,11 +304,39 @@ public class CharacterInfo
             var effectCleanse = _roll.GetEffectCleanse();
             var baseEffectCleanse = value.Item2;
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{item.EffectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
+#if !ALWAY_APPLY_EFFECT
             if (effectCleanse >= baseEffectCleanse) continue;
-            EffectInfo.Effects.Remove(item);
+                    EffectInfo.Effects.Remove(item);
+#endif
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Removed effect: {item.EffectType}");
         }    
+    }
+
+    private void HandleApplyEffectBeforeNewRound()
+    {
+        foreach (var item in EffectInfo.Effects.ToList())
+        {
+            if (item.EffectType == EffectType.Immobilize)
+            {
+                var damage = Roll.RollDice(1, 6, 0);
+                HandleHpChanged(-damage);
+                Debug.Log($"[{Character.characterConfig.characterName}] - Mổng Yểm: Damage = 1d6 = {damage}");
+            }
+        }
+
+        if (MustEndTurn)
+        {
+            Debug.Log($"[{Character.characterConfig.characterName}] sleep = {HasSleepEffect} or stun = {HasStunEffect} => End turn");
+            GameplayManager.Instance.HandleEndTurn();
+        }
+        else
+        {
+            if (Character.Type == Type.AI)
+            {
+                ((AICharacter)Character).HandleAIPlayCoroutine();
+            }
+        }
     }
     
     private void ApplyEffect(Dictionary<EffectType, int> effects)
@@ -471,7 +495,9 @@ public class CharacterInfo
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Immobilize].Item1;
         AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 15: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+#if !ALWAY_APPLY_EFFECT
         if (effectResistance < baseEffectResistance)
+#endif
         {
             EffectInfo.AddEffect(new EffectData()
             {
@@ -497,7 +523,9 @@ public class CharacterInfo
     private void ApplyPoisonPowder()
     {
         var rollData = Roll.RollDice(1, 20, 0);
+#if !ALWAY_APPLY_EFFECT
         if (rollData < 10)
+#endif
         {
             EffectInfo.AddEffect(new EffectData()
             {
@@ -551,7 +579,9 @@ public class CharacterInfo
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Sleep].Item1;
         AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff4: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
-        // if (effectResistance >= baseEffectResistance) return;
+#if !ALWAY_APPLY_EFFECT
+        if (effectResistance >= baseEffectResistance) return;
+#endif
         EffectInfo.AddEffect(new EffectData()
         {
             EffectType = EffectType.Sleep,
