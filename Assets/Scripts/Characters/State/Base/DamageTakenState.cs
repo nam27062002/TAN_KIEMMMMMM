@@ -67,7 +67,7 @@
             WaitForCounter = _damageTakenParams.WaitCounter,
         });
         Character.ChangeState(ECharacterState.Idle);
-        Character.CharacterInfo.CheckEffectAfterReceiveDamage();
+        Character.CharacterInfo.CheckEffectAfterReceiveDamage(_damageTakenParams);
         AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} set DamageTakenFinished");
     }
     

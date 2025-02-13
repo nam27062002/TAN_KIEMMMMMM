@@ -291,9 +291,19 @@ public class CharacterInfo
         Character.uiFeedback.UpdateEffectIcons();
     }
 
-    public void CheckEffectAfterReceiveDamage()
+    public void CheckEffectAfterReceiveDamage(DamageTakenParams damageTakenParams)
     {
-
+        // remove all sleep
+        if (!damageTakenParams.Effects.ContainsKey(EffectType.Sleep))
+        {
+            if (EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep))
+            {
+                EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.Sleep);
+                AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] nhận damage => removed effect: Sleep");
+            }
+        }
+        
+        Character.uiFeedback.UpdateEffectIcons();
     }
     
     private void HandleEffectCleanse()
@@ -389,6 +399,11 @@ public class CharacterInfo
         if (effects.TryGetValue(EffectType.Sleep, out var _))
         {
             ApplySleep();
+        }
+        
+        if (effects.TryGetValue(EffectType.Stun, out var _))
+        {
+            ApplyStun();
         }
 
         if (effects.TryGetValue(EffectType.RedDahlia, out var _))
@@ -578,7 +593,7 @@ public class CharacterInfo
     {
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Sleep].Item1;
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff4: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 4: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
 #if !ALWAY_APPLY_EFFECT
         if (effectResistance >= baseEffectResistance) return;
 #endif
@@ -589,6 +604,23 @@ public class CharacterInfo
         });
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Sleep}");
+    }
+    
+    private void ApplyStun()
+    {
+        var effectResistance = _roll.GetEffectResistance();
+        var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Stun].Item1;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 14: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+#if !ALWAY_APPLY_EFFECT
+        if (effectResistance >= baseEffectResistance) return;
+#endif
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.Stun,
+            Duration = EffectConfig.DebuffRound,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Stun}");
     }
     #endregion
 
