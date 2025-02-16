@@ -425,6 +425,11 @@ public class CharacterInfo
         {
             ApplyNightCactus();
         }
+
+        if (effects.TryGetValue(EffectType.RemoveAllPoisonPowder, out var _))
+        {
+            ApplyRemoveAllPoisonPowder();
+        }
     }
 
     private void ApplyIncreaseDamage(int damage)
@@ -621,6 +626,11 @@ public class CharacterInfo
         });
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Stun}");
+    }
+
+    private void ApplyRemoveAllPoisonPowder()
+    {
+        EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.PoisonPowder);
     }
     #endregion
 

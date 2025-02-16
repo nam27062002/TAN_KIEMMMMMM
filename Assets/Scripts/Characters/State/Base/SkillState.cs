@@ -7,16 +7,16 @@ public class SkillState : CharacterState
 {
     public override string NameState { get; set; } = "Skill";
 
-    private readonly Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>> _damageParamsHandlers;
+    private readonly Dictionary<(SkillTurnType, SkillIndex), Func<Character, DamageTakenParams>> _damageParamsHandlers;
     private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
-    private SkillStateParams _skillStateParams;
+    protected SkillStateParams _skillStateParams;
     protected readonly List<Character> TargetCharacters = new();
     private bool _waitForFeedback = false;
     protected bool WaitForReact = false;
 
     public SkillState(Character character) : base(character)
     {
-        _damageParamsHandlers = new Dictionary<(SkillTurnType, SkillIndex), Func<DamageTakenParams>>
+        _damageParamsHandlers = new Dictionary<(SkillTurnType, SkillIndex), Func<Character, DamageTakenParams>>
         {
             { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill1), GetDamageParams_Skill1_MyTurn },
             { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill2), GetDamageParams_Skill2_MyTurn },
@@ -32,6 +32,8 @@ public class SkillState : CharacterState
             { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill3), GetDamageParams_Skill3_EnemyTurn },
             { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill4), GetDamageParams_Skill4_EnemyTurn }
         };
+
+
 
         _targetCharacterActions = new Dictionary<(SkillTurnType, SkillIndex), Action>
         {
@@ -123,11 +125,11 @@ public class SkillState : CharacterState
 
     //=======================================================================
     // Damage & Damage Params
-    protected virtual DamageTakenParams GetDamageParams()
+    protected virtual DamageTakenParams GetDamageParams(Character character)
     {
         var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
         var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler)
-            ? handler()
+            ? handler(character)
             : new DamageTakenParams();
 
         return new DamageTakenParams
@@ -163,7 +165,7 @@ public class SkillState : CharacterState
 
 #if ALWAY_APPLY_EFFECT
                     if (hitChangeParams.HitChangeValue < dodge && Character.Type == Type.AI)
-#else
+#else 
                     if (hitChangeParams.HitChangeValue < dodge)
 #endif
                     {
@@ -179,13 +181,13 @@ public class SkillState : CharacterState
                     }
                     else
                     {
-                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams()));
+                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams(target)));
                         _waitForFeedback = true;
                     }
                 }
                 else
                 {
-                    var damageParams = GetDamageParams();
+                    var damageParams = GetDamageParams(target);
                     damageParams.CanCounter = false;
                     CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
                 }
@@ -257,47 +259,47 @@ public class SkillState : CharacterState
     #region Skill Damage Params
 
     //===================== SKILL 1 =====================
-    protected virtual DamageTakenParams GetDamageParams_Skill1_MyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill1_MyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill1_TeammateTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill1_TeammateTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill1_EnemyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill1_EnemyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
     //===================== SKILL 2 =====================
-    protected virtual DamageTakenParams GetDamageParams_Skill2_MyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill2_TeammateTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill2_EnemyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
     //===================== SKILL 3 =====================
-    protected virtual DamageTakenParams GetDamageParams_Skill3_MyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill3_TeammateTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill3_EnemyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
     //===================== SKILL 4 =====================
-    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill4_TeammateTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
-    protected virtual DamageTakenParams GetDamageParams_Skill4_EnemyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
     //===================== PASSIVE SKILL 2 =====================
-    protected virtual DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn() =>
+    protected virtual DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
 
     #endregion

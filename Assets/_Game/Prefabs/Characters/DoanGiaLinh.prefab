@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ff9fc305941dee14baed9406ef3dc8b8, type: 2}
+    - target: {fileID: 5687476869882378970, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 2203334176055078997}
     - target: {fileID: 7330223302066570300, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 1.116
@@ -185,7 +189,7 @@ MonoBehaviour:
       mpCost: 4
       range: 6
       isDirectionalSkill: 0
-      canOverrideSetTargetCharacters: 0
+      canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
       description: "Thi\u1EBFt Kho\xE1i T\u1EED (Winter Rose): thu h\u1ED3i \u0111\u1ED9c
@@ -243,7 +247,7 @@ MonoBehaviour:
       mpCost: 4
       range: 6
       isDirectionalSkill: 0
-      canOverrideSetTargetCharacters: 0
+      canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 2
       description: "H\u1ED3ng Ti (Red Dodder): thu h\u1ED3i \u0111\u1ED9c ph\u1EA5n
@@ -296,8 +300,8 @@ MonoBehaviour:
       mpCost: 4
       range: 6
       isDirectionalSkill: 0
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
+      canOverrideSetTargetCharacters: 1
+      canBlockDamage: 1
       damageType: 4
       description: "Kim T\u01B0\u1EDBc Mai (Sundews): thu h\u1ED3i \u0111\u1ED9c
         ph\u1EA5n t\u1EEB k\u1EBB \u0111ang t\u1EA5n c\xF4ng m\xECnh, gi\u1EA3m to\xE0n
@@ -318,6 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 2203334176055078997}
+  hpPerParasite: 3
 --- !u!114 &4460552136440462341 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2868514981145055145, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

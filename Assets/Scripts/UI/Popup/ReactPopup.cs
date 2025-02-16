@@ -28,8 +28,8 @@ public class ReactPopup : PopupBase
         base.Open(parameters);
         if (parameters is not ReactPopupParameters reactPopupParameters) return;
         _reactPopupParameters = reactPopupParameters;
-        OnConfirm += reactPopupParameters.OnConfirm;
-        OnCancel += reactPopupParameters.OnCancel;
+        OnConfirm = reactPopupParameters.OnConfirm;
+        OnCancel = reactPopupParameters.OnCancel;
     }
     
     private void OnConfirmClicked()
@@ -44,7 +44,5 @@ public class ReactPopup : PopupBase
         if (GameplayManager.Instance.IsTutorialLevel) return;
         OnCancel?.Invoke();
         Close();
-        OnConfirm -= _reactPopupParameters.OnConfirm;
-        OnCancel -= _reactPopupParameters.OnCancel;
     }
 }

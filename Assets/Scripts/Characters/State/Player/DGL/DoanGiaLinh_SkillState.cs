@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class DoanGiaLinh_SkillState : SkillState
 {
@@ -24,7 +25,7 @@ public class DoanGiaLinh_SkillState : SkillState
 
     //===================== SKILL 1 =====================
 
-    protected override DamageTakenParams GetDamageParams_Skill2_MyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         ApplyPoisonPowder();
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Nhiên Huyết");
@@ -39,7 +40,7 @@ public class DoanGiaLinh_SkillState : SkillState
         };
     }
 
-    protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
         ApplyPoisonPowder();
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Mộng Yểm");
@@ -53,7 +54,7 @@ public class DoanGiaLinh_SkillState : SkillState
         };
     }
 
-    protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn()
+    protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
         ApplyPoisonPowder();
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Băng Hoại");
@@ -67,7 +68,7 @@ public class DoanGiaLinh_SkillState : SkillState
     }
 
     //===================== SKILL 2 =====================
-    protected override DamageTakenParams GetDamageParams_Skill3_MyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
         ApplyPoisonPowder();
         var baseDamage = GetBaseDamage();
@@ -86,7 +87,7 @@ public class DoanGiaLinh_SkillState : SkillState
         };
     }
 
-    protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn()
+    protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
     {
         ApplyPoisonPowder();
         var baseDamage = GetBaseDamage();
@@ -106,7 +107,7 @@ public class DoanGiaLinh_SkillState : SkillState
         };
     }
 
-    protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
         ApplyPoisonPowder();
         var baseDamage = GetBaseDamage();
@@ -124,5 +125,85 @@ public class DoanGiaLinh_SkillState : SkillState
                 { EffectType.Marigold , 0}
             }
         };
+    }
+    
+    protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
+    {
+        ApplyPoisonPowder();
+        var baseDamage = GetBaseDamage();
+        var skillDamage = Roll.RollDice(1, 4, 0);
+        var realDamage = baseDamage + skillDamage;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * stack(chưa xử lí stack) = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        
+        return new DamageTakenParams()
+        {
+            Damage = realDamage,
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.ReduceChiDef , 0},
+                { EffectType.RemoveAllPoisonPowder , 0}
+            }
+        };
+    }
+    
+    protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
+    {
+        ApplyPoisonPowder();
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Hồng Ti");
+        
+        return new DamageTakenParams()
+        {
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.RemoveAllPoisonPowder , 0}
+            }
+        };
+    }
+    
+    protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
+    {
+        ApplyPoisonPowder();
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Kim Tước Mai");
+        
+        return new DamageTakenParams()
+        {
+            Effects = new Dictionary<EffectType, int>()
+            {
+                { EffectType.RemoveAllPoisonPowder , 0}
+            }
+        };
+    }
+    
+    //===================== SKILL 4 =====================
+    protected override void SetTargetCharacters_Skill4_MyTurn()
+    {
+        var validCharacters = GameplayManager.Instance.MapManager
+            .GetCharactersInRange(Character.CharacterInfo.Cell, _skillStateParams.SkillInfo)
+            .Where(character => character.CharacterInfo.EffectInfo.Effects
+                .Any(effect => effect.EffectType == EffectType.PoisonPowder));
+
+        foreach (var character in validCharacters)
+        {
+            AddTargetCharacters(character);
+        }
+    }
+    
+    protected override void SetTargetCharacters_Skill4_TeammateTurn()
+    {
+        var validCharacters = GameplayManager.Instance.MapManager
+            .GetCharactersInRange(Character.CharacterInfo.Cell, _skillStateParams.SkillInfo)
+            .Where(character => character.CharacterInfo.EffectInfo.Effects
+                .Any(effect => effect.EffectType == EffectType.PoisonPowder));
+
+        foreach (var character in validCharacters)
+        {
+            AddTargetCharacters(character);
+        }
+    }
+    
+    protected override void SetTargetCharacters_Skill4_EnemyTurn()
+    {
+        AddTargetCharacters(GpManager.MainCharacter);
     }
 }

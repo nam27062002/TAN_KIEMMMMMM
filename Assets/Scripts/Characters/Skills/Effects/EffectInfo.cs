@@ -52,4 +52,6 @@ public enum EffectType
     Marigold = 13,
     WhiteLotus = 14,
     NightCactus = 15,
+    ReduceChiDef = 16,
+    RemoveAllPoisonPowder = 17,
 }

@@ -2244,7 +2244,7 @@ MonoBehaviour:
     highlightType: 1
     highlightObject: {fileID: 1597481208187390316}
   button: {fileID: 7257548803623565176}
-  skillIndex: 0
+  skillIndex: 1
 --- !u!224 &2756952727371338728 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3413386593865831237, guid: f7aa26115c0b19a42b3c6bd91ba1b835, type: 3}

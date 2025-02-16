@@ -9,7 +9,7 @@ public class LyVoDanh_SkillState : SkillState
     #region Skill
     
     //=====================SKILL 1=====================================
-    protected override DamageTakenParams GetDamageParams_Skill1_MyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill1_MyTurn(Character character)
     {
         return new DamageTakenParams
         {
@@ -21,7 +21,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
 
-    protected override DamageTakenParams GetDamageParams_Skill1_TeammateTurn()
+    protected override DamageTakenParams GetDamageParams_Skill1_TeammateTurn(Character character)
     {
         return new DamageTakenParams
         {
@@ -33,7 +33,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
 
-    protected override DamageTakenParams GetDamageParams_Skill1_EnemyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill1_EnemyTurn(Character character)
     {
         return new DamageTakenParams
         {
@@ -45,7 +45,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
 
-    protected override DamageTakenParams GetDamageParams_Skill2_MyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var skillDamage = (int)(Roll.RollDice(1,6, 3) * 1.5f);
@@ -64,7 +64,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
     
-    protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn()
+    protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var skillDamage = (int)(Roll.RollDice(1,6, 3) * 1.5f);
@@ -82,7 +82,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
     
-    protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var skillDamage = (int)(Roll.RollDice(1,6, 3) * 1.5f);
@@ -100,7 +100,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
     
-    protected override DamageTakenParams GetDamageParams_Skill3_MyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
         var increaseDamage = Character.CharacterInfo.CurrentHp / 10;
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp}*10% = {increaseDamage}");
@@ -113,7 +113,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
     //=====================SKILL 4=====================================
-    protected override DamageTakenParams GetDamageParams_Skill4_MyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var rollDamage = Roll.RollDice(2, 4, 2);
@@ -129,7 +129,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
     
-    protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn()
+    protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var rollDamage = Roll.RollDice(2, 4, 2);
@@ -145,7 +145,7 @@ public class LyVoDanh_SkillState : SkillState
         };
     }
     
-    protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn()
+    protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var rollDamage = Roll.RollDice(2, 4, 2);
@@ -162,7 +162,7 @@ public class LyVoDanh_SkillState : SkillState
     }
 
     //===================== Passtive Skill =====================================
-    protected override DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn()
+    protected override DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Toàn Phong: damage = {baseDamage}");
