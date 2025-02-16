@@ -32,16 +32,16 @@ public class Roll
     public int GetEffectResistance()
     {
         var rollData = _attributes.effectResistanceRollData; 
-        var effectResistance = RollDice(rollData, _characterInfo.Attributes.chiDef / 4 + 5);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} + 5 = {effectResistance}");
+        var effectResistance = RollDice(rollData, _characterInfo.CalculateChiDef() / 4 + 5);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.CalculateChiDef() / 4} + 5 = {effectResistance}");
         return effectResistance;
     }
 
     public int GetEffectCleanse()
     {
         var rollData = _attributes.effectEffectCleanseRollData; 
-        var effectCleanse = RollDice(rollData, _characterInfo.Attributes.chiDef / 4);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Giải hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.Attributes.chiDef / 4} = {effectCleanse}");
+        var effectCleanse = RollDice(rollData, _characterInfo.CalculateChiDef() / 4);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Giải hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.CalculateChiDef() / 4} = {effectCleanse}");
         return effectCleanse;
     }
     

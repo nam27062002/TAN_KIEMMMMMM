@@ -136,6 +136,15 @@ public class CharacterInfo
         return baseValue + moveBuff;
     }
 
+    public int CalculateChiDef()
+    {
+        var chiDef = Attributes.chiDef;
+        var buff =  EffectInfo.Effects
+            .Where(e => e.EffectType == EffectType.ReduceChiDef)
+            .Sum(e => ((ChangeStatEffect)e).Value);
+        return chiDef - buff;
+    }
+
     private int CalculateMoveReduction()
     {
         var totalReduction = 0;
@@ -430,8 +439,32 @@ public class CharacterInfo
         {
             ApplyRemoveAllPoisonPowder();
         }
+        if (effects.TryGetValue(EffectType.ReduceChiDef, out var value))
+        {
+            ApplyReduceChiDef(value);
+        }
     }
 
+    private void ApplyReduceChiDef(int value)
+    {
+        var effectResistance = _roll.GetEffectResistance();
+        var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.ReduceChiDef].Item1;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 7: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+#if !ALWAY_APPLY_EFFECT
+        if (effectResistance < baseEffectResistance)
+#endif
+        {
+            EffectInfo.AddEffect(new ChangeStatEffect()
+            {
+                Value =  value,
+                EffectType = EffectType.ReduceChiDef,
+                Duration = EffectConfig.DebuffRound,
+            });
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Added effect: {EffectType.ReduceChiDef}");
+        }
+    }
+    
     private void ApplyIncreaseDamage(int damage)
     {
         if (damage == 0) return;
@@ -631,6 +664,11 @@ public class CharacterInfo
     private void ApplyRemoveAllPoisonPowder()
     {
         EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.PoisonPowder);
+    }
+
+    public int GetPoisonPowder()
+    {
+        return EffectInfo.Effects.Count(p => p.EffectType == EffectType.PoisonPowder);
     }
     #endregion
 

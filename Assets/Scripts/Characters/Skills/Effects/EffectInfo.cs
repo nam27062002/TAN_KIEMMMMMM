@@ -19,6 +19,7 @@ public class EffectInfo
         EffectType.Immobilize,
         EffectType.Stun,
         EffectType.Sleep,
+        EffectType.ReduceChiDef,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -26,6 +27,7 @@ public class EffectInfo
         { EffectType.Immobilize , (15, 15)},
         { EffectType.Stun, (10, 10)},
         { EffectType.Sleep, (10, 10)},
+        { EffectType.ReduceChiDef, (15, 15)}
     };
 
     public void AddEffect(EffectData effect)

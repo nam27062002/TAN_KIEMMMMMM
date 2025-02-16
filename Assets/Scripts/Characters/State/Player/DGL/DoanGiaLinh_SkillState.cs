@@ -132,8 +132,9 @@ public class DoanGiaLinh_SkillState : SkillState
         ApplyPoisonPowder();
         var baseDamage = GetBaseDamage();
         var skillDamage = Roll.RollDice(1, 4, 0);
-        var realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * stack(chưa xử lí stack) = {skillDamage}");
+        var stack = character.CharacterInfo.GetPoisonPowder();
+        var realDamage = baseDamage + skillDamage * stack;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * {stack} = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {skillDamage} = {realDamage}");
         
         return new DamageTakenParams()
@@ -141,7 +142,7 @@ public class DoanGiaLinh_SkillState : SkillState
             Damage = realDamage,
             Effects = new Dictionary<EffectType, int>()
             {
-                { EffectType.ReduceChiDef , 0},
+                { EffectType.ReduceChiDef , stack},
                 { EffectType.RemoveAllPoisonPowder , 0}
             }
         };
