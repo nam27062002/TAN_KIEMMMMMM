@@ -12,6 +12,6 @@ public class EffectUI : MonoBehaviour
     
     public void DestroyEffect()
     {
-        Destroy(icon.gameObject);
+        Destroy(gameObject);
     }
 }

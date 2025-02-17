@@ -4,7 +4,7 @@ public class TheAllPoisonScript : PassiveSkill
 {
     [SerializeField] private int hpPerParasite = 3;
 
-    private int _venomousParasite = 0;
+    public int VenomousParasite { get; set; } = 0;
 
     private int _damageAccumulator = 0;
 
@@ -30,7 +30,7 @@ public class TheAllPoisonScript : PassiveSkill
         _damageAccumulator %= hpPerParasite;
         if (parasitesEarned > 0)
         {
-            _venomousParasite += parasitesEarned;
+            VenomousParasite += parasitesEarned;
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Độc Điển: mất {value} máu => nhận {parasitesEarned} độc trùng");
         }
     }

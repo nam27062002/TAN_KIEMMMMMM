@@ -43,6 +43,7 @@ public class UIFeedback : MonoBehaviour
         foreach (var item in character.CharacterInfo.EffectInfo.Effects)
         {
             var go = Instantiate(effectUI.gameObject, effectsPanel);
+            go.transform.SetAsFirstSibling();
             var cpn = go.GetComponent<EffectUI>();
             cpn.Initialize(effectIcons[item.EffectType]);
             _effectUIs.Add(cpn);

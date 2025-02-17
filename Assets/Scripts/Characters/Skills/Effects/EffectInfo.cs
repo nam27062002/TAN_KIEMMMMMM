@@ -56,4 +56,5 @@ public enum EffectType
     NightCactus = 15,
     ReduceChiDef = 16,
     RemoveAllPoisonPowder = 17,
+    VenomousParasite = 18,
 }

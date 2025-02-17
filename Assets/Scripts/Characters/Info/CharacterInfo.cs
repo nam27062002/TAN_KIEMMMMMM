@@ -31,6 +31,7 @@ public class CharacterInfo
     public HashSet<Character> CharactersInSkillRange { get; set; } = new();
 
     // Stat
+    public bool IsToggleOn { get; set; } = false;
     public int Speed { get; set; }
     public CharacterAttributes Attributes { get; set; }
     public int CurrentHp { get; set; }
@@ -443,6 +444,11 @@ public class CharacterInfo
         {
             ApplyReduceChiDef(value);
         }
+
+        if (effects.TryGetValue(EffectType.VenomousParasite, out value))
+        {
+            ApplyVenomousParasite(value);
+        }
     }
 
     private void ApplyReduceChiDef(int value)
@@ -462,6 +468,23 @@ public class CharacterInfo
             });
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Added effect: {EffectType.ReduceChiDef}");
+        }
+    }
+
+    private bool IsVenomousEffect(EffectType effectType) =>
+        effectType is EffectType.RedDahlia or EffectType.Marigold or EffectType.NightCactus or EffectType.WhiteLotus;
+
+    private void ApplyVenomousParasite(int removalCount)
+    {
+        var removedCount = 0;
+        foreach (var effect in EffectInfo.Effects.ToList().Where(effect => IsVenomousEffect(effect.EffectType)))
+        {
+            EffectInfo.Effects.Remove(effect);
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+            removedCount++;
+            if (removedCount >= removalCount)
+                break;
         }
     }
     
@@ -669,6 +692,11 @@ public class CharacterInfo
     public int GetPoisonPowder()
     {
         return EffectInfo.Effects.Count(p => p.EffectType == EffectType.PoisonPowder);
+    }
+
+    public int CountFlower()
+    {
+        return EffectInfo.Effects.Count(effect => effect.EffectType is EffectType.RedDahlia or EffectType.WhiteLotus or EffectType.Marigold or EffectType.NightCactus);
     }
     #endregion
 

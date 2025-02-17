@@ -9,4 +9,5 @@ public class CharacterConfig
     public Sprite characterIcon;
     public CharacterAttributes characterAttributes;
     public SerializableDictionary<SkillTurnType, int> actionPoints = new();
+    public bool hasToggle;
 }

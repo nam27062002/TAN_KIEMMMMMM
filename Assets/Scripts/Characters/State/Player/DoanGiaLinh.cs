@@ -1,5 +1,6 @@
 ﻿public class DoanGiaLinh : PlayerCharacter
 {
+    public TheAllPoisonScript theAllPoisonScript;
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -21,5 +22,15 @@
         }
         
         CharacterInfo.Speed = 60;
-    }  
+    }
+
+    public int GetVenomousParasite()
+    {
+        return theAllPoisonScript.VenomousParasite;
+    }
+
+    public void SetVenomousParasite(int venomousParasite)
+    {
+        theAllPoisonScript.VenomousParasite = venomousParasite;
+    }
 }
