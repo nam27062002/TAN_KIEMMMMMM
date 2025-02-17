@@ -19,7 +19,7 @@ public abstract class Character : MonoBehaviour
     public SkillConfig skillConfig;
     public List<PassiveSkill> passiveSkills;
 
-    protected CharacterStateMachine StateMachine { get; set; }
+    public CharacterStateMachine StateMachine { get; set; }
 
     public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
     

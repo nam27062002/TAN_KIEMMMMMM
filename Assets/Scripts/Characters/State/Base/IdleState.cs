@@ -12,9 +12,7 @@
     {
         base.OnEnter(stateParams);
         IdleStateParams = stateParams as IdleStateParams;
-        PlayAnim(AnimationParameterNameType.Idle);
-        SetCharacterPosition();
-        SetFacing();
+        SetIdle();
     }
 
     public override void OnExit()

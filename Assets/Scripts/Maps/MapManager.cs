@@ -86,6 +86,19 @@ public class MapManager : MonoBehaviour
         var self = cell.Character;
         return GetCharacterInRange(cell, info.range).Where(c => CheckDamageTarget(c, self, info.damageType)).ToHashSet();
     }
+    
+    public HashSet<Character> GetAllTypeInRange(Cell cell, CharacterType type, int range)
+    {
+        var allCells = _pathfinding.GetHexagonsInAttack(cell, range);
+        var res = new HashSet<Character>();
+        foreach (var item in allCells.Where(item => item.CellType == CellType.Character && item.Character.characterType == type))
+        {
+            res.Add(item.Character);
+        }
+
+        res.Remove(cell.Character);
+        return res;
+    }
 
     private static bool CheckDamageTarget(Character target, Character self, DamageTargetType damageType)
     {

@@ -44,8 +44,9 @@ public abstract class CharacterState : IState
         Character.SetCell(cell);
     }
     
-    protected void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
+    public void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
     {
+        onEndAnim ??= SetIdle;
         Character.AnimationData.PlayAnimation(animationParameterNameType, onEndAnim);
     }
 
@@ -56,6 +57,13 @@ public abstract class CharacterState : IState
         var pos = Info.Cell.transform.position;
         pos.y += Character.characterConfig.characterHeight / 2f;
         Transform.position = pos;
+    }
+
+    public void SetIdle()
+    {
+        PlayAnim(AnimationParameterNameType.Idle);
+        SetCharacterPosition();
+        SetFacing();
     }
 
     #endregion

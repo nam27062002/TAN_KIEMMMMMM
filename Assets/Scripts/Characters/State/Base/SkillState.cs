@@ -337,7 +337,7 @@ public class SkillState : CharacterState
 
     #endregion
 
-    private static AnimationParameterNameType GetAnimByIndex(SkillIndex index)
+    protected static AnimationParameterNameType GetAnimByIndex(SkillIndex index)
     {
         return index switch
         {

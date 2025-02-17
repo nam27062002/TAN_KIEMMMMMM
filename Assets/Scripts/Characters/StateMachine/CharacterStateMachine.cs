@@ -9,6 +9,7 @@ public class CharacterStateMachine : StateMachine
     private SkillState SkillState {get; set;}
 
     private readonly Dictionary<ECharacterState, CharacterState> _characterStates = new();
+    public CharacterState GetCurrentState => (CharacterState)CurrentState;
     
     public CharacterStateMachine(Character character, IdleState idleState, MoveState moveState, DamageTakenState damageTakenState, SkillState skillState)
     {
@@ -35,6 +36,7 @@ public class CharacterStateMachine : StateMachine
         if (CurrentState != null) 
             AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"{Character.characterConfig.characterName}: [{CurrentState?.NameState}] => [{newState?.NameState}]");
     }
+    
 }
 
 public enum ECharacterState
