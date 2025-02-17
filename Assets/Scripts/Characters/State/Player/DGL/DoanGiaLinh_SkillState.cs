@@ -17,7 +17,7 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         ((DoanGiaLinh)Character).SetVenomousParasite(venomousParasite);
     }
-    
+
     private void ApplyPoisonPowder(Character target)
     {
         var allCharacters = new List<Character>(GpManager.Characters);
@@ -26,29 +26,39 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             other.CharacterInfo.OnDamageTaken(new DamageTakenParams
             {
-                Effects = new Dictionary<EffectType, int>
+                Effects = new List<EffectData>()
                 {
-                    { EffectType.PoisonPowder, 0 }
+                    new()
+                    {
+                        EffectType = EffectType.PoisonPowder,
+                        Duration = 0,
+                    },
                 }
             });
         }
     }
 
-    private int ApplyVenomousParasiteExtraDamage(Character target, int currentDamage, Dictionary<EffectType, int> effects)
-    {
-        int flower = target.CharacterInfo.CountFlower();
-        int venomousParasite = GetVenomousParasite();
-        if (flower > 0 && venomousParasite > 0 && Character.CharacterInfo.IsToggleOn)
+    private int ApplyVenomousParasiteExtraDamage(Character target, int currentDamage, List<EffectData> effects)
         {
-            int value = Mathf.Min(flower, venomousParasite);
-            SetVenomousParasite(flower - value);
-            effects[EffectType.VenomousParasite] = value;
-            int extraDamage = Roll.RollDice(1, 6, 0) * value;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng ăn hoa: damage = {value} * 1d6 = {extraDamage}");
-            return currentDamage + extraDamage;
+            int flower = target.CharacterInfo.CountFlower();
+            int venomousParasite = GetVenomousParasite();
+            if (flower > 0 && venomousParasite > 0 && Character.CharacterInfo.IsToggleOn)
+            {
+                int value = Mathf.Min(flower, venomousParasite);
+                SetVenomousParasite(flower - value);
+                effects.Add(new EffectData()
+                {
+                    EffectType = EffectType.VenomousParasite,
+                    Duration = value,
+                });
+                int extraDamage = Roll.RollDice(1, 6, 0) * value;
+                AlkawaDebug.Log(ELogCategory.SKILL,
+                    $"[{CharName}] Độc trùng ăn hoa: damage = {value} * 1d6 = {extraDamage}");
+                return currentDamage + extraDamage;
+            }
+
+            return currentDamage;
         }
-        return currentDamage;
-    }
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character target)
     {
@@ -56,12 +66,26 @@ public class DoanGiaLinh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhiên Huyết");
         return new DamageTakenParams
         {
-            Effects = new Dictionary<EffectType, int>
+            Effects = new List<EffectData>()
             {
-                { EffectType.BlockSkill, 0 },
-                { EffectType.IncreaseActionPoints, 1 },
-                { EffectType.IncreaseMoveRange, 2 }
-            }
+                new()
+                {
+                    EffectType = EffectType.BlockSkill,
+                    Duration = 0,
+                },
+                new ChangeStatEffect()
+                {
+                    EffectType = EffectType.IncreaseActionPoints,
+                    Value =  1,
+                    Duration = 1,
+                },
+                new ChangeStatEffect()
+                {
+                    EffectType = EffectType.IncreaseMoveRange,
+                    Value = 2,
+                    Duration = 1,
+                },
+            },
         };
     }
 
@@ -70,10 +94,18 @@ public class DoanGiaLinh_SkillState : SkillState
         ApplyPoisonPowder(target);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Mộng Yểm");
         int damage = 0;
-        var effects = new Dictionary<EffectType, int>
+        var effects = new List<EffectData>()
         {
-            { EffectType.Immobilize, EffectConfig.DebuffRound },
-            { EffectType.NightCactus, 0 }
+            new()
+            {
+                EffectType = EffectType.Immobilize,
+                Duration = EffectConfig.DebuffRound,
+            },
+            new()
+            {
+                EffectType = EffectType.Immobilize,
+                Duration = EffectConfig.DebuffRound,
+            },
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
         return new DamageTakenParams { Damage = damage, Effects = effects };
@@ -84,9 +116,13 @@ public class DoanGiaLinh_SkillState : SkillState
         ApplyPoisonPowder(target);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Băng Hoại");
         int damage = 0;
-        var effects = new Dictionary<EffectType, int>
+        var effects = new List<EffectData>()
         {
-            { EffectType.ReduceMoveRange, 1 }
+            new()
+            {
+                EffectType = EffectType.ReduceMoveRange,
+                Duration = 1,
+            },
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
         return new DamageTakenParams { Damage = damage, Effects = effects };
@@ -99,10 +135,15 @@ public class DoanGiaLinh_SkillState : SkillState
         int skillDamage = Roll.RollDice(1, 4, 2);
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thược Dược Đỏ: skill damage = 1d4 + 2 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thược Dược Đỏ: damage = {baseDamage} + {skillDamage} = {realDamage}");
-        var effects = new Dictionary<EffectType, int>
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Thược Dược Đỏ: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        var effects = new List<EffectData>()
         {
-            { EffectType.RedDahlia, 0 }
+            new()
+            {
+                EffectType = EffectType.RedDahlia,
+                Duration = 0,
+            },
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams { Damage = realDamage, Effects = effects };
@@ -115,11 +156,20 @@ public class DoanGiaLinh_SkillState : SkillState
         int skillDamage = Roll.RollDice(1, 4, 2);
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sen Trắng: skill damage = 1d4 + 2 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sen Trắng: damage = {baseDamage} + {skillDamage} = {realDamage}");
-        var effects = new Dictionary<EffectType, int>
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Sen Trắng: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        var effects = new List<EffectData>()
         {
-            { EffectType.WhiteLotus, 0 },
-            { EffectType.Sleep, 0 }
+            new()
+            {
+                EffectType = EffectType.WhiteLotus,
+                Duration = 0,
+            },
+            new()
+            {
+                EffectType = EffectType.Sleep,
+                Duration = 0,
+            }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams { Damage = realDamage, Effects = effects };
@@ -132,11 +182,20 @@ public class DoanGiaLinh_SkillState : SkillState
         int skillDamage = Roll.RollDice(1, 4, 2);
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Cúc Vạn Thọ: skill damage = 1d4 + 2 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Cúc Vạn Thọ: damage = {baseDamage} + {skillDamage} = {realDamage}");
-        var effects = new Dictionary<EffectType, int>
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Cúc Vạn Thọ: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        var effects = new List<EffectData>()
         {
-            { EffectType.WhiteLotus, 0 },
-            { EffectType.Sleep, 0 }
+            new()
+            {
+                EffectType = EffectType.Marigold,
+                Duration = 0,
+            },
+            new()
+            {
+                EffectType = EffectType.Sleep,
+                Duration = 0,
+            }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams { Damage = realDamage, Effects = effects };
@@ -150,12 +209,22 @@ public class DoanGiaLinh_SkillState : SkillState
         int stack = target.CharacterInfo.GetPoisonPowder();
         int totalSkillDamage = skillDamage * stack;
         int realDamage = baseDamage + totalSkillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * {stack} = {totalSkillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}");
-        var effects = new Dictionary<EffectType, int>
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * {stack} = {totalSkillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}");
+        var effects = new List<EffectData>()
         {
-            { EffectType.ReduceChiDef, stack },
-            { EffectType.RemoveAllPoisonPowder, 0 }
+            new()
+            {
+                EffectType = EffectType.ReduceChiDef,
+                Duration = stack,
+            },
+            new()
+            {
+                EffectType = EffectType.RemoveAllPoisonPowder,
+                Duration = 0,
+            }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams { Damage = realDamage, Effects = effects };
@@ -167,9 +236,13 @@ public class DoanGiaLinh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Hồng Ti");
         return new DamageTakenParams
         {
-            Effects = new Dictionary<EffectType, int>
+            Effects = new List<EffectData>()
             {
-                { EffectType.RemoveAllPoisonPowder, 0 }
+                new()
+                {
+                    EffectType = EffectType.RemoveAllPoisonPowder,
+                    Duration = 0,
+                }
             }
         };
     }
@@ -180,9 +253,13 @@ public class DoanGiaLinh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Kim Tước Mai");
         return new DamageTakenParams
         {
-            Effects = new Dictionary<EffectType, int>
+            Effects = new List<EffectData>()
             {
-                { EffectType.RemoveAllPoisonPowder, 0 }
+                new()
+                {
+                    EffectType = EffectType.RemoveAllPoisonPowder,
+                    Duration = 0,
+                }
             }
         };
     }

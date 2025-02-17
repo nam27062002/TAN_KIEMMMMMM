@@ -14,9 +14,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = GetBaseDamage(),
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BreakBloodSealDamage , 1}
+                new()
+                {
+                    EffectType = EffectType.BreakBloodSealDamage ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -26,9 +30,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = GetBaseDamage(),
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BreakBloodSealDamage , 1}
+                new()
+                {
+                    EffectType = EffectType.BreakBloodSealDamage ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -38,9 +46,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = GetBaseDamage(),
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BreakBloodSealDamage , 1}
+                new()
+                {
+                    EffectType = EffectType.BreakBloodSealDamage ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -57,9 +69,13 @@ public class LyVoDanh_SkillState : SkillState
         {
             Damage = realDamage,
             ReducedMana = reducedMana,
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BloodSealEffect , 1}
+                new()
+                {
+                    EffectType = EffectType.BloodSealEffect ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -75,9 +91,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = realDamage,
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BloodSealEffect , 1}
+                new()
+                {
+                    EffectType = EffectType.BloodSealEffect ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -93,23 +113,32 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = realDamage,
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BloodSealEffect , 1}
+                new()
+                {
+                    EffectType = EffectType.BloodSealEffect ,
+                    Duration = 1
+                }
             }
         };
     }
     
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
-        var increaseDamage = Character.CharacterInfo.CurrentHp / 10;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp}*10% = {increaseDamage}");
+        var increaseDamage = Utils.RoundNumber(Character.CharacterInfo.CurrentHp * 1f/ 10);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp} * 10% = {increaseDamage}");
         return new DamageTakenParams
         {
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                {EffectType.IncreaseDamage, increaseDamage },
-            },
+                new ChangeStatEffect()
+                {
+                    EffectType = EffectType.IncreaseDamage,
+                    Value = increaseDamage,
+                    Duration = EffectConfig.BuffRound,
+                }
+            }
         };
     }
     //=====================SKILL 4=====================================
@@ -122,9 +151,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = realDamage,
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BreakBloodSealDamage , 1}
+                new()
+                {
+                    EffectType = EffectType.BreakBloodSealDamage ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -138,9 +171,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = realDamage,
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BreakBloodSealDamage , 1}
+                new()
+                {
+                    EffectType = EffectType.BreakBloodSealDamage ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -154,9 +191,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = realDamage,
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BreakBloodSealDamage , 1}
+                new()
+                {
+                    EffectType = EffectType.BreakBloodSealDamage ,
+                    Duration = 1
+                }
             }
         };
     }
@@ -169,9 +210,13 @@ public class LyVoDanh_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = baseDamage,
-            Effects = new Dictionary<EffectType, int>()
+            Effects = new List<EffectData>()
             {
-                { EffectType.BreakBloodSealDamage , 1}
+                new()
+                {
+                    EffectType = EffectType.BreakBloodSealDamage ,
+                    Duration = 1
+                }
             }
         };
     }

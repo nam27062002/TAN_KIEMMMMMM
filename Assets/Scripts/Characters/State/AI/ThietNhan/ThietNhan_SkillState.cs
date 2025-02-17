@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class ThietNhan_SkillState : AISkillState
@@ -47,9 +48,13 @@ public class ThietNhan_SkillState : AISkillState
         return new DamageTakenParams
         {
             Damage = totalDamage,
-            Effects = new Dictionary<EffectType, int>
+            Effects = new List<EffectData>()
             {
-                { EffectType.Poison, EffectConfig.DebuffRound }
+                new()
+                {
+                    EffectType = EffectType.Poison,
+                    Duration = EffectConfig.DebuffRound
+                }
             }
         };
     }
@@ -57,17 +62,25 @@ public class ThietNhan_SkillState : AISkillState
     
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
-        var baseDamage = GetBaseDamage();
-        var skillDamage = Roll.RollDice(1, 4, 0);
-        var realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Ném Đá: Skill Damage = 1d4 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Ném Đá: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        int baseDamage = GetBaseDamage();
+        int skillDamage = Roll.RollDice(1, 4, 0);
+        var friends = GpManager.MapManager.GetAllTypeInRange(Info.Cell, CharacterType.ThietNhan, 3);
+        skillDamage += 1 * friends.Count;
+        int totalDamage = baseDamage + skillDamage;
+        
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: có {friends.Count} Thiết Nhân đứng cạnh trong 3 ô");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: Skill Damage = 1d4 + 1 * {friends.Count} = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: damage = {baseDamage} + {skillDamage} = {totalDamage}");
         return new DamageTakenParams
         {
-            Damage = realDamage,
-            Effects =  new Dictionary<EffectType, int>()
+            Damage = totalDamage,
+            Effects = new List<EffectData>
             {
-                { EffectType.Poison, EffectConfig.DebuffRound}
+               new()
+               {
+                   EffectType = EffectType.Poison,
+                   Duration = EffectConfig.DebuffRound
+               }
             }
         };
     }

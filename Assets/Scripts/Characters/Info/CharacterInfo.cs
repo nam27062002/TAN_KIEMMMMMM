@@ -304,7 +304,7 @@ public class CharacterInfo
     public void CheckEffectAfterReceiveDamage(DamageTakenParams damageTakenParams)
     {
         // remove all sleep
-        if (!damageTakenParams.Effects.ContainsKey(EffectType.Sleep))
+        if (damageTakenParams.Effects.All(p => p.EffectType != EffectType.Sleep))
         {
             if (EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep))
             {
@@ -370,100 +370,103 @@ public class CharacterInfo
         }
     }
     
-    private void ApplyEffect(Dictionary<EffectType, int> effects)
+    private void ApplyEffect(List<EffectData> effects)
     {
-        if (effects.TryGetValue(EffectType.IncreaseDamage, out var damage))
+        foreach (var effect in effects)
         {
-            ApplyIncreaseDamage(damage);
-        }
+            if (effect.EffectType == EffectType.IncreaseDamage)
+            {
+                ApplyIncreaseDamage(effect);
+            }
 
-        if (effects.TryGetValue(EffectType.BlockSkill, out var _))
-        {
-            ApplyBlockSkill();
-        }
-
-        if (effects.TryGetValue(EffectType.IncreaseMoveRange, out var moveRange))
-        {
-            ApplyIncreaseMoveRange(moveRange);
-        }
-
-        if (effects.TryGetValue(EffectType.IncreaseActionPoints, out var actionPoints))
-        {
-            ApplyIncreaseActionPoints(actionPoints);
-        }
-
-        if (effects.TryGetValue(EffectType.BloodSealEffect, out var _))
-        {
-            ApplyBloodSealEffect();
-        }
-
-        if (effects.TryGetValue(EffectType.BreakBloodSealDamage, out var _))
-        {
-            ApplyBloodSealDamage();
-        }
-
-        if (effects.TryGetValue(EffectType.Immobilize, out var duration))
-        {
-            ApplyImmobilize(duration);
-        }
-
-        if (effects.TryGetValue(EffectType.ReduceMoveRange, out duration))
-        {
-            ApplyReduceMoveRange(duration);
-        }
-
-        if (effects.TryGetValue(EffectType.PoisonPowder, out var _))
-        {
-            ApplyPoisonPowder();
-        }
-
-        if (effects.TryGetValue(EffectType.Sleep, out var _))
-        {
-            ApplySleep();
-        }
-        
-        if (effects.TryGetValue(EffectType.Stun, out var _))
-        {
-            ApplyStun();
-        }
-
-        if (effects.TryGetValue(EffectType.RedDahlia, out var _))
-        {
-            ApplyRedDahlia();
-        }
-        
-        if (effects.TryGetValue(EffectType.WhiteLotus, out var _))
-        {
-            ApplyWhiteLotus();
-        }
-        
-        if (effects.TryGetValue(EffectType.Marigold, out var _))
-        {
-            ApplyMarigold();
-        }
-
-        if (effects.TryGetValue(EffectType.NightCactus, out var _))
-        {
-            ApplyNightCactus();
-        }
-
-        if (effects.TryGetValue(EffectType.RemoveAllPoisonPowder, out var _))
-        {
-            ApplyRemoveAllPoisonPowder();
-        }
-        if (effects.TryGetValue(EffectType.ReduceChiDef, out var value))
-        {
-            ApplyReduceChiDef(value);
-        }
-
-        if (effects.TryGetValue(EffectType.VenomousParasite, out value))
-        {
-            ApplyVenomousParasite(value);
-        }
-
-        if (effects.TryGetValue(EffectType.Poison, out duration))
-        {
-            ApplyPoison(duration);
+            if (effect.EffectType == EffectType.BlockSkill)
+            {
+                ApplyBlockSkill();
+            }
+            //
+            // if (effects.TryGetValue(EffectType.IncreaseMoveRange, out var moveRange))
+            // {
+            //     ApplyIncreaseMoveRange(moveRange);
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.IncreaseActionPoints, out var actionPoints))
+            // {
+            //     ApplyIncreaseActionPoints(actionPoints);
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.BloodSealEffect, out var _))
+            // {
+            //     ApplyBloodSealEffect();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.BreakBloodSealDamage, out var _))
+            // {
+            //     ApplyBloodSealDamage();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.Immobilize, out var duration))
+            // {
+            //     ApplyImmobilize(duration);
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.ReduceMoveRange, out duration))
+            // {
+            //     ApplyReduceMoveRange(duration);
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.PoisonPowder, out var _))
+            // {
+            //     ApplyPoisonPowder();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.Sleep, out var _))
+            // {
+            //     ApplySleep();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.Stun, out var _))
+            // {
+            //     ApplyStun();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.RedDahlia, out var _))
+            // {
+            //     ApplyRedDahlia();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.WhiteLotus, out var _))
+            // {
+            //     ApplyWhiteLotus();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.Marigold, out var _))
+            // {
+            //     ApplyMarigold();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.NightCactus, out var _))
+            // {
+            //     ApplyNightCactus();
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.RemoveAllPoisonPowder, out var _))
+            // {
+            //     ApplyRemoveAllPoisonPowder();
+            // }
+            // if (effects.TryGetValue(EffectType.ReduceChiDef, out var value))
+            // {
+            //     ApplyReduceChiDef(value);
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.VenomousParasite, out value))
+            // {
+            //     ApplyVenomousParasite(value);
+            // }
+            //
+            // if (effects.TryGetValue(EffectType.Poison, out duration))
+            // {
+            //     ApplyPoison(duration);
+            // }   
         }
     }
 
@@ -504,18 +507,16 @@ public class CharacterInfo
         }
     }
     
-    private void ApplyIncreaseDamage(int damage)
+    private void ApplyIncreaseDamage(EffectData effectData)
     {
-        if (damage == 0) return;
-        EffectInfo.AddEffect(new ChangeStatEffect
+        if (effectData is ChangeStatEffect changeStatEffect)
         {
-            Value = damage,
-            Duration = EffectConfig.BuffRound,
-            EffectType = EffectType.IncreaseDamage,
-        });
-        Character.ShowMessage($"Tăng {damage} sát thương");
-        AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseDamage}");
+            if (changeStatEffect.Value == 0) return;
+            EffectInfo.AddEffect(effectData);
+            Character.ShowMessage($"Tăng {changeStatEffect.Value} sát thương");
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseDamage}");
+        }
     }
 
     private void ApplyBlockSkill()
