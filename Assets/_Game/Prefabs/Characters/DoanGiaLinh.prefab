@@ -113,8 +113,8 @@ MonoBehaviour:
     characterIcon: {fileID: 21300000, guid: e6389fba37d1c3241bcb9529c9a99783, type: 3}
     characterAttributes:
       maxMoveRange: 6
-      health: 32
-      mana: 28
+      health: 320
+      mana: 280
       atk: 8
       def: 9
       chiDef: 14

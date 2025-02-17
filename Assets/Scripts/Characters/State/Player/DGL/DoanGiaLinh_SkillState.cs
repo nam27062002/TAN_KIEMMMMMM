@@ -44,7 +44,7 @@ public class DoanGiaLinh_SkillState : SkillState
             SetVenomousParasite(flower - value);
             effects[EffectType.VenomousParasite] = value;
             int extraDamage = Roll.RollDice(1, 6, 0) * value;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Độc trùng ăn hoa: damage = {value} * 1d6 = {extraDamage}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng ăn hoa: damage = {value} * 1d6 = {extraDamage}");
             return currentDamage + extraDamage;
         }
         return currentDamage;
@@ -53,7 +53,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Nhiên Huyết");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhiên Huyết");
         return new DamageTakenParams
         {
             Effects = new Dictionary<EffectType, int>
@@ -68,7 +68,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Mộng Yểm");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Mộng Yểm");
         int damage = 0;
         var effects = new Dictionary<EffectType, int>
         {
@@ -82,7 +82,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Băng Hoại");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Băng Hoại");
         int damage = 0;
         var effects = new Dictionary<EffectType, int>
         {
@@ -98,8 +98,8 @@ public class DoanGiaLinh_SkillState : SkillState
         int baseDamage = GetBaseDamage();
         int skillDamage = Roll.RollDice(1, 4, 2);
         int realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Thược Dược Đỏ: skill damage = 1d4 + 2 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Thược Dược Đỏ: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thược Dược Đỏ: skill damage = 1d4 + 2 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thược Dược Đỏ: damage = {baseDamage} + {skillDamage} = {realDamage}");
         var effects = new Dictionary<EffectType, int>
         {
             { EffectType.RedDahlia, 0 }
@@ -114,8 +114,8 @@ public class DoanGiaLinh_SkillState : SkillState
         int baseDamage = GetBaseDamage();
         int skillDamage = Roll.RollDice(1, 4, 2);
         int realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Sen Trắng: skill damage = 1d4 + 2 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Sen Trắng: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sen Trắng: skill damage = 1d4 + 2 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sen Trắng: damage = {baseDamage} + {skillDamage} = {realDamage}");
         var effects = new Dictionary<EffectType, int>
         {
             { EffectType.WhiteLotus, 0 },
@@ -131,8 +131,8 @@ public class DoanGiaLinh_SkillState : SkillState
         int baseDamage = GetBaseDamage();
         int skillDamage = Roll.RollDice(1, 4, 2);
         int realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Cúc Vạn Thọ: skill damage = 1d4 + 2 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Cúc Vạn Thọ: damage = {baseDamage} + {skillDamage} = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Cúc Vạn Thọ: skill damage = 1d4 + 2 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Cúc Vạn Thọ: damage = {baseDamage} + {skillDamage} = {realDamage}");
         var effects = new Dictionary<EffectType, int>
         {
             { EffectType.WhiteLotus, 0 },
@@ -150,8 +150,8 @@ public class DoanGiaLinh_SkillState : SkillState
         int stack = target.CharacterInfo.GetPoisonPowder();
         int totalSkillDamage = skillDamage * stack;
         int realDamage = baseDamage + totalSkillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * {stack} = {totalSkillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * {stack} = {totalSkillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}");
         var effects = new Dictionary<EffectType, int>
         {
             { EffectType.ReduceChiDef, stack },
@@ -164,7 +164,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Hồng Ti");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Hồng Ti");
         return new DamageTakenParams
         {
             Effects = new Dictionary<EffectType, int>
@@ -177,7 +177,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Kim Tước Mai");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Kim Tước Mai");
         return new DamageTakenParams
         {
             Effects = new Dictionary<EffectType, int>

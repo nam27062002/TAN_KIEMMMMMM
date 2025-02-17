@@ -52,7 +52,7 @@ public class LyVoDanh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * (1d6 + 3) = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Vấn Truy Lưu: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Vấn Truy Lưu: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -71,7 +71,7 @@ public class LyVoDanh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * 1d6 + 3 = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -89,7 +89,7 @@ public class LyVoDanh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * 1d6 + 3 = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Huề Hồ Viên Du: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Huề Hồ Viên Du: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -103,7 +103,7 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
         var increaseDamage = Character.CharacterInfo.CurrentHp / 10;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp}*10% = {increaseDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp}*10% = {increaseDamage}");
         return new DamageTakenParams
         {
             Effects = new Dictionary<EffectType, int>()
@@ -118,7 +118,7 @@ public class LyVoDanh_SkillState : SkillState
         var baseDamage = GetBaseDamage();
         var rollDamage = Roll.RollDice(2, 4, 2);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -134,7 +134,7 @@ public class LyVoDanh_SkillState : SkillState
         var baseDamage = GetBaseDamage();
         var rollDamage = Roll.RollDice(2, 4, 2);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -150,7 +150,7 @@ public class LyVoDanh_SkillState : SkillState
         var baseDamage = GetBaseDamage();
         var rollDamage = Roll.RollDice(2, 4, 2);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Thất Ca Ngâm: damage = {baseDamage} + 2d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất Ca Ngâm: damage = {baseDamage} + 2d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -165,7 +165,7 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] Toàn Phong: damage = {baseDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Toàn Phong: damage = {baseDamage}");
         return new DamageTakenParams
         {
             Damage = baseDamage,
