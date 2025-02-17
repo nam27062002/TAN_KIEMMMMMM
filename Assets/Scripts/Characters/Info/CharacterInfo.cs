@@ -228,6 +228,8 @@ public class CharacterInfo
             IncreasePoints(effect.ActionPoints);
         }
 
+        return;
+
         void IncreasePoints(IList<int> points)
         {
             for (int i = 0; i < points.Count; i++)
@@ -246,32 +248,30 @@ public class CharacterInfo
     {
         var pointsToReduce = GetSkillActionPoints(Character.GetSkillTurnType());
 
+        if (TryReducePoints(GetActionPointEffects())) return;
+
+        for (var i = 0; i < ActionPoints.Count; i++)
+        {
+            if (ActionPoints[i] != 3) continue;
+            ActionPoints[i] -= pointsToReduce;
+            return;
+        }
+
+        return;
+
         bool TryReducePoints(IEnumerable<ActionPointEffect> effects)
         {
             foreach (var effect in effects)
             {
-                for (int i = 0; i < effect.ActionPoints.Count; i++)
+                for (var i = 0; i < effect.ActionPoints.Count; i++)
                 {
-                    if (effect.ActionPoints[i] == 3)
-                    {
-                        effect.ActionPoints[i] -= pointsToReduce;
-                        return true;
-                    }
+                    if (effect.ActionPoints[i] != 3) continue;
+                    effect.ActionPoints[i] -= pointsToReduce;
+                    return true;
                 }
             }
 
             return false;
-        }
-
-        if (TryReducePoints(GetActionPointEffects())) return;
-
-        for (int i = 0; i < ActionPoints.Count; i++)
-        {
-            if (ActionPoints[i] == 3)
-            {
-                ActionPoints[i] -= pointsToReduce;
-                return;
-            }
         }
     }
 

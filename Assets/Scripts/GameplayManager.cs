@@ -31,7 +31,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public Character SelectedCharacter { get; set; }
     private Character _focusedCharacter;
-    private Character _reactTarget;
 
     public int CurrentRound { get; private set; }
     public int CurrentPlayerIndex { get; private set; }
@@ -149,7 +148,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void SetCharacterReact(Character character, DamageTakenParams damageTakenParams)
     {
-        _reactTarget = SelectedCharacter;
         SetSelectedCharacter(character, new IdleStateParams
         {
             DamageTakenParams = damageTakenParams,
