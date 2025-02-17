@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class ThietNhan : AICharacter
 {
+    protected override void SetStateMachine()
+    {
+        StateMachine = new CharacterStateMachine(this,
+            new IdleState(this),
+            new AIMoveState(this),
+            new DamageTakenState(this),
+            new ThietNhan_SkillState(this));
+    }
+    
     protected override void SetSpeed()
     {
         if (GpManager.IsTutorialLevel)
@@ -14,15 +23,4 @@ public class ThietNhan : AICharacter
             base.SetSpeed();
         }
     }
-    
-#if UNITY_EDITOR
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P) && CharacterInfo.Cell.CellPosition == new Vector2Int(6,8))
-        {
-            OnDie();
-        }
-    }
-#endif
 }

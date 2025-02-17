@@ -20,6 +20,7 @@ public class EffectInfo
         EffectType.Stun,
         EffectType.Sleep,
         EffectType.ReduceChiDef,
+        EffectType.Poison,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -27,7 +28,8 @@ public class EffectInfo
         { EffectType.Immobilize , (15, 15)},
         { EffectType.Stun, (10, 10)},
         { EffectType.Sleep, (10, 10)},
-        { EffectType.ReduceChiDef, (15, 15)}
+        { EffectType.ReduceChiDef, (15, 15)},
+        { EffectType.Poison, (15, 15)}
     };
 
     public void AddEffect(EffectData effect)
@@ -57,4 +59,5 @@ public enum EffectType
     ReduceChiDef = 16,
     RemoveAllPoisonPowder = 17,
     VenomousParasite = 18,
+    Poison = 19,
 }

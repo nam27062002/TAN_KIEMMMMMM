@@ -337,11 +337,22 @@ public class CharacterInfo
     {
         foreach (var item in EffectInfo.Effects.ToList())
         {
-            if (item.EffectType == EffectType.Immobilize)
+            switch (item.EffectType)
             {
-                var damage = Roll.RollDice(1, 6, 0);
-                HandleHpChanged(-damage);
-                Debug.Log($"[{Character.characterConfig.characterName}] - Mổng Yểm: Damage = 1d6 = {damage}");
+                case EffectType.Immobilize:
+                {
+                    var damage = Roll.RollDice(1, 6, 0);
+                    HandleHpChanged(-damage);
+                    Debug.Log($"[{Character.characterConfig.characterName}] - Mổng Yểm: Damage = 1d6 = {damage}");
+                    break;
+                }
+                case EffectType.Poison:
+                {
+                    var damage = Roll.RollDice(1, 4, 0);
+                    HandleHpChanged(-damage);
+                    Debug.Log($"[{Character.characterConfig.characterName}] - Poison: Damage = 1d4 = {damage}");
+                    break;
+                }
             }
         }
 
@@ -448,6 +459,11 @@ public class CharacterInfo
         if (effects.TryGetValue(EffectType.VenomousParasite, out value))
         {
             ApplyVenomousParasite(value);
+        }
+
+        if (effects.TryGetValue(EffectType.Poison, out duration))
+        {
+            ApplyPoison(duration);
         }
     }
 
@@ -687,6 +703,23 @@ public class CharacterInfo
     private void ApplyRemoveAllPoisonPowder()
     {
         EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.PoisonPowder);
+    }
+
+    private void ApplyPoison(int duration)
+    {
+        var effectResistance = _roll.GetEffectResistance();
+        var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Poison].Item1;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 12: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+#if !ALWAY_APPLY_EFFECT
+        if (effectResistance >= baseEffectResistance) return;
+#endif
+        EffectInfo.AddEffect(new EffectData()
+        {
+            EffectType = EffectType.Poison,
+            Duration = duration,
+        });
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Poison}");
     }
 
     public int GetPoisonPowder()
