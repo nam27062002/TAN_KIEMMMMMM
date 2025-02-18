@@ -265,13 +265,13 @@ public class Pathfinding
             case DirectionType.Right:
                 return new Vector2Int(0, 1);
             case DirectionType.UpRight:
-                return new Vector2Int(-1, 1);
-            // case DirectionType.UpLeft:
-            //     return new Vector2Int(-1, -1);
-            // case DirectionType.DownRight:
-            //     return new Vector2Int(1, 1);
-            // case DirectionType.DownLeft:
-            //     return isOddRow ? new Vector2Int(1, -1) : new Vector2Int(1, 0);
+                return isOddRow ? new Vector2Int(-1, 1) : new Vector2Int(-1, 0);
+            case DirectionType.UpLeft:
+                return isOddRow ? new Vector2Int(-1, 0) : new Vector2Int(-1, -1);
+            case DirectionType.DownRight:
+                return isOddRow ? new Vector2Int(1, 1) : new Vector2Int(1, 0);
+            case DirectionType.DownLeft:
+                return isOddRow ? new Vector2Int(1, 0) : new Vector2Int(1, -1);
             default:
                 return Vector2Int.zero;
         }
