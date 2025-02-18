@@ -7,7 +7,7 @@ public class LyVoDanh_SkillState : SkillState
     }
 
     #region Skill
-    
+
     //=====================SKILL 1=====================================
     protected override DamageTakenParams GetDamageParams_Skill1_MyTurn(Character character)
     {
@@ -18,8 +18,7 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage ,
-                    Duration = 1
+                    EffectType = EffectType.BreakBloodSealDamage,
                 }
             }
         };
@@ -34,8 +33,7 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage ,
-                    Duration = 1
+                    EffectType = EffectType.BreakBloodSealDamage,
                 }
             }
         };
@@ -50,8 +48,7 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage ,
-                    Duration = 1
+                    EffectType = EffectType.BreakBloodSealDamage,
                 }
             }
         };
@@ -60,11 +57,12 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = (int)(Roll.RollDice(1,6, 3) * 1.5f);
+        var skillDamage = (int)(Roll.RollDice(1, 6, 3) * 1.5f);
         AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * (1d6 + 3) = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Vấn Truy Lưu: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Vấn Truy Lưu: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -73,21 +71,21 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BloodSealEffect ,
-                    Duration = 1
+                    EffectType = EffectType.BloodSealEffect,
                 }
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = (int)(Roll.RollDice(1,6, 3) * 1.5f);
+        var skillDamage = (int)(Roll.RollDice(1, 6, 3) * 1.5f);
         AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * 1d6 + 3 = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -95,21 +93,21 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BloodSealEffect ,
-                    Duration = 1
+                    EffectType = EffectType.BloodSealEffect,
                 }
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = (int)(Roll.RollDice(1,6, 3) * 1.5f);
+        var skillDamage = (int)(Roll.RollDice(1, 6, 3) * 1.5f);
         AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * 1d6 + 3 = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Huề Hồ Viên Du: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Huề Hồ Viên Du: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -117,17 +115,17 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BloodSealEffect ,
-                    Duration = 1
+                    EffectType = EffectType.BloodSealEffect,
                 }
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
-        var increaseDamage = Utils.RoundNumber(Character.CharacterInfo.CurrentHp * 1f/ 10);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp} * 10% = {increaseDamage}");
+        var increaseDamage = Utils.RoundNumber(Character.CharacterInfo.CurrentHp * 1f / 10);
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp} * 10% = {increaseDamage}");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
@@ -141,6 +139,7 @@ public class LyVoDanh_SkillState : SkillState
             }
         };
     }
+
     //=====================SKILL 4=====================================
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
@@ -155,13 +154,12 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage ,
-                    Duration = 1
+                    EffectType = EffectType.BreakBloodSealDamage,
                 }
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
@@ -175,19 +173,19 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage ,
-                    Duration = 1
+                    EffectType = EffectType.BreakBloodSealDamage,
                 }
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var rollDamage = Roll.RollDice(2, 4, 2);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất Ca Ngâm: damage = {baseDamage} + 2d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Thất Ca Ngâm: damage = {baseDamage} + 2d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -195,8 +193,7 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage ,
-                    Duration = 1
+                    EffectType = EffectType.BreakBloodSealDamage,
                 }
             }
         };
@@ -214,22 +211,21 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage ,
-                    Duration = 1
+                    EffectType = EffectType.BreakBloodSealDamage,
                 }
             }
         };
     }
-    
+
     #endregion
 
     #region Targets
-    
+
     protected override void SetTargetCharacters_Skill3_MyTurn()
     {
         AddTargetCharacters(Character);
     }
-    
+
     protected override void SetTargetCharacters_Skill4_MyTurn()
     {
         var allCharacter = new HashSet<Character>(TargetCharacters);
@@ -238,7 +234,7 @@ public class LyVoDanh_SkillState : SkillState
             AddTargetCharacters(item);
         }
     }
-    
+
     protected override void SetTargetCharacters_Skill4_TeammateTurn()
     {
         var allCharacter = new HashSet<Character>(TargetCharacters);
@@ -247,7 +243,7 @@ public class LyVoDanh_SkillState : SkillState
             AddTargetCharacters(item);
         }
     }
-    
+
     protected override void SetTargetCharacters_Skill4_EnemyTurn()
     {
         var allCharacter = new HashSet<Character>(TargetCharacters);
@@ -256,6 +252,6 @@ public class LyVoDanh_SkillState : SkillState
             AddTargetCharacters(item);
         }
     }
-    #endregion
 
+    #endregion
 }

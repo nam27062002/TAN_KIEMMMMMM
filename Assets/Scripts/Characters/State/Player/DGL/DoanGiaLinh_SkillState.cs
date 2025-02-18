@@ -31,7 +31,6 @@ public class DoanGiaLinh_SkillState : SkillState
                     new()
                     {
                         EffectType = EffectType.PoisonPowder,
-                        Duration = 0,
                     },
                 }
             });
@@ -39,26 +38,27 @@ public class DoanGiaLinh_SkillState : SkillState
     }
 
     private int ApplyVenomousParasiteExtraDamage(Character target, int currentDamage, List<EffectData> effects)
+    {
+        int flower = target.CharacterInfo.CountFlower();
+        int venomousParasite = GetVenomousParasite();
+        if (flower > 0 && venomousParasite > 0 && Character.CharacterInfo.IsToggleOn)
         {
-            int flower = target.CharacterInfo.CountFlower();
-            int venomousParasite = GetVenomousParasite();
-            if (flower > 0 && venomousParasite > 0 && Character.CharacterInfo.IsToggleOn)
+            int value = Mathf.Min(flower, venomousParasite);
+            SetVenomousParasite(flower - value);
+            effects.Add(new ChangeStatEffect()
             {
-                int value = Mathf.Min(flower, venomousParasite);
-                SetVenomousParasite(flower - value);
-                effects.Add(new EffectData()
-                {
-                    EffectType = EffectType.VenomousParasite,
-                    Duration = value,
-                });
-                int extraDamage = Roll.RollDice(1, 6, 0) * value;
-                AlkawaDebug.Log(ELogCategory.SKILL,
-                    $"[{CharName}] Độc trùng ăn hoa: damage = {value} * 1d6 = {extraDamage}");
-                return currentDamage + extraDamage;
-            }
-
-            return currentDamage;
+                EffectType = EffectType.VenomousParasite,
+                Value = value,
+                Duration = -1
+            });
+            int extraDamage = Roll.RollDice(1, 6, 0) * value;
+            AlkawaDebug.Log(ELogCategory.SKILL,
+                $"[{CharName}] Độc trùng ăn hoa: damage = {value} * 1d6 = {extraDamage}");
+            return currentDamage + extraDamage;
         }
+
+        return currentDamage;
+    }
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character target)
     {
@@ -73,10 +73,10 @@ public class DoanGiaLinh_SkillState : SkillState
                     EffectType = EffectType.BlockSkill,
                     Duration = 0,
                 },
-                new ChangeStatEffect()
+                new ActionPointEffect()
                 {
                     EffectType = EffectType.IncreaseActionPoints,
-                    Value =  1,
+                    ActionPoints = new List<int> { 3 },
                     Duration = 1,
                 },
                 new ChangeStatEffect()
@@ -103,8 +103,7 @@ public class DoanGiaLinh_SkillState : SkillState
             },
             new()
             {
-                EffectType = EffectType.Immobilize,
-                Duration = EffectConfig.DebuffRound,
+                EffectType = EffectType.NightCactus,
             },
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
@@ -142,7 +141,6 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 EffectType = EffectType.RedDahlia,
-                Duration = 0,
             },
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -163,12 +161,11 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 EffectType = EffectType.WhiteLotus,
-                Duration = 0,
             },
             new()
             {
                 EffectType = EffectType.Sleep,
-                Duration = 0,
+                Duration = EffectConfig.DebuffRound
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -189,12 +186,11 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 EffectType = EffectType.Marigold,
-                Duration = 0,
             },
             new()
             {
                 EffectType = EffectType.Sleep,
-                Duration = 0,
+                Duration = EffectConfig.DebuffRound,
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -215,15 +211,15 @@ public class DoanGiaLinh_SkillState : SkillState
             $"[{CharName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}");
         var effects = new List<EffectData>()
         {
-            new()
+            new ChangeStatEffect()
             {
                 EffectType = EffectType.ReduceChiDef,
-                Duration = stack,
+                Value = stack,
+                Duration = EffectConfig.DebuffRound,
             },
             new()
             {
                 EffectType = EffectType.RemoveAllPoisonPowder,
-                Duration = 0,
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -241,7 +237,6 @@ public class DoanGiaLinh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.RemoveAllPoisonPowder,
-                    Duration = 0,
                 }
             }
         };
@@ -258,7 +253,6 @@ public class DoanGiaLinh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.RemoveAllPoisonPowder,
-                    Duration = 0,
                 }
             }
         };

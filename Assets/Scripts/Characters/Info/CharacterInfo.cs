@@ -383,94 +383,94 @@ public class CharacterInfo
             {
                 ApplyBlockSkill();
             }
-            //
-            // if (effects.TryGetValue(EffectType.IncreaseMoveRange, out var moveRange))
-            // {
-            //     ApplyIncreaseMoveRange(moveRange);
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.IncreaseActionPoints, out var actionPoints))
-            // {
-            //     ApplyIncreaseActionPoints(actionPoints);
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.BloodSealEffect, out var _))
-            // {
-            //     ApplyBloodSealEffect();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.BreakBloodSealDamage, out var _))
-            // {
-            //     ApplyBloodSealDamage();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.Immobilize, out var duration))
-            // {
-            //     ApplyImmobilize(duration);
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.ReduceMoveRange, out duration))
-            // {
-            //     ApplyReduceMoveRange(duration);
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.PoisonPowder, out var _))
-            // {
-            //     ApplyPoisonPowder();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.Sleep, out var _))
-            // {
-            //     ApplySleep();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.Stun, out var _))
-            // {
-            //     ApplyStun();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.RedDahlia, out var _))
-            // {
-            //     ApplyRedDahlia();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.WhiteLotus, out var _))
-            // {
-            //     ApplyWhiteLotus();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.Marigold, out var _))
-            // {
-            //     ApplyMarigold();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.NightCactus, out var _))
-            // {
-            //     ApplyNightCactus();
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.RemoveAllPoisonPowder, out var _))
-            // {
-            //     ApplyRemoveAllPoisonPowder();
-            // }
-            // if (effects.TryGetValue(EffectType.ReduceChiDef, out var value))
-            // {
-            //     ApplyReduceChiDef(value);
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.VenomousParasite, out value))
-            // {
-            //     ApplyVenomousParasite(value);
-            // }
-            //
-            // if (effects.TryGetValue(EffectType.Poison, out duration))
-            // {
-            //     ApplyPoison(duration);
-            // }   
+            
+            if (effect.EffectType == EffectType.IncreaseMoveRange)
+            {
+                ApplyIncreaseMoveRange(effect);
+            }
+            
+            if (effect.EffectType == EffectType.IncreaseActionPoints)
+            {
+                ApplyIncreaseActionPoints(effect);
+            }
+            
+            if (effect.EffectType == EffectType.BloodSealEffect)
+            {
+                ApplyBloodSealEffect(effect);
+            }
+            
+            if (effect.EffectType == EffectType.BreakBloodSealDamage)
+            {
+                ApplyBloodSealDamage(effect);
+            }
+            
+            if (effect.EffectType == EffectType.Immobilize)
+            {
+                ApplyImmobilize(effect);
+            }
+            
+            if (effect.EffectType == EffectType.ReduceMoveRange)
+            {
+                ApplyReduceMoveRange(effect);
+            }
+            
+            if (effect.EffectType == EffectType.PoisonPowder)
+            {
+                ApplyPoisonPowder(effect);
+            }
+            
+            if (effect.EffectType == EffectType.Sleep)
+            {
+                ApplySleep(effect);
+            }
+            
+            if (effect.EffectType == EffectType.Stun)
+            {
+                ApplyStun(effect);
+            }
+            
+            if (effect.EffectType == EffectType.RedDahlia)
+            {
+                ApplyRedDahlia(effect);
+            }
+            
+            if (effect.EffectType == EffectType.WhiteLotus)
+            {
+                ApplyWhiteLotus(effect);
+            }
+            
+            if (effect.EffectType == EffectType.Marigold)
+            {
+                ApplyMarigold(effect);
+            }
+            
+            if (effect.EffectType == EffectType.NightCactus)
+            {
+                ApplyNightCactus(effect);
+            }
+            
+            if (effect.EffectType == EffectType.RemoveAllPoisonPowder)
+            {
+                ApplyRemoveAllPoisonPowder(effect);
+            }
+            if (effect.EffectType == EffectType.ReduceChiDef)
+            {
+                ApplyReduceChiDef(effect);
+            }
+            
+            if (effect.EffectType == EffectType.VenomousParasite)
+            {
+                ApplyVenomousParasite(effect);
+            }
+            
+            if (effect.EffectType == EffectType.Poison)
+            {
+                ApplyPoison(effect);
+            }   
         }
     }
 
-    private void ApplyReduceChiDef(int value)
+    private void ApplyReduceChiDef(EffectData effectData)
     {
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.ReduceChiDef].Item1;
@@ -479,12 +479,7 @@ public class CharacterInfo
         if (effectResistance < baseEffectResistance)
 #endif
         {
-            EffectInfo.AddEffect(new ChangeStatEffect()
-            {
-                Value =  value,
-                EffectType = EffectType.ReduceChiDef,
-                Duration = EffectConfig.DebuffRound,
-            });
+            EffectInfo.AddEffect(effectData);
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Added effect: {EffectType.ReduceChiDef}");
         }
@@ -493,17 +488,20 @@ public class CharacterInfo
     private bool IsVenomousEffect(EffectType effectType) =>
         effectType is EffectType.RedDahlia or EffectType.Marigold or EffectType.NightCactus or EffectType.WhiteLotus;
 
-    private void ApplyVenomousParasite(int removalCount)
+    private void ApplyVenomousParasite(EffectData effectData)
     {
-        var removedCount = 0;
-        foreach (var effect in EffectInfo.Effects.ToList().Where(effect => IsVenomousEffect(effect.EffectType)))
+        if (effectData is ChangeStatEffect changeStatEffect)
         {
-            EffectInfo.Effects.Remove(effect);
-            AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
-            removedCount++;
-            if (removedCount >= removalCount)
-                break;
+            var removedCount = 0;
+            foreach (var effect in EffectInfo.Effects.ToList().Where(effect => IsVenomousEffect(effect.EffectType)))
+            {
+                EffectInfo.Effects.Remove(effect);
+                AlkawaDebug.Log(ELogCategory.EFFECT,
+                    $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+                removedCount++;
+                if (removedCount >= changeStatEffect.Value)
+                    break;
+            }
         }
     }
     
@@ -530,49 +528,28 @@ public class CharacterInfo
             $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BlockSkill}");
     }
 
-    private void ApplyIncreaseMoveRange(int moveRange)
+    private void ApplyIncreaseMoveRange(EffectData effectData)
     {
-        EffectInfo.AddEffect(new ChangeStatEffect()
-        {
-            Value = moveRange,
-            Duration = 1,
-            EffectType = EffectType.IncreaseMoveRange,
-        });
-        AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseMoveRange}");
+        EffectInfo.AddEffect(effectData);
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseMoveRange}");
     }
 
-    private void ApplyIncreaseActionPoints(int actionPoints)
+    private void ApplyIncreaseActionPoints(EffectData effectData)
     {
-        var actionPoint = new List<int>();
-        for (var i = 0; i < actionPoints; i++)
-        {
-            actionPoint.Add(3);
-        }
-
-        EffectInfo.AddEffect(new ActionPointEffect()
-        {
-            ActionPoints = actionPoint,
-            Duration = 1,
-            EffectType = EffectType.IncreaseActionPoints,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Added effect: {EffectType.IncreaseActionPoints}");
     }
 
-    private void ApplyBloodSealEffect()
+    private void ApplyBloodSealEffect(EffectData effectData)
     {
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.BloodSealEffect,
-        });
-        AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BloodSealEffect}");
+        EffectInfo.AddEffect(effectData);
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: {EffectType.BloodSealEffect}");
     }
 
-    private void ApplyBloodSealDamage()
+    private void ApplyBloodSealDamage(EffectData effectData)
     {
-        if (EffectInfo.Effects.Any(p => p.EffectType == EffectType.BloodSealEffect))
+        if (EffectInfo.Effects.All(p => p.EffectType != EffectType.BloodSealEffect)) return;
         {
             EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.BloodSealEffect);
             var hpDecreased = Attributes.health - CurrentHp;
@@ -583,7 +560,7 @@ public class CharacterInfo
         }
     }
 
-    private void ApplyImmobilize(int duration)
+    private void ApplyImmobilize(EffectData effectData)
     {
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Immobilize].Item1;
@@ -592,38 +569,27 @@ public class CharacterInfo
         if (effectResistance < baseEffectResistance)
 #endif
         {
-            EffectInfo.AddEffect(new EffectData()
-            {
-                EffectType = EffectType.Immobilize,
-                Duration = duration
-            });
+            EffectInfo.AddEffect(effectData);
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Immobilize}");
         }
     }
 
-    private void ApplyReduceMoveRange(int duration)
+    private void ApplyReduceMoveRange(EffectData effectData)
     {
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.ReduceMoveRange,
-            Duration = duration
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Added effect: {EffectType.ReduceMoveRange}");
     }
 
-    private void ApplyPoisonPowder()
+    private void ApplyPoisonPowder(EffectData effectData)
     {
         var rollData = Roll.RollDice(1, 20, 0);
 #if !ALWAY_APPLY_EFFECT
         if (rollData < 10)
 #endif
         {
-            EffectInfo.AddEffect(new EffectData()
-            {
-                EffectType = EffectType.PoisonPowder
-            });
+            EffectInfo.AddEffect(effectData);
         }
         AlkawaDebug.Log(ELogCategory.EFFECT,
             rollData < 10
@@ -631,82 +597,62 @@ public class CharacterInfo
                 : $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Độc Phấn");
     }
 
-    private void ApplyRedDahlia()
+    private void ApplyRedDahlia(EffectData effectData)
     {
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.RedDahlia,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Thược Dược");
     }
 
-    private void ApplyWhiteLotus()
+    private void ApplyWhiteLotus(EffectData effectData)
     {
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.WhiteLotus,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Sen Trắng");
     }
 
-    private void ApplyMarigold()
+    private void ApplyMarigold(EffectData effectData)
     {
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.Marigold,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Cúc Vạn Thọ");
     }
 
-    private void ApplyNightCactus()
+    private void ApplyNightCactus(EffectData effectData)
     {
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.NightCactus,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Added effect: Hoa Quỳnh");   
     }
 
-    private void ApplySleep()
+    private void ApplySleep(EffectData effectData)
     {
         var effectResistance = _roll.GetEffectResistance();
-        var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Sleep].Item1;
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 4: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+        var baseEffectResistance = EffectInfo.AppliedEffect[effectData.EffectType].Item1;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff {effectData.EffectType}: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
 #if !ALWAY_APPLY_EFFECT
         if (effectResistance >= baseEffectResistance) return;
 #endif
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.Sleep,
-            Duration = EffectConfig.DebuffRound,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Sleep}");
+            $"[{Character.characterConfig.characterName}] Added effect: {effectData.EffectType}");
     }
     
-    private void ApplyStun()
+    private void ApplyStun(EffectData effectData)
     {
         var effectResistance = _roll.GetEffectResistance();
-        var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Stun].Item1;
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff 14: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+        var baseEffectResistance = EffectInfo.AppliedEffect[effectData.EffectType].Item1;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Debuff {effectData.EffectType}: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
 #if !ALWAY_APPLY_EFFECT
         if (effectResistance >= baseEffectResistance) return;
 #endif
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.Stun,
-            Duration = EffectConfig.DebuffRound,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Stun}");
+            $"[{Character.characterConfig.characterName}] Added effect: {effectData.EffectType}");
     }
 
-    private void ApplyRemoveAllPoisonPowder()
+    private void ApplyRemoveAllPoisonPowder(EffectData effectData)
     {
         EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.PoisonPowder);
     }
 
-    private void ApplyPoison(int duration)
+    private void ApplyPoison(EffectData effectData)
     {
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[EffectType.Poison].Item1;
@@ -714,11 +660,7 @@ public class CharacterInfo
 #if !ALWAY_APPLY_EFFECT
         if (effectResistance >= baseEffectResistance) return;
 #endif
-        EffectInfo.AddEffect(new EffectData()
-        {
-            EffectType = EffectType.Poison,
-            Duration = duration,
-        });
+        EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Added effect: {EffectType.Poison}");
     }
