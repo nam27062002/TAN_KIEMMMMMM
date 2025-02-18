@@ -165,7 +165,9 @@ public abstract class Character : MonoBehaviour
         if (damageType.HasFlag(DamageTargetType.Move))
         {
             if (!Info.SkillRange.Contains(cell)) return false;
-            var path = MapManager.FindPath(Info.Cell, cell);
+            var path = MapManager.FindShortestPath(Info.Cell, cell);
+            var targets = (from item in path where item.CellType == CellType.Character && item.Character.Type == Type.AI select item.Character).ToList();
+            HandleCastSkill(targets);
             return true;
         }
         return false;
@@ -176,7 +178,7 @@ public abstract class Character : MonoBehaviour
         return skillConfig.SkillConfigs[skillTurnType];
     }
 
-    private void HandleCastSkill(List<Character> targets = null)
+    private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null)
     {
         Info.HandleMpChanged(-Info.SkillInfo.mpCost);
     
@@ -186,6 +188,7 @@ public abstract class Character : MonoBehaviour
             SkillInfo = Info.SkillInfo,
             Targets = targets ?? new List<Character>(),
             SkillTurnType = GetSkillTurnType(),
+            TargetCell = targetCell,
         };
     
         SetSkill(skillParams);
@@ -350,6 +353,12 @@ public abstract class Character : MonoBehaviour
     public void ShowMessage(string message)
     {
         uiFeedback.ShowMessage(message);
+    }
+
+    public void UnRegisterCell()
+    {
+        Info.Cell.CellType = CellType.Walkable;
+        Info.Cell.Character = null;
     }
     #endregion
     

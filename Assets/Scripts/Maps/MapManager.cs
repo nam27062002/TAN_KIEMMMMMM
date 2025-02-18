@@ -145,6 +145,11 @@ public class MapManager : MonoBehaviour
         return _pathfinding.FindPath(startCell, endCell);
     }
 
+    public List<Cell> FindShortestPath(Cell startCell, Cell endCell)
+    {
+        return _pathfinding.FindShortestPath(startCell, endCell);
+    }
+    
     public void DestroyMap()
     {
         Destroy(gameObject);

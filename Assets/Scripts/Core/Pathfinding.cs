@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -51,19 +52,32 @@ public class Pathfinding
         return path;
     }
 
-
     public List<Cell> FindPath(Cell startHexagon, Cell endHexagon)
+    {
+        return FindPathInternal(startHexagon, endHexagon, neighbor => neighbor.CellType == CellType.Walkable);
+    }
+
+    public List<Cell> FindShortestPath(Cell startHexagon, Cell endHexagon)
+    {
+        return FindPathInternal(startHexagon, endHexagon, neighbor => true);
+    }
+
+    private List<Cell> FindPathInternal(Cell startHexagon, Cell endHexagon, Func<Cell, bool> neighborFilter)
     {
         if (startHexagon == null || endHexagon == null)
             return null;
 
         var openSet = new List<HexNode>();
         var cameFrom = new Dictionary<Cell, Cell>();
-        var gScore = new Dictionary<Cell, float>();
-        var fScore = new Dictionary<Cell, float>();
+        var gScore = new Dictionary<Cell, float>
+        {
+            [startHexagon] = 0
+        };
+        var fScore = new Dictionary<Cell, float>
+        {
+            [startHexagon] = GetHeuristic(startHexagon, endHexagon)
+        };
 
-        gScore[startHexagon] = 0;
-        fScore[startHexagon] = GetHeuristic(startHexagon, endHexagon);
         openSet.Add(new HexNode(startHexagon, fScore[startHexagon]));
 
         while (openSet.Count > 0)
@@ -73,30 +87,25 @@ public class Pathfinding
             openSet.RemoveAt(0);
 
             if (currentNode.Hex == endHexagon)
-            {
                 return ReconstructPath(cameFrom, currentNode.Hex);
-            }
-
-            var neighbors = GetNeighbors(currentNode.Hex);
-            foreach (var neighbor in neighbors.Where(neighbor => neighbor.CellType == CellType.Walkable))
+            foreach (var neighbor in GetNeighbors(currentNode.Hex).Where(neighborFilter))
             {
-                var tentativeGScore = gScore.TryGetValue(currentNode.Hex, out var value) ? value + 1 : Mathf.Infinity;
+                var tentativeGScore = gScore[currentNode.Hex] + 1;
                 var currentGScore = gScore.GetValueOrDefault(neighbor, Mathf.Infinity);
 
-                if (!(tentativeGScore < currentGScore)) continue;
+                if (tentativeGScore >= currentGScore)
+                    continue;
+
                 cameFrom[neighbor] = currentNode.Hex;
                 gScore[neighbor] = tentativeGScore;
-                fScore[neighbor] = gScore[neighbor] + GetHeuristic(neighbor, endHexagon);
-
-                var inOpenSet = false;
-                foreach (var t in openSet.Where(t => t.Hex == neighbor))
+                fScore[neighbor] = tentativeGScore + GetHeuristic(neighbor, endHexagon);
+                
+                var nodeInOpenSet = openSet.FirstOrDefault(n => n.Hex == neighbor);
+                if (nodeInOpenSet != null)
                 {
-                    t.F = fScore[neighbor];
-                    inOpenSet = true;
-                    break;
+                    nodeInOpenSet.F = fScore[neighbor];
                 }
-
-                if (!inOpenSet)
+                else
                 {
                     openSet.Add(new HexNode(neighbor, fScore[neighbor]));
                 }
@@ -105,7 +114,7 @@ public class Pathfinding
 
         return null;
     }
-
+    
     private List<Cell> GetNeighbors(Cell hex)
     {
         var r = hex.CellPosition.x;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class SkillState : CharacterState
@@ -109,7 +110,7 @@ public class SkillState : CharacterState
         _skillStateParams.Targets.Add(character);
     }
 
-    private void HandleCastSkill()
+    protected virtual void HandleCastSkill()
     {
         var animName = GetAnimByIndex(_skillStateParams.SkillInfo.skillIndex);
         PlayAnim(animName, OnCastSkillFinished);
@@ -350,5 +351,18 @@ public class SkillState : CharacterState
             SkillIndex.PassiveSkill3 => AnimationParameterNameType.Skill1,
             _ => AnimationParameterNameType.None,
         };
+    }
+
+    protected void MoveToCell(Cell cell, float time)
+    {
+        var targetPos = cell.transform.position;
+        targetPos.y += Character.characterConfig.characterHeight / 2f;
+        Character.UnRegisterCell();
+        var moveSequence = DOTween.Sequence();
+        moveSequence.Append(Transform.DOMove(targetPos, time).SetEase(Ease.Linear));
+        moveSequence.OnComplete(() =>
+        {
+            Character.SetCell(cell);
+        });
     }
 }

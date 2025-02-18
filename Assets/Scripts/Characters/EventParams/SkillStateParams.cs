@@ -7,4 +7,5 @@ public class SkillStateParams : StateParams
     public SkillInfo SkillInfo;
     public List<Character> Targets;
     public bool EndTurnAfterFinish;
+    public Cell TargetCell;
 }

@@ -18,7 +18,7 @@ public class MoveState : CharacterState
 
     private void HandleMovement(MoveStateParams stateParams)
     {
-        Character.Info.Cell.CellType = CellType.Walkable;
+        Character.UnRegisterCell();
         Character.HideMoveRange();
         ReleaseFacing();
         Character.Info.Cell.HideFocus();
