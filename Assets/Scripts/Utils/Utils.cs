@@ -27,7 +27,7 @@ public static class Utils
 
         foreach (var target in targets)
         {
-            if (target == null && origin.characterType == target.characterType)
+            if (target == null || origin == target)
                 continue;
             var distance = Vector3.Distance(originPosition, target.transform.position);
             if (!(distance < minDistance)) continue;

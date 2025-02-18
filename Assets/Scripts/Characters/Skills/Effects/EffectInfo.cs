@@ -70,4 +70,5 @@ public enum EffectType
     ThietNhan_ReduceMoveRange = 21,
     ThietNhan_BlockAP = 22,
     ThietNhan_Infected = 23,
+    Cover = 24,
 }

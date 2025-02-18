@@ -41,7 +41,8 @@ public class CharacterInfo
             { EffectType.ThietNhan_Poison, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_ReduceMoveRange, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_BlockAP, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.ThietNhan_Infected, ApplySimpleEffect }
+            { EffectType.ThietNhan_Infected, ApplySimpleEffect },
+            { EffectType.Cover, ApplySimpleEffect }
         };
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class HoacLienHuong_SkillState : SkillState
@@ -33,7 +34,23 @@ public class HoacLienHuong_SkillState : SkillState
     
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
-        return new DamageTakenParams();
+        var coveredBy = GpManager.GetNearestAlly(Character);
+        var effects = new List<EffectData>();
+        if (coveredBy != null)
+        {
+            effects.Add(new EffectData()
+            {
+                EffectType = EffectType.Cover,
+                Duration = EffectConfig.DebuffRound,
+                CoveredBy = coveredBy,
+            });
+        }
+        Debug.Log($"Liên kết với đồng minh gần nhất: {coveredBy.characterConfig.characterName}");
+        character.linkCharacter.SetLine(Transform.position, coveredBy.transform.position);
+        return new DamageTakenParams()
+        {
+            Effects = effects,
+        };
     }
     
     //===================== SKILL 2 =====================
@@ -49,8 +66,7 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill2_TeammateTurn()
     {
-        var character = GpManager.GetNearestAlly(Character);
-        AddTargetCharacters(character);
+        AddTargetCharacters(Character);
     }
         
 }

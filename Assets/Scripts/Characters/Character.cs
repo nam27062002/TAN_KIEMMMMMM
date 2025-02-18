@@ -13,6 +13,7 @@ public abstract class Character : MonoBehaviour
     [Title("References")] 
     public HpBar hpBar;
     public UIFeedback uiFeedback;
+    public LinkCharacter linkCharacter;
     public GameObject model;
 
     [Title("Settings"), Space(10)] public CharacterConfig characterConfig;
@@ -406,6 +407,10 @@ public abstract class Character : MonoBehaviour
             uiFeedback = GetComponentInChildren<UIFeedback>();
         }
 
+        if (linkCharacter == null)
+        {
+            linkCharacter = GetComponentInChildren<LinkCharacter>();
+        }
         passiveSkills = GetComponents<PassiveSkill>().ToList();
         
         skillConfig.OnValidate();
