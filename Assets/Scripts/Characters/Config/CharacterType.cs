@@ -2,5 +2,6 @@
 {
     LyVoDanh,
     DoanGiaLinh,
-    ThietNhan
+    ThietNhan,
+    HoacLienHuong,
 }

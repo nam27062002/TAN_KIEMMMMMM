@@ -24,7 +24,7 @@ public class Roll
     public HitChangeParams GetHitChange()
     {
         var rollData = _attributes.hitChangeRollData; 
-        var hitChange = RollDice(_attributes.rollValue, _characterInfo.GetCurrentDamage() / 2);
+        var hitChange = RollDice(rollData.rollValue, _characterInfo.GetCurrentDamage() / 2);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Hit Change = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 2} = {hitChange}");
         return new HitChangeParams(){HitChangeValue = hitChange, IsCritical = rollData.rollValue == hitChange};
     }
@@ -47,7 +47,7 @@ public class Roll
     
     public bool IsCritical(int value)
     {
-        return _attributes.rollValue == value;
+        return _attributes.hitChangeRollData.rollValue == value;
     }
     
     public int GetDodge()

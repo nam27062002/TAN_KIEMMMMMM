@@ -1,0 +1,461 @@
+fileFormatVersion: 2
+guid: 9584eb256229cb34396e2a3b1a56a649
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2968471134191621776
+    second: "Lung Y\xEAn_0"
+  - first:
+      213: -2841551941085263584
+    second: "Lung Y\xEAn_1"
+  - first:
+      213: -6480084901180428025
+    second: "Lung Y\xEAn_2"
+  - first:
+      213: -1376657975442861647
+    second: "Lung Y\xEAn_3"
+  - first:
+      213: -8389714495147069551
+    second: "Lung Y\xEAn_4"
+  - first:
+      213: 4115974883353448647
+    second: "Lung Y\xEAn_5"
+  - first:
+      213: 6388479785954015009
+    second: "Lung Y\xEAn_6"
+  - first:
+      213: 1622272029011828433
+    second: "Lung Y\xEAn_7"
+  - first:
+      213: 5921564397944503871
+    second: "Lung Y\xEAn_8"
+  - first:
+      213: 2870003670682392997
+    second: "Lung Y\xEAn_9"
+  - first:
+      213: 5625748588913209730
+    second: "Lung Y\xEAn_10"
+  - first:
+      213: -5337781055522109686
+    second: "Lung Y\xEAn_11"
+  - first:
+      213: -3110488879507173469
+    second: "Lung Y\xEAn_12"
+  - first:
+      213: -4532063669185401033
+    second: "Lung Y\xEAn_13"
+  - first:
+      213: -7161025848272256553
+    second: "Lung Y\xEAn_14"
+  - first:
+      213: -6901792838982751941
+    second: "Lung Y\xEAn_15"
+  - first:
+      213: -3144301118997185341
+    second: "Lung Y\xEAn_16"
+  - first:
+      213: 5067940216997349135
+    second: "Lung Y\xEAn_17"
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Win64
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_0"
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 17
+        width: 147
+        height: 157
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0961e77d4c0223920800000000000000
+      internalID: 2968471134191621776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_1"
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 17
+        width: 169
+        height: 157
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0298ac49097c098d0800000000000000
+      internalID: -2841551941085263584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_2"
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 17
+        width: 181
+        height: 157
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 701b4c68d1d1216a0800000000000000
+      internalID: -6480084901180428025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_4"
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 17
+        width: 169
+        height: 158
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19f20d50e1fb19b80800000000000000
+      internalID: -8389714495147069551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_5"
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 17
+        width: 170
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c056ba5951ee1930800000000000000
+      internalID: 4115974883353448647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_6"
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 17
+        width: 199
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1277d88848078a850800000000000000
+      internalID: 6388479785954015009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_7"
+      rect:
+        serializedVersion: 2
+        x: 1442
+        y: 17
+        width: 185
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1de5d42b0d7738610800000000000000
+      internalID: 1622272029011828433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_8"
+      rect:
+        serializedVersion: 2
+        x: 1675
+        y: 17
+        width: 202
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3ef416327f9d2250800000000000000
+      internalID: 5921564397944503871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_10"
+      rect:
+        serializedVersion: 2
+        x: 1909
+        y: 17
+        width: 208
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 281b3ddf88ca21e40800000000000000
+      internalID: 5625748588913209730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Lung Y\xEAn_11"
+      rect:
+        serializedVersion: 2
+        x: 2143
+        y: 17
+        width: 169
+        height: 156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a078bc829646ce5b0800000000000000
+      internalID: -5337781055522109686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 0dd0f63120628cf46b3e6452016dedbb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      "Lung Y\xEAn_0": 2968471134191621776
+      "Lung Y\xEAn_1": -2841551941085263584
+      "Lung Y\xEAn_10": 5625748588913209730
+      "Lung Y\xEAn_11": -5337781055522109686
+      "Lung Y\xEAn_12": -3110488879507173469
+      "Lung Y\xEAn_13": -4532063669185401033
+      "Lung Y\xEAn_14": -7161025848272256553
+      "Lung Y\xEAn_15": -6901792838982751941
+      "Lung Y\xEAn_16": -3144301118997185341
+      "Lung Y\xEAn_17": 5067940216997349135
+      "Lung Y\xEAn_2": -6480084901180428025
+      "Lung Y\xEAn_3": -1376657975442861647
+      "Lung Y\xEAn_4": -8389714495147069551
+      "Lung Y\xEAn_5": 4115974883353448647
+      "Lung Y\xEAn_6": 6388479785954015009
+      "Lung Y\xEAn_7": 1622272029011828433
+      "Lung Y\xEAn_8": 5921564397944503871
+      "Lung Y\xEAn_9": 2870003670682392997
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
