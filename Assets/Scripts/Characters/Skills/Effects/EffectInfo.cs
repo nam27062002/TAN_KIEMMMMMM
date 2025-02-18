@@ -69,4 +69,5 @@ public enum EffectType
     ThietNhan_Poison = 20,
     ThietNhan_ReduceMoveRange = 21,
     ThietNhan_BlockAP = 22,
+    ThietNhan_Infected = 23,
 }

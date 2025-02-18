@@ -21,26 +21,27 @@ public class CharacterInfo
         {
             { EffectType.IncreaseDamage, ApplyIncreaseDamage },
             { EffectType.BlockSkill, _ => ApplyBlockSkill() },
-            { EffectType.IncreaseMoveRange, ApplyIncreaseMoveRange },
-            { EffectType.IncreaseActionPoints, ApplyIncreaseActionPoints },
-            { EffectType.BloodSealEffect, ApplyBloodSealEffect },
+            { EffectType.IncreaseMoveRange, ApplySimpleEffect },
+            { EffectType.IncreaseActionPoints, ApplySimpleEffect },
+            { EffectType.BloodSealEffect, ApplySimpleEffect },
             { EffectType.BreakBloodSealDamage, ApplyBloodSealDamage },
             { EffectType.Immobilize, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.ReduceMoveRange, ApplyReduceMoveRange },
+            { EffectType.ReduceMoveRange, ApplySimpleEffect },
             { EffectType.PoisonPowder, ApplyPoisonPowder },
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.RedDahlia, ApplyRedDahlia },
-            { EffectType.WhiteLotus, ApplyWhiteLotus },
-            { EffectType.Marigold, ApplyMarigold },
-            { EffectType.NightCactus, ApplyNightCactus },
+            { EffectType.RedDahlia, ApplySimpleEffect },
+            { EffectType.WhiteLotus, ApplySimpleEffect },
+            { EffectType.Marigold, ApplySimpleEffect },
+            { EffectType.NightCactus, ApplySimpleEffect },
             { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
             { EffectType.ReduceChiDef, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.VenomousParasite, ApplyVenomousParasite },
             { EffectType.Poison, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_Poison, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_ReduceMoveRange, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.ThietNhan_BlockAP, TryCheckEffectResistanceAndApplyEffect }
+            { EffectType.ThietNhan_BlockAP, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.ThietNhan_Infected, ApplySimpleEffect }
         };
     }
 
@@ -439,11 +440,11 @@ public class CharacterInfo
 #endif
     }
 
-    private void ApplyEffect(EffectData effectData, string effectName = null)
+    private void ApplyEffect(EffectData effectData)
     {
         EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] Added effect: {effectName ?? effectData.EffectType.ToString()}");
+            $"[{Character.characterConfig.characterName}] Added effect: {effectData.EffectType.ToString()}");
     }
     
     private void ApplyIncreaseDamage(EffectData effectData)
@@ -457,24 +458,14 @@ public class CharacterInfo
     private void ApplyBlockSkill()
     {
         var effect = new EffectData { Duration = 1, EffectType = EffectType.BlockSkill };
-        ApplyEffect(effect, EffectType.BlockSkill.ToString());
+        ApplyEffect(effect);
     }
 
-    private void ApplyIncreaseMoveRange(EffectData effectData)
+    private void ApplySimpleEffect(EffectData effectData)
     {
         ApplyEffect(effectData);
     }
-
-    private void ApplyIncreaseActionPoints(EffectData effectData)
-    {
-        ApplyEffect(effectData);
-    }
-
-    private void ApplyBloodSealEffect(EffectData effectData)
-    {
-        ApplyEffect(effectData);
-    }
-
+    
     private void ApplyBloodSealDamage(EffectData effectData)
     {
         if (EffectInfo.Effects.All(p => p.EffectType != EffectType.BloodSealEffect))
@@ -492,12 +483,7 @@ public class CharacterInfo
         if (ShouldApplyEffect(effectData))
             ApplyEffect(effectData);
     }
-
-    private void ApplyReduceMoveRange(EffectData effectData)
-    {
-        ApplyEffect(effectData);
-    }
-
+    
     private void ApplyPoisonPowder(EffectData effectData)
     {
         var rollData = Roll.RollDice(1, 20, 0);
@@ -516,26 +502,6 @@ public class CharacterInfo
             $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Độc Phấn");
     }
 #endif
-    }
-
-    private void ApplyRedDahlia(EffectData effectData)
-    {
-        ApplyEffect(effectData, "Hoa Thược Dược");
-    }
-
-    private void ApplyWhiteLotus(EffectData effectData)
-    {
-        ApplyEffect(effectData, "Hoa Sen Trắng");
-    }
-
-    private void ApplyMarigold(EffectData effectData)
-    {
-        ApplyEffect(effectData, "Hoa Cúc Vạn Thọ");
-    }
-
-    private void ApplyNightCactus(EffectData effectData)
-    {
-        ApplyEffect(effectData, "Hoa Quỳnh");
     }
     
     private void ApplyRemoveAllPoisonPowder(EffectData effectData)
