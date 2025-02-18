@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class HoacLienHuong_SkillState : SkillState
+﻿public class HoacLienHuong_SkillState : SkillState
 {
     public HoacLienHuong_SkillState(Character character) : base(character)
     {
@@ -11,7 +9,7 @@ public class HoacLienHuong_SkillState : SkillState
         base.HandleCastSkill();
         if (_skillStateParams.SkillInfo.skillIndex == SkillIndex.ActiveSkill2)
         {
-            MoveToCell(_skillStateParams.TargetCell, 0.9f);
+            MoveToCell(_skillStateParams.TargetCell, 0.5f);
         }
     }
     

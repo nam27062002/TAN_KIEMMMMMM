@@ -167,7 +167,7 @@ public abstract class Character : MonoBehaviour
             if (!Info.SkillRange.Contains(cell)) return false;
             var path = MapManager.FindShortestPath(Info.Cell, cell);
             var targets = (from item in path where item.CellType == CellType.Character && item.Character.Type == Type.AI select item.Character).ToList();
-            HandleCastSkill(targets);
+            HandleCastSkill(targets, cell);
             return true;
         }
         return false;
@@ -359,6 +359,7 @@ public abstract class Character : MonoBehaviour
     {
         Info.Cell.CellType = CellType.Walkable;
         Info.Cell.Character = null;
+        Info.Cell.HideFocus();
     }
     #endregion
     

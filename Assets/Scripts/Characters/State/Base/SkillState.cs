@@ -363,6 +363,7 @@ public class SkillState : CharacterState
         moveSequence.OnComplete(() =>
         {
             Character.SetCell(cell);
+            Info.Cell.ShowFocus();
         });
     }
 }
