@@ -28,9 +28,9 @@ public class SkillConfig
     {
         for (var i = 0; i < internalSkill.Count; i++)
         {
-            internalSkill[i].skillIndex = (SkillIndex)i;
-            movementSkill[i].skillIndex = (SkillIndex)i;
-            combatSkill[i].skillIndex = (SkillIndex)i;
+            if (i < internalSkill.Count) internalSkill[i].skillIndex = (SkillIndex)i;
+            if (i < movementSkill.Count) movementSkill[i].skillIndex = (SkillIndex)i;
+            if (i < combatSkill.Count) combatSkill[i].skillIndex = (SkillIndex)i;
         }
     }
 }
@@ -41,5 +41,5 @@ public enum DamageTargetType
     Self = 1 << 0,
     Team = 1 << 1,
     Enemies = 1 << 2,
+    Move = 1 << 3,
 }
-

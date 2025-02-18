@@ -331,7 +331,7 @@ public abstract class Character : MonoBehaviour
     public void ShowMoveRange()
     {
         if (!IsMainCharacter) return;
-        CharacterInfo.MoveRange = MapManager.GetHexagonsInMoveRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange());
+        CharacterInfo.MoveRange = MapManager.GetHexagonsInMoveRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange(), characterConfig.moveDirection);
         foreach (var item in CharacterInfo.MoveRange)
         {
             item.ShowMoveRange();
@@ -351,7 +351,7 @@ public abstract class Character : MonoBehaviour
     
     private void ShowSkillRange()
     {
-        CharacterInfo.SkillRange = MapManager.GetHexagonsInAttack(CharacterInfo.Cell, CharacterInfo.SkillInfo.range);
+        CharacterInfo.SkillRange = MapManager.GetHexagonsInAttack(CharacterInfo.Cell, CharacterInfo.SkillInfo);
         foreach (var item in CharacterInfo.SkillRange)
         {
             item.ShowSkillRange();

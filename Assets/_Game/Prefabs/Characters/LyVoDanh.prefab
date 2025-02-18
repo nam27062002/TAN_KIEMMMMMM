@@ -109,7 +109,6 @@ MonoBehaviour:
       def: 12
       chiDef: 12
       spd: 8
-      rollValue: 20
       baseDamageRollData:
         rollTime: 1
         rollValue: 8
@@ -130,6 +129,7 @@ MonoBehaviour:
       m_keys: 000000000100000002000000
       m_values: 010000000200000001000000
     hasToggle: 0
+    moveDirection: 512
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 5a881b8a6a8de22419817212449f2a56, type: 3}

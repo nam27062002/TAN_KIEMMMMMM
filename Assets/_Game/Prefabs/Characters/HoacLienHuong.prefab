@@ -131,10 +131,134 @@ MonoBehaviour:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
     hasToggle: 0
+    moveDirection: 512
   skillConfig:
-    internalSkill: []
-    movementSkill: []
-    combatSkill: []
+    internalSkill:
+    - icon: {fileID: 21300000, guid: 51b2cc13f0bc51242997a7d34460129d, type: 3}
+      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      skillIndex: 0
+      mpCost: 0
+      range: 3
+      isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 4
+      description: 
+    - icon: {fileID: 21300000, guid: 15fccd12ffb8db54bb61743f025b5d18, type: 3}
+      name: "\u0110\u1ED3ng Quan Long"
+      skillIndex: 1
+      mpCost: 2
+      range: 4
+      isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 8
+      description: 
+    - icon: {fileID: 21300000, guid: b39c88e743443a949831189233ab6553, type: 3}
+      name: "Hi\u1EC3u Nh\u1EADt Quang L\xE2m"
+      skillIndex: 2
+      mpCost: 5
+      range: 0
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
+    - icon: {fileID: 21300000, guid: c8b0ea87cef61dc4fa6548e048416e41, type: 3}
+      name: "Tr\u01B0\u1EDDng Giang"
+      skillIndex: 3
+      mpCost: 2
+      range: 0
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 4
+      description: 
+    movementSkill:
+    - icon: {fileID: 21300000, guid: f0d50b495edbd004898e55b4373d7b44, type: 3}
+      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      skillIndex: 0
+      mpCost: 0
+      range: 3
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 4
+      description: 
+    - icon: {fileID: -3170110953543520844, guid: e39c1aef6103eb646856ed502c1b48a1, type: 3}
+      name: 
+      skillIndex: 1
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
+    - icon: {fileID: -3537580891591011323, guid: a97897a1fec02854282671c8d23474ec, type: 3}
+      name: 
+      skillIndex: 2
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
+    - icon: {fileID: -8178576035687786624, guid: 980a727da5c46cc4da1ee06a07d3b5dc, type: 3}
+      name: "V\xE2n H\u01B0\u01A1ng"
+      skillIndex: 3
+      mpCost: 2
+      range: 6
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
+    combatSkill:
+    - icon: {fileID: 2037120817534264460, guid: 72139ca088282ff48ab52ed50ead1d13, type: 3}
+      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      skillIndex: 0
+      mpCost: 0
+      range: 3
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 4
+      description: 
+    - icon: {fileID: 3516235422905818384, guid: 51f8435cfc8e1ee4391ea7047d65e05c, type: 3}
+      name: 
+      skillIndex: 1
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
+    - icon: {fileID: -8359747887217438903, guid: 7d3603f082f7ba54a9c4a7fa5d1967f9, type: 3}
+      name: 
+      skillIndex: 2
+      mpCost: 0
+      range: 0
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
+    - icon: {fileID: 7338152196854973384, guid: e5a7bd3a9bde49b4289d09ca454e84f0, type: 3}
+      name: "Long H\u01B0ng"
+      skillIndex: 3
+      mpCost: 2
+      range: 6
+      isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 4
+      description: "ho\xE1n \u0111\u1ED5i v\u1ECB tr\xED v\u1EDBi k\u1EBB \u0111\u1ECBch,
+        \u0111\u1ED3ng th\u1EDDi qu\xE9t th\u01B0\u01A1ng t\u1EA5n c\xF4ng ph\u1EA1m
+        vi 1 \xF4 quanh m\xECnh. H\u01B0\u1EDBng t\u1EA5n c\xF4ng c\u1EE7a v\xF5
+        k\u1EF9 \u0111\u1ECBch thi tri\u1EC3n gi\u1EEF nguy\xEAn"
   passiveSkills: []
 --- !u!114 &3469845707852262298 stripped
 MonoBehaviour:
