@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
-using UnityEngine;
 
 public class ThietNhan_SkillState : AISkillState
 {
@@ -56,7 +54,7 @@ public class ThietNhan_SkillState : AISkillState
             {
                 new PoisonEffectData()
                 {
-                    EffectType = EffectType.Poison,
+                    EffectType = EffectType.ThietNhan_Poison,
                     Duration = EffectConfig.DebuffRound,
                     Damage = new RollData()
                     {
@@ -64,6 +62,17 @@ public class ThietNhan_SkillState : AISkillState
                         rollValue = 4,
                         add = 0
                     }
+                },
+                new ChangeStatEffect()
+                {
+                    EffectType = EffectType.ThietNhan_ReduceMoveRange,
+                    Duration = EffectConfig.DebuffRound,
+                    Value = 2,
+                },
+                new()
+                {
+                    EffectType = EffectType.ThietNhan_BlockAP,
+                    Duration = EffectConfig.DebuffRound,
                 }
             }
         };

@@ -21,6 +21,9 @@ public class EffectInfo
         EffectType.Sleep,
         EffectType.ReduceChiDef,
         EffectType.Poison,
+        EffectType.ThietNhan_Poison,
+        EffectType.ThietNhan_ReduceMoveRange,
+        EffectType.ThietNhan_BlockAP,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -29,7 +32,10 @@ public class EffectInfo
         { EffectType.Stun, (10, 10)},
         { EffectType.Sleep, (10, 10)},
         { EffectType.ReduceChiDef, (15, 15)},
-        { EffectType.Poison, (15, 15)}
+        { EffectType.Poison, (15, 15)},
+        { EffectType.ThietNhan_Poison, (10, 10)},
+        { EffectType.ThietNhan_ReduceMoveRange, (10, 10)},
+        { EffectType.ThietNhan_BlockAP, (10, 10)},
     };
 
     public void AddEffect(EffectData effect)
@@ -60,4 +66,7 @@ public enum EffectType
     RemoveAllPoisonPowder = 17,
     VenomousParasite = 18,
     Poison = 19,
+    ThietNhan_Poison = 20,
+    ThietNhan_ReduceMoveRange = 21,
+    ThietNhan_BlockAP = 22,
 }

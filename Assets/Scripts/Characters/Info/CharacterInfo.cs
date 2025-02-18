@@ -25,19 +25,22 @@ public class CharacterInfo
             { EffectType.IncreaseActionPoints, ApplyIncreaseActionPoints },
             { EffectType.BloodSealEffect, ApplyBloodSealEffect },
             { EffectType.BreakBloodSealDamage, ApplyBloodSealDamage },
-            { EffectType.Immobilize, ApplyImmobilize },
+            { EffectType.Immobilize, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ReduceMoveRange, ApplyReduceMoveRange },
             { EffectType.PoisonPowder, ApplyPoisonPowder },
-            { EffectType.Sleep, ApplySleep },
-            { EffectType.Stun, ApplyStun },
+            { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.RedDahlia, ApplyRedDahlia },
             { EffectType.WhiteLotus, ApplyWhiteLotus },
             { EffectType.Marigold, ApplyMarigold },
             { EffectType.NightCactus, ApplyNightCactus },
             { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
-            { EffectType.ReduceChiDef, ApplyReduceChiDef },
+            { EffectType.ReduceChiDef, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.VenomousParasite, ApplyVenomousParasite },
-            { EffectType.Poison, ApplyPoison }
+            { EffectType.Poison, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.ThietNhan_Poison, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.ThietNhan_ReduceMoveRange, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.ThietNhan_BlockAP, TryCheckEffectResistanceAndApplyEffect }
         };
     }
 
@@ -173,15 +176,28 @@ public class CharacterInfo
     {
         var totalReduction = 0;
 
-        foreach (var unused in EffectInfo.Effects
-                     .Where(e => e.EffectType == EffectType.ReduceMoveRange))
+        foreach (var effect in EffectInfo.Effects)
         {
-            var reduction = Roll.RollDice(1, 4, 0);
-            AlkawaDebug.Log(
-                ELogCategory.EFFECT,
-                $"Apply debuff 16: giảm di chuyển = 1d4 = {reduction}"
-            );
-            totalReduction += reduction;
+            switch (effect.EffectType)
+            {
+                case EffectType.ReduceMoveRange:
+                {
+                    var reduction = Roll.RollDice(1, 4, 0);
+                    AlkawaDebug.Log(
+                        ELogCategory.EFFECT,
+                        $"Apply debuff {effect.EffectType}: giảm di chuyển = 1d4 = {reduction}"
+                    );
+                    totalReduction += reduction;
+                    break;
+                }
+                case EffectType.ThietNhan_ReduceMoveRange when effect is ChangeStatEffect changeStatEffect:
+                    totalReduction += changeStatEffect.Value;
+                    AlkawaDebug.Log(
+                        ELogCategory.EFFECT,
+                        $"Apply debuff {effect.EffectType}: giảm di chuyển = {changeStatEffect.Value}"
+                    );
+                    break;
+            }
         }
 
         return totalReduction;
@@ -233,11 +249,10 @@ public class CharacterInfo
 
     #region Action Points
 
-    public List<int> ActionPointsList => new List<int>(ActionPoints)
-        .Concat(GetActionPointEffects()
-            .SelectMany(e => e.ActionPoints))
-        .ToList();
-
+    public List<int> ActionPointsList => ActionPoints.Concat(GetActionPointEffects().SelectMany(effect => effect.ActionPoints))
+            .Reverse().Skip(EffectInfo.Effects.Count(p => p.EffectType == EffectType.ThietNhan_BlockAP))
+            .Reverse().ToList();
+    
     private IEnumerable<ActionPointEffect> GetActionPointEffects() =>
         EffectInfo.Effects
             .OfType<ActionPointEffect>()
@@ -365,21 +380,15 @@ public class CharacterInfo
         {
             switch (item.EffectType)
             {
-                // case EffectType.Immobilize:
-                // {
-                //     var damage = Roll.RollDice(1, 6, 0);
-                //     HandleHpChanged(-damage);
-                //     Debug.Log($"[{Character.characterConfig.characterName}] - Mổng Yểm: Damage = 1d6 = {damage}");
-                //     break;
-                // }
                 case EffectType.Poison:
+                case EffectType.ThietNhan_Poison:
                 {
                     if (item is PoisonEffectData poisonEffectData)
                     {
                         var rollData = poisonEffectData.Damage;
                             var damage = Roll.RollDice(rollData);
                         HandleHpChanged(-damage);
-                        Debug.Log($"[{Character.characterConfig.characterName}] - Poison: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
+                        Debug.Log($"[{Character.characterConfig.characterName}] - {item.EffectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
                     }
                     break;
                 }
@@ -478,7 +487,7 @@ public class CharacterInfo
             $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
     }
 
-    private void ApplyImmobilize(EffectData effectData)
+    private void TryCheckEffectResistanceAndApplyEffect(EffectData effectData)
     {
         if (ShouldApplyEffect(effectData))
             ApplyEffect(effectData);
@@ -528,30 +537,12 @@ public class CharacterInfo
     {
         ApplyEffect(effectData, "Hoa Quỳnh");
     }
-
-    private void ApplySleep(EffectData effectData)
-    {
-        if (ShouldApplyEffect(effectData))
-            ApplyEffect(effectData);
-    }
-
-    private void ApplyStun(EffectData effectData)
-    {
-        if (ShouldApplyEffect(effectData))
-            ApplyEffect(effectData);
-    }
-
+    
     private void ApplyRemoveAllPoisonPowder(EffectData effectData)
     {
         EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.PoisonPowder);
     }
-
-    private void ApplyReduceChiDef(EffectData effectData)
-    {
-        if (ShouldApplyEffect(effectData))
-            ApplyEffect(effectData);
-    }
-
+    
     private void ApplyVenomousParasite(EffectData effectData)
     {
         if (effectData is ChangeStatEffect changeStatEffect)
@@ -567,12 +558,6 @@ public class CharacterInfo
                     break;
             }
         }
-    }
-
-    private void ApplyPoison(EffectData effectData)
-    {
-        if (ShouldApplyEffect(effectData))
-            ApplyEffect(effectData);
     }
     
     public int GetPoisonPowder()
