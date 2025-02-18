@@ -14,7 +14,7 @@ public class SkillState : CharacterState
     protected readonly List<Character> TargetCharacters = new();
     private bool _waitForFeedback = false;
     protected bool WaitForReact = false;
-
+    protected string SkillName => _skillStateParams.SkillInfo.name;
     public SkillState(Character character) : base(character)
     {
         _damageParamsHandlers = new Dictionary<(SkillTurnType, SkillIndex), Func<Character, DamageTakenParams>>
@@ -128,11 +128,13 @@ public class SkillState : CharacterState
     // Damage & Damage Params
     protected virtual DamageTakenParams GetDamageParams(Character character)
     {
+        Debug.Log("________________________________________________________________");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - {SkillName}");
         var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
         var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler)
             ? handler(character)
             : new DamageTakenParams();
-
+        Debug.Log("________________________________________________________________");
         return new DamageTakenParams
         {
             Damage = damageParams.Damage,
@@ -355,6 +357,8 @@ public class SkillState : CharacterState
 
     protected void MoveToCell(Cell cell, float time)
     {
+        ReleaseFacing();
+        SetFacing(Info.Cell.transform.position.x > cell.transform.position.x ? FacingType.Left : FacingType.Right);
         var targetPos = cell.transform.position;
         targetPos.y += Character.characterConfig.characterHeight / 2f;
         Character.UnRegisterCell();

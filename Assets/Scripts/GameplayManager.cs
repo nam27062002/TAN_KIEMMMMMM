@@ -295,6 +295,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
     }
 
+    public Character GetNearestAlly(Character character)
+    {
+        var nearestOpponent = Utils.FindNearestCharacter(character, character.Type == Type.AI ? _enemies : _players);
+        return nearestOpponent;
+    }
+
     private bool CanMove()
     {
         return IsRoundOfPlayer && MainCharacter == SelectedCharacter;

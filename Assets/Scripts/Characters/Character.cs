@@ -165,9 +165,7 @@ public abstract class Character : MonoBehaviour
         if (damageType.HasFlag(DamageTargetType.Move))
         {
             if (!Info.SkillRange.Contains(cell)) return false;
-            var path = MapManager.FindShortestPath(Info.Cell, cell);
-            var targets = (from item in path where item.CellType == CellType.Character && item.Character.Type == Type.AI select item.Character).ToList();
-            HandleCastSkill(targets, cell);
+            HandleCastSkill(null, cell);
             return true;
         }
         return false;

@@ -17,7 +17,7 @@ public class Roll
     {
         var rollData = _attributes.baseDamageRollData; 
         var baseDamage = RollDice(rollData, _characterInfo.GetCurrentDamage() / 4);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 4} = {baseDamage}");
+        Debug.Log($"Base Damage = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 4} = {baseDamage}");
         return baseDamage;
     }
 
@@ -25,7 +25,7 @@ public class Roll
     {
         var rollData = _attributes.hitChangeRollData; 
         var hitChange = RollDice(rollData.rollValue, _characterInfo.GetCurrentDamage() / 2);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Hit Change = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 2} = {hitChange}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Hit Change = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 2} = {hitChange}");
         return new HitChangeParams(){HitChangeValue = hitChange, IsCritical = rollData.rollValue == hitChange};
     }
 
@@ -33,7 +33,7 @@ public class Roll
     {
         var rollData = _attributes.effectResistanceRollData; 
         var effectResistance = RollDice(rollData, _characterInfo.CalculateChiDef() / 4 + 5);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.CalculateChiDef() / 4} + 5 = {effectResistance}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.CalculateChiDef() / 4} + 5 = {effectResistance}");
         return effectResistance;
     }
 
@@ -41,7 +41,7 @@ public class Roll
     {
         var rollData = _attributes.effectEffectCleanseRollData; 
         var effectCleanse = RollDice(rollData, _characterInfo.CalculateChiDef() / 4);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] Giải hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.CalculateChiDef() / 4} = {effectCleanse}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Giải hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.CalculateChiDef() / 4} = {effectCleanse}");
         return effectCleanse;
     }
     
