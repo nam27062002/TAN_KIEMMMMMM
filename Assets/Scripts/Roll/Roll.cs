@@ -72,6 +72,11 @@ public class Roll
         return res;
     }
     
+    public static int RollDice(RollData rollData)
+    {
+        return RollDice(rollData.rollTime, rollData.rollValue, rollData.add);   
+    }
+    
     public static int RollDice(int times, int side, int add)
     {
         var res = add;

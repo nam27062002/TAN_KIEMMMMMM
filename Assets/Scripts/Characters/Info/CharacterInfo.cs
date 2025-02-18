@@ -80,8 +80,8 @@ public class CharacterInfo
     public event EventHandler<int> OnMpChanged;
     public event EventHandler<int> OnMoveAmount;
 
-    public SkillConfig SkillConfig { get; set; }
-    public Character Character { get; set; }
+    private SkillConfig SkillConfig { get; set; }
+    private Character Character { get; set; }
 
     //
     private void HandleHpChanged(DamageTakenParams damageTakenParams)
@@ -256,7 +256,7 @@ public class CharacterInfo
 
         void IncreasePoints(IList<int> points)
         {
-            for (int i = 0; i < points.Count; i++)
+            for (var i = 0; i < points.Count; i++)
             {
                 points[i] = Math.Min(points[i] + 1, 3);
             }
@@ -365,18 +365,22 @@ public class CharacterInfo
         {
             switch (item.EffectType)
             {
-                case EffectType.Immobilize:
-                {
-                    var damage = Roll.RollDice(1, 6, 0);
-                    HandleHpChanged(-damage);
-                    Debug.Log($"[{Character.characterConfig.characterName}] - Mổng Yểm: Damage = 1d6 = {damage}");
-                    break;
-                }
+                // case EffectType.Immobilize:
+                // {
+                //     var damage = Roll.RollDice(1, 6, 0);
+                //     HandleHpChanged(-damage);
+                //     Debug.Log($"[{Character.characterConfig.characterName}] - Mổng Yểm: Damage = 1d6 = {damage}");
+                //     break;
+                // }
                 case EffectType.Poison:
                 {
-                    var damage = Roll.RollDice(1, 4, 0);
-                    HandleHpChanged(-damage);
-                    Debug.Log($"[{Character.characterConfig.characterName}] - Poison: Damage = 1d4 = {damage}");
+                    if (item is PoisonEffectData poisonEffectData)
+                    {
+                        var rollData = poisonEffectData.Damage;
+                            var damage = Roll.RollDice(rollData);
+                        HandleHpChanged(-damage);
+                        Debug.Log($"[{Character.characterConfig.characterName}] - Poison: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
+                    }
                     break;
                 }
             }

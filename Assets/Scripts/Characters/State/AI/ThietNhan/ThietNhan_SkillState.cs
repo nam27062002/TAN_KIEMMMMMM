@@ -18,7 +18,7 @@ public class ThietNhan_SkillState : AISkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: Skill Damage = 1d4 = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Ném Đá: damage = {baseDamage} + {skillDamage} = {totalDamage}");
-        var friends = GpManager.MapManager.GetAllTypeInRange(Info.Cell, CharacterType.ThietNhan, 10);
+        var friends = GpManager.MapManager.GetAllTypeInRange(Info.Cell, CharacterType.ThietNhan, 1);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: có {friends.Count} Thiết Nhân đứng sát");
 
         foreach (var friend in friends)
