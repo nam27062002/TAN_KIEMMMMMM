@@ -55,7 +55,7 @@ public class MapManager : MonoBehaviour
 
     public Cell GetCell(Vector2Int position)
     {
-        return cells[position];
+        return cells.TryGetValue(position, out var cell) ? cell : null;
     }
 
     public HashSet<Cell> GetHexagonsInMoveRange(Cell cell, int range, DirectionType direction)
@@ -65,7 +65,7 @@ public class MapManager : MonoBehaviour
 
     public HashSet<Cell> GetHexagonsInAttack(Cell cell, SkillInfo skillInfo)
     {
-        var allCells = _pathfinding.GetHexagonsInAttack(cell, skillInfo.range, DirectionType.All);
+        var allCells = _pathfinding.GetHexagonsInAttack(cell, skillInfo.range, skillInfo.directionType);
         var results = new HashSet<Cell>();
     
         foreach (var item in allCells)
@@ -80,21 +80,28 @@ public class MapManager : MonoBehaviour
                     results.Add(item);
                 }
             }
+            else if (item.CellType == CellType.Walkable)
+            {
+                if (skillInfo.damageType == DamageTargetType.Move)
+                {
+                    results.Add(item);
+                }
+            }
         }
     
         return results;
     }
 
 
-    public List<Cell> GetCellsWalkableInRange(Cell cell, int range)
+    public List<Cell> GetCellsWalkableInRange(Cell cell, int range, DirectionType direction)
     {
-        var allCells = _pathfinding.GetHexagonsInMoveRange(cell, range, DirectionType.All);
+        var allCells = _pathfinding.GetHexagonsInMoveRange(cell, range, direction);
         return allCells.Where(c => c.CellType == CellType.Walkable).ToList();
     }
     
-    public List<Character> GetCharacterInRange(Cell cell, int range)
+    public List<Character> GetCharacterInRange(Cell cell, int range, DirectionType direction)
     {
-        var allCells = _pathfinding.GetHexagonsInAttack(cell, range, DirectionType.All);
+        var allCells = _pathfinding.GetHexagonsInAttack(cell, range, direction);
         return (from item in allCells where item.CellType == CellType.Character select item.Character).ToList();
     }
 
@@ -104,7 +111,7 @@ public class MapManager : MonoBehaviour
             return new HashSet<Character>();
 
         var self = cell.Character;
-        return GetCharacterInRange(cell, info.range).Where(c => CheckDamageTarget(c, self, info.damageType))
+        return GetCharacterInRange(cell, info.range, info.directionType).Where(c => CheckDamageTarget(c, self, info.damageType))
             .ToHashSet();
     }
 
@@ -131,7 +138,7 @@ public class MapManager : MonoBehaviour
 
     public List<Cell> FindPath(Cell startCell, Cell endCell)
     {
-        return _pathfinding.FindPath(startCell, endCell, DirectionType.All);
+        return _pathfinding.FindPath(startCell, endCell);
     }
 
     public void DestroyMap()

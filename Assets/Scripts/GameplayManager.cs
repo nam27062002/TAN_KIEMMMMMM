@@ -360,9 +360,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
-    public List<Character> GetEnemiesInRange(Character character, int range)
+    public List<Character> GetEnemiesInRange(Character character, int range, DirectionType directionType)
     {
-        var characters = MapManager.GetCharacterInRange(character.CharacterInfo.Cell, range);
+        var characters = MapManager.GetCharacterInRange(character.CharacterInfo.Cell, range, directionType);
         return characters.Where(c => c.Type != character.Type).ToList();
     }
 

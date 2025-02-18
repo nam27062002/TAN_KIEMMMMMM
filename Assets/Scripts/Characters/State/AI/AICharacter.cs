@@ -36,7 +36,7 @@ public abstract class AICharacter : Character
     private bool TryMoving()
     {
         if (CharacterInfo.GetMoveRange() <= 0) return false;
-        var cells = GpManager.MapManager.GetCellsWalkableInRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange());
+        var cells = GpManager.MapManager.GetCellsWalkableInRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange(), characterConfig.moveDirection);
         if (cells.Count == 0) return false;
         var random = new System.Random();
         var randomCell = cells[random.Next(cells.Count)];
@@ -56,7 +56,7 @@ public abstract class AICharacter : Character
          {
              if (CharacterInfo.CanCastSkill(skills[i]) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
              {
-                 var enemiesInRange = GpManager.GetEnemiesInRange(this, skills[i].range);
+                 var enemiesInRange = GpManager.GetEnemiesInRange(this, skills[i].range, skills[i].directionType);
                  if (enemiesInRange.Count > 0)
                  {
                      _enemy = enemiesInRange[0];

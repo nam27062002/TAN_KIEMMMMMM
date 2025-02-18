@@ -53,10 +53,7 @@ public class CharacterInfo
 
     // Skill
     public SkillInfo SkillInfo { get; set; }
-
-    // Character
-    public HashSet<Character> CharactersInSkillRange { get; set; } = new();
-
+    
     // Stat
     public bool IsToggleOn { get; set; } = false;
     public int Speed { get; set; }

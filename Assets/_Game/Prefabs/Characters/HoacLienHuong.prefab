@@ -150,7 +150,7 @@ MonoBehaviour:
       skillIndex: 1
       mpCost: 2
       range: 4
-      directionType: 512
+      directionType: 510
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0

@@ -152,9 +152,19 @@ public abstract class Character : MonoBehaviour
 
     public bool TryCastSkill(Cell cell)
     {
-        if (!CharacterInfo.CharactersInSkillRange.Contains(cell.Character)) return false;
-        HandleCastSkill(new List<Character>(){cell.Character});
-        return true;
+        var damageType = CharacterInfo.SkillInfo.damageType;
+        if (damageType.HasFlag(DamageTargetType.Enemies) || damageType.HasFlag(DamageTargetType.Team))
+        {
+            if (!CharacterInfo.SkillRange.Contains(cell)) return false;
+            HandleCastSkill(new List<Character>(){cell.Character});
+            return true;
+        }
+
+        if (damageType.HasFlag(DamageTargetType.Move))
+        {
+            Debug.Log("NT - OKE NE");
+        }
+        return false;
     }
     
     public List<SkillInfo> GetSkillInfos(SkillTurnType skillTurnType)
@@ -205,42 +215,8 @@ public abstract class Character : MonoBehaviour
     private void HandleDirectionalSkill()
     {
         ShowSkillRange();
-        CharacterInfo.CharactersInSkillRange.Clear();
-        var damageType = CharacterInfo.SkillInfo.damageType;
-        if (damageType.HasFlag(DamageTargetType.Self))
-        {
-            CharacterInfo.CharactersInSkillRange.Add(this);
-        }
-        
-        foreach (var cell in CharacterInfo.SkillRange.Where(cell => cell.CellType == CellType.Character).Where(cell => IsValidTarget(cell.Character, damageType)))
-        {
-            CharacterInfo.CharactersInSkillRange.Add(cell.Character);
-        }
-        
-        var counterCharacter = GetCounterCharacter();
-        if (counterCharacter == null) return;
-        var isValidCounter = CharacterInfo.CharactersInSkillRange.Contains(counterCharacter);
-        CharacterInfo.CharactersInSkillRange.Clear();
-        if (isValidCounter)
-        {
-            CharacterInfo.CharactersInSkillRange.Add(counterCharacter);
-        }
     }
     
-    private bool IsValidTarget(Character target, DamageTargetType damageType)
-    {
-        return damageType.HasFlag(target.Type == Type ? DamageTargetType.Team : DamageTargetType.Enemies);
-    }
-    
-    private Character GetCounterCharacter()
-    {
-        if (StateMachine.CurrentState is IdleState { IdleStateParams: not null } idleState)
-        {
-            return idleState.IdleStateParams.DamageTakenParams.ReceiveFromCharacter;
-        }
-        return null;
-    }
-
     protected IdleStateParams GetIdleStateParams()
     {
         if (StateMachine.CurrentState is IdleState idleState)
@@ -263,7 +239,6 @@ public abstract class Character : MonoBehaviour
     private void UnSelectSkill()
     {
         CharacterInfo.SkillInfo = null;
-        CharacterInfo.CharactersInSkillRange.Clear();
         Skill_UI.Selected?.highlightable.Unhighlight();
         HideSkillRange();
     }
