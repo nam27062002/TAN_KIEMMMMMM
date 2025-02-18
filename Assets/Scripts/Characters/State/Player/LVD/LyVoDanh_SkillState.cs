@@ -123,9 +123,9 @@ public class LyVoDanh_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
-        var increaseDamage = Utils.RoundNumber(Character.CharacterInfo.CurrentHp * 1f / 10);
+        var increaseDamage = Utils.RoundNumber(Character.Info.CurrentHp * 1f / 10);
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Nhất Giang Yên Trúc: increase damage = {Character.CharacterInfo.CurrentHp} * 10% = {increaseDamage}");
+            $"[{CharName}] Nhất Giang Yên Trúc: increase damage = {Character.Info.CurrentHp} * 10% = {increaseDamage}");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()

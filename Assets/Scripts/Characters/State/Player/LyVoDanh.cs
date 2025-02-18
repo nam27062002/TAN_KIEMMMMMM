@@ -24,13 +24,13 @@
     {
         if (GpManager.IsTutorialLevel)
         {
-            CharacterInfo.Speed = 10;
+            Info.Speed = 10;
         }
         else
         {
             base.SetSpeed();
         }
-        CharacterInfo.Speed = 50;
+        Info.Speed = 50;
     }       
     
 }

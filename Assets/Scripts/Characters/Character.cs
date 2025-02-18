@@ -23,7 +23,7 @@ public abstract class Character : MonoBehaviour
 
     public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
     
-    public CharacterInfo CharacterInfo;
+    public CharacterInfo Info;
     private SkillStateParams _skillStateParams;
     public bool IsMainCharacter => GpManager.MainCharacter == this;
     // protected function
@@ -46,12 +46,12 @@ public abstract class Character : MonoBehaviour
 
     public void Initialize(Cell cell)
     {
-        CharacterInfo = new CharacterInfo(skillConfig, characterConfig.characterAttributes, this);
+        Info = new CharacterInfo(skillConfig, characterConfig.characterAttributes, this);
         skillConfig.SetSkillConfigs();
         SetCell(cell);
         SetIdle();
         SetSpeed();
-        CharacterInfo.OnHpChanged += OnHpChanged;
+        Info.OnHpChanged += OnHpChanged;
         OnHpChanged(null);
         ChangeState(ECharacterState.Idle);
         SetPassiveSkills();
@@ -59,7 +59,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void SetMainCharacter()
     {
-        CharacterInfo.ResetBuffBefore();
+        Info.ResetBuffBefore();
     }
 
     private void SetPassiveSkills()
@@ -84,9 +84,9 @@ public abstract class Character : MonoBehaviour
     
     public virtual void TryMoveToCell(Cell cell)
     {
-        if (CharacterInfo.MoveRange != null && CharacterInfo.MoveRange.Contains(cell))
+        if (Info.MoveRange != null && Info.MoveRange.Contains(cell))
         {
-            TryMoveToCell(MapManager.FindPath(CharacterInfo.Cell, cell));
+            TryMoveToCell(MapManager.FindPath(Info.Cell, cell));
         }
     }
 
@@ -152,20 +152,20 @@ public abstract class Character : MonoBehaviour
 
     public bool TryCastSkill(Cell cell)
     {
-        if (CharacterInfo.SkillInfo == null) return false;
-        var damageType = CharacterInfo.SkillInfo.damageType;
+        if (Info.SkillInfo == null) return false;
+        var damageType = Info.SkillInfo.damageType;
         
         if (damageType.HasFlag(DamageTargetType.Enemies) || damageType.HasFlag(DamageTargetType.Team))
         {
-            if (!CharacterInfo.SkillRange.Contains(cell)) return false;
+            if (!Info.SkillRange.Contains(cell)) return false;
             HandleCastSkill(new List<Character>(){cell.Character});
             return true;
         }
 
         if (damageType.HasFlag(DamageTargetType.Move))
         {
-            if (!CharacterInfo.SkillRange.Contains(cell)) return false;
-            Debug.Log($"NT - {CharacterInfo.Cell.CellPosition} - {cell.CellPosition}");
+            if (!Info.SkillRange.Contains(cell)) return false;
+            var path = MapManager.FindPath(Info.Cell, cell);
             return true;
         }
         return false;
@@ -178,24 +178,24 @@ public abstract class Character : MonoBehaviour
 
     private void HandleCastSkill(List<Character> targets = null)
     {
-        CharacterInfo.HandleMpChanged(-CharacterInfo.SkillInfo.mpCost);
+        Info.HandleMpChanged(-Info.SkillInfo.mpCost);
     
         var skillParams = new SkillStateParams
         {
             IdleStateParams = GetIdleStateParams(),
-            SkillInfo = CharacterInfo.SkillInfo,
+            SkillInfo = Info.SkillInfo,
             Targets = targets ?? new List<Character>(),
             SkillTurnType = GetSkillTurnType(),
         };
     
         SetSkill(skillParams);
-        CharacterInfo.ReduceActionPoints();
+        Info.ReduceActionPoints();
         UnSelectSkill();
     }
 
     protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null)
     {
-        CharacterInfo.SkillInfo = skillInfo;
+        Info.SkillInfo = skillInfo;
         HandleCastSkill(targets);
     }
 
@@ -203,10 +203,10 @@ public abstract class Character : MonoBehaviour
     {
         HideMoveRange();
         UnSelectSkill();
-        if (CharacterInfo.SkillInfo == GetSkillInfo(skillIndex)) return;
+        if (Info.SkillInfo == GetSkillInfo(skillIndex)) return;
         UnSelectSkill();
-        CharacterInfo.SkillInfo = GetSkillInfo(skillIndex);
-        if (CharacterInfo.SkillInfo.isDirectionalSkill)
+        Info.SkillInfo = GetSkillInfo(skillIndex);
+        if (Info.SkillInfo.isDirectionalSkill)
         {
             HandleDirectionalSkill();
         }
@@ -237,12 +237,12 @@ public abstract class Character : MonoBehaviour
     
     private SkillInfo GetSkillInfo(int index)
     {
-        return CharacterInfo.GetSkillInfo(index, GetSkillTurnType());
+        return Info.GetSkillInfo(index, GetSkillTurnType());
     }
     
     private void UnSelectSkill()
     {
-        CharacterInfo.SkillInfo = null;
+        Info.SkillInfo = null;
         Skill_UI.Selected?.highlightable.Unhighlight();
         HideSkillRange();
     }
@@ -269,19 +269,19 @@ public abstract class Character : MonoBehaviour
     
     public void SetCell(Cell cell)
     {
-        CharacterInfo.Cell = cell;
+        Info.Cell = cell;
         cell.OnCharacterRegister(this);
     }
     
     protected virtual void SetSpeed()
     {
-        CharacterInfo.SetSpeed();
+        Info.SetSpeed();
     }
     
     private void OnHpChanged(object sender, int value = 0)
     {
-        var currentHp = CharacterInfo.CurrentHp;
-        var maxHp = CharacterInfo.Attributes.health;
+        var currentHp = Info.CurrentHp;
+        var maxHp = Info.Attributes.health;
         hpBar.SetValue(currentHp * 1f / maxHp, $"{currentHp} / {maxHp}");
     }
     
@@ -297,12 +297,12 @@ public abstract class Character : MonoBehaviour
     
     protected virtual void OnSelected()
     {
-        CharacterInfo.Cell.ShowFocus();
+        Info.Cell.ShowFocus();
     }
 
     public virtual void OnUnSelected()
     {
-        CharacterInfo.Cell.HideFocus();
+        Info.Cell.HideFocus();
         UnSelectSkill();
         HideMoveRange();
     }
@@ -310,8 +310,8 @@ public abstract class Character : MonoBehaviour
     public void ShowMoveRange()
     {
         if (!IsMainCharacter) return;
-        CharacterInfo.MoveRange = MapManager.GetHexagonsInMoveRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange(), characterConfig.moveDirection);
-        foreach (var item in CharacterInfo.MoveRange)
+        Info.MoveRange = MapManager.GetHexagonsInMoveRange(Info.Cell, Info.GetMoveRange(), characterConfig.moveDirection);
+        foreach (var item in Info.MoveRange)
         {
             item.ShowMoveRange();
         }
@@ -320,18 +320,18 @@ public abstract class Character : MonoBehaviour
     
     public void HideMoveRange()
     {
-        if (CharacterInfo.MoveRange == null || CharacterInfo.MoveRange.Count == 0) return;
-        foreach (var item in CharacterInfo.MoveRange)
+        if (Info.MoveRange == null || Info.MoveRange.Count == 0) return;
+        foreach (var item in Info.MoveRange)
         {
             item.HideMoveRange();
         }
-        CharacterInfo.MoveRange.Clear();
+        Info.MoveRange.Clear();
     }
     
     private void ShowSkillRange()
     {
-        CharacterInfo.SkillRange = MapManager.GetHexagonsInAttack(CharacterInfo.Cell, CharacterInfo.SkillInfo);
-        foreach (var item in CharacterInfo.SkillRange)
+        Info.SkillRange = MapManager.GetHexagonsInAttack(Info.Cell, Info.SkillInfo);
+        foreach (var item in Info.SkillRange)
         {
             item.ShowSkillRange();
         }
@@ -339,12 +339,12 @@ public abstract class Character : MonoBehaviour
     
     private void HideSkillRange()
     {
-        if (CharacterInfo.SkillRange == null || CharacterInfo.SkillRange.Count == 0) return;
-        foreach (var item in CharacterInfo.SkillRange)
+        if (Info.SkillRange == null || Info.SkillRange.Count == 0) return;
+        foreach (var item in Info.SkillRange)
         {
             item.HideSkillRange();
         }
-        CharacterInfo.SkillRange.Clear();
+        Info.SkillRange.Clear();
     }
 
     public void ShowMessage(string message)
@@ -364,7 +364,7 @@ public abstract class Character : MonoBehaviour
 
     public void OnDie()
     {
-        CharacterInfo.Cell.CellType = CellType.Walkable;
+        Info.Cell.CellType = CellType.Walkable;
         var index = GpManager.Characters.IndexOf(this);
         ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
         GpManager.HandleCharacterDie(this);

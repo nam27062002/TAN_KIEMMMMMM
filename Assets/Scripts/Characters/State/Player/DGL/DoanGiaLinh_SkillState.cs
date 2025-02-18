@@ -24,7 +24,7 @@ public class DoanGiaLinh_SkillState : SkillState
         allCharacters.Remove(Character);
         foreach (var other in allCharacters)
         {
-            other.CharacterInfo.OnDamageTaken(new DamageTakenParams
+            other.Info.OnDamageTaken(new DamageTakenParams
             {
                 Effects = new List<EffectData>()
                 {
@@ -39,9 +39,9 @@ public class DoanGiaLinh_SkillState : SkillState
 
     private int ApplyVenomousParasiteExtraDamage(Character target, int currentDamage, List<EffectData> effects)
     {
-        int flower = target.CharacterInfo.CountFlower();
+        int flower = target.Info.CountFlower();
         int venomousParasite = GetVenomousParasite();
-        if (flower > 0 && venomousParasite > 0 && Character.CharacterInfo.IsToggleOn)
+        if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
         {
             int value = Mathf.Min(flower, venomousParasite);
             SetVenomousParasite(flower - value);
@@ -213,7 +213,7 @@ public class DoanGiaLinh_SkillState : SkillState
         ApplyPoisonPowder(target);
         int baseDamage = GetBaseDamage();
         int skillDamage = Roll.RollDice(1, 4, 0);
-        int stack = target.CharacterInfo.GetPoisonPowder();
+        int stack = target.Info.GetPoisonPowder();
         int totalSkillDamage = skillDamage * stack;
         int realDamage = baseDamage + totalSkillDamage;
         AlkawaDebug.Log(ELogCategory.SKILL,
@@ -287,8 +287,8 @@ public class DoanGiaLinh_SkillState : SkillState
     private void SetTargetCharactersForAllySkill4()
     {
         var validCharacters = GameplayManager.Instance.MapManager
-            .GetCharactersInRange(Character.CharacterInfo.Cell, _skillStateParams.SkillInfo)
-            .Where(c => c.CharacterInfo.EffectInfo.Effects.Any(e => e.EffectType == EffectType.PoisonPowder));
+            .GetCharactersInRange(Character.Info.Cell, _skillStateParams.SkillInfo)
+            .Where(c => c.Info.EffectInfo.Effects.Any(e => e.EffectType == EffectType.PoisonPowder));
         foreach (var character in validCharacters)
         {
             AddTargetCharacters(character);

@@ -16,7 +16,7 @@ public class ThietNhan : AICharacter
     {
         if (GpManager.IsTutorialLevel)
         {
-            CharacterInfo.Speed = CharacterInfo.Cell.CellPosition == new Vector2Int(6, 8) ? 8 : 7;
+            Info.Speed = Info.Cell.CellPosition == new Vector2Int(6, 8) ? 8 : 7;
         }
         else
         {

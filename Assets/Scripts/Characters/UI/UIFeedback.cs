@@ -40,7 +40,7 @@ public class UIFeedback : MonoBehaviour
             item.DestroyEffect();
         }
         _effectUIs.Clear();
-        foreach (var item in character.CharacterInfo.EffectInfo.Effects)
+        foreach (var item in character.Info.EffectInfo.Effects)
         {
             var go = Instantiate(effectUI.gameObject, effectsPanel);
             go.transform.SetAsFirstSibling();

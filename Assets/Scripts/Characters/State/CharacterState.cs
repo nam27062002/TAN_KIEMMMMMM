@@ -11,7 +11,7 @@ public abstract class CharacterState : IState
     protected Transform Transform => Owner.transform;
     protected Vector3 Position => Owner.transform.position;
     protected GameplayManager GpManager => GameplayManager.Instance;
-    protected CharacterInfo Info => Character.CharacterInfo;
+    protected CharacterInfo Info => Character.Info;
     
     protected string CharName => Character.characterConfig.characterName;
 

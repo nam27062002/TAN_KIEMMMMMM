@@ -18,13 +18,13 @@ public class MoveState : CharacterState
 
     private void HandleMovement(MoveStateParams stateParams)
     {
-        Character.CharacterInfo.Cell.CellType = CellType.Walkable;
+        Character.Info.Cell.CellType = CellType.Walkable;
         Character.HideMoveRange();
         ReleaseFacing();
-        Character.CharacterInfo.Cell.HideFocus();
+        Character.Info.Cell.HideFocus();
         var moveAmount = stateParams.MoveCells.Count - 1;
-        Character.CharacterInfo.MoveAmount += moveAmount;
-        Character.CharacterInfo.HandleMoveAmountChanged(moveAmount);
+        Character.Info.MoveAmount += moveAmount;
+        Character.Info.HandleMoveAmountChanged(moveAmount);
         var moveSequence = DOTween.Sequence();
         float currentX = Transform.position.x;
         foreach (var cell in stateParams.MoveCells)
@@ -53,7 +53,7 @@ public class MoveState : CharacterState
     protected virtual void OnReachToTarget(Cell cell)
     {
         SetCell(cell);
-        Character.CharacterInfo.Cell.ShowFocus();
+        Character.Info.Cell.ShowFocus();
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
     }

@@ -124,7 +124,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
         else
         {
-            if (MainCharacter == null || MainCharacter.CharacterInfo.IsDie)
+            if (MainCharacter == null || MainCharacter.Info.IsDie)
             {
                 HandleEndTurn();
             }
@@ -179,7 +179,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         else
         {
             if (SelectedCharacter)
-                MainCharacter?.CharacterInfo.ResetBuffAfter();
+                MainCharacter?.Info.ResetBuffAfter();
             CurrentPlayerIndex++;
             if (CurrentPlayerIndex >= Characters.Count)
             {
@@ -257,7 +257,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void SortCharacterBySpeed()
     {
-        Characters = Characters.OrderByDescending(c => c.CharacterInfo.Speed).ToList();
+        Characters = Characters.OrderByDescending(c => c.Info.Speed).ToList();
     }
 
     public void DestroyGameplay()
@@ -363,7 +363,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public List<Character> GetEnemiesInRange(Character character, int range, DirectionType directionType)
     {
-        var characters = MapManager.GetCharacterInRange(character.CharacterInfo.Cell, range, directionType);
+        var characters = MapManager.GetCharacterInRange(character.Info.Cell, range, directionType);
         return characters.Where(c => c.Type != character.Type).ToList();
     }
 

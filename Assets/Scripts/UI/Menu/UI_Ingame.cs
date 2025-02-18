@@ -174,8 +174,8 @@ public class UI_Ingame : MenuBase
         {
             skillUI[i].SetSkill(index: i + 1,
                 skillIcon: characterParams.Skills[i].icon,
-                unlock: !characterParams.Character.CharacterInfo.IsLockSkill,
-                enoughMana: characterParams.Character.CharacterInfo.CanCastSkill(characterParams.Skills[i]),
+                unlock: !characterParams.Character.Info.IsLockSkill,
+                enoughMana: characterParams.Character.Info.CanCastSkill(characterParams.Skills[i]),
                 type: characterParams.Character.Type);
         }
 
@@ -184,19 +184,19 @@ public class UI_Ingame : MenuBase
         endTurnButton.gameObject.SetActiveIfNeeded(characterParams.Character.CanEndTurn);
         characterName.text = characterParams.Character.characterConfig.characterName;
         characterIcon.sprite = characterParams.Character.characterConfig.characterIcon;
-        characterParams.Character.CharacterInfo.OnHpChanged += OnHpChanged;
-        characterParams.Character.CharacterInfo.OnMpChanged += OnMpChanged;
+        characterParams.Character.Info.OnHpChanged += OnHpChanged;
+        characterParams.Character.Info.OnMpChanged += OnMpChanged;
         OnHpChanged(null);
         OnMpChanged(null);
-        actionPointUI.SetActionPoints(characterParams.Character.CharacterInfo.ActionPointsList);
+        actionPointUI.SetActionPoints(characterParams.Character.Info.ActionPointsList);
         SetRound();
         toggle.gameObject.SetActiveIfNeeded(characterParams.Character.characterConfig.hasToggle);
-        toggle.isOn = characterParams.Character.CharacterInfo.IsToggleOn;
+        toggle.isOn = characterParams.Character.Info.IsToggleOn;
     }
 
     private void OnToggleValueChanged(bool isOn)
     {
-        GameplayManager.SelectedCharacter.CharacterInfo.IsToggleOn = isOn;
+        GameplayManager.SelectedCharacter.Info.IsToggleOn = isOn;
     }
 
 
@@ -225,15 +225,15 @@ public class UI_Ingame : MenuBase
 
     private void OnHpChanged(object sender, int _ = 0)
     {
-        var currentHp = _characterParams.Character.CharacterInfo.CurrentHp;
-        var maxHp = _characterParams.Character.CharacterInfo.Attributes.health;
+        var currentHp = _characterParams.Character.Info.CurrentHp;
+        var maxHp = _characterParams.Character.Info.Attributes.health;
         hpBar.SetValue(currentHp * 1f / maxHp, $"{currentHp} / {maxHp}");
     }
 
     private void OnMpChanged(object sender, int _ = 0)
     {
-        var currentMp = _characterParams.Character.CharacterInfo.CurrentMp;
-        var maxMp = _characterParams.Character.CharacterInfo.Attributes.mana;
+        var currentMp = _characterParams.Character.Info.CurrentMp;
+        var maxMp = _characterParams.Character.Info.Attributes.mana;
         mpBar.SetValue(currentMp * 1f / maxMp, $"{currentMp} / {maxMp}");
     }
 

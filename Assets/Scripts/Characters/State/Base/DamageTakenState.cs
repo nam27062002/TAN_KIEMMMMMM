@@ -55,7 +55,7 @@
     
     private void OnDamageTaken()
     {
-        Character.CharacterInfo.OnDamageTaken(_damageTakenParams);
+        Character.Info.OnDamageTaken(_damageTakenParams);
         PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
     }
     
@@ -67,7 +67,7 @@
             WaitForCounter = _damageTakenParams.WaitCounter,
         });
         Character.ChangeState(ECharacterState.Idle);
-        Character.CharacterInfo.CheckEffectAfterReceiveDamage(_damageTakenParams);
+        Character.Info.CheckEffectAfterReceiveDamage(_damageTakenParams);
         AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} set DamageTakenFinished");
     }
     

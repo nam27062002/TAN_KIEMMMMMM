@@ -36,17 +36,17 @@ public class BloodyRainbow : PassiveSkill
     public override void RegisterEvents()
     {
         base.RegisterEvents();
-        character.CharacterInfo.OnHpChanged += OnHpChanged;
-        character.CharacterInfo.OnMpChanged += OnMPChanged;
+        character.Info.OnHpChanged += OnHpChanged;
+        character.Info.OnMpChanged += OnMPChanged;
     }
 
     public override void UnregisterEvents()
     {
         base.UnregisterEvents();
-        if (character.CharacterInfo != null)
+        if (character.Info != null)
         {
-            character.CharacterInfo.OnHpChanged -= OnHpChanged;
-            character.CharacterInfo.OnMpChanged -= OnMPChanged;
+            character.Info.OnHpChanged -= OnHpChanged;
+            character.Info.OnMpChanged -= OnMPChanged;
         }
     }
 
@@ -85,7 +85,7 @@ public class BloodyRainbow : PassiveSkill
 
     private void IncreaseDamage()
     {
-        character.CharacterInfo.Attributes.atk += increasedDamageValue;
+        character.Info.Attributes.atk += increasedDamageValue;
         character.ShowMessage("Tăng 1 sát thương");
         AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} tăng {increasedDamageValue} damage");
     }
@@ -99,7 +99,7 @@ public class BloodyRainbow : PassiveSkill
     private void IncreaseDamageTakenAndMovement()
     {
         // character.CharacterInfo.Attributes.damageTaken += increasedDamageTaken;
-        character.CharacterInfo.MoveAmount += increasedMovement;
+        character.Info.MoveAmount += increasedMovement;
         character.ShowMessage($"Tăng {increasedMovement} di chuyển và nhận {increasedDamageTaken} sát thương");
     }
 }

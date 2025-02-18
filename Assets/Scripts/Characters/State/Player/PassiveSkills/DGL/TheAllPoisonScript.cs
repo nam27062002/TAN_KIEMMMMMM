@@ -11,15 +11,15 @@ public class TheAllPoisonScript : PassiveSkill
     public override void RegisterEvents()
     {
         base.RegisterEvents();
-        character.CharacterInfo.OnHpChanged += OnHpChanged;
+        character.Info.OnHpChanged += OnHpChanged;
     }
 
     public override void UnregisterEvents()
     {
         base.UnregisterEvents();
-        if (character.CharacterInfo != null)
+        if (character.Info != null)
         {
-            character.CharacterInfo.OnHpChanged -= OnHpChanged;
+            character.Info.OnHpChanged -= OnHpChanged;
         }
     }
 

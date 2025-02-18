@@ -14,14 +14,14 @@
     {
         if (GpManager.IsTutorialLevel)
         {
-            CharacterInfo.Speed = 11;
+            Info.Speed = 11;
         }
         else
         {
             base.SetSpeed();
         }
         
-        CharacterInfo.Speed = 60;
+        Info.Speed = 60;
     }
 
     public int GetVenomousParasite()

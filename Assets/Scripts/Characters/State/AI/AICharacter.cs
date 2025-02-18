@@ -23,7 +23,7 @@ public abstract class AICharacter : Character
     public void HandleAIPlay()
     {
         AlkawaDebug.Log(ELogCategory.AI,"HandleAIPlay");
-        CharacterInfo.GetMoveRange(); // TODO: Clean code
+        Info.GetMoveRange(); // TODO: Clean code
         if (!TryCastSkill())
         {
             if (!TryMoving())
@@ -35,12 +35,12 @@ public abstract class AICharacter : Character
     
     private bool TryMoving()
     {
-        if (CharacterInfo.GetMoveRange() <= 0) return false;
-        var cells = GpManager.MapManager.GetCellsWalkableInRange(CharacterInfo.Cell, CharacterInfo.GetMoveRange(), characterConfig.moveDirection);
+        if (Info.GetMoveRange() <= 0) return false;
+        var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, Info.GetMoveRange(), characterConfig.moveDirection);
         if (cells.Count == 0) return false;
         var random = new System.Random();
         var randomCell = cells[random.Next(cells.Count)];
-        var path = GpManager.MapManager.FindPath(CharacterInfo.Cell, randomCell);
+        var path = GpManager.MapManager.FindPath(Info.Cell, randomCell);
         TryMoveToCell(path);
         AlkawaDebug.Log(ELogCategory.AI,$"move to cell: {randomCell.CellPosition}");
         return true;
@@ -54,7 +54,7 @@ public abstract class AICharacter : Character
         
          for (int i = 0; i < skills.Count; i++)
          {
-             if (CharacterInfo.CanCastSkill(skills[i]) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
+             if (Info.CanCastSkill(skills[i]) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
              {
                  var enemiesInRange = GpManager.GetEnemiesInRange(this, skills[i].range, skills[i].directionType);
                  if (enemiesInRange.Count > 0)

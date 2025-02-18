@@ -3,6 +3,6 @@
     protected override void SetSpeed()
     {
         base.SetSpeed();
-        CharacterInfo.Speed = 100;
+        Info.Speed = 100;
     }
 }

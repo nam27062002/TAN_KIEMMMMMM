@@ -158,7 +158,7 @@ public class SkillState : CharacterState
                 if (Character.Type != target.Type)
                 {
                     var hitChangeParams = GetHitChangeParams();
-                    var dodge = target.CharacterInfo.Dodge;
+                    var dodge = target.Info.Dodge;
                     AlkawaDebug.Log(ELogCategory.SKILL,
                         $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
                         $"[{target.characterConfig.characterName}] Dodge = {dodge}");
@@ -207,7 +207,7 @@ public class SkillState : CharacterState
             yield return new WaitUntil(() => !_waitForFeedback);
             yield return new WaitForSecondsRealtime(0.1f);
 
-            if (!target.CharacterInfo.IsDie)
+            if (!target.Info.IsDie)
             {
                 target.OnDamageTaken(damageTakenParams);
             }

@@ -10,13 +10,13 @@ public class FlyingTempest : PassiveSkill
     public override void RegisterEvents()
     {
         base.RegisterEvents();
-        character.CharacterInfo.OnMoveAmount += OnMoveAmount;
+        character.Info.OnMoveAmount += OnMoveAmount;
     }
 
     public override void UnregisterEvents()
     {
         base.UnregisterEvents();
-        if (character.CharacterInfo != null) character.CharacterInfo.OnMoveAmount -= OnMoveAmount;
+        if (character.Info != null) character.Info.OnMoveAmount -= OnMoveAmount;
     }
 
     private void OnMoveAmount(object sender, int moveAmount)
@@ -36,7 +36,7 @@ public class FlyingTempest : PassiveSkill
             SkillTurnType = SkillTurnType.MyTurn,
             SkillInfo = info,
             Targets = new List<Character>(
-                GameplayManager.Instance.MapManager.GetCharactersInRange(character.CharacterInfo.Cell, info)),
+                GameplayManager.Instance.MapManager.GetCharactersInRange(character.Info.Cell, info)),
         });
     }
 }
