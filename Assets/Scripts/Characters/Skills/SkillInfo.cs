@@ -28,6 +28,9 @@ public class SkillInfo
     [LabelWidth(75)]
     public int range;
 
+    [VerticalGroup("Skill Info/Details")] [LabelWidth(75)]
+    public DirectionType directionType = DirectionType.All;
+    
     [VerticalGroup("Skill Info/Details")]
     [LabelWidth(125)]
     [ToggleLeft] 

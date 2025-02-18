@@ -139,6 +139,7 @@ MonoBehaviour:
       skillIndex: 0
       mpCost: 0
       range: 1
+      directionType: 512
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -149,6 +150,7 @@ MonoBehaviour:
       skillIndex: 1
       mpCost: 0
       range: 8
+      directionType: 512
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -161,6 +163,7 @@ MonoBehaviour:
       skillIndex: 2
       mpCost: 6
       range: 2
+      directionType: 512
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -175,6 +178,7 @@ MonoBehaviour:
       skillIndex: 0
       mpCost: 0
       range: 0
+      directionType: 512
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -185,6 +189,7 @@ MonoBehaviour:
       skillIndex: 1
       mpCost: 0
       range: 0
+      directionType: 512
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -195,6 +200,7 @@ MonoBehaviour:
       skillIndex: 2
       mpCost: 0
       range: 0
+      directionType: 512
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -206,6 +212,7 @@ MonoBehaviour:
       skillIndex: 0
       mpCost: 0
       range: 1
+      directionType: 512
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -216,6 +223,7 @@ MonoBehaviour:
       skillIndex: 1
       mpCost: 0
       range: 3
+      directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
@@ -232,6 +240,7 @@ MonoBehaviour:
       skillIndex: 2
       mpCost: 6
       range: 0
+      directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
