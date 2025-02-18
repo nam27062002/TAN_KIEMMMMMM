@@ -152,7 +152,9 @@ public abstract class Character : MonoBehaviour
 
     public bool TryCastSkill(Cell cell)
     {
+        if (CharacterInfo.SkillInfo == null) return false;
         var damageType = CharacterInfo.SkillInfo.damageType;
+        
         if (damageType.HasFlag(DamageTargetType.Enemies) || damageType.HasFlag(DamageTargetType.Team))
         {
             if (!CharacterInfo.SkillRange.Contains(cell)) return false;
@@ -162,7 +164,9 @@ public abstract class Character : MonoBehaviour
 
         if (damageType.HasFlag(DamageTargetType.Move))
         {
-            Debug.Log("NT - OKE NE");
+            if (!CharacterInfo.SkillRange.Contains(cell)) return false;
+            Debug.Log($"NT - {CharacterInfo.Cell.CellPosition} - {cell.CellPosition}");
+            return true;
         }
         return false;
     }

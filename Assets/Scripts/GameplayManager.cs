@@ -214,6 +214,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnWaypointClicked(Cell cell)
     {
+        if (SelectedCharacter.TryCastSkill(cell)) return;
         if (!CanMove()) return;
         SelectedCharacter.TryMoveToCell(cell);
     }
