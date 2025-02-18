@@ -105,6 +105,17 @@ public class DoanGiaLinh_SkillState : SkillState
             {
                 EffectType = EffectType.NightCactus,
             },
+            new PoisonEffectData()
+            {
+                EffectType = EffectType.Poison,
+                Duration = EffectConfig.DebuffRound,
+                Damage = new RollData()
+                {
+                    rollTime = 1,
+                    rollValue = 4,
+                    add = 0,
+                }
+            }
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
         return new DamageTakenParams { Damage = damage, Effects = effects };
