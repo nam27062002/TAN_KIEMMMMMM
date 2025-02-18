@@ -25,7 +25,7 @@ public abstract class Character : MonoBehaviour
     public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
     
     public CharacterInfo Info;
-    private SkillStateParams _skillStateParams;
+    protected SkillStateParams _skillStateParams;
     public bool IsMainCharacter => GpManager.MainCharacter == this;
     // protected function
     protected GameplayManager GpManager => GameplayManager.Instance;
@@ -118,7 +118,7 @@ public abstract class Character : MonoBehaviour
             damageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
         }
         
-        if (_skillStateParams != null && _skillStateParams.SkillInfo.canBlockDamage)
+        if (_skillStateParams != null && CanBlockSkill(damageTakenParams))
         {
             damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams
             {
@@ -131,7 +131,11 @@ public abstract class Character : MonoBehaviour
         {
             OnDamageTaken(damageTakenParams); 
         }
-        
+    }
+
+    protected virtual bool CanBlockSkill(DamageTakenParams damageTakenParams)
+    {
+        return _skillStateParams.SkillInfo.canBlockDamage;
     }
 
     private void OnDamageTakenCounterFinished(FinishApplySkillParams _)
@@ -188,6 +192,7 @@ public abstract class Character : MonoBehaviour
             Targets = targets ?? new List<Character>(),
             SkillTurnType = GetSkillTurnType(),
             TargetCell = targetCell,
+            Source = this,
         };
     
         SetSkill(skillParams);

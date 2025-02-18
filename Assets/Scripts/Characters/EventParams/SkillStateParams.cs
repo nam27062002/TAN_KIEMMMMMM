@@ -2,6 +2,7 @@
 
 public class SkillStateParams : StateParams
 {
+    public Character Source;
     public IdleStateParams IdleStateParams;
     public SkillTurnType SkillTurnType;
     public SkillInfo SkillInfo;

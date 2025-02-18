@@ -143,6 +143,7 @@ public class SkillState : CharacterState
             OnSetDamageTakenFinished = HandleTargetFinish,
             ReceiveFromCharacter = Character,
             CanCounter = true,
+            SkillStateParams = _skillStateParams
         };
     }
 
@@ -179,6 +180,7 @@ public class SkillState : CharacterState
                             ReceiveFromCharacter = Character,
                             CanCounter = true,
                             OnSetDamageTakenFinished = HandleTargetFinish,
+                            SkillStateParams = _skillStateParams
                         };
                         CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
                         _waitForFeedback = true;
