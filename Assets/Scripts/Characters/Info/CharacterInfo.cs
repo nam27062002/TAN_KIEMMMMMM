@@ -19,30 +19,33 @@ public class CharacterInfo
 
         _effectHandlers = new Dictionary<EffectType, Action<EffectData>>
         {
-            { EffectType.IncreaseDamage, ApplyIncreaseDamage },
-            { EffectType.BlockSkill, _ => ApplyBlockSkill() },
             { EffectType.IncreaseMoveRange, ApplySimpleEffect },
             { EffectType.IncreaseActionPoints, ApplySimpleEffect },
             { EffectType.BloodSealEffect, ApplySimpleEffect },
-            { EffectType.BreakBloodSealDamage, ApplyBloodSealDamage },
-            { EffectType.Immobilize, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.ReduceMoveRange, ApplySimpleEffect },
-            { EffectType.PoisonPowder, ApplyPoisonPowder },
-            { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.RedDahlia, ApplySimpleEffect },
             { EffectType.WhiteLotus, ApplySimpleEffect },
             { EffectType.Marigold, ApplySimpleEffect },
             { EffectType.NightCactus, ApplySimpleEffect },
-            { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
+            { EffectType.ReduceMoveRange, ApplySimpleEffect },
+            { EffectType.ThietNhan_Infected, ApplySimpleEffect },
+            { EffectType.Cover, ApplySimpleEffect },
+            
+            { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.Immobilize, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ReduceChiDef, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.VenomousParasite, ApplyVenomousParasite },
+            { EffectType.Disarm , TryCheckEffectResistanceAndApplyEffect},
             { EffectType.Poison, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_Poison, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_ReduceMoveRange, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_BlockAP, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.ThietNhan_Infected, ApplySimpleEffect },
-            { EffectType.Cover, ApplySimpleEffect }
+            
+            { EffectType.IncreaseDamage, ApplyIncreaseDamage },
+            { EffectType.BlockSkill, _ => ApplyBlockSkill() },
+            { EffectType.BreakBloodSealDamage, ApplyBloodSealDamage },
+            { EffectType.PoisonPowder, ApplyPoisonPowder },
+            { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
+            { EffectType.VenomousParasite, ApplyVenomousParasite },
         };
     }
 

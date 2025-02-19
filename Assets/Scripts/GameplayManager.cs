@@ -282,24 +282,32 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             return FacingType.Right;
         }
+        var opponents = character.Type == Type.AI ? _players : _enemies;
+        var nearestOpponent = Utils.FindNearestCharacter(character, opponents);
 
-        var characterPosition = character.transform.position;
-        var nearestOpponent = Utils.FindNearestCharacter(character, character.Type == Type.AI ? _players : _enemies);
         if (nearestOpponent == null)
         {
             AlkawaDebug.Log(ELogCategory.GAMEPLAY, "GetFacingType: No opponents found.");
             return FacingType.Right;
         }
 
+        var characterPosition = character.transform.position;
         var opponentPosition = nearestOpponent.transform.position;
         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
     }
 
     public Character GetNearestAlly(Character character)
     {
-        var nearestOpponent = Utils.FindNearestCharacter(character, character.Type == Type.AI ? _enemies : _players);
-        return nearestOpponent;
+        var allies = character.Type == Type.AI ? _enemies : _players;
+        return Utils.FindNearestCharacter(character, allies);
     }
+
+    public Character GetNearestEnemy(Character character)
+    {
+        var enemies = character.Type == Type.AI ? _players : _enemies;
+        return Utils.FindNearestCharacter(character, enemies);
+    }
+
 
     private bool CanMove()
     {
@@ -341,9 +349,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     #region Skills
 
-    public void HandleSelectSkill(int skillIndex)
+    public void HandleSelectSkill(int skillIndex, Skill_UI skillUI)
     {
-        SelectedCharacter.HandleSelectSkill(skillIndex);
+        SelectedCharacter.HandleSelectSkill(skillIndex, skillUI);
     }
 
     public void HandleCharacterDie(Character character)
@@ -373,6 +381,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return characters.Where(c => c.Type != character.Type).ToList();
     }
 
+    public void SwapPlayers(Character character1, Character character2)
+    {
+        var cell1 = character1.Info.Cell;
+        var cell2 = character2.Info.Cell;
+        cell1.Character = character2;
+        cell2.Character = character1;
+
+        character1.Info.Cell = cell2;
+        character2.Info.Cell = cell1;
+        
+        character1.SetPosition();
+        character2.SetPosition();
+        
+        cell1.HideFocus();
+        cell2.ShowFocus();
+    }
+    
     #endregion
 
     #region Tutorial

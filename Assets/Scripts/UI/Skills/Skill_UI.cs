@@ -30,7 +30,7 @@ public class Skill_UI : MonoBehaviour
         {
             Selected?.highlightable.Unhighlight();
             highlightable.Highlight();
-            GameplayManager.Instance.HandleSelectSkill(_skillIndex);
+            GameplayManager.Instance.HandleSelectSkill(_skillIndex, this);
             Selected = this;
         }
     }

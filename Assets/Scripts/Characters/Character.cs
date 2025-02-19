@@ -212,7 +212,7 @@ public abstract class Character : MonoBehaviour
         HandleCastSkill(targets);
     }
 
-    public void HandleSelectSkill(int skillIndex)
+    public void HandleSelectSkill(int skillIndex, Skill_UI skillUI)
     {
         HideMoveRange();
         UnSelectSkill();
@@ -226,6 +226,7 @@ public abstract class Character : MonoBehaviour
         else
         {
             HandleCastSkill();
+            skillUI.highlightable.Unhighlight();
         }
     }
 
@@ -403,6 +404,12 @@ public abstract class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void SetPosition()
+    {
+        StateMachine.GetCurrentState.SetCharacterPosition();
+        StateMachine.GetCurrentState.SetFacing();
+    }
+    
 #if UNITY_EDITOR
     private void OnValidate()
     {

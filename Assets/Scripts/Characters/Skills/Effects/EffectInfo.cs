@@ -25,6 +25,7 @@ public class EffectInfo
         EffectType.ThietNhan_ReduceMoveRange,
         EffectType.ThietNhan_BlockAP,
         EffectType.Cover,
+        EffectType.Disarm,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -37,6 +38,7 @@ public class EffectInfo
         { EffectType.ThietNhan_Poison, (10, 10)},
         { EffectType.ThietNhan_ReduceMoveRange, (10, 10)},
         { EffectType.ThietNhan_BlockAP, (10, 10)},
+        { EffectType.Disarm, (10, 10)},
     };
 
     public void AddEffect(EffectData effect)
@@ -72,4 +74,5 @@ public enum EffectType
     ThietNhan_BlockAP = 22,
     ThietNhan_Infected = 23,
     Cover = 24,
+    Disarm = 25,
 }

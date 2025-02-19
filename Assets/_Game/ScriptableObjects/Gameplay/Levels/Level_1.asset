@@ -26,5 +26,5 @@ MonoBehaviour:
         - {x: 3, y: 10}
         - {x: 6, y: 8}
       - points:
-        - {x: 6, y: 6}
+        - {x: 2, y: 2}
   mapPrefab: {fileID: 1980423763408188603, guid: 417e63c948212724082e659fe45c197a, type: 3}

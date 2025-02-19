@@ -372,4 +372,18 @@ public class SkillState : CharacterState
             Info.Cell.ShowFocus();
         });
     }
+
+    protected int GetSkillDamage(RollData rollData)
+    {
+        var damage = Roll.RollDice(rollData);
+        Debug.Log($"Skill Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
+        return damage;
+    }
+
+    protected int GetTotalDamage(int baseDamage, int skillDamage)
+    {
+        var totalDamage = baseDamage + skillDamage;
+        Debug.Log($"Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
+        return totalDamage;
+    }
 }

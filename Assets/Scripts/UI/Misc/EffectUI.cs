@@ -7,6 +7,7 @@ public class EffectUI : MonoBehaviour
 
     public void Initialize(Sprite sprite)
     {
+        if (sprite == null) return;
         icon.sprite = sprite;
     }
     

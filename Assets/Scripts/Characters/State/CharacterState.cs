@@ -29,7 +29,7 @@ public abstract class CharacterState : IState
         Model.transform.localScale = Vector3.one;
     }
     
-    protected void SetFacing()
+    public void SetFacing()
     {
         var facing = GpManager.GetFacingType(Character);
         SetFacing(facing);
@@ -54,7 +54,7 @@ public abstract class CharacterState : IState
 
     #region Sub
 
-    protected void SetCharacterPosition()
+    public void SetCharacterPosition()
     {
         var pos = Info.Cell.transform.position;
         pos.y += Character.characterConfig.characterHeight / 2f;

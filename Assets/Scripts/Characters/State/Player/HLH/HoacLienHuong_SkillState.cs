@@ -52,6 +52,37 @@ public class HoacLienHuong_SkillState : SkillState
         };
     }
     
+    //===================== SKILL 4 =====================
+    protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
+    {
+        var baseDamage = GetBaseDamage();
+        var skillDamage = GetSkillDamage(new RollData(2, 4, 2));
+        var totalDamage = GetTotalDamage(baseDamage, skillDamage);
+        return new DamageTakenParams
+        {
+            Damage = totalDamage,
+            Effects = new List<EffectData>()
+            {
+                new()
+                {
+                    EffectType = EffectType.Disarm,
+                    Duration = EffectConfig.DebuffRound,
+                }
+            }
+        };   
+    }
+    
+    protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character _)
+    {
+        var baseDamage = GetBaseDamage();
+        var skillDamage = GetSkillDamage(new RollData(2, 4, 2));
+        var totalDamage = GetTotalDamage(baseDamage, skillDamage);
+        return new DamageTakenParams()
+        {
+            Damage = totalDamage,
+        };
+    }
+    
     //===================== SKILL 2 =====================
     protected override void SetTargetCharacters_Skill2_MyTurn()
     {
@@ -67,5 +98,23 @@ public class HoacLienHuong_SkillState : SkillState
     {
         AddTargetCharacters(Character);
     }
-        
-}
+    
+    protected override void SetTargetCharacters_Skill4_MyTurn()
+    {
+        var nearestEnemy = GpManager.GetNearestEnemy(Character);
+        if (nearestEnemy != null) AddTargetCharacters(nearestEnemy);
+    }
+    
+    protected override void SetTargetCharacters_Skill4_EnemyTurn()
+    {
+        var focusEnemy = GpManager.MainCharacter;
+        GpManager.SwapPlayers(Character, focusEnemy);
+        var character =
+            new List<Character>(GpManager.MapManager.GetCharactersInRange(Info.Cell, _skillStateParams.SkillInfo));
+
+        foreach (var item in character)
+        {
+            AddTargetCharacters(item);
+        }
+    }
+}        

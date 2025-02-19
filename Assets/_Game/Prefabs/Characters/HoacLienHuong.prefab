@@ -262,9 +262,9 @@ MonoBehaviour:
       name: "Long H\u01B0ng"
       skillIndex: 3
       mpCost: 2
-      range: 6
+      range: 1
       directionType: 512
-      isDirectionalSkill: 1
+      isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
