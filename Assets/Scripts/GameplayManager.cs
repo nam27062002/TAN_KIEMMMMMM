@@ -396,6 +396,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         
         cell1.HideFocus();
         cell2.ShowFocus();
+        
+        UpdateAllFacing();
+    }
+
+    public void UpdateAllFacing()
+    {
+        foreach (var character in Characters)
+        {
+            character.UpdateFacing();
+        }
     }
     
     #endregion

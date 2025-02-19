@@ -64,7 +64,6 @@ public class SkillState : CharacterState
         }
 
         _skillStateParams = skillStateParams;
-
         if (_skillStateParams.IdleStateParams != null)
         {
             Character.HandleCounterLogic(_skillStateParams);
@@ -134,7 +133,6 @@ public class SkillState : CharacterState
         var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler)
             ? handler(character)
             : new DamageTakenParams();
-        Debug.Log("________________________________________________________________");
         return new DamageTakenParams
         {
             Damage = damageParams.Damage,
@@ -166,12 +164,7 @@ public class SkillState : CharacterState
                     AlkawaDebug.Log(ELogCategory.SKILL,
                         $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
                         $"[{target.characterConfig.characterName}] Dodge = {dodge}");
-
-// #if ALWAY_APPLY_EFFECT
-//                     if (hitChangeParams.HitChangeValue < dodge && Character.Type == Type.AI)
-// #else 
-//                     if (hitChangeParams.HitChangeValue < dodge)
-// #endif
+                    
                     if (hitChangeParams.HitChangeValue < dodge)
                     {
                         var dodgeDamageParams = new DamageTakenParams

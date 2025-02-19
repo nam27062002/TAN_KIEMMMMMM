@@ -407,6 +407,11 @@ public abstract class Character : MonoBehaviour
     public void SetPosition()
     {
         StateMachine.GetCurrentState.SetCharacterPosition();
+        UpdateFacing();
+    }
+
+    public void UpdateFacing()
+    {
         StateMachine.GetCurrentState.SetFacing();
     }
     

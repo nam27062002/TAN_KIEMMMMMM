@@ -55,6 +55,7 @@ public class MoveState : CharacterState
         SetCell(cell);
         Character.Info.Cell.ShowFocus();
         GpManager.SetInteract(true);
+        GpManager.UpdateAllFacing();
         Character.ChangeState(ECharacterState.Idle);
     }
 }
