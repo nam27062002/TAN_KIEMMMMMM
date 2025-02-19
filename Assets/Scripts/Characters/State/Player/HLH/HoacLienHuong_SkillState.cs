@@ -46,7 +46,6 @@ public class HoacLienHuong_SkillState : SkillState
             });
         }
         Debug.Log($"Liên kết với đồng minh gần nhất: {coveredBy.characterConfig.characterName}");
-        character.linkCharacter.SetLine(Transform.position, coveredBy.transform.position);
         return new DamageTakenParams()
         {
             Effects = effects,

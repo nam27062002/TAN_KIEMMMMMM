@@ -664,6 +664,7 @@ MonoBehaviour:
     m_values:
     - {fileID: 6458488636825399351}
   greyBackground: {fileID: 679854189}
+  cheat: {fileID: 1327207704}
 --- !u!1001 &1327207702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -956,6 +957,11 @@ PrefabInstance:
 --- !u!224 &1327207703 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 22457152, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+  m_PrefabInstance: {fileID: 1327207702}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1327207704 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
   m_PrefabInstance: {fileID: 1327207702}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1960295637

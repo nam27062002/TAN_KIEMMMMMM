@@ -24,6 +24,7 @@ public class EffectInfo
         EffectType.ThietNhan_Poison,
         EffectType.ThietNhan_ReduceMoveRange,
         EffectType.ThietNhan_BlockAP,
+        EffectType.Cover,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()

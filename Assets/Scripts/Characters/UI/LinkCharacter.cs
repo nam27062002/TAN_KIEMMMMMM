@@ -6,12 +6,13 @@ public class LinkCharacter : MonoBehaviour
 
     public void SetLine(Vector3 startPoint, Vector3 endPoint)
     {
+        lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, startPoint);
         lineRenderer.SetPosition(1, endPoint);
     }
 
     public void ClearLine()
     {
-        Destroy(gameObject);
+        lineRenderer.positionCount = 0;
     }
 }

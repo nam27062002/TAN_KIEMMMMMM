@@ -76,6 +76,7 @@ public class CharacterInfo
     private bool HasStunEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Stun);
 
     private bool MustEndTurn => HasSleepEffect || HasStunEffect;
+    public EffectData CoverEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover);
 
     // Action
     public event EventHandler<int> OnHpChanged;
@@ -90,6 +91,8 @@ public class CharacterInfo
     {
         var damage = -damageTakenParams.Damage;
         if (damage == 0) return;
+
+        TryHandleCoverEffect(ref damage);
         CurrentHp += damage;
         CurrentHp = math.max(0, CurrentHp);
         if (IsDie)
@@ -106,6 +109,23 @@ public class CharacterInfo
             Character.ShowMessage($"{-damage}");
             OnHpChanged?.Invoke(this, damageTakenParams.Damage);
         }
+    }
+
+    private void TryHandleCoverEffect(ref int damage)
+    {
+        var coverEffect = CoverEffectData;
+        if (coverEffect == null)
+        {
+            return;
+        }
+        damage = Utils.RoundNumber(damage * 1f / 2);
+        coverEffect.CoveredBy.OnDamageTaken(new DamageTakenParams()
+        {
+            CanDodge = false,
+            Damage = damage,
+            ReceiveFromCharacter = Character,
+            CanCounter = false,
+        });
     }
 
     private void HandleHpChanged(int damage)

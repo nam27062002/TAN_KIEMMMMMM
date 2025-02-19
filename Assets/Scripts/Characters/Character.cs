@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -41,6 +42,11 @@ public abstract class Character : MonoBehaviour
     private void Awake()
     {
         SetStateMachine();
+    }
+    
+    public void FixedUpdate()
+    {
+        DrawLink();
     }
 
     protected abstract void SetStateMachine();
@@ -367,6 +373,14 @@ public abstract class Character : MonoBehaviour
     }
     #endregion
     
+    private void DrawLink()
+    {
+        var coverEffect = Info.CoverEffectData;
+        if (coverEffect == null) return;
+        linkCharacter.ClearLine();
+        linkCharacter.SetLine(coverEffect.CoveredBy.transform.position, transform.position);
+    }
+
     public void DestroyCharacter()
     {
         Destroy(gameObject);

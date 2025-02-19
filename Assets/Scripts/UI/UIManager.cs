@@ -9,7 +9,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     [SerializeField] private SerializableDictionary<PopupType, UIBase> allPopups = new();
     [SerializeField] private SerializableDictionary<MenuType, UIBase> allMenus = new();
     [SerializeField] private Image greyBackground;
-    
+    [SerializeField] private GameObject cheat;
     public UIBase CurrentMenu { get; set; }
     public UIBase CurrentPopup { get; set; }
     
@@ -18,6 +18,7 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         base.Awake();
         SetActiveAllMenus(false);
         SetActiveAllPopups(false);
+        cheat.SetActiveIfNeeded(true);
     }
 
     protected override void RegisterEvents()
@@ -32,6 +33,14 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         base.UnRegisterEvents();
         PopupBase.OnOpen -= OnOpenPopup;
         PopupBase.OnClose -= OnClosePopup;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            cheat.SetActiveIfNeeded(!cheat.activeSelf);
+        }
     }
 
     #region Main Function
