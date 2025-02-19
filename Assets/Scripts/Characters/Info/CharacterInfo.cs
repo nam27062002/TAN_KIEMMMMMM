@@ -28,7 +28,8 @@ public class CharacterInfo
             { EffectType.NightCactus, ApplySimpleEffect },
             { EffectType.ReduceMoveRange, ApplySimpleEffect },
             { EffectType.ThietNhan_Infected, ApplySimpleEffect },
-            { EffectType.Cover, ApplySimpleEffect },
+            { EffectType.Cover_50_Percent, ApplySimpleEffect },
+            { EffectType.Cover_100_Percent, ApplySimpleEffect },
             
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -79,8 +80,8 @@ public class CharacterInfo
     private bool HasStunEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Stun);
 
     private bool MustEndTurn => HasSleepEffect || HasStunEffect;
-    public EffectData CoverEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover);
-
+    public EffectData CoverEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_50_Percent);
+    public EffectData CoverFullDamageEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_100_Percent);
     // Action
     public event EventHandler<int> OnHpChanged;
     public event EventHandler<int> OnMpChanged;
@@ -113,9 +114,25 @@ public class CharacterInfo
             OnHpChanged?.Invoke(this, damageTakenParams.Damage);
         }
     }
-
+    
     private void TryHandleCoverEffect(ref int damage)
     {
+        // 100 %
+        var fullCover = CoverFullDamageEffectData;
+        if (fullCover != null)
+        {
+            fullCover.CoveredBy.OnDamageTaken(new DamageTakenParams()
+            {
+                CanDodge = false,
+                Damage = -damage,
+                ReceiveFromCharacter = Character,
+                CanCounter = false,
+            });
+            damage = 0;
+            return;
+        }
+        
+        // 50 %
         var coverEffect = CoverEffectData;
         if (coverEffect == null)
         {
@@ -125,7 +142,7 @@ public class CharacterInfo
         coverEffect.CoveredBy.OnDamageTaken(new DamageTakenParams()
         {
             CanDodge = false,
-            Damage = damage,
+            Damage = -damage,
             ReceiveFromCharacter = Character,
             CanCounter = false,
         });

@@ -24,7 +24,7 @@ public class EffectInfo
         EffectType.ThietNhan_Poison,
         EffectType.ThietNhan_ReduceMoveRange,
         EffectType.ThietNhan_BlockAP,
-        EffectType.Cover,
+        EffectType.Cover_50_Percent,
         EffectType.Disarm,
     };
     
@@ -73,6 +73,7 @@ public enum EffectType
     ThietNhan_ReduceMoveRange = 21,
     ThietNhan_BlockAP = 22,
     ThietNhan_Infected = 23,
-    Cover = 24,
+    Cover_50_Percent = 24,
     Disarm = 25,
+    Cover_100_Percent = 26,
 }

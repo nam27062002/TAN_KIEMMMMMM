@@ -219,10 +219,10 @@ MonoBehaviour:
       mpCost: 2
       range: 6
       directionType: 512
-      isDirectionalSkill: 0
+      isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 0
+      damageType: 2
       description: 
     combatSkill:
     - icon: {fileID: 2037120817534264460, guid: 72139ca088282ff48ab52ed50ead1d13, type: 3}

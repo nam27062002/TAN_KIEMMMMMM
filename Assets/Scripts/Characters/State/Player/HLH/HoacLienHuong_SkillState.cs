@@ -40,7 +40,7 @@ public class HoacLienHuong_SkillState : SkillState
         {
             effects.Add(new EffectData()
             {
-                EffectType = EffectType.Cover,
+                EffectType = EffectType.Cover_50_Percent,
                 Duration = EffectConfig.DebuffRound,
                 CoveredBy = coveredBy,
             });
@@ -70,6 +70,22 @@ public class HoacLienHuong_SkillState : SkillState
                 }
             }
         };   
+    }
+    
+    protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character _)
+    {
+        return new DamageTakenParams()
+        {
+            Effects = new List<EffectData>()
+            {
+                new()
+                {
+                    EffectType = EffectType.Cover_100_Percent,
+                    Duration = 1,
+                    CoveredBy = Character,
+                }
+            }
+        };
     }
     
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character _)
