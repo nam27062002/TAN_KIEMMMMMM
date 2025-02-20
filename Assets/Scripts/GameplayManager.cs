@@ -404,7 +404,15 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         foreach (var character in Characters)
         {
-            character.UpdateFacing();
+            character?.UpdateFacing();
+        }
+    }
+
+    public void UpdateAllEffectFeedback()
+    {
+        foreach (var character in Characters)
+        {
+            character?.uiFeedback.UpdateEffectIcons();
         }
     }
     

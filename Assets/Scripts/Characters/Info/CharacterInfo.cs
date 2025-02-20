@@ -136,7 +136,6 @@ public class CharacterInfo
             GameplayManager.Instance.MainCharacter.Info.HandleHpChanged(damage);
             AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => phản sát thương");
         }
-        
     }
     
     private void TryHandleCoverEffect(ref int damage)
@@ -588,6 +587,7 @@ public class CharacterInfo
     {
         EffectInfo.Effects.RemoveAll(p => p.EffectType == effectType);
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
+        GameplayManager.Instance.UpdateAllEffectFeedback();
     }
     
     private void ApplyVenomousParasite(EffectData effectData)

@@ -67,6 +67,11 @@ public class MapManager : MonoBehaviour
         return _pathfinding.GetHexagonsInMoveRange(cell, range, direction);
     }
 
+    public HashSet<Cell> GetAllHexagonInRange(Cell cell, int range)
+    {
+        return _pathfinding.GetHexagonsInAttack(cell,range, DirectionType.All);
+    }
+
     public HashSet<Cell> GetHexagonsInAttack(Cell cell, SkillInfo skillInfo)
     {
         var allCells = _pathfinding.GetHexagonsInAttack(cell, skillInfo.range, skillInfo.directionType);

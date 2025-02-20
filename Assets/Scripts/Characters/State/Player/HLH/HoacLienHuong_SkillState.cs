@@ -53,6 +53,13 @@ public class HoacLienHuong_SkillState : SkillState
     }
     
     //===================== SKILL 3 =====================
+
+    protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
+    {
+        Info.Cell.SetShield(Character.Type);
+        return new DamageTakenParams();
+    }
+    
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
     {
         Character.Info.ApplyEffects(new List<EffectData>()
@@ -145,6 +152,11 @@ public class HoacLienHuong_SkillState : SkillState
     protected override void SetTargetCharacters_Skill3_TeammateTurn()
     {
         AddTargetCharacters(GpManager.MainCharacter);
+    }
+    
+    protected override void SetTargetCharacters_Skill3_MyTurn()
+    {
+        AddTargetCharacters(Character);
     }
     
     //===================== SKILL 4 =====================

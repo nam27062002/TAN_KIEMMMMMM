@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Cell : MonoBehaviour
 {
@@ -13,7 +13,23 @@ public class Cell : MonoBehaviour
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer highlightSprite;
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer withinAttackRangeSprite;
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer withinMoveRangeSprite;
+    [TabGroup("Sprites"), SerializeField] private SpriteRenderer shieldSprite;
+    [TabGroup("Sprites"), SerializeField] private SpriteRenderer shieldImpactSprite;
+
+    [TabGroup("Shield")] public Sprite shield_100_sprite;
+    [TabGroup("Shield")] public Type shieldType;
+    [TabGroup("Shield")] public Sprite shield_40_sprite;
+    [TabGroup("Shield")] public int shieldHeath = 3;
+    [TabGroup("Shield")] public int currentShieldHP = 0;
+    [TabGroup("Shield")] public HpBar hpBar;
+    [TabGroup("Shield"), ReadOnly] public Cell mainShieldCell;
+    [TabGroup("Shield"), ReadOnly] public List<Cell> shieldImpactCells = new List<Cell>();
     
+    private void Start()
+    {
+        shieldSprite.gameObject.SetActiveIfNeeded(false);
+    }
+
     public CellType CellType
     {
         get => cellType;
@@ -43,7 +59,27 @@ public class Cell : MonoBehaviour
         sequence.Join(backgroundSprite.DOFade(1f, 0.5f).SetDelay(delay).SetEase(Ease.Linear));
         sequence.OnComplete(() => { onComplete?.Invoke(); });
     }
+    
+    public void SetShield(Type shieldType)
+    {
+        this.shieldType = shieldType;
+        shieldSprite.gameObject.SetActiveIfNeeded(true);
+        shieldSprite.sprite = shield_100_sprite;
+        currentShieldHP = shieldHeath;
+        hpBar.SetValue(currentShieldHP * 1f / shieldHeath);
+        var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, 4);
+        foreach (var cell in cells)
+        {
+            cell.SetShieldImpact(this);
+        }
+        SetShieldImpact(this);
+    }
 
+    private void SetShieldImpact(Cell cell)
+    {
+        mainShieldCell = cell;
+        shieldImpactSprite.enabled = true; 
+    }
 
     public void ShowFocus()
     {
