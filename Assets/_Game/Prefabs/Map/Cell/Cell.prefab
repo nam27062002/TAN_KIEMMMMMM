@@ -297,8 +297,8 @@ Transform:
   - {fileID: 2441297031674016224}
   - {fileID: 1738823325081228924}
   - {fileID: 3373597041948629565}
-  - {fileID: 7098682025645839527}
   - {fileID: 6453063802860802428}
+  - {fileID: 7098682025645839527}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5704361207653108254
@@ -322,6 +322,7 @@ MonoBehaviour:
   shieldSprite: {fileID: 7573996916000973019}
   shieldImpactSprite: {fileID: 4508354501542677688}
   shield_100_sprite: {fileID: 21300000, guid: fee833452db81e046a60d00cd9d14a10, type: 3}
+  shieldType: 0
   shield_40_sprite: {fileID: 21300000, guid: 46c33628391ac5241af07becd238a15b, type: 3}
   shieldHeath: 3
   currentShieldHP: 0
@@ -458,7 +459,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: fe41f0ff9e71b964eb49256db0f1c1ed, type: 3}
   m_Color: {r: 0.21153234, g: 0.89433956, b: 0.14680664, a: 1}
   m_FlipX: 0
@@ -618,7 +619,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_TargetDisplay: 0
 --- !u!114 &2327984054724684458
 MonoBehaviour:

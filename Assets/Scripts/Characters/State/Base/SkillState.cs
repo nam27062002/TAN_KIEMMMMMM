@@ -15,6 +15,7 @@ public class SkillState : CharacterState
     private bool _waitForFeedback = false;
     protected bool WaitForReact = false;
     protected string SkillName => _skillStateParams.SkillInfo.name;
+
     public SkillState(Character character) : base(character)
     {
         _damageParamsHandlers = new Dictionary<(SkillTurnType, SkillIndex), Func<Character, DamageTakenParams>>
@@ -33,7 +34,6 @@ public class SkillState : CharacterState
             { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill3), GetDamageParams_Skill3_EnemyTurn },
             { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill4), GetDamageParams_Skill4_EnemyTurn }
         };
-
 
 
         _targetCharacterActions = new Dictionary<(SkillTurnType, SkillIndex), Action>
@@ -153,50 +153,80 @@ public class SkillState : CharacterState
 
     private void HandleDodgeDamage()
     {
-        if (_skillStateParams.Targets.Count > 0)
+        if (_skillStateParams.Targets.Count == 0)
         {
-            foreach (var target in _skillStateParams.Targets)
+            HandleAllTargetFinish();
+            return;
+        }
+
+        foreach (var target in _skillStateParams.Targets)
+        {
+            if (Character.Type != target.Type)
             {
-                if (Character.Type != target.Type)
-                {
-                    var hitChangeParams = GetHitChangeParams();
-                    var dodge = target.Info.Dodge;
-                    AlkawaDebug.Log(ELogCategory.SKILL,
-                        $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
-                        $"[{target.characterConfig.characterName}] Dodge = {dodge}");
-                    
-                    if (hitChangeParams.HitChangeValue < dodge)
-                    {
-                        var dodgeDamageParams = new DamageTakenParams
-                        {
-                            CanDodge = true,
-                            ReceiveFromCharacter = Character,
-                            CanCounter = true,
-                            OnSetDamageTakenFinished = HandleTargetFinish,
-                            SkillStateParams = _skillStateParams
-                        };
-                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
-                        _waitForFeedback = true;
-                    }
-                    else
-                    {
-                        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams(target)));
-                        _waitForFeedback = true;
-                    }
-                }
-                else
-                {
-                    var damageParams = GetDamageParams(target);
-                    damageParams.CanCounter = false;
-                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
-                }
+                ProcessEnemyTarget(target);
             }
+            else
+            {
+                ProcessFriendlyTarget(target);
+            }
+        }
+    }
+
+    private void ProcessEnemyTarget(Character target)
+    {
+        if (HasValidShield(target))
+        {
+            target.Info.Cell.mainShieldCell.ReceiveDamage(target, Character);
+            HandleTargetFinish(new FinishApplySkillParams()
+            {
+                Character = target,
+                WaitForCounter = false,
+            });
         }
         else
         {
-            HandleAllTargetFinish();
+            var hitChangeParams = GetHitChangeParams();
+            var dodge = target.Info.Dodge;
+
+            AlkawaDebug.Log(ELogCategory.SKILL,
+                $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
+                $"[{target.characterConfig.characterName}] Dodge = {dodge}");
+        
+            if (hitChangeParams.HitChangeValue < dodge)
+            {
+                var dodgeDamageParams = new DamageTakenParams
+                {
+                    CanDodge = true,
+                    ReceiveFromCharacter = Character,
+                    CanCounter = true,
+                    OnSetDamageTakenFinished = HandleTargetFinish,
+                    SkillStateParams = _skillStateParams
+                };
+
+                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
+            }
+            else
+            {
+                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams(target)));
+            }
+
+            _waitForFeedback = true;   
         }
     }
+
+    private void ProcessFriendlyTarget(Character target)
+    {
+        var damageParams = GetDamageParams(target);
+        damageParams.CanCounter = false;
+        CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
+    }
+
+    private bool HasValidShield(Character target)
+    {
+        var shieldCell = target.Info.Cell.mainShieldCell;
+        return shieldCell != null && shieldCell != Character.Info.Cell.mainShieldCell;
+    }
+
 
     private IEnumerator HandleApplyDamage(Character target, DamageTakenParams damageTakenParams)
     {
@@ -306,32 +336,56 @@ public class SkillState : CharacterState
     #region Set Target Characters
 
     //===================== SKILL 1 =====================
-    protected virtual void SetTargetCharacters_Skill1_MyTurn() { }
+    protected virtual void SetTargetCharacters_Skill1_MyTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill1_TeammateTurn() { }
+    protected virtual void SetTargetCharacters_Skill1_TeammateTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill1_EnemyTurn() { }
+    protected virtual void SetTargetCharacters_Skill1_EnemyTurn()
+    {
+    }
 
     //===================== SKILL 2 =====================
-    protected virtual void SetTargetCharacters_Skill2_MyTurn() { }
+    protected virtual void SetTargetCharacters_Skill2_MyTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill2_TeammateTurn() { }
+    protected virtual void SetTargetCharacters_Skill2_TeammateTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill2_EnemyTurn() { }
+    protected virtual void SetTargetCharacters_Skill2_EnemyTurn()
+    {
+    }
 
     //===================== SKILL 3 =====================
-    protected virtual void SetTargetCharacters_Skill3_MyTurn() { }
+    protected virtual void SetTargetCharacters_Skill3_MyTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill3_TeammateTurn() { }
+    protected virtual void SetTargetCharacters_Skill3_TeammateTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill3_EnemyTurn() { }
+    protected virtual void SetTargetCharacters_Skill3_EnemyTurn()
+    {
+    }
 
     //===================== SKILL 4 =====================
-    protected virtual void SetTargetCharacters_Skill4_MyTurn() { }
+    protected virtual void SetTargetCharacters_Skill4_MyTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill4_TeammateTurn() { }
+    protected virtual void SetTargetCharacters_Skill4_TeammateTurn()
+    {
+    }
 
-    protected virtual void SetTargetCharacters_Skill4_EnemyTurn() { }
+    protected virtual void SetTargetCharacters_Skill4_EnemyTurn()
+    {
+    }
 
     #endregion
 

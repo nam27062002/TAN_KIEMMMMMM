@@ -75,12 +75,36 @@ public class Cell : MonoBehaviour
         SetShieldImpact(this);
     }
 
+    public void ReceiveDamage(Character to, Character from)
+    {
+        currentShieldHP--;
+        hpBar.SetValue(currentShieldHP * 1f / shieldHeath);
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: chặn sát thương cho {to.characterConfig.characterName} từ đòn đánh của {from.characterConfig.characterName}");
+        if (currentShieldHP <= 0)
+        {
+            var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, 4);
+            foreach (var cell in cells)
+            {
+                cell.UnsetShieldImpact(this);
+            }
+            UnsetShieldImpact(this);
+            shieldSprite.gameObject.SetActiveIfNeeded(false);
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: tháp bị phá hủy");
+        }
+    }
+
     private void SetShieldImpact(Cell cell)
     {
         mainShieldCell = cell;
         shieldImpactSprite.enabled = true; 
     }
 
+    public void UnsetShieldImpact(Cell cell)
+    {
+        mainShieldCell = null;
+        shieldImpactSprite.enabled = false; 
+    }
+    
     public void ShowFocus()
     {
         highlightSprite.enabled = true;
