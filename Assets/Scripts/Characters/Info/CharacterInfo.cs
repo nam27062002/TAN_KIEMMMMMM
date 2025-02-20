@@ -98,7 +98,7 @@ public class CharacterInfo
     {
         var damage = -damageTakenParams.Damage;
         if (damage == 0) return;
-
+        TryBreakDragonArmor(damage);
         TryHandleCoverEffect(ref damage);
         CurrentHp += damage;
         CurrentHp = math.max(0, CurrentHp);
@@ -116,6 +116,27 @@ public class CharacterInfo
             Character.ShowMessage($"{-damage}");
             OnHpChanged?.Invoke(this, damageTakenParams.Damage);
         }
+    }
+
+    private void TryBreakDragonArmor(int damage)
+    {
+        if (damage == 0) return;
+        var dragonArmor = DragonArmorEffectData;
+        if (dragonArmor == null) return;
+        damage = -damage;
+        var rollData = Roll.RollDice(2, 4,0);
+        if (damage > rollData)
+        {
+            dragonArmor.CoveredBy.Info.RemoveAllEffect(EffectType.SnakeArmor);
+            RemoveAllEffect(EffectType.DragonArmor);
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => vỡ khiên");
+        }
+        else
+        {
+            GameplayManager.Instance.MainCharacter.Info.HandleHpChanged(damage);
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => phản sát thương");
+        }
+        
     }
     
     private void TryHandleCoverEffect(ref int damage)
@@ -560,7 +581,13 @@ public class CharacterInfo
     
     private void ApplyRemoveAllPoisonPowder(EffectData effectData)
     {
-        EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.PoisonPowder);
+        RemoveAllEffect(effectData.EffectType);
+    }
+
+    private void RemoveAllEffect(EffectType effectType)
+    {
+        EffectInfo.Effects.RemoveAll(p => p.EffectType == effectType);
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
     }
     
     private void ApplyVenomousParasite(EffectData effectData)
