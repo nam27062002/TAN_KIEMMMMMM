@@ -30,6 +30,8 @@ public class CharacterInfo
             { EffectType.ThietNhan_Infected, ApplySimpleEffect },
             { EffectType.Cover_50_Percent, ApplySimpleEffect },
             { EffectType.Cover_100_Percent, ApplySimpleEffect },
+            { EffectType.DragonArmor, ApplySimpleEffect },
+            { EffectType.SnakeArmor, ApplySimpleEffect },
             
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -78,10 +80,11 @@ public class CharacterInfo
     public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.EffectType == EffectType.BlockSkill);
     private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep);
     private bool HasStunEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Stun);
-
     private bool MustEndTurn => HasSleepEffect || HasStunEffect;
     public EffectData CoverEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_50_Percent);
     public EffectData CoverFullDamageEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_100_Percent);
+    
+    private EffectData DragonArmorEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.DragonArmor);
     // Action
     public event EventHandler<int> OnHpChanged;
     public event EventHandler<int> OnMpChanged;
@@ -167,6 +170,19 @@ public class CharacterInfo
     public void HandleMpChanged(int value)
     {
         if (value == 0) return;
+        var dragon = DragonArmorEffectData;
+        if (dragon != null)
+        {
+            if (dragon.CoveredBy != null)
+            {
+                value = Utils.RoundNumber(value * 1f / 2f);
+                dragon.CoveredBy.Info.HandleMpChanged(value);
+            }
+            else
+            {
+                Debug.LogError("Loi roi");
+            }
+        }
         CurrentMp += value;
         OnMpChanged?.Invoke(this, value);
     }
@@ -449,7 +465,7 @@ public class CharacterInfo
         }
     }
 
-    private void ApplyEffects(List<EffectData> effects)
+    public void ApplyEffects(List<EffectData> effects)
     {
         foreach (var effect in effects)
         {

@@ -52,6 +52,32 @@ public class HoacLienHuong_SkillState : SkillState
         };
     }
     
+    //===================== SKILL 3 =====================
+    protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
+    {
+        Character.Info.ApplyEffects(new List<EffectData>()
+        {
+            new()
+            {
+                EffectType = EffectType.DragonArmor,
+                CoveredBy = character,
+            }
+        });
+        
+        return new DamageTakenParams()
+        {
+            Effects = new List<EffectData>()
+            {
+                new()
+                {
+                    EffectType = EffectType.SnakeArmor,
+   
+                    CoveredBy = Character,
+                }
+            }
+        };
+    }
+    
     //===================== SKILL 4 =====================
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
@@ -114,6 +140,14 @@ public class HoacLienHuong_SkillState : SkillState
     {
         AddTargetCharacters(Character);
     }
+    
+    //===================== SKILL 3 =====================
+    protected override void SetTargetCharacters_Skill3_TeammateTurn()
+    {
+        AddTargetCharacters(GpManager.MainCharacter);
+    }
+    
+    //===================== SKILL 4 =====================
     
     protected override void SetTargetCharacters_Skill4_MyTurn()
     {

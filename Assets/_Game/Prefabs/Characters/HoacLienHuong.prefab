@@ -203,15 +203,15 @@ MonoBehaviour:
       damageType: 8
       description: 
     - icon: {fileID: -3537580891591011323, guid: a97897a1fec02854282671c8d23474ec, type: 3}
-      name: 
+      name: "Long X\xE0 \u0110\xF4i Tr\xE1c"
       skillIndex: 2
-      mpCost: 0
+      mpCost: 5
       range: 0
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 0
+      damageType: 2
       description: 
     - icon: {fileID: -8178576035687786624, guid: 980a727da5c46cc4da1ee06a07d3b5dc, type: 3}
       name: "V\xE2n H\u01B0\u01A1ng"
@@ -248,15 +248,15 @@ MonoBehaviour:
       damageType: 8
       description: 
     - icon: {fileID: -8359747887217438903, guid: 7d3603f082f7ba54a9c4a7fa5d1967f9, type: 3}
-      name: 
+      name: "Long X\xE0 \u0110\xF4i Tr\xE1"
       skillIndex: 2
-      mpCost: 0
+      mpCost: 5
       range: 0
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 0
+      canBlockDamage: 1
+      damageType: 4
       description: 
     - icon: {fileID: 7338152196854973384, guid: e5a7bd3a9bde49b4289d09ca454e84f0, type: 3}
       name: "Long H\u01B0ng"

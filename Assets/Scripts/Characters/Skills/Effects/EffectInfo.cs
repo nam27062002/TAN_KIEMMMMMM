@@ -76,4 +76,6 @@ public enum EffectType
     Cover_50_Percent = 24,
     Disarm = 25,
     Cover_100_Percent = 26,
+    SnakeArmor = 27,
+    DragonArmor = 28,
 }
