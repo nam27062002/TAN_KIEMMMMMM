@@ -7,7 +7,6 @@ public class EffectInfo
     public static readonly HashSet<EffectType> TriggerAtStart = new()
     {
         EffectType.BlockSkill,
-        
     };
 
     public static readonly HashSet<EffectType> TriggerAtEnd = new()

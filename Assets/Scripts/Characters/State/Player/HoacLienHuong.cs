@@ -2,6 +2,8 @@
 
 public class HoacLienHuong : PlayerCharacter
 {
+    [SerializeField] private float goldenAPChance = 0.25f;
+    
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -25,5 +27,31 @@ public class HoacLienHuong : PlayerCharacter
         var canDodge = path.Count > damageTakenParams.SkillStateParams.SkillInfo.range;
         Debug.Log($"Khoảng cách hiện tại = {path.Count} | Khoảng cách skill = {damageTakenParams.SkillStateParams.SkillInfo.range} => né = {canDodge}");
         return canDodge;
+    }
+    
+    public override int GetSkillActionPoints(SkillTurnType skillTurnType)
+    {
+        if (skillTurnType == SkillTurnType.EnemyTurn)
+        {
+            float roll = Random.value;
+            int ap = roll < 0.25f ? 1 : 2;
+            AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Lượt địch - Kết quả roll AP: {roll} => AP = {ap}");
+            
+            if(roll < goldenAPChance)
+            {
+                goldenAPChance = 0.25f;
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Kích hoạt AP vàng! (Xác suất: {goldenAPChance}, Roll: {roll})");
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Xác suất AP vàng được reset: {goldenAPChance}");
+            }
+            else
+            {
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Kích hoạt AP đỏ. (Xác suất: {goldenAPChance}, Roll: {roll})");
+                goldenAPChance = Mathf.Min(goldenAPChance + 0.10f, 1f);
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Xác suất AP vàng tăng lên: {goldenAPChance}");
+            }
+            return ap;
+        }
+        
+        return base.GetSkillActionPoints(skillTurnType);
     }
 }

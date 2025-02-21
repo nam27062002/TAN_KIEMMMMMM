@@ -50,9 +50,12 @@ public class CharacterInfo
             { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
             { EffectType.VenomousParasite, ApplyVenomousParasite },
         };
+        
+        GameplayManager.Instance.OnEndTurn += OnEndTurn;
     }
-
+    
     // Cell
+    public int RoundIndex = 0;
     public Cell Cell { get; set; }
     public HashSet<Cell> MoveRange { get; set; } = new();
 
@@ -89,6 +92,7 @@ public class CharacterInfo
     public event EventHandler<int> OnHpChanged;
     public event EventHandler<int> OnMpChanged;
     public event EventHandler<int> OnMoveAmount;
+    public event EventHandler<int> OnNewRound; 
 
     private SkillConfig SkillConfig { get; set; }
     private Character Character { get; set; }
@@ -229,6 +233,11 @@ public class CharacterInfo
             .Any(effect => effect.EffectType == EffectType.Immobilize);
     }
 
+    private void OnEndTurn(object sender, EventArgs e)
+    {
+        RemoveAllEffect(EffectType.BlockSkill);
+    }
+    
     private int CalculateBaseMovement()
     {
         var baseValue = Attributes.maxMoveRange - MoveAmount;
@@ -295,6 +304,7 @@ public class CharacterInfo
 
     public void ResetBuffBefore()
     {
+        OnNewRound?.Invoke(this, RoundIndex);
         MoveAmount = 0;
         IncreaseActionPointsValue();
         foreach (var effect in EffectInfo.Effects.ToList()
@@ -310,6 +320,7 @@ public class CharacterInfo
         HandleEffectCleanse();
         HandleApplyEffectBeforeNewRound();
         Character.uiFeedback.UpdateEffectIcons();
+        RoundIndex++;
     }
 
     public SkillInfo GetSkillInfo(int index, SkillTurnType skillTurnType)
@@ -355,12 +366,11 @@ public class CharacterInfo
 
     private bool HasEnoughActionPoints => ActionPointsList.Any(point => point == 3);
 
-    private int GetSkillActionPoints(SkillTurnType skillTurnType) =>
-        Character.characterConfig.actionPoints[skillTurnType];
+
 
     public void ReduceActionPoints()
     {
-        var pointsToReduce = GetSkillActionPoints(Character.GetSkillTurnType());
+        var pointsToReduce = Character.GetSkillActionPoints(Character.GetSkillTurnType());
 
         if (TryReducePoints(GetActionPointEffects())) return;
 
@@ -368,6 +378,7 @@ public class CharacterInfo
         {
             if (ActionPoints[i] != 3) continue;
             ActionPoints[i] -= pointsToReduce;
+            RemoveAllEffect(EffectType.IncreaseActionPoints);
             return;
         }
 
@@ -585,7 +596,8 @@ public class CharacterInfo
 
     private void RemoveAllEffect(EffectType effectType)
     {
-        EffectInfo.Effects.RemoveAll(p => p.EffectType == effectType);
+        var value = EffectInfo.Effects.RemoveAll(p => p.EffectType == effectType);
+        if (value <= 0) return;
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
         GameplayManager.Instance.UpdateAllEffectFeedback();
     }

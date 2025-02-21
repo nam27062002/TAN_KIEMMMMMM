@@ -21,6 +21,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler<ShowInfoCharacterParameters> OnUpdateCharacterInfo;
     public event EventHandler OnSetMainCharacterFinished;
     public event EventHandler OnNewRound;
+    public event EventHandler OnEndTurn;
 
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
@@ -189,6 +190,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
             SetMainCharacter();
         }
+        OnEndTurn?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnCharacterClicked(Cell cell)

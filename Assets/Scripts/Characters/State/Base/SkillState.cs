@@ -420,6 +420,19 @@ public class SkillState : CharacterState
         });
     }
 
+    protected void TeleportToCell(Cell cell)
+    {
+        Info.Cell.HideFocus();
+        Info.Cell.Character = null;
+        Info.Cell.CellType = CellType.Walkable;
+
+        cell.Character = Character;
+        cell.CellType = CellType.Character;
+        Character.Info.Cell = cell;
+        SetCharacterPosition();
+        SetFacing();
+    }
+
     protected int GetSkillDamage(RollData rollData)
     {
         var damage = Roll.RollDice(rollData);

@@ -415,6 +415,8 @@ public abstract class Character : MonoBehaviour
         StateMachine.GetCurrentState.SetFacing();
     }
     
+    public virtual int GetSkillActionPoints(SkillTurnType skillTurnType) => characterConfig.actionPoints[skillTurnType];
+    
 #if UNITY_EDITOR
     private void OnValidate()
     {

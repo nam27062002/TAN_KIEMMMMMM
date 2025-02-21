@@ -151,6 +151,12 @@ public class HoacLienHuong_SkillState : SkillState
     //===================== SKILL 3 =====================
     protected override void SetTargetCharacters_Skill3_TeammateTurn()
     {
+        var walkAbleCells = GpManager.MapManager.GetAllHexagonInRange(GpManager.MainCharacter.Info.Cell, 1);
+        foreach (var item in walkAbleCells.Where(item => item.CellType == CellType.Walkable))
+        {
+            TeleportToCell(item);
+            break;
+        }
         AddTargetCharacters(GpManager.MainCharacter);
     }
     
