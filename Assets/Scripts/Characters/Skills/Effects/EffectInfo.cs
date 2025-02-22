@@ -25,6 +25,7 @@ public class EffectInfo
         EffectType.ThietNhan_BlockAP,
         EffectType.Cover_50_Percent,
         EffectType.Disarm,
+        EffectType.Shield,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -77,4 +78,5 @@ public enum EffectType
     Cover_100_Percent = 26,
     SnakeArmor = 27,
     DragonArmor = 28,
+    Shield = 29,
 }

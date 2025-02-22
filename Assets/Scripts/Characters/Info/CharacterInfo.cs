@@ -32,28 +32,29 @@ public class CharacterInfo
             { EffectType.Cover_100_Percent, ApplySimpleEffect },
             { EffectType.DragonArmor, ApplySimpleEffect },
             { EffectType.SnakeArmor, ApplySimpleEffect },
-            
+
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Immobilize, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ReduceChiDef, TryCheckEffectResistanceAndApplyEffect },
-            { EffectType.Disarm , TryCheckEffectResistanceAndApplyEffect},
+            { EffectType.Disarm, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Poison, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_Poison, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_ReduceMoveRange, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ThietNhan_BlockAP, TryCheckEffectResistanceAndApplyEffect },
-            
+
             { EffectType.IncreaseDamage, ApplyIncreaseDamage },
             { EffectType.BlockSkill, _ => ApplyBlockSkill() },
             { EffectType.BreakBloodSealDamage, ApplyBloodSealDamage },
             { EffectType.PoisonPowder, ApplyPoisonPowder },
             { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
             { EffectType.VenomousParasite, ApplyVenomousParasite },
+            { EffectType.Shield, ApplyShieldEffect }
         };
-        
+
         GameplayManager.Instance.OnEndTurn += OnEndTurn;
     }
-    
+
     // Cell
     public int RoundIndex = 0;
     public Cell Cell { get; set; }
@@ -63,7 +64,7 @@ public class CharacterInfo
 
     // Skill
     public SkillInfo SkillInfo { get; set; }
-    
+
     // Stat
     public bool IsToggleOn { get; set; } = false;
     public int Speed { get; set; }
@@ -72,6 +73,7 @@ public class CharacterInfo
     public int CurrentMp { get; set; }
     public int MoveAmount { get; set; }
 
+    private int ShieldAmount => ShieldEffectData?.Value ?? 0;
     public bool IsDie => CurrentHp <= 0;
 
     private List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
@@ -84,28 +86,37 @@ public class CharacterInfo
     private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep);
     private bool HasStunEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Stun);
     private bool MustEndTurn => HasSleepEffect || HasStunEffect;
-    public EffectData CoverEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_50_Percent);
-    public EffectData CoverFullDamageEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_100_Percent);
-    
-    private EffectData DragonArmorEffectData => EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.DragonArmor);
+
+    public EffectData CoverEffectData =>
+        EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_50_Percent);
+
+    public EffectData CoverFullDamageEffectData =>
+        EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_100_Percent);
+
+    private EffectData DragonArmorEffectData =>
+        EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.DragonArmor);
+
+    private ShieldEffect ShieldEffectData => (ShieldEffect)EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Shield);
+
     // Action
     public event EventHandler<int> OnHpChanged;
     public event EventHandler<int> OnMpChanged;
+
+    public event EventHandler<float> OnShieldChanged;
     public event EventHandler<int> OnMoveAmount;
-    public event EventHandler<int> OnNewRound; 
+    public event EventHandler<int> OnNewRound;
 
     private SkillConfig SkillConfig { get; set; }
     private Character Character { get; set; }
 
     //
-    private void HandleHpChanged(DamageTakenParams damageTakenParams)
+    private void HandleDamageTaken(DamageTakenParams damageTakenParams)
     {
         var damage = -damageTakenParams.Damage;
         if (damage == 0) return;
         TryBreakDragonArmor(damage);
         TryHandleCoverEffect(ref damage);
-        CurrentHp += damage;
-        CurrentHp = math.max(0, CurrentHp);
+        HandleHpChanged(ref damage);
         if (IsDie)
         {
             damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
@@ -128,7 +139,7 @@ public class CharacterInfo
         var dragonArmor = DragonArmorEffectData;
         if (dragonArmor == null) return;
         damage = -damage;
-        var rollData = Roll.RollDice(2, 4,0);
+        var rollData = Roll.RollDice(2, 4, 0);
         if (damage > rollData)
         {
             dragonArmor.CoveredBy.Info.RemoveAllEffect(EffectType.SnakeArmor);
@@ -137,11 +148,11 @@ public class CharacterInfo
         }
         else
         {
-            GameplayManager.Instance.MainCharacter.Info.HandleHpChanged(damage);
+            GameplayManager.Instance.MainCharacter.Info.HandleDamageTaken(damage);
             AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => phản sát thương");
         }
     }
-    
+
     private void TryHandleCoverEffect(ref int damage)
     {
         // 100 %
@@ -158,13 +169,14 @@ public class CharacterInfo
             damage = 0;
             return;
         }
-        
+
         // 50 %
         var coverEffect = CoverEffectData;
         if (coverEffect == null)
         {
             return;
         }
+
         damage = Utils.RoundNumber(damage * 1f / 2);
         coverEffect.CoveredBy.OnDamageTaken(new DamageTakenParams()
         {
@@ -175,11 +187,10 @@ public class CharacterInfo
         });
     }
 
-    private void HandleHpChanged(int damage)
+    private void HandleDamageTaken(int damage)
     {
         if (damage == 0) return;
-        CurrentHp += damage;
-        CurrentHp = math.max(0, CurrentHp);
+        HandleHpChanged(ref damage);
         if (IsDie)
         {
             Character.OnDie();
@@ -190,6 +201,53 @@ public class CharacterInfo
             OnHpChanged?.Invoke(this, damage);
         }
     }
+
+    private void HandleHpChanged(ref int hp)
+    {
+        if (ShieldEffectData != null && hp < 0)
+        {
+            var damage = -hp;
+            var shieldValue = ShieldEffectData.Value;
+            if (shieldValue >= damage)
+            {
+                ShieldEffectData.Value -= damage;
+                HandleShieldChange(-damage);
+                hp = 0;
+            }
+            else
+            {
+                var remainingDamage = damage - shieldValue;
+                HandleShieldChange(-ShieldEffectData.Value);
+                ShieldEffectData.Value = 0;
+                hp = -remainingDamage;
+                RemoveAllEffect(EffectType.Shield);
+            }
+        }
+
+        CurrentHp += hp;
+        CurrentHp = Math.Max(0, CurrentHp);
+    }
+
+    
+    private void HandleShieldChange(int value)
+    {
+        int newShield = ShieldAmount + value;
+        int remainder = 0;
+
+        if (newShield < 0)
+        {
+            remainder = -newShield;
+            newShield = 0;
+        }
+        
+        OnShieldChanged?.Invoke(this, ShieldAmount * 1f / Attributes.health);
+
+        if (remainder > 0)
+        {
+            HandleDamageTaken(-remainder);
+        }
+    }
+
 
     public void HandleMpChanged(int value)
     {
@@ -207,6 +265,7 @@ public class CharacterInfo
                 Debug.LogError("Loi roi");
             }
         }
+
         CurrentMp += value;
         OnMpChanged?.Invoke(this, value);
     }
@@ -237,7 +296,7 @@ public class CharacterInfo
     {
         RemoveAllEffect(EffectType.BlockSkill);
     }
-    
+
     private int CalculateBaseMovement()
     {
         var baseValue = Attributes.maxMoveRange - MoveAmount;
@@ -335,10 +394,11 @@ public class CharacterInfo
 
     #region Action Points
 
-    public List<int> ActionPointsList => ActionPoints.Concat(GetActionPointEffects().SelectMany(effect => effect.ActionPoints))
-            .Reverse().Skip(EffectInfo.Effects.Count(p => p.EffectType == EffectType.ThietNhan_BlockAP))
-            .Reverse().ToList();
-    
+    public List<int> ActionPointsList => ActionPoints
+        .Concat(GetActionPointEffects().SelectMany(effect => effect.ActionPoints))
+        .Reverse().Skip(EffectInfo.Effects.Count(p => p.EffectType == EffectType.ThietNhan_BlockAP))
+        .Reverse().ToList();
+
     private IEnumerable<ActionPointEffect> GetActionPointEffects() =>
         EffectInfo.Effects
             .OfType<ActionPointEffect>()
@@ -365,7 +425,6 @@ public class CharacterInfo
     }
 
     private bool HasEnoughActionPoints => ActionPointsList.Any(point => point == 3);
-
 
 
     public void ReduceActionPoints()
@@ -420,7 +479,7 @@ public class CharacterInfo
 
     public void OnDamageTaken(DamageTakenParams damageTakenParams)
     {
-        HandleHpChanged(damageTakenParams);
+        HandleDamageTaken(damageTakenParams);
         HandleMpChanged(-damageTakenParams.ReducedMana);
         ApplyEffects(damageTakenParams.Effects);
         Character.uiFeedback.UpdateEffectIcons();
@@ -453,7 +512,7 @@ public class CharacterInfo
                 $"{item.EffectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
 #if !ALWAY_APPLY_EFFECT
             if (effectCleanse >= baseEffectCleanse) continue;
-                    EffectInfo.Effects.Remove(item);
+            EffectInfo.Effects.Remove(item);
 #endif
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Removed effect: {item.EffectType}");
@@ -472,10 +531,12 @@ public class CharacterInfo
                     if (item is PoisonEffectData poisonEffectData)
                     {
                         var rollData = poisonEffectData.Damage;
-                            var damage = Roll.RollDice(rollData);
-                        HandleHpChanged(-damage);
-                        Debug.Log($"[{Character.characterConfig.characterName}] - {item.EffectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
+                        var damage = Roll.RollDice(rollData);
+                        HandleDamageTaken(-damage);
+                        Debug.Log(
+                            $"[{Character.characterConfig.characterName}] - {item.EffectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
                     }
+
                     break;
                 }
             }
@@ -511,7 +572,7 @@ public class CharacterInfo
             }
         }
     }
-    
+
     private bool ShouldApplyEffect(EffectData effectData)
     {
         var effectResistance = _roll.GetEffectResistance();
@@ -519,7 +580,7 @@ public class CharacterInfo
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"Debuff {effectData.EffectType}: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
 #if !ALWAY_APPLY_EFFECT
-    return effectResistance < baseEffectResistance;
+        return effectResistance < baseEffectResistance;
 #else
         return true;
 #endif
@@ -531,7 +592,7 @@ public class CharacterInfo
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Added effect: {effectData.EffectType.ToString()}");
     }
-    
+
     private void ApplyIncreaseDamage(EffectData effectData)
     {
         if (effectData is not ChangeStatEffect changeStatEffect || changeStatEffect.Value == 0)
@@ -550,7 +611,7 @@ public class CharacterInfo
     {
         ApplyEffect(effectData);
     }
-    
+
     private void ApplyBloodSealDamage(EffectData effectData)
     {
         if (EffectInfo.Effects.All(p => p.EffectType != EffectType.BloodSealEffect))
@@ -558,7 +619,7 @@ public class CharacterInfo
         EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.BloodSealEffect);
         var hpDecreased = Attributes.health - CurrentHp;
         var damage = Utils.RoundNumber(hpDecreased * 1f / 10);
-        if (CurrentHp > 0) HandleHpChanged(-damage);
+        if (CurrentHp > 0) HandleDamageTaken(-damage);
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
     }
@@ -568,12 +629,12 @@ public class CharacterInfo
         if (ShouldApplyEffect(effectData))
             ApplyEffect(effectData);
     }
-    
+
     private void ApplyPoisonPowder(EffectData effectData)
     {
         var rollData = Roll.RollDice(1, 20, 0);
 #if !ALWAY_APPLY_EFFECT
-    if (rollData < 10)
+        if (rollData < 10)
 #endif
         {
             EffectInfo.AddEffect(effectData);
@@ -581,14 +642,14 @@ public class CharacterInfo
                 $"[{Character.characterConfig.characterName}] roll data = {rollData} < 10 => Added effect: Độc Phấn");
         }
 #if !ALWAY_APPLY_EFFECT
-    else
-    {
-        AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Độc Phấn");
-    }
+        else
+        {
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Độc Phấn");
+        }
 #endif
     }
-    
+
     private void ApplyRemoveAllPoisonPowder(EffectData effectData)
     {
         RemoveAllEffect(effectData.EffectType);
@@ -598,10 +659,11 @@ public class CharacterInfo
     {
         var value = EffectInfo.Effects.RemoveAll(p => p.EffectType == effectType);
         if (value <= 0) return;
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
         GameplayManager.Instance.UpdateAllEffectFeedback();
     }
-    
+
     private void ApplyVenomousParasite(EffectData effectData)
     {
         if (effectData is ChangeStatEffect changeStatEffect)
@@ -618,7 +680,23 @@ public class CharacterInfo
             }
         }
     }
-    
+
+    private void ApplyShieldEffect(EffectData effectData)
+    {
+        if (effectData is not ShieldEffect changeStatEffect) return;
+        if (ShieldEffectData == null)
+        {
+            ApplySimpleEffect(effectData);
+        }
+        else
+        {
+            ShieldEffectData.Duration = changeStatEffect.Duration;
+            ShieldEffectData.Value += changeStatEffect.Value;
+            ShieldEffectData.Damage = Mathf.Max(ShieldEffectData.Damage, changeStatEffect.Damage);
+        }
+        if (ShieldEffectData != null) HandleShieldChange(ShieldEffectData.Value);
+    }
+
     public int GetPoisonPowder()
     {
         return EffectInfo.Effects.Count(p => p.EffectType == EffectType.PoisonPowder);

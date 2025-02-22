@@ -27,6 +27,7 @@ public abstract class Character : MonoBehaviour
     
     public CharacterInfo Info;
     protected SkillStateParams _skillStateParams;
+    protected DamageTakenParams _damageTakenParams;
     public bool IsMainCharacter => GpManager.MainCharacter == this;
     // protected function
     protected GameplayManager GpManager => GameplayManager.Instance;
@@ -59,7 +60,9 @@ public abstract class Character : MonoBehaviour
         SetIdle();
         SetSpeed();
         Info.OnHpChanged += OnHpChanged;
+        Info.OnShieldChanged += OnShieldChanged;
         OnHpChanged(null);
+        OnShieldChanged(null, 0);
         ChangeState(ECharacterState.Idle);
         SetPassiveSkills();
     }
@@ -113,17 +116,26 @@ public abstract class Character : MonoBehaviour
         HandleCounterLogic(skillStateParams.IdleStateParams.DamageTakenParams, true);
     }
     
-    private void HandleCounterLogic(DamageTakenParams damageTaken = null, bool waitCounter = false) // 
+    private void HandleCounterLogic(DamageTakenParams damageTaken = null, bool waitCounter = false)
     {
         SetIdle();
-        var damageTakenParams = damageTaken ?? GetIdleStateParams().DamageTakenParams;
-        damageTakenParams.CanCounter = false;
-        damageTakenParams.WaitCounter = waitCounter;
-        if (damageTakenParams.WaitCounter)
+        _damageTakenParams = damageTaken ?? GetIdleStateParams().DamageTakenParams;
+        _damageTakenParams.CanCounter = false;
+        _damageTakenParams.WaitCounter = waitCounter;
+    
+        if (_damageTakenParams.WaitCounter)
         {
-            damageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
+            _damageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
         }
         
+        if (!HandleBlockSkillLogic(_damageTakenParams))
+        {
+            OnDamageTaken(_damageTakenParams);
+        }
+    }
+
+    private bool HandleBlockSkillLogic(DamageTakenParams damageTakenParams)
+    {
         if (_skillStateParams != null && CanBlockSkill(damageTakenParams))
         {
             damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams
@@ -132,13 +144,11 @@ public abstract class Character : MonoBehaviour
                 WaitForCounter = true,
             });
             ShowMessage("Chặn sát thương");
+            return true; 
         }
-        else
-        {
-            OnDamageTaken(damageTakenParams); 
-        }
+        return false; 
     }
-
+    
     protected virtual bool CanBlockSkill(DamageTakenParams damageTakenParams)
     {
         return _skillStateParams.SkillInfo.canBlockDamage;
@@ -154,6 +164,7 @@ public abstract class Character : MonoBehaviour
     {
         _skillStateParams.IdleStateParams = null;
         _skillStateParams.EndTurnAfterFinish = true;
+        _skillStateParams.DamageTakenParams = _damageTakenParams;
         SetSkill(_skillStateParams);
     }
     
@@ -297,6 +308,11 @@ public abstract class Character : MonoBehaviour
         var currentHp = Info.CurrentHp;
         var maxHp = Info.Attributes.health;
         hpBar.SetValue(currentHp * 1f / maxHp, $"{currentHp} / {maxHp}");
+    }
+
+    private void OnShieldChanged(object sender, float value)
+    {
+        hpBar.SetShield(value);
     }
     
     public void ShowHpBar()
