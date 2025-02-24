@@ -133,7 +133,7 @@ MonoBehaviour:
     characterName: "Ph\u1EA1m C\u1EF1 Ch\xEDch"
     characterIcon: {fileID: 21300000, guid: 2e699fd2a5398dc4cbf81d03dd2de78d, type: 3}
     characterAttributes:
-      maxMoveRange: 4
+      maxMoveRange: 100
       health: 60
       mana: 20
       atk: 10
@@ -189,23 +189,23 @@ MonoBehaviour:
       name: "C\u1ED5 Kh\xED Ti\xEAu Linh"
       skillIndex: 2
       mpCost: 4
-      range: 0
+      range: 5
       directionType: 512
-      isDirectionalSkill: 0
-      canOverrideSetTargetCharacters: 0
+      isDirectionalSkill: 1
+      canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
-      damageType: 0
+      damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: 334c1b9ed31741d49b05465de26ea373, type: 3}
       name: "H\u1EADn V\u1ECB Ti\xEAu"
       skillIndex: 3
       mpCost: 4
-      range: 0
+      range: 1
       directionType: 512
-      isDirectionalSkill: 0
+      isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 0
+      damageType: 4
       description: 
     movementSkill:
     - icon: {fileID: 21300000, guid: 5dbd273f544d7004ebcec644e32ed464, type: 3}
@@ -223,23 +223,23 @@ MonoBehaviour:
       name: "B\xEDch Th\u1EE7y Thanh S\u01A1n"
       skillIndex: 1
       mpCost: 4
-      range: 0
+      range: 1
       directionType: 512
-      isDirectionalSkill: 0
+      isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 0
+      damageType: 2
       description: 
     - icon: {fileID: 21300000, guid: a534078403968c745918d0771f2fde33, type: 3}
       name: "S\u01B0\u01A1ng Nh\u1EA1n Th\xF9y Th\xE0nh"
       skillIndex: 2
-      mpCost: 0
-      range: 0
+      mpCost: 4
+      range: 3
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 0
+      damageType: 2
       description: 
     - icon: {fileID: 21300000, guid: 92d6599197b118248b88e91a7f54c77e, type: 3}
       name: "S\u1EA7u Do T\u1EA1i"
@@ -272,30 +272,30 @@ MonoBehaviour:
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
-      canBlockDamage: 1
-      damageType: 0
+      canBlockDamage: 0
+      damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: 07d6b726ee041ef4eb3634fe49385904, type: 3}
       name: "T\xE1 Kh\xE1ch V\xE2n Th\xEA "
       skillIndex: 2
-      mpCost: 0
+      mpCost: 4
       range: 0
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 0
+      canBlockDamage: 1
+      damageType: 4
       description: 
     - icon: {fileID: 21300000, guid: be209ed9a9367b04280db00f16dffb43, type: 3}
       name: "Kim H\xE0 T\u1EA1i"
       skillIndex: 3
-      mpCost: 0
-      range: 0
+      mpCost: 4
+      range: 1
       directionType: 512
-      isDirectionalSkill: 0
+      isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 0
+      damageType: 4
       description: 
   passiveSkills: []
 --- !u!1 &6907775959439712675 stripped

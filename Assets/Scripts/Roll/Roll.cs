@@ -52,7 +52,7 @@ public class Roll
     
     public int GetDodge()
     {
-        return _attributes.def + _attributes.spd / 2;
+        return _characterInfo.GetDef() + _attributes.spd / 2;
     }
     
     public int GetSpeed()

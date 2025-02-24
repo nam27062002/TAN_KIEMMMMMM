@@ -19,6 +19,7 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
+                    Actor = Character
                 }
             }
         };
@@ -34,6 +35,7 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
+                    Actor = Character
                 }
             }
         };
@@ -49,6 +51,7 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
+                    Actor = Character
                 }
             }
         };
@@ -72,8 +75,10 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BloodSealEffect,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character,
         };
     }
 
@@ -94,8 +99,10 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BloodSealEffect,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character,
         };
     }
 
@@ -116,8 +123,10 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BloodSealEffect,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character,
         };
     }
 
@@ -135,8 +144,10 @@ public class LyVoDanh_SkillState : SkillState
                     EffectType = EffectType.IncreaseDamage,
                     Value = increaseDamage,
                     Duration = EffectConfig.BuffRound,
-                }
-            }
+                    Actor = Character
+                },
+            },
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -155,8 +166,10 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -174,8 +187,10 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
+                    Actor = Character,
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -194,8 +209,10 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
+                    Actor = Character,
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -212,8 +229,10 @@ public class LyVoDanh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
+                    Actor = Character,
                 }
-            }
+            },
+            ReceiveFromCharacter = character
         };
     }
 

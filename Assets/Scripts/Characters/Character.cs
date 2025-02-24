@@ -395,7 +395,7 @@ public abstract class Character : MonoBehaviour
         var coverEffect = Info.CoverEffectData;
         if (coverEffect == null) return;
         linkCharacter.ClearLine();
-        linkCharacter.SetLine(coverEffect.CoveredBy.transform.position, transform.position);
+        linkCharacter.SetLine(coverEffect.Actor.transform.position, transform.position);
     }
 
     public void DestroyCharacter()

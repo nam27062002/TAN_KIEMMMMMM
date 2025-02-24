@@ -10,8 +10,10 @@ public class SkillState : CharacterState
 
     private readonly Dictionary<(SkillTurnType, SkillIndex), Func<Character, DamageTakenParams>> _damageParamsHandlers;
     private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _targetCharacterActions;
+    private readonly Dictionary<(SkillTurnType, SkillIndex), Action> _handleAfterDamageTakenFinish;
     protected SkillStateParams _skillStateParams;
     protected readonly List<Character> TargetCharacters = new();
+    protected HashSet<Character> mainTargetCharacter = new();
     private bool _waitForFeedback = false;
     protected bool WaitForReact = false;
     protected string SkillName => _skillStateParams.SkillInfo.name;
@@ -51,6 +53,22 @@ public class SkillState : CharacterState
             { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill3), SetTargetCharacters_Skill3_EnemyTurn },
             { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill4), SetTargetCharacters_Skill4_EnemyTurn }
         };
+
+        _handleAfterDamageTakenFinish = new Dictionary<(SkillTurnType, SkillIndex), Action>
+        {
+            { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill1), HandleAfterDamageTakenFinish_Skill1_MyTurn },
+            { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill2), HandleAfterDamageTakenFinish_Skill2_MyTurn },
+            { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill3), HandleAfterDamageTakenFinish_Skill3_MyTurn },
+            { (SkillTurnType.MyTurn, SkillIndex.ActiveSkill4), HandleAfterDamageTakenFinish_Skill4_MyTurn },
+            { (SkillTurnType.TeammateTurn, SkillIndex.ActiveSkill1), HandleAfterDamageTakenFinish_Skill1_TeammateTurn },
+            { (SkillTurnType.TeammateTurn, SkillIndex.ActiveSkill2), HandleAfterDamageTakenFinish_Skill2_TeammateTurn },
+            { (SkillTurnType.TeammateTurn, SkillIndex.ActiveSkill3), HandleAfterDamageTakenFinish_Skill3_TeammateTurn },
+            { (SkillTurnType.TeammateTurn, SkillIndex.ActiveSkill4), HandleAfterDamageTakenFinish_Skill4_TeammateTurn },
+            { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill1), HandleAfterDamageTakenFinish_Skill1_EnemyTurn },
+            { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill2), HandleAfterDamageTakenFinish_Skill2_EnemyTurn },
+            { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill3), HandleAfterDamageTakenFinish_Skill3_EnemyTurn },
+            { (SkillTurnType.EnemyTurn, SkillIndex.ActiveSkill4), HandleAfterDamageTakenFinish_Skill4_EnemyTurn }
+        };
     }
 
     public override void OnEnter(StateParams stateParams = null)
@@ -64,6 +82,7 @@ public class SkillState : CharacterState
         }
 
         _skillStateParams = skillStateParams;
+        mainTargetCharacter = new HashSet<Character>(_skillStateParams.Targets);
         if (_skillStateParams.IdleStateParams != null)
         {
             Character.HandleCounterLogic(_skillStateParams);
@@ -96,6 +115,15 @@ public class SkillState : CharacterState
         }
     }
 
+    private void HandleAfterDamageTakenFinish()
+    {
+        var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
+        if (_handleAfterDamageTakenFinish.TryGetValue(key, out var action))
+        {
+            action.Invoke();
+        }
+    }
+
     private bool CanSetTargetCharactersInternal()
     {
         return _skillStateParams.SkillInfo.canOverrideSetTargetCharacters ||
@@ -107,6 +135,12 @@ public class SkillState : CharacterState
     {
         TargetCharacters.Add(character);
         _skillStateParams.Targets.Add(character);
+    }
+
+    protected void RemoveAllTargetCharacters()
+    {
+        TargetCharacters.Clear();
+        _skillStateParams.Targets.Clear();
     }
 
     protected virtual void HandleCastSkill()
@@ -273,6 +307,7 @@ public class SkillState : CharacterState
 
     protected virtual void HandleAllTargetFinish()
     {
+        HandleAfterDamageTakenFinish();
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
 
@@ -384,6 +419,62 @@ public class SkillState : CharacterState
     }
 
     protected virtual void SetTargetCharacters_Skill4_EnemyTurn()
+    {
+    }
+
+    #endregion
+    
+    #region Set Target Characters
+
+    //===================== SKILL 1 =====================
+    protected virtual void HandleAfterDamageTakenFinish_Skill1_MyTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill1_TeammateTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill1_EnemyTurn()
+    {
+    }
+
+    //===================== SKILL 2 =====================
+    protected virtual void HandleAfterDamageTakenFinish_Skill2_MyTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill2_TeammateTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill2_EnemyTurn()
+    {
+    }
+
+    //===================== SKILL 3 =====================
+    protected virtual void HandleAfterDamageTakenFinish_Skill3_MyTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill3_TeammateTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill3_EnemyTurn()
+    {
+    }
+
+    //===================== SKILL 4 =====================
+    protected virtual void HandleAfterDamageTakenFinish_Skill4_MyTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill4_TeammateTurn()
+    {
+    }
+
+    protected virtual void HandleAfterDamageTakenFinish_Skill4_EnemyTurn()
     {
     }
 

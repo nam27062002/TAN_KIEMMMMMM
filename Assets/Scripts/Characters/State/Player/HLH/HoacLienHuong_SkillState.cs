@@ -29,6 +29,7 @@ public class HoacLienHuong_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = totalDamage,
+            ReceiveFromCharacter = Character
         };   
     }
     
@@ -42,13 +43,14 @@ public class HoacLienHuong_SkillState : SkillState
             {
                 EffectType = EffectType.Cover_50_Percent,
                 Duration = EffectConfig.DebuffRound,
-                CoveredBy = coveredBy,
+                Actor = coveredBy,
             });
         }
         Debug.Log($"Liên kết với đồng minh gần nhất: {coveredBy.characterConfig.characterName}");
         return new DamageTakenParams()
         {
             Effects = effects,
+            ReceiveFromCharacter = character
         };
     }
     
@@ -67,7 +69,7 @@ public class HoacLienHuong_SkillState : SkillState
             new()
             {
                 EffectType = EffectType.DragonArmor,
-                CoveredBy = character,
+                Actor = character,
             }
         });
         
@@ -79,9 +81,10 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     EffectType = EffectType.SnakeArmor,
    
-                    CoveredBy = Character,
+                    Actor = Character,
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
     
@@ -100,8 +103,10 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     EffectType = EffectType.Disarm,
                     Duration = EffectConfig.DebuffRound,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };   
     }
     
@@ -115,9 +120,10 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     EffectType = EffectType.Cover_100_Percent,
                     Duration = 1,
-                    CoveredBy = Character,
+                    Actor = Character,
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
     

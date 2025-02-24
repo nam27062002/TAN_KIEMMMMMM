@@ -36,20 +36,24 @@ public class ThietNhan_SkillState : AISkillState
                         rollTime = 1,
                         rollValue = 4,
                         add = 0
-                    }
+                    },
+                    Actor = Character
                 },
                 new ChangeStatEffect
                 {
                     EffectType = EffectType.ThietNhan_ReduceMoveRange,
                     Duration = EffectConfig.DebuffRound,
                     Value = 2,
+                    Actor = Character
                 },
-                new EffectData
+                new()
                 {
                     EffectType = EffectType.ThietNhan_BlockAP,
                     Duration = EffectConfig.DebuffRound,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -75,15 +79,17 @@ public class ThietNhan_SkillState : AISkillState
             Damage = totalDamage,
             Effects = new List<EffectData>
             {
-                new EffectData
+                new()
                 {
                     EffectType = EffectType.Poison,
                     Duration = EffectConfig.DebuffRound,
+                    Actor = Character
                 },
-                new EffectData
+                new()
                 {
                     EffectType = EffectType.Immobilize,
                     Duration = EffectConfig.DebuffRound,
+                    Actor = Character
                 }
             }
         };
@@ -110,8 +116,10 @@ public class ThietNhan_SkillState : AISkillState
                 {
                     EffectType = EffectType.ThietNhan_Infected,
                     Duration = EffectConfig.DebuffRound,
+                    Actor = character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
     

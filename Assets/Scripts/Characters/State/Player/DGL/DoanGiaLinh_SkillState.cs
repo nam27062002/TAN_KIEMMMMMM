@@ -100,10 +100,12 @@ public class DoanGiaLinh_SkillState : SkillState
             {
                 EffectType = EffectType.Immobilize,
                 Duration = EffectConfig.DebuffRound,
+                Actor = Character,
             },
             new()
             {
                 EffectType = EffectType.NightCactus,
+                Actor = Character,
             },
             new PoisonEffectData()
             {
@@ -114,11 +116,17 @@ public class DoanGiaLinh_SkillState : SkillState
                     rollTime = 1,
                     rollValue = 4,
                     add = 0,
-                }
+                },
+                Actor = Character
             }
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
-        return new DamageTakenParams { Damage = damage, Effects = effects };
+        return new DamageTakenParams
+        {
+            Damage = damage, 
+            Effects = effects,
+            ReceiveFromCharacter = Character
+        };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character target)
@@ -132,10 +140,16 @@ public class DoanGiaLinh_SkillState : SkillState
             {
                 EffectType = EffectType.ReduceMoveRange,
                 Duration = 1,
+                Actor = Character
             },
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
-        return new DamageTakenParams { Damage = damage, Effects = effects };
+        return new DamageTakenParams
+        {
+            Damage = damage, 
+            Effects = effects,
+            ReceiveFromCharacter = Character
+        };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character target)
@@ -152,10 +166,16 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 EffectType = EffectType.RedDahlia,
+                Actor = Character
             },
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
-        return new DamageTakenParams { Damage = realDamage, Effects = effects };
+        return new DamageTakenParams
+        {
+            Damage = realDamage, 
+            Effects = effects,
+            ReceiveFromCharacter = Character,
+        };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character target)
@@ -172,15 +192,22 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 EffectType = EffectType.WhiteLotus,
+                Actor = Character
             },
             new()
             {
                 EffectType = EffectType.Sleep,
-                Duration = EffectConfig.DebuffRound
+                Duration = EffectConfig.DebuffRound,
+                Actor = Character
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
-        return new DamageTakenParams { Damage = realDamage, Effects = effects };
+        return new DamageTakenParams
+        {
+            Damage = realDamage,
+            Effects = effects,
+            ReceiveFromCharacter = Character,
+        };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character target)
@@ -197,15 +224,22 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 EffectType = EffectType.Marigold,
+                Actor = Character
             },
             new()
             {
                 EffectType = EffectType.Sleep,
                 Duration = EffectConfig.DebuffRound,
+                Actor = Character
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
-        return new DamageTakenParams { Damage = realDamage, Effects = effects };
+        return new DamageTakenParams
+        {
+            Damage = realDamage,
+            Effects = effects,
+            ReceiveFromCharacter = Character
+        };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character target)
@@ -227,14 +261,21 @@ public class DoanGiaLinh_SkillState : SkillState
                 EffectType = EffectType.ReduceChiDef,
                 Value = stack,
                 Duration = EffectConfig.DebuffRound,
+                Actor = Character
             },
             new()
             {
                 EffectType = EffectType.RemoveAllPoisonPowder,
+                Actor = Character
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
-        return new DamageTakenParams { Damage = realDamage, Effects = effects };
+        return new DamageTakenParams
+        {
+            Damage = realDamage,
+            Effects = effects,
+            ReceiveFromCharacter = Character
+        };
     }
 
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character target)
@@ -248,8 +289,10 @@ public class DoanGiaLinh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.RemoveAllPoisonPowder,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -264,8 +307,10 @@ public class DoanGiaLinh_SkillState : SkillState
                 new()
                 {
                     EffectType = EffectType.RemoveAllPoisonPowder,
+                    Actor = Character
                 }
-            }
+            },
+            ReceiveFromCharacter = Character
         };
     }
 

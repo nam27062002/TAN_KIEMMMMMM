@@ -26,6 +26,9 @@ public class EffectInfo
         EffectType.Cover_50_Percent,
         EffectType.Disarm,
         EffectType.Shield,
+        EffectType.Taunt,
+        EffectType.Cover_PhamCuChich_Skill3,
+        EffectType.ReduceAP,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -39,6 +42,9 @@ public class EffectInfo
         { EffectType.ThietNhan_ReduceMoveRange, (10, 10)},
         { EffectType.ThietNhan_BlockAP, (10, 10)},
         { EffectType.Disarm, (10, 10)},
+        { EffectType.Taunt, (15, 15)},
+        { EffectType.Silence, (10, 10)},
+        { EffectType.ReduceAP, (15, 15)}
     };
 
     public void AddEffect(EffectData effect)
@@ -79,4 +85,9 @@ public enum EffectType
     SnakeArmor = 27,
     DragonArmor = 28,
     Shield = 29,
+    Taunt = 30,
+    Silence = 31,
+    Cover_PhamCuChich_Skill3 = 32,
+    ReduceStat_PhamCuChich_Skill3 = 34,
+    ReduceAP = 35,
 }
