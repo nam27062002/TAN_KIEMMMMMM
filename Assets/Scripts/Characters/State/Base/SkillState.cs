@@ -217,6 +217,15 @@ public class SkillState : CharacterState
                 WaitForCounter = false,
             });
         }
+        else if (HasBlockProjectile(target))
+        {
+            HandleTargetFinish(new FinishApplySkillParams()
+            {
+                Character = target,
+                WaitForCounter = false,
+            });
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"Kim Hà Tại: chặn sát thương cho {target.characterConfig.characterName} từ đòn đánh của {Character.characterConfig.characterName}");
+        }
         else
         {
             var hitChangeParams = GetHitChangeParams();
@@ -247,7 +256,7 @@ public class SkillState : CharacterState
             _waitForFeedback = true;   
         }
     }
-
+    
     private void ProcessFriendlyTarget(Character target)
     {
         var damageParams = GetDamageParams(target);
@@ -259,6 +268,12 @@ public class SkillState : CharacterState
     {
         var shieldCell = target.Info.Cell.mainShieldCell;
         return shieldCell != null && shieldCell != Character.Info.Cell.mainShieldCell;
+    }
+
+    private bool HasBlockProjectile(Character target)
+    {
+        var shieldCell = target.Info.Cell.mainBlockProjectile;
+        return shieldCell != null && shieldCell != Character.Info.Cell.mainBlockProjectile;
     }
 
 

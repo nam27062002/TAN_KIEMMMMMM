@@ -82,7 +82,7 @@ public abstract class Character : MonoBehaviour
 
     #region Set States
     
-    private void SetIdle(IdleStateParams idleStateParams = null)
+    protected virtual void SetIdle(IdleStateParams idleStateParams = null)
     {
         ChangeState(ECharacterState.Idle, idleStateParams);
     }
@@ -277,7 +277,7 @@ public abstract class Character : MonoBehaviour
         HandleCounterLogic();
     }
     
-    public void OnDamageTaken(DamageTakenParams damageTakenParams)
+    public virtual void OnDamageTaken(DamageTakenParams damageTakenParams)
     {
         ChangeState(ECharacterState.DamageTaken, damageTakenParams);
     }

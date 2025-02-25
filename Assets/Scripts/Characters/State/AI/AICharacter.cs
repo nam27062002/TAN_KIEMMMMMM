@@ -20,7 +20,7 @@ public abstract class AICharacter : Character
         Invoke(nameof(HandleAIPlay), 1f);
     }
 
-    public void HandleAIPlay()
+    public virtual void HandleAIPlay()
     {
         AlkawaDebug.Log(ELogCategory.AI,"HandleAIPlay");
         Info.GetMoveRange(); // TODO: Clean code

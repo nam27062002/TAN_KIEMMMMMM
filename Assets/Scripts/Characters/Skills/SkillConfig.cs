@@ -42,4 +42,5 @@ public enum DamageTargetType
     Team = 1 << 1,
     Enemies = 1 << 2,
     Move = 1 << 3,
+    Walkable = 1 << 4,
 }

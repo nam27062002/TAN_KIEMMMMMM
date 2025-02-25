@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -23,7 +22,7 @@ public class Cell : MonoBehaviour
     [TabGroup("Shield")] public int currentShieldHP = 0;
     [TabGroup("Shield")] public HpBar hpBar;
     [TabGroup("Shield"), ReadOnly] public Cell mainShieldCell;
-    [TabGroup("Shield"), ReadOnly] public List<Cell> shieldImpactCells = new List<Cell>();
+    public Cell mainBlockProjectile;
     
     private void Start()
     {
@@ -75,6 +74,26 @@ public class Cell : MonoBehaviour
         SetShieldImpact(this);
     }
 
+    public void SetMainProjectile()
+    {
+        var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, 4);
+        foreach (var cell in cells)
+        {
+            cell.SetMainBlockProjectile(this);
+        }
+        SetMainBlockProjectile(this);
+    }
+    
+    public void UnSetMainProjectile()
+    {
+        var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, 4);
+        foreach (var cell in cells)
+        {
+            cell.UnSetMainBlockProjectile(this);
+        }
+        UnSetMainBlockProjectile(this);
+    }
+
     public void ReceiveDamage(Character to, Character from)
     {
         currentShieldHP--;
@@ -102,6 +121,18 @@ public class Cell : MonoBehaviour
     public void UnsetShieldImpact(Cell cell)
     {
         mainShieldCell = null;
+        shieldImpactSprite.enabled = false; 
+    }
+    
+    private void SetMainBlockProjectile(Cell cell)
+    {
+        mainBlockProjectile = cell;
+        shieldImpactSprite.enabled = true; 
+    }
+
+    private void UnSetMainBlockProjectile(Cell cell)
+    {
+        mainBlockProjectile = null;
         shieldImpactSprite.enabled = false; 
     }
     

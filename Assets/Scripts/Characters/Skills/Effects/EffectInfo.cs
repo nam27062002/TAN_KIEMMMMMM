@@ -29,6 +29,8 @@ public class EffectInfo
         EffectType.Taunt,
         EffectType.Cover_PhamCuChich_Skill3,
         EffectType.ReduceAP,
+        EffectType.BlockProjectile,
+        EffectType.Bleed
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -44,7 +46,8 @@ public class EffectInfo
         { EffectType.Disarm, (10, 10)},
         { EffectType.Taunt, (15, 15)},
         { EffectType.Silence, (10, 10)},
-        { EffectType.ReduceAP, (15, 15)}
+        { EffectType.ReduceAP, (15, 15)},
+        { EffectType.Bleed, (10, 10)},
     };
 
     public void AddEffect(EffectData effect)
@@ -90,4 +93,6 @@ public enum EffectType
     Cover_PhamCuChich_Skill3 = 32,
     ReduceStat_PhamCuChich_Skill3 = 34,
     ReduceAP = 35,
+    BlockProjectile = 36,
+    Bleed = 37,
 }

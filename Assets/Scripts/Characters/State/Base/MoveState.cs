@@ -40,7 +40,7 @@ public class MoveState : CharacterState
         
         moveSequence.OnComplete(() =>
         {
-            OnReachToTarget(stateParams.MoveCells[^1]);
+            OnReachToTarget(Character.Info.Cell, stateParams.MoveCells[^1]);
         });
         
     }
@@ -50,9 +50,9 @@ public class MoveState : CharacterState
         
     }
     
-    protected virtual void OnReachToTarget(Cell cell)
+    protected virtual void OnReachToTarget(Cell from, Cell to)
     {
-        SetCell(cell);
+        SetCell(to);
         Character.Info.Cell.ShowFocus();
         GpManager.SetInteract(true);
         GpManager.UpdateAllFacing();

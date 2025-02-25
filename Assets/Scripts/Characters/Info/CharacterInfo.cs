@@ -31,6 +31,7 @@ public class CharacterInfo
             { EffectType.SnakeArmor, ApplySimpleEffect },
             { EffectType.ReduceStat_PhamCuChich_Skill3, ApplySimpleEffect },
             { EffectType.Cover_PhamCuChich_Skill3, ApplySimpleEffect },
+            { EffectType.BlockProjectile, ApplySimpleEffect },
 
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -44,6 +45,7 @@ public class CharacterInfo
             { EffectType.Taunt, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Silence, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ReduceAP, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.Bleed, TryCheckEffectResistanceAndApplyEffect },
             
             { EffectType.IncreaseDamage, ApplyIncreaseDamage },
             { EffectType.BlockSkill, _ => ApplyBlockSkill() },
@@ -383,9 +385,17 @@ public class CharacterInfo
             if (effect.Duration != 0) continue;
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
-            if (effect.EffectType == EffectType.Cover_PhamCuChich_Skill3)
+            switch (effect.EffectType)
             {
-                effect.Actor.Info.RemoveEffect(EffectType.ReduceStat_PhamCuChich_Skill3, Character);
+                case EffectType.Cover_PhamCuChich_Skill3:
+                    effect.Actor.Info.RemoveEffect(EffectType.ReduceStat_PhamCuChich_Skill3, Character);
+                    break;
+                case EffectType.BlockProjectile:
+                    if (effect is BlockProjectile projectile)
+                    {
+                        projectile.targetCell.UnSetMainProjectile();
+                    }
+                    break;
             }
             EffectInfo.Effects.Remove(effect);
         }

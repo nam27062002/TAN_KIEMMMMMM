@@ -160,6 +160,7 @@ public class PhamCuChich_SkillState : SkillState
             Damage = damage,
         };
     }
+    
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
     {
         Info.ApplyEffects(new List<EffectData>()
@@ -181,6 +182,24 @@ public class PhamCuChich_SkillState : SkillState
                     Duration = 2,
                     Value = 1,
                     Actor = Character,
+                }
+            }
+        };
+    }
+    
+    protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
+    {
+        Info.Cell.SetMainProjectile();
+        return new DamageTakenParams()
+        {
+            Effects = new List<EffectData>()
+            {
+                new BlockProjectile()
+                {
+                    EffectType = EffectType.BlockProjectile,
+                    Duration = 3,
+                    Actor = Character,
+                    targetCell = Info.Cell
                 }
             }
         };
@@ -236,6 +255,10 @@ public class PhamCuChich_SkillState : SkillState
         AddTargetCharacters(GpManager.MainCharacter);
     }
 
+    protected override void SetTargetCharacters_Skill4_EnemyTurn()
+    {
+        AddTargetCharacters(Character);
+    }
 
     protected override void HandleAfterDamageTakenFinish_Skill4_MyTurn()
     {
@@ -243,6 +266,11 @@ public class PhamCuChich_SkillState : SkillState
     }
     
     protected override void HandleAfterDamageTakenFinish_Skill4_TeammateTurn()
+    {
+        BreakShield(3);
+    }
+    
+    protected override void HandleAfterDamageTakenFinish_Skill4_EnemyTurn()
     {
         BreakShield(3);
     }

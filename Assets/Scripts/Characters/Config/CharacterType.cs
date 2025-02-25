@@ -5,4 +5,7 @@
     ThietNhan,
     HoacLienHuong,
     PhamCuChich,
+    CanSat,
+    Dancer,
+    Assassin,
 }

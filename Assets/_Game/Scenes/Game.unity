@@ -1257,13 +1257,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelConfig: {fileID: 11400000, guid: bfe7d7693f185354fa1e3acbbe5861e2, type: 2}
   allCharacter:
-    m_keys: 0000000001000000020000000300000004000000
+    m_keys: 000000000100000002000000030000000400000005000000
     m_values:
     - {fileID: 8476363159216195691, guid: b66348842be014b4ba9d986355ab8d8f, type: 3}
     - {fileID: 2203334176055078997, guid: fe2068912a251fa4ea416286b601690f, type: 3}
     - {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
     - {fileID: 3872505134893282029, guid: bd7fbed440bef7a4aa1a62c4e9856a3d, type: 3}
     - {fileID: 3806043014458436532, guid: b4f8af257117aeb4b85def41a59a21f0, type: 3}
+    - {fileID: 7579461828209338209, guid: 324725251a2f142449578c5e84b4f519, type: 3}
   tutorialPrefab: {fileID: 702396812}
 --- !u!1001 &2962411132894324362
 PrefabInstance:

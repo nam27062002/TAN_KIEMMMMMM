@@ -49,7 +49,7 @@ public abstract class CharacterState : IState
     public void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
     {
         onEndAnim ??= SetIdle;
-        Character.AnimationData.PlayAnimation(animationParameterNameType, onEndAnim);
+        Character.AnimationData?.PlayAnimation(animationParameterNameType, onEndAnim);
     }
 
     #region Sub

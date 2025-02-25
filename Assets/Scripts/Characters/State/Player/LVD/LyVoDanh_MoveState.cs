@@ -4,9 +4,9 @@
     {
     }
     
-    protected override void OnReachToTarget(Cell cell)
+    protected override void OnReachToTarget(Cell from, Cell to)
     {
-        base.OnReachToTarget(cell);
+        base.OnReachToTarget(from, to);
         CoroutineDispatcher.Invoke(TryTriggerFlyingTempest, 0.5f);
     }
 
