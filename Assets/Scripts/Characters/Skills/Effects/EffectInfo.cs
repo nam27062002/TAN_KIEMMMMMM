@@ -30,7 +30,10 @@ public class EffectInfo
         EffectType.Cover_PhamCuChich_Skill3,
         EffectType.ReduceAP,
         EffectType.BlockProjectile,
-        EffectType.Bleed
+        EffectType.Bleed,
+        EffectType.IncreaseDef,
+        EffectType.IncreaseSpd,
+        EffectType.ReduceHitChange
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -95,4 +98,7 @@ public enum EffectType
     ReduceAP = 35,
     BlockProjectile = 36,
     Bleed = 37,
+    IncreaseDef = 38,
+    IncreaseSpd = 39,
+    ReduceHitChange = 40,
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -65,11 +66,17 @@ public abstract class Character : MonoBehaviour
         OnShieldChanged(null, 0);
         ChangeState(ECharacterState.Idle);
         SetPassiveSkills();
+        StartCoroutine(HandleSpecialAction());
     }
 
     public virtual void SetMainCharacter()
     {
         Info.ResetBuffBefore();
+    }
+
+    protected virtual IEnumerator HandleSpecialAction()
+    {
+        yield return null;
     }
 
     private void SetPassiveSkills()
@@ -198,7 +205,7 @@ public abstract class Character : MonoBehaviour
         return skillConfig.SkillConfigs[skillTurnType];
     }
 
-    private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null)
+    private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, bool dontNeedActionPoints = false)
     {
         Info.HandleMpChanged(-Info.SkillInfo.mpCost);
     
@@ -213,14 +220,14 @@ public abstract class Character : MonoBehaviour
         };
     
         SetSkill(skillParams);
-        Info.ReduceActionPoints();
+        if (!dontNeedActionPoints) Info.ReduceActionPoints();
         UnSelectSkill();
     }
 
-    protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null)
+    protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null, bool dontNeedActionPoints = false)
     {
         Info.SkillInfo = skillInfo;
-        HandleCastSkill(targets);
+        HandleCastSkill(targets, dontNeedActionPoints: dontNeedActionPoints);
     }
 
     public void HandleSelectSkill(int skillIndex, Skill_UI skillUI)
@@ -407,7 +414,7 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public void OnDie()
+    public virtual void OnDie()
     {
         Info.Cell.CellType = CellType.Walkable;
         var index = GpManager.Characters.IndexOf(this);

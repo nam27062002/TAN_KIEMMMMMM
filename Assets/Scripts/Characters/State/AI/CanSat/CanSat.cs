@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -18,9 +19,11 @@ public class CanSat : AICharacter
             new CanSat_SkillState(this));
     }
     
-    protected override void SetIdle(IdleStateParams idleStateParams = null)
+    protected override IEnumerator HandleSpecialAction()
     {
-        
+        StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1]));
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(Summer(assassinPrefab, GetSkillInfos(SkillTurnType.EnemyTurn)[1]));
     }
     
     protected override void SetSpeed()
@@ -43,25 +46,32 @@ public class CanSat : AICharacter
         Info.GetMoveRange();
         if (dancer == null && Info.ActionPointsList.Count(p => p == 3) >= 2)
         {
-            var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, 6, DirectionType.All);
-            if (cells != null && cells.Count > 0)
-            {
-                int randomIndex = Random.Range(0, cells.Count);
-                var selectedCell = cells[randomIndex];
-                var go = Instantiate(dancerPrefab);
-                dancer = go.GetComponent<Dancer>();
-                dancer.Initialize(selectedCell);
-                var skillInfos = GetSkillInfos(SkillTurnType.MyTurn);
-                if (skillInfos != null && skillInfos.Count > 1)
-                {
-                    HandleCastSkill(skillInfos[1], new List<Character> { this });
-                    Info.ReduceActionPoints();
-                }
-            }
+            StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1]));
+            Info.ReduceActionPoints();
         }
         else
         {
             GpManager.HandleEndTurn();
         }
+    }
+
+    private IEnumerator Summer(GameObject type, SkillInfo skillInfo, bool dontNeedActionPoints = false)
+    {
+        HandleCastSkill(skillInfo, new List<Character> { this }, dontNeedActionPoints);
+        if (!dontNeedActionPoints) Info.ReduceActionPoints();
+        yield return new WaitForSeconds(1f);
+        SpawnEnemy(type);
+    }
+
+    private void SpawnEnemy(GameObject gameObj)
+    {
+        var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, 6, DirectionType.All);
+        if (cells is not { Count: > 0 }) return;
+        int randomIndex = Random.Range(0, cells.Count);
+        var selectedCell = cells[randomIndex];
+        var go = Instantiate(gameObj);
+        dancer = go.GetComponent<Dancer>();
+        dancer.Initialize(selectedCell);
+        dancer.owner = this;
     }
 }

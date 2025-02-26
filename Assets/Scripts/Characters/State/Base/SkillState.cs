@@ -17,6 +17,7 @@ public class SkillState : CharacterState
     private bool _waitForFeedback = false;
     protected bool WaitForReact = false;
     protected string SkillName => _skillStateParams.SkillInfo.name;
+    protected static int MAX_ROUND = 100000;
 
     public SkillState(Character character) : base(character)
     {

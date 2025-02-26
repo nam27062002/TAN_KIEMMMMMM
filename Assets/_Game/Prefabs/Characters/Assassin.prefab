@@ -11,10 +11,10 @@ PrefabInstance:
     - target: {fileID: 16297741487603358, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 8fd30ee0b4cbd874bb15e8e8ea528e63, type: 3}
+      objectReference: {fileID: 21300000, guid: f851e0bf3ea94ed4bba55148d02c6e22, type: 3}
     - target: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_Name
-      value: Dancer
+      value: Assassin
       objectReference: {fileID: 0}
     - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_LocalScale.x
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45eba8bfe96544118128d3f9601b37aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterType: 6
+  characterType: 7
   characterAnimationData: {fileID: 0}
   hpBar: {fileID: 5633098880171246710}
   uiFeedback: {fileID: 2814240345546387717}

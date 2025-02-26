@@ -32,6 +32,9 @@ public class CharacterInfo
             { EffectType.ReduceStat_PhamCuChich_Skill3, ApplySimpleEffect },
             { EffectType.Cover_PhamCuChich_Skill3, ApplySimpleEffect },
             { EffectType.BlockProjectile, ApplySimpleEffect },
+            { EffectType.IncreaseDef, ApplySimpleEffect },
+            { EffectType.IncreaseSpd, ApplySimpleEffect },
+            { EffectType.ReduceHitChange, ApplySimpleEffect },
 
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
