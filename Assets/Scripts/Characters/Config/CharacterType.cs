@@ -8,4 +8,5 @@
     CanSat,
     Dancer,
     Assassin,
+    RoiNguoi
 }

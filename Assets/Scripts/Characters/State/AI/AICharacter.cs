@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public abstract class AICharacter : Character
 {
     public override Type Type => Type.AI;
-    private Character _enemy;
+    protected Character Enemy;
 
     protected override void SetStateMachine()
     {
@@ -33,7 +33,7 @@ public abstract class AICharacter : Character
         }
     }
     
-    private bool TryMoving()
+    protected bool TryMoving()
     {
         if (Info.GetMoveRange() <= 0) return false;
         var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, Info.GetMoveRange(), characterConfig.moveDirection);
@@ -59,8 +59,8 @@ public abstract class AICharacter : Character
                  var enemiesInRange = GpManager.GetEnemiesInRange(this, skills[i].range, skills[i].directionType);
                  if (enemiesInRange.Count > 0)
                  {
-                     _enemy = enemiesInRange[0];
-                     HandleCastSkill(skills[i], new List<Character> {_enemy});
+                     Enemy = enemiesInRange[0];
+                     HandleCastSkill(skills[i], new List<Character> {Enemy});
                      AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {skills[i].name}");
                      return true;
                  }

@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelConfig: {fileID: 11400000, guid: bfe7d7693f185354fa1e3acbbe5861e2, type: 2}
   allCharacter:
-    m_keys: 000000000100000002000000030000000400000005000000
+    m_keys: 00000000010000000200000003000000040000000500000008000000
     m_values:
     - {fileID: 8476363159216195691, guid: b66348842be014b4ba9d986355ab8d8f, type: 3}
     - {fileID: 2203334176055078997, guid: fe2068912a251fa4ea416286b601690f, type: 3}
@@ -1265,6 +1265,7 @@ MonoBehaviour:
     - {fileID: 3872505134893282029, guid: bd7fbed440bef7a4aa1a62c4e9856a3d, type: 3}
     - {fileID: 3806043014458436532, guid: b4f8af257117aeb4b85def41a59a21f0, type: 3}
     - {fileID: 7579461828209338209, guid: 324725251a2f142449578c5e84b4f519, type: 3}
+    - {fileID: 2529861749566756791, guid: 6e35315aa9c3b1642bb9c41154cd5ba5, type: 3}
   tutorialPrefab: {fileID: 702396812}
 --- !u!1001 &2962411132894324362
 PrefabInstance:

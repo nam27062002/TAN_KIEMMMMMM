@@ -33,7 +33,8 @@ public class ShowInfoPopup : PopupBase
         
             var currentMp = showInfoCharacterParameters.Character.Info.CurrentMp;
             var maxMp = showInfoCharacterParameters.Character.Info.Attributes.mana;
-            mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
+            if (maxMp != 0)
+                mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
         }
     }
 

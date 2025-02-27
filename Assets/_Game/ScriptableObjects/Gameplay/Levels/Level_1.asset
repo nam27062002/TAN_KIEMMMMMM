@@ -16,7 +16,7 @@ MonoBehaviour:
   levelType: 1
   spawnerConfig:
     spawnPoints:
-      m_keys: 000000000100000002000000030000000400000005000000
+      m_keys: 00000000010000000200000003000000040000000500000008000000
       m_values:
       - points:
         - {x: 6, y: 3}
@@ -29,6 +29,8 @@ MonoBehaviour:
         - {x: 2, y: 2}
       - points:
         - {x: 6, y: 6}
+      - points:
+        - {x: 7, y: 10}
       - points:
         - {x: 5, y: 7}
   mapPrefab: {fileID: 1980423763408188603, guid: 417e63c948212724082e659fe45c197a, type: 3}

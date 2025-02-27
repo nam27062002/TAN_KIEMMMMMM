@@ -243,7 +243,8 @@ public class CharacterInfo
         }
 
         CurrentHp += hp;
-        character.Info.SetDamageDealtInCurrentRound(-hp);
+        if (character != null) 
+            character.Info.SetDamageDealtInCurrentRound(-hp);
         CurrentHp = Math.Max(0, CurrentHp);
     }
 
@@ -402,8 +403,6 @@ public class CharacterInfo
             }
             EffectInfo.Effects.Remove(effect);
         }
-
-        Character.uiFeedback.UpdateEffectIcons();
     }
 
     public void ResetBuffBefore()
@@ -423,7 +422,6 @@ public class CharacterInfo
 
         HandleEffectCleanse();
         HandleApplyEffectBeforeNewRound();
-        Character.uiFeedback.UpdateEffectIcons();
         RoundIndex++;
     }
 
@@ -470,6 +468,10 @@ public class CharacterInfo
                 else if (effect.EffectType == EffectType.ReduceAP && effect is ChangeStatEffect changeStatEffect)
                 {
                     skipCount += changeStatEffect.Value;
+                }
+                else if (effect.EffectType == EffectType.CanSat_TakeAP)
+                {
+                    skipCount += 1;
                 }
             }
         
@@ -593,8 +595,6 @@ public class CharacterInfo
                     $"[{Character.characterConfig.characterName}] nhận damage => removed effect: Sleep");
             }
         }
-
-        Character.uiFeedback.UpdateEffectIcons();
     }
 
     private void HandleEffectCleanse()
@@ -667,7 +667,6 @@ public class CharacterInfo
                     $"[{Character.characterConfig.characterName}] No handler for effect: {effect.EffectType}");
             }
         }
-        Character.uiFeedback.UpdateEffectIcons();
     }
 
     private bool ShouldApplyEffect(EffectData effectData)
@@ -758,7 +757,6 @@ public class CharacterInfo
         if (value <= 0) return;
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
-        GameplayManager.Instance.UpdateAllEffectFeedback();
     }
 
     public void RemoveEffect(EffectType effectType, Character actor)
@@ -770,7 +768,6 @@ public class CharacterInfo
             EffectInfo.Effects.RemoveAt(i);
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Removed effect: {effectType}");
-            GameplayManager.Instance.UpdateAllEffectFeedback();
             return;
         }
     }

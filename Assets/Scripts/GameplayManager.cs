@@ -106,7 +106,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
 
         SortCharacterBySpeed();
-        SetMainCharacter();
+        Invoke(nameof(SetMainCharacter), 3f);
         SetInteract(true);
         HandleNewRound();
         ShowLevelName();
@@ -172,6 +172,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleEndTurn(bool force = false)
     {
+        if (SelectedCharacter == null) return;
         if (!_canInteract && !force) return;
         if (SelectedCharacter.IsReact)
         {
@@ -216,6 +217,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnWaypointClicked(Cell cell)
     {
+        if (SelectedCharacter == null) return;
         if (SelectedCharacter.TryCastSkill(cell)) return;
         if (!CanMove()) return;
         SelectedCharacter.TryMoveToCell(cell);
@@ -344,6 +346,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void UpdateCharacterInfo()
     {
+        if (SelectedCharacter == null) return;
         OnUpdateCharacterInfo?.Invoke(this, GetSelectedCharacterParams());
     }
 
@@ -407,14 +410,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         foreach (var character in Characters)
         {
             character?.UpdateFacing();
-        }
-    }
-
-    public void UpdateAllEffectFeedback()
-    {
-        foreach (var character in Characters)
-        {
-            character?.uiFeedback.UpdateEffectIcons();
         }
     }
     

@@ -21,9 +21,10 @@ public class CanSat : AICharacter
     
     protected override IEnumerator HandleSpecialAction()
     {
-        StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1]));
         yield return new WaitForSeconds(1f);
-        StartCoroutine(Summer(assassinPrefab, GetSkillInfos(SkillTurnType.EnemyTurn)[1]));
+        StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1], SkillTurnType.MyTurn));
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(Summer(assassinPrefab, GetSkillInfos(SkillTurnType.EnemyTurn)[1], SkillTurnType.EnemyTurn));
     }
     
     protected override void SetSpeed()
@@ -44,10 +45,21 @@ public class CanSat : AICharacter
     {
         AlkawaDebug.Log(ELogCategory.AI, "HandleAIPlay");
         Info.GetMoveRange();
+        var enemiesInRange = GpManager.GetEnemiesInRange(this, 2, DirectionType.All);
         if (dancer == null && Info.ActionPointsList.Count(p => p == 3) >= 2)
         {
-            StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1]));
+            StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1], SkillTurnType.MyTurn));
             Info.ReduceActionPoints();
+        }
+        else if (Info.ActionPointsList.Count(p => p == 3) >= 1 && enemiesInRange.Count > 0)
+        {
+            Enemy = enemiesInRange[0];
+            HandleCastSkill(GetSkillInfos(SkillTurnType.MyTurn)[2], new List<Character> {Enemy});
+            AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {GetSkillInfos(SkillTurnType.MyTurn)[2].name}");
+        }
+        else if (TryMoving())
+        {
+            
         }
         else
         {
@@ -55,9 +67,9 @@ public class CanSat : AICharacter
         }
     }
 
-    private IEnumerator Summer(GameObject type, SkillInfo skillInfo, bool dontNeedActionPoints = false)
+    private IEnumerator Summer(GameObject type, SkillInfo skillInfo,SkillTurnType skillTurnType, bool dontNeedActionPoints = false)
     {
-        HandleCastSkill(skillInfo, new List<Character> { this }, dontNeedActionPoints);
+        HandleCastSkill(skillInfo, new List<Character> { this }, skillTurnType, dontNeedActionPoints);
         if (!dontNeedActionPoints) Info.ReduceActionPoints();
         yield return new WaitForSeconds(1f);
         SpawnEnemy(type);

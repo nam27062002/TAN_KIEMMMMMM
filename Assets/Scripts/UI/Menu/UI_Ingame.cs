@@ -51,7 +51,15 @@ public class UI_Ingame : MenuBase
     private GameplayManager GameplayManager => GameplayManager.Instance;
     private ShowInfoCharacterParameters _characterParams;
     private List<AVT_SpdUI> _avtSpdUI = new();
-
+    
+    private readonly List<EffectUI> _effectUIs = new();
+    
+    [Title("Effects")]
+    [SerializeField] private EffectUI effectUI;
+    [SerializeField] private RectTransform effectsPanel;
+    [SerializeField] private SerializableDictionary<EffectType, Sprite> effectIcons;
+    [SerializeField] private Sprite defaultIcon;
+    
     public override void Open(UIBaseParameters parameters = null)
     {
         base.Open(parameters);
@@ -192,6 +200,22 @@ public class UI_Ingame : MenuBase
         SetRound();
         toggle.gameObject.SetActiveIfNeeded(characterParams.Character.characterConfig.hasToggle);
         toggle.isOn = characterParams.Character.Info.IsToggleOn;
+        
+        foreach (var item in _effectUIs)
+        {
+            item.DestroyEffect();
+        }
+        _effectUIs.Clear();
+        foreach (var item in _characterParams.Character.Info.EffectInfo.Effects)
+        {
+            var go = Instantiate(effectUI.gameObject, effectsPanel);
+            go.transform.SetAsFirstSibling();
+            var cpn = go.GetComponent<EffectUI>();
+            effectIcons.TryGetValue(item.EffectType, out var effectIcon);
+            if (effectIcon == null) effectIcon = defaultIcon;
+            cpn.Initialize(effectIcon);
+            _effectUIs.Add(cpn);
+        }
     }
 
     private void OnToggleValueChanged(bool isOn)
@@ -234,6 +258,7 @@ public class UI_Ingame : MenuBase
     {
         var currentMp = _characterParams.Character.Info.CurrentMp;
         var maxMp = _characterParams.Character.Info.Attributes.mana;
+        if (maxMp == 0) return;
         mpBar.SetValue(currentMp * 1f / maxMp, $"{currentMp} / {maxMp}");
     }
 

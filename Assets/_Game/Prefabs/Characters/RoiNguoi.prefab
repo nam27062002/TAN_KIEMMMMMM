@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2505940573128540015
+--- !u!1001 &2661434900280462203
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,10 +11,10 @@ PrefabInstance:
     - target: {fileID: 16297741487603358, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 7678057080099263248, guid: 93c556936901169468bdab14715a573a, type: 3}
+      objectReference: {fileID: 2147685559727469259, guid: e9c014ae51438ac4cba01bd1fd0321c0, type: 3}
     - target: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_Name
-      value: CanSat
+      value: RoiNguoi
       objectReference: {fileID: 0}
     - target: {fileID: 2488554237871491635, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -59,23 +59,23 @@ PrefabInstance:
     - target: {fileID: 3885517116035834783, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: ef0c4a274057ce84cb6b05ef83466385, type: 2}
+      objectReference: {fileID: 9100000, guid: 1a327b2328c800542b0da7a9bb1c5ca2, type: 2}
     - target: {fileID: 5687476869882378970, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 7579461828209338209}
+      objectReference: {fileID: 2529861749566756791}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7579461828209338209}
+      addedObject: {fileID: 2529861749566756791}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
---- !u!114 &363068093890113734 stripped
+--- !u!114 &225272192236176594 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2868514981145055145, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 2505940573128540015}
+  m_PrefabInstance: {fileID: 2661434900280462203}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -83,44 +83,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618060fc918741ebb601372ea285c46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3378197077589489141 stripped
+--- !u!1 &2938729648393028065 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 2505940573128540015}
+  m_PrefabInstance: {fileID: 2661434900280462203}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7579461828209338209
+--- !u!114 &2529861749566756791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3378197077589489141}
+  m_GameObject: {fileID: 2938729648393028065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 911e765b83074427b1fd653229823574, type: 3}
+  m_Script: {fileID: 11500000, guid: f57ba450258e4fe198a8817cc04b25b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterType: 5
-  characterAnimationData: {fileID: 7134127359125798883}
-  hpBar: {fileID: 363068093890113734}
-  uiFeedback: {fileID: 7794351862320612789}
-  linkCharacter: {fileID: 7827631973338287044}
-  model: {fileID: 3488727249622327364}
+  characterType: 8
+  characterAnimationData: {fileID: 7289129136760376311}
+  hpBar: {fileID: 225272192236176594}
+  uiFeedback: {fileID: 7638855816377643425}
+  linkCharacter: {fileID: 7676639083263328208}
+  model: {fileID: 3910181860838020176}
   characterConfig:
     characterHeight: 1
-    characterName: "C\xE0n S\xE1t"
-    characterIcon: {fileID: 21300000, guid: 4d4e8c0128eedd74db765ffb4cc88a2d, type: 3}
+    characterName: "R\u1ED1i Ng\u01B0\u1EDDi "
+    characterIcon: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
     characterAttributes:
-      maxMoveRange: 7
-      health: 180
-      mana: 60
-      atk: 16
-      def: 8
-      chiDef: 16
-      spd: 10
+      maxMoveRange: 0
+      health: 120
+      mana: 0
+      atk: 0
+      def: 5
+      chiDef: 5
+      spd: 0
       baseDamageRollData:
-        rollTime: 0
-        rollValue: 0
+        rollTime: 1
+        rollValue: 8
         add: 0
       hitChangeRollData:
         rollTime: 1
@@ -135,148 +135,46 @@ MonoBehaviour:
         rollValue: 20
         add: 0
     actionPoints:
-      m_keys: 000000000100000002000000
-      m_values: 010000000100000002000000
+      m_keys: 
+      m_values: 
     hasToggle: 0
-    moveDirection: 512
+    moveDirection: 0
   skillConfig:
-    internalSkill:
-    - icon: {fileID: 21300000, guid: c52bf978ec397e146b6e764ecec11fbc, type: 3}
-      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
-      skillIndex: 0
-      mpCost: 0
-      range: 1
-      directionType: 512
-      isDirectionalSkill: 1
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 4
-      description: 
-    - icon: {fileID: 21300000, guid: 7d83262a187e20840a4c1b3890d9f54f, type: 3}
-      name: "\u1EA2nh V\u1ECDng"
-      skillIndex: 1
-      mpCost: 10
-      range: 6
-      directionType: 512
-      isDirectionalSkill: 1
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 16
-      description: 
-    - icon: {fileID: 21300000, guid: 97ece1ac75e34b64aa8fd4a1aec44dfb, type: 3}
-      name: "C\xE0o x\xE9 "
-      skillIndex: 2
-      mpCost: 5
-      range: 2
-      directionType: 512
-      isDirectionalSkill: 1
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 4
-      description: 
-    movementSkill:
-    - icon: {fileID: 21300000, guid: aa1acb52e2c949b42ab3c9eee8184f71, type: 3}
-      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
-      skillIndex: 0
-      mpCost: 0
-      range: 1
-      directionType: 512
-      isDirectionalSkill: 1
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 4
-      description: 
-    - icon: {fileID: 21300000, guid: 1771d25e4d6fb884b970883be01be940, type: 3}
-      name: 
-      skillIndex: 1
-      mpCost: 0
-      range: 0
-      directionType: 512
-      isDirectionalSkill: 0
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 0
-      description: 
-    - icon: {fileID: 21300000, guid: 139b9a1434e2550428d47ca0b125527a, type: 3}
-      name: 
-      skillIndex: 2
-      mpCost: 0
-      range: 0
-      directionType: 512
-      isDirectionalSkill: 0
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 0
-      description: 
-    combatSkill:
-    - icon: {fileID: 21300000, guid: 7383c9b7ca74ffd4dbb1bc4a8b3947cc, type: 3}
-      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
-      skillIndex: 0
-      mpCost: 0
-      range: 1
-      directionType: 512
-      isDirectionalSkill: 1
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 4
-      description: 
-    - icon: {fileID: 21300000, guid: bb2e02d8ea79a3946a89d0f09f46dacb, type: 3}
-      name: "\u1EA2nh V\u1ECDng"
-      skillIndex: 1
-      mpCost: 10
-      range: 6
-      directionType: 512
-      isDirectionalSkill: 1
-      canOverrideSetTargetCharacters: 0
-      canBlockDamage: 0
-      damageType: 16
-      description: 
-    - icon: {fileID: 21300000, guid: f170377e38ba20f429d7932e511f17a1, type: 3}
-      name: "C\xE0o x\xE9 "
-      skillIndex: 2
-      mpCost: 5
-      range: 2
-      directionType: 512
-      isDirectionalSkill: 1
-      canOverrideSetTargetCharacters: 1
-      canBlockDamage: 0
-      damageType: 4
-      description: 
+    internalSkill: []
+    movementSkill: []
+    combatSkill: []
   passiveSkills: []
-  dancerPrefab: {fileID: 7333246952435401029, guid: b66becf0d5714cf4199e85604416e8f6, type: 3}
-  assassinPrefab: {fileID: 7333246952435401029, guid: a4aca6144b5c1614796279710c2df1a0, type: 3}
-  dancer: {fileID: 7333246952435401029, guid: b66becf0d5714cf4199e85604416e8f6, type: 3}
---- !u!1 &3488727249622327364 stripped
+--- !u!1 &3910181860838020176 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 2505940573128540015}
+  m_PrefabInstance: {fileID: 2661434900280462203}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7134127359125798883 stripped
+--- !u!114 &7289129136760376311 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4739863392310132876, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 2505940573128540015}
+  m_PrefabInstance: {fileID: 2661434900280462203}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3488727249622327364}
+  m_GameObject: {fileID: 3910181860838020176}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8c6a644fad47c0ab8aa0cd8d58090c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7794351862320612789 stripped
+--- !u!114 &7638855816377643425 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5687476869882378970, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 2505940573128540015}
+  m_PrefabInstance: {fileID: 2661434900280462203}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3378197077589489141}
+  m_GameObject: {fileID: 2938729648393028065}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1993e832f614006b2d94a622ea69097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7827631973338287044 stripped
+--- !u!114 &7676639083263328208 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5649684790568367275, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
-  m_PrefabInstance: {fileID: 2505940573128540015}
+  m_PrefabInstance: {fileID: 2661434900280462203}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1

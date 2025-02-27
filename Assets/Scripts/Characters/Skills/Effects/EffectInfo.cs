@@ -33,7 +33,8 @@ public class EffectInfo
         EffectType.Bleed,
         EffectType.IncreaseDef,
         EffectType.IncreaseSpd,
-        EffectType.ReduceHitChange
+        EffectType.ReduceHitChange,
+        EffectType.CanSat_TakeAP,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -101,4 +102,5 @@ public enum EffectType
     IncreaseDef = 38,
     IncreaseSpd = 39,
     ReduceHitChange = 40,
+    CanSat_TakeAP = 41,
 }

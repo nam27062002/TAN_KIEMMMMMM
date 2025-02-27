@@ -205,7 +205,7 @@ public abstract class Character : MonoBehaviour
         return skillConfig.SkillConfigs[skillTurnType];
     }
 
-    private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, bool dontNeedActionPoints = false)
+    private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
         Info.HandleMpChanged(-Info.SkillInfo.mpCost);
     
@@ -214,7 +214,7 @@ public abstract class Character : MonoBehaviour
             IdleStateParams = GetIdleStateParams(),
             SkillInfo = Info.SkillInfo,
             Targets = targets ?? new List<Character>(),
-            SkillTurnType = GetSkillTurnType(),
+            SkillTurnType = skillTurnType == SkillTurnType.None ? GetSkillTurnType() : skillTurnType,
             TargetCell = targetCell,
             Source = this,
         };
@@ -224,7 +224,7 @@ public abstract class Character : MonoBehaviour
         UnSelectSkill();
     }
 
-    protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null, bool dontNeedActionPoints = false)
+    protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
         Info.SkillInfo = skillInfo;
         HandleCastSkill(targets, dontNeedActionPoints: dontNeedActionPoints);
@@ -436,6 +436,21 @@ public abstract class Character : MonoBehaviour
     public void UpdateFacing()
     {
         StateMachine.GetCurrentState.SetFacing();
+    }
+
+    public void TeleportToCell(Cell cell)
+    {
+        Info.Cell.HideFocus();
+        Info.Cell.Character = null;
+        Info.Cell.CellType = CellType.Walkable;
+
+        cell.Character = this;
+        cell.CellType = CellType.Character;
+        Info.Cell = cell;
+        var pos = Info.Cell.transform.position;
+        pos.y += characterConfig.characterHeight / 2f;
+        transform.position = pos;
+        UpdateFacing();
     }
     
     public virtual int GetSkillActionPoints(SkillTurnType skillTurnType) => characterConfig.actionPoints[skillTurnType];
