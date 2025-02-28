@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77a922feca14861b511785a06283244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterType: 0
+  characterType: 3
   characterAnimationData: {fileID: 6210250308618888383}
   hpBar: {fileID: 3469845707852262298}
   uiFeedback: {fileID: 6414717346093326057}
@@ -106,7 +106,8 @@ MonoBehaviour:
   characterConfig:
     characterHeight: 1
     characterName: "Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng"
-    characterIcon: {fileID: 21300000, guid: 875aa84d9f244044bb8768cfb096fb43, type: 3}
+    characterIcon: {fileID: 21300000, guid: 58031a0e34e068948b7c03fb8666c0c1, type: 3}
+    slideBarIcon: {fileID: 21300000, guid: ba210eef1d5e48448a88c12ecea548a0, type: 3}
     characterAttributes:
       maxMoveRange: 8
       health: 440
@@ -277,6 +278,7 @@ MonoBehaviour:
         k\u1EF9 \u0111\u1ECBch thi tri\u1EC3n gi\u1EEF nguy\xEAn"
   passiveSkills:
   - {fileID: 4073403874055096316}
+  goldenAPChance: 0.25
 --- !u!114 &4073403874055096316
 MonoBehaviour:
   m_ObjectHideFlags: 0

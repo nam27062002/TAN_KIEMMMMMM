@@ -59,14 +59,14 @@ public class Cell : MonoBehaviour
         sequence.OnComplete(() => { onComplete?.Invoke(); });
     }
     
-    public void SetShield(Type shieldType)
+    public void SetShield(Type shieldType, int range)
     {
         this.shieldType = shieldType;
         shieldSprite.gameObject.SetActiveIfNeeded(true);
         shieldSprite.sprite = shield_100_sprite;
         currentShieldHP = shieldHeath;
         hpBar.SetValue(currentShieldHP * 1f / shieldHeath);
-        var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, 4);
+        var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, range);
         foreach (var cell in cells)
         {
             cell.SetShieldImpact(this);
@@ -101,15 +101,20 @@ public class Cell : MonoBehaviour
         AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: chặn sát thương cho {to.characterConfig.characterName} từ đòn đánh của {from.characterConfig.characterName}");
         if (currentShieldHP <= 0)
         {
-            var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, 4);
-            foreach (var cell in cells)
-            {
-                cell.UnsetShieldImpact(this);
-            }
-            UnsetShieldImpact(this);
-            shieldSprite.gameObject.SetActiveIfNeeded(false);
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: tháp bị phá hủy");
+            UnsetShieldImpact(3); // hard code
         }
+    }
+
+    public void UnsetShieldImpact(int range)
+    {
+        var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, range);
+        foreach (var cell in cells)
+        {
+            cell.UnsetShieldImpact(this);
+        }
+        UnsetShieldImpact(this);
+        shieldSprite.gameObject.SetActiveIfNeeded(false);
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: tháp bị phá hủy");
     }
 
     private void SetShieldImpact(Cell cell)

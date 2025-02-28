@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b727f6c08f69ff443b907494e16fcda2
+guid: 58031a0e34e068948b7c03fb8666c0c1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7352863103099564311
-    second: RoiNguoi_AVT_0
+      213: -4675599154386437512
+    second: HLH_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RoiNguoi_AVT_0
+      name: HLH_0
       rect:
         serializedVersion: 2
-        x: 36
-        y: 15
-        width: 97
-        height: 95
+        x: 0
+        y: 0
+        width: 148
+        height: 146
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 711735ef80e9a0660800000000000000
-      internalID: 7352863103099564311
+      spriteID: 87afdaa675fec1fb0800000000000000
+      internalID: -4675599154386437512
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RoiNguoi_AVT_0: 7352863103099564311
+      HLH_0: -4675599154386437512
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

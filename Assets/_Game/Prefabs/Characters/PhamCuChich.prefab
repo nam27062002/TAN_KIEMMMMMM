@@ -131,9 +131,10 @@ MonoBehaviour:
   characterConfig:
     characterHeight: 1
     characterName: "Ph\u1EA1m C\u1EF1 Ch\xEDch"
-    characterIcon: {fileID: 21300000, guid: 2e699fd2a5398dc4cbf81d03dd2de78d, type: 3}
+    characterIcon: {fileID: 21300000, guid: f22538280a262904986d0e104fe27de8, type: 3}
+    slideBarIcon: {fileID: 21300000, guid: fd4ab39730964d6499dec9573bda009d, type: 3}
     characterAttributes:
-      maxMoveRange: 100
+      maxMoveRange: 8
       health: 60
       mana: 20
       atk: 10
@@ -298,6 +299,7 @@ MonoBehaviour:
       damageType: 4
       description: 
   passiveSkills: []
+  CurrentShield: {fileID: 0}
 --- !u!1 &6907775959439712675 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

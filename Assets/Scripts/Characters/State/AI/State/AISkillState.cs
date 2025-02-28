@@ -12,6 +12,6 @@
 
     private void HandleEndTurn()
     {
-        if (!WaitForReact) GameplayManager.Instance.HandleEndTurn();
+        if (!WaitForReact && GpManager.SelectedCharacter != null) GameplayManager.Instance.HandleEndTurn();
     }
 }

@@ -26,7 +26,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
     private readonly List<Character> _players = new();
-    private readonly List<Character> _enemies = new();
+    public readonly List<Character> Enemies = new();
     public List<Character> Characters { get; private set; } = new();
     public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? null : Characters[CurrentPlayerIndex];
 
@@ -78,7 +78,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         Characters.Clear();
         _players.Clear();
-        _enemies.Clear();
+        Enemies.Clear();
         SelectedCharacter = null;
         foreach (var spawnPoint in levelConfig.spawnerConfig.spawnPoints)
         {
@@ -90,7 +90,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 switch (character.Type)
                 {
                     case Type.AI:
-                        _enemies.Add(character);
+                        Enemies.Add(character);
                         break;
                     case Type.Player:
                         _players.Add(character);
@@ -106,7 +106,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
 
         SortCharacterBySpeed();
-        Invoke(nameof(SetMainCharacter), 3f);
+        Invoke(nameof(SetMainCharacter), 5f);
         SetInteract(true);
         HandleNewRound();
         ShowLevelName();
@@ -286,7 +286,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             return FacingType.Right;
         }
-        var opponents = character.Type == Type.AI ? _players : _enemies;
+        var opponents = character.Type == Type.AI ? _players : Enemies;
         var nearestOpponent = Utils.FindNearestCharacter(character, opponents);
 
         if (nearestOpponent == null)
@@ -302,13 +302,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public Character GetNearestAlly(Character character)
     {
-        var allies = character.Type == Type.AI ? _enemies : _players;
+        var allies = character.Type == Type.AI ? Enemies : _players;
         return Utils.FindNearestCharacter(character, allies);
     }
 
     public Character GetNearestEnemy(Character character)
     {
-        var enemies = character.Type == Type.AI ? _players : _enemies;
+        var enemies = character.Type == Type.AI ? _players : Enemies;
         return Utils.FindNearestCharacter(character, enemies);
     }
 
@@ -364,8 +364,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         Characters.Remove(character);
         if (character.Type == Type.AI)
         {
-            _enemies.Remove(character);
-            if (_enemies.Count == 0)
+            Enemies.Remove(character);
+            if (Enemies.Count == 0)
             {
                 // Invoke(nameof(OnWin), 1f);
             }

@@ -3,7 +3,7 @@
 public class HoacLienHuong : PlayerCharacter
 {
     [SerializeField] private float goldenAPChance = 0.25f;
-    
+    public Cell CurrentShield;
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,

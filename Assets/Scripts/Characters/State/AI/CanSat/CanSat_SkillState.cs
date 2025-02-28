@@ -18,14 +18,14 @@ public class CanSat_SkillState : AISkillState
                     EffectType = EffectType.IncreaseDef,
                     Actor = Character,
                     Value = 4,
-                    Duration = MAX_ROUND
+                    Duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
                     EffectType = EffectType.IncreaseSpd,
                     Actor = Character,
                     Value = 6,
-                    Duration = MAX_ROUND
+                    Duration = EffectConfig.MAX_ROUND
                 }
             }
         };
@@ -42,14 +42,14 @@ public class CanSat_SkillState : AISkillState
                     EffectType = EffectType.IncreaseDamage,
                     Actor = Character,
                     Value = 2,
-                    Duration = MAX_ROUND
+                    Duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
                     EffectType = EffectType.ReduceHitChange,
                     Actor = Character,
                     Value = 6,
-                    Duration = MAX_ROUND
+                    Duration = EffectConfig.MAX_ROUND
                 }
             }
         };

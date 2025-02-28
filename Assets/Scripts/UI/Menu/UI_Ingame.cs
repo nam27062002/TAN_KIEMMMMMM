@@ -25,7 +25,7 @@ public class UI_Ingame : MenuBase
     [SerializeField] private TextMeshProUGUI roundIndex;
 
     [Title("Skill"), Space] [SerializeField]
-    private List<Skill_UI> skillUI = new List<Skill_UI>();
+    private List<Skill_UI> skillUI = new();
 
     [SerializeField] private UI_Button endTurnButton;
     [SerializeField] private Toggle toggle;
@@ -162,7 +162,7 @@ public class UI_Ingame : MenuBase
         for (var i = 0; i < _avtSpdUI.Count; i++)
         {
             _avtSpdUI[i].SetupUI(i == GameplayManager.CurrentPlayerIndex, GameplayManager.Characters[i].Type,
-                GameplayManager.Characters[i].characterConfig.characterIcon);
+                GameplayManager.Characters[i].characterConfig.slideBarIcon);
         }
     }
 

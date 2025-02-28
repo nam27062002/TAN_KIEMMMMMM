@@ -21,10 +21,10 @@ public class ShowInfoPopup : PopupBase
         if (parameters is ShowInfoCharacterParameters showInfoCharacterParameters)
         {
             characterName.text = showInfoCharacterParameters.Character.characterConfig.characterName;
-            damage.text =  showInfoCharacterParameters.Character.Info.Attributes.atk.ToString();
+            damage.text = showInfoCharacterParameters.Character.Info.GetCurrentDamage().ToString();
             spd.text =  showInfoCharacterParameters.Character.Info.Attributes.spd.ToString();
-            def.text =  showInfoCharacterParameters.Character.Info.Attributes.def.ToString();
-            chiDef.text =  showInfoCharacterParameters.Character.Info.Attributes.chiDef.ToString();
+            def.text = showInfoCharacterParameters.Character.Info.GetDef().ToString();
+            chiDef.text = showInfoCharacterParameters.Character.Info.GetChiDef().ToString();
             avatar.sprite = showInfoCharacterParameters.Character.characterConfig.characterIcon;
             
             var currentHp = showInfoCharacterParameters.Character.Info.CurrentHp;

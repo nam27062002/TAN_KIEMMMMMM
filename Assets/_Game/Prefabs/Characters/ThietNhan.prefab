@@ -98,11 +98,13 @@ MonoBehaviour:
   characterAnimationData: {fileID: 4811324158122557611}
   hpBar: {fileID: 2651813540610510734}
   uiFeedback: {fileID: 5615948485166004989}
+  linkCharacter: {fileID: 5577029820830823564}
   model: {fileID: 1274149462394461964}
   characterConfig:
     characterHeight: 0.55
     characterName: "Thi\u1EBFt Nh\xE2n"
-    characterIcon: {fileID: 21300000, guid: 177a247f955219b40b307348ba3c6abc, type: 3}
+    characterIcon: {fileID: 21300000, guid: e55e5373d10db6543b614591ae678d79, type: 3}
+    slideBarIcon: {fileID: 21300000, guid: 6326bd0ceb66ce145833bd72fd433cf0, type: 3}
     characterAttributes:
       maxMoveRange: 5
       health: 400
@@ -276,6 +278,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8c6a644fad47c0ab8aa0cd8d58090c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5577029820830823564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5649684790568367275, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 216772500856537127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ba3c77851444e78cbd56cfaf1cb86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5615948485166004989 stripped

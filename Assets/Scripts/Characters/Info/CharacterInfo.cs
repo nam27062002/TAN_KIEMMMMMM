@@ -340,7 +340,7 @@ public class CharacterInfo
         return baseValue + moveBuff;
     }
 
-    public int CalculateChiDef()
+    public int GetChiDef()
     {
         var chiDef = Attributes.chiDef;
         var buff = EffectInfo.Effects

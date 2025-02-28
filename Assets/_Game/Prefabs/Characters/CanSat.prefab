@@ -109,7 +109,8 @@ MonoBehaviour:
   characterConfig:
     characterHeight: 1
     characterName: "C\xE0n S\xE1t"
-    characterIcon: {fileID: 21300000, guid: 4d4e8c0128eedd74db765ffb4cc88a2d, type: 3}
+    characterIcon: {fileID: 21300000, guid: f5daf092a4772df439fed07482e296de, type: 3}
+    slideBarIcon: {fileID: 21300000, guid: 6086cfb16a5efb6439d72e955e1b38c1, type: 3}
     characterAttributes:
       maxMoveRange: 7
       health: 180
@@ -119,9 +120,9 @@ MonoBehaviour:
       chiDef: 16
       spd: 10
       baseDamageRollData:
-        rollTime: 0
-        rollValue: 0
-        add: 0
+        rollTime: 1
+        rollValue: 4
+        add: 2
       hitChangeRollData:
         rollTime: 1
         rollValue: 20

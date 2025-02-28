@@ -19,7 +19,7 @@ public class EffectUI : MonoBehaviour
         float spriteWidth = sprite.rect.width;
         float spriteHeight = sprite.rect.height;
         arf.aspectRatio = spriteWidth / spriteHeight;
-        arf.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+        arf.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
     }
     
     public void DestroyEffect()

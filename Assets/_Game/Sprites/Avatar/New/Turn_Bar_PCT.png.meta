@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 177a247f955219b40b307348ba3c6abc
+guid: fd4ab39730964d6499dec9573bda009d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6056478293809768524
-    second: "Thie\u0302\u0301t Nha\u0302n 1_0"
+      213: 5092269521429358054
+    second: PCT_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "Thie\u0302\u0301t Nha\u0302n 1_0"
+      name: PCT_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 86
-        height: 88
+        width: 148
+        height: 145
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c48256c6beeec0450800000000000000
-      internalID: 6056478293809768524
+      spriteID: 6e5685556206ba640800000000000000
+      internalID: 5092269521429358054
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "Thie\u0302\u0301t Nha\u0302n 1_0": 6056478293809768524
+      PCT_0: 5092269521429358054
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,6 @@
 ﻿public class PhamCuChich : PlayerCharacter
 {
+    public Cell CurrentShield;
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,

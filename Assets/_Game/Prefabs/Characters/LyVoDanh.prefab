@@ -96,11 +96,13 @@ MonoBehaviour:
   characterAnimationData: {fileID: 4661756497990611313}
   hpBar: {fileID: 2790403680272580180}
   uiFeedback: {fileID: 5736310929516759847}
+  linkCharacter: {fileID: 5697392262768379222}
   model: {fileID: 1430476920419069654}
   characterConfig:
     characterHeight: 1
     characterName: "L\xFD V\xF4 Danh"
-    characterIcon: {fileID: 21300000, guid: 2e699fd2a5398dc4cbf81d03dd2de78d, type: 3}
+    characterIcon: {fileID: 21300000, guid: 16d4b1c00db987b48a4146fb70d10aab, type: 3}
+    slideBarIcon: {fileID: 21300000, guid: db80c193a5922034a867789949cb417c, type: 3}
     characterAttributes:
       maxMoveRange: 5
       health: 400
@@ -367,6 +369,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef8c6a644fad47c0ab8aa0cd8d58090c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5697392262768379222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5649684790568367275, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 105415065458405885}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ba3c77851444e78cbd56cfaf1cb86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5736310929516759847 stripped

@@ -2,8 +2,8 @@
 {
     public override void OnDie()
     {
-        owner.Info.RemoveAllEffect(EffectType.IncreaseDamage);
-        owner.Info.RemoveAllEffect(EffectType.ReduceHitChange);
+        owner.Info.RemoveEffect(EffectType.IncreaseDamage, this);
+        owner.Info.RemoveEffect(EffectType.ReduceHitChange, this);
         base.OnDie();
     }
 }

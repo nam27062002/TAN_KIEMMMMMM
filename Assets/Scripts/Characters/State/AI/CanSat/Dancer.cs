@@ -2,8 +2,8 @@
 {
     public override void OnDie()
     {
-        owner.Info.RemoveAllEffect(EffectType.IncreaseDef);
-        owner.Info.RemoveAllEffect(EffectType.IncreaseSpd);
+        owner.Info.RemoveEffect(EffectType.IncreaseDef, this);
+        owner.Info.RemoveEffect(EffectType.IncreaseSpd, this);
         base.OnDie();
     }
 }

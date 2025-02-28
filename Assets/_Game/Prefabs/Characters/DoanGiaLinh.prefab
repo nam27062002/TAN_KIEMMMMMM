@@ -106,11 +106,13 @@ MonoBehaviour:
   characterAnimationData: {fileID: 6624640028912595744}
   hpBar: {fileID: 4460552136440462341}
   uiFeedback: {fileID: 6108545420298537334}
+  linkCharacter: {fileID: 6075256699221706503}
   model: {fileID: 613759459630214279}
   characterConfig:
     characterHeight: 1
     characterName: "\u0110o\xE0n Gia Linh"
-    characterIcon: {fileID: 21300000, guid: e6389fba37d1c3241bcb9529c9a99783, type: 3}
+    characterIcon: {fileID: 21300000, guid: a24519c7d159b76418668e6412e03796, type: 3}
+    slideBarIcon: {fileID: 21300000, guid: d2e1dabed019e0d4aa252000fd5a7d6e, type: 3}
     characterAttributes:
       maxMoveRange: 6
       health: 320
@@ -346,6 +348,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 618060fc918741ebb601372ea285c46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6075256699221706503 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5649684790568367275, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
+  m_PrefabInstance: {fileID: 1884778046107235244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ba3c77851444e78cbd56cfaf1cb86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6108545420298537334 stripped

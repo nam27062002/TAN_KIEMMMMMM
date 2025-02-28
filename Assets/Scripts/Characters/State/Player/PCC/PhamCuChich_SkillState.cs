@@ -189,7 +189,12 @@ public class PhamCuChich_SkillState : SkillState
     
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
     {
+        if (((PhamCuChich)Character).CurrentShield != null)
+        {
+            ((PhamCuChich)Character).CurrentShield.UnSetMainProjectile();
+        }   
         Info.Cell.SetMainProjectile();
+        ((PhamCuChich)Character).CurrentShield = Info.Cell;
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>()

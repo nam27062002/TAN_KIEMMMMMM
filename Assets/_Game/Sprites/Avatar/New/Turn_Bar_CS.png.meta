@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2e699fd2a5398dc4cbf81d03dd2de78d
+guid: 6086cfb16a5efb6439d72e955e1b38c1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6566068748350472888
-    second: "L\xFD V\xF4 Danh 1_0"
+      213: 1721768761602827580
+    second: CS_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "L\xFD V\xF4 Danh 1_0"
+      name: CS_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 0
         y: 0
-        width: 84
-        height: 86
+        width: 148
+        height: 145
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 84db6cb0343a0e4a0800000000000000
-      internalID: -6566068748350472888
+      spriteID: c3563bcf093f4e710800000000000000
+      internalID: 1721768761602827580
       vertices: []
       indices: 
       edges: []
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "L\xFD V\xF4 Danh 1_0": -6566068748350472888
+      CS_0: 1721768761602827580
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

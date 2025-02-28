@@ -7,6 +7,7 @@ public class CharacterConfig
     public float characterHeight = 1f;
     public string characterName;
     public Sprite characterIcon;
+    public Sprite slideBarIcon;
     public CharacterAttributes characterAttributes;
     public SerializableDictionary<SkillTurnType, int> actionPoints = new();
     public bool hasToggle;

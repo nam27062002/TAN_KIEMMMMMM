@@ -227,7 +227,7 @@ public abstract class Character : MonoBehaviour
     protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
         Info.SkillInfo = skillInfo;
-        HandleCastSkill(targets, dontNeedActionPoints: dontNeedActionPoints);
+        HandleCastSkill(targets, null, skillTurnType, dontNeedActionPoints: dontNeedActionPoints);
     }
 
     public void HandleSelectSkill(int skillIndex, Skill_UI skillUI)

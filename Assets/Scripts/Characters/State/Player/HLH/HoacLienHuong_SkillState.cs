@@ -58,7 +58,13 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
-        Info.Cell.SetShield(Character.Type);
+        var currentShield = ((HoacLienHuong)character).CurrentShield;
+        if (currentShield != null)
+        {
+            currentShield.UnsetShieldImpact(3);
+        }
+        Info.Cell.SetShield(Character.Type, 3);
+        ((HoacLienHuong)character).CurrentShield = Info.Cell;
         return new DamageTakenParams();
     }
     
