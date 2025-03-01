@@ -108,7 +108,7 @@ MonoBehaviour:
     characterName: "Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng"
     characterIcon: {fileID: 21300000, guid: 58031a0e34e068948b7c03fb8666c0c1, type: 3}
     slideBarIcon: {fileID: 21300000, guid: ba210eef1d5e48448a88c12ecea548a0, type: 3}
-    characterNoBgIcon: {fileID: 21300000, guid: af9ac18f582242145a6ec78860c4a297, type: 3}
+    characterNoBgIcon: {fileID: -4284080389631902950, guid: af9ac18f582242145a6ec78860c4a297, type: 3}
     characterAttributes:
       maxMoveRange: 8
       health: 44

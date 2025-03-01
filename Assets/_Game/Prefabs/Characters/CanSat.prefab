@@ -111,7 +111,7 @@ MonoBehaviour:
     characterName: "C\xE0n S\xE1t"
     characterIcon: {fileID: 21300000, guid: f5daf092a4772df439fed07482e296de, type: 3}
     slideBarIcon: {fileID: 21300000, guid: 6086cfb16a5efb6439d72e955e1b38c1, type: 3}
-    characterNoBgIcon: {fileID: 21300000, guid: 2cf74b2a7543e374da3a8b6072363c78, type: 3}
+    characterNoBgIcon: {fileID: -2218154901412318895, guid: 2cf74b2a7543e374da3a8b6072363c78, type: 3}
     characterAttributes:
       maxMoveRange: 7
       health: 180

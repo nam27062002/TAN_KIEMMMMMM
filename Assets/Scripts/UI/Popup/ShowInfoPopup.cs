@@ -33,27 +33,48 @@ public class ShowInfoPopup : PopupBase
             var character = showInfoCharacterParameters.Character;
             var info = character.Info;
             var config = character.characterConfig;
-            
-            characterName.text = config.characterName;
-            damage.text = info.GetCurrentDamage().ToString();
-            spd.text = info.Attributes.spd.ToString();
-            def.text = info.GetDef().ToString();
-            chiDef.text = info.GetChiDef().ToString();
-            avatar.sprite = config.characterNoBgIcon;
-            
-            var currentHp = info.CurrentHp;
-            var maxHp = info.Attributes.health;
-            hpBarUI.SetValue((float)currentHp / maxHp, $"{currentHp} / {maxHp}");
-            
-            var currentMp = info.CurrentMp;
-            var maxMp = info.Attributes.mana;
-            if (maxMp != 0)
-                mpBarUI.SetValue((float)currentMp / maxMp, $"{currentMp} / {maxMp}");
-            else
-                mpBarUI.gameObject.SetActive(false);
-
+            SetupCharacterInfo(config, info);
+            SetupAvatar(config);
+            SetupBars(info);
             ShowSkillInfo();
         }
+    }
+
+    private void SetupCharacterInfo(CharacterConfig config, CharacterInfo info)
+    {
+        characterName.text = config.characterName;
+        damage.text = info.GetCurrentDamage().ToString();
+        spd.text = info.Attributes.spd.ToString();
+        def.text = info.GetDef().ToString();
+        chiDef.text = info.GetChiDef().ToString();
+    }
+
+    private void SetupAvatar(CharacterConfig config)
+    {
+        avatar.sprite = config.characterNoBgIcon;
+        avatar.SetNativeSize();
+        RectTransform avatarRect = avatar.GetComponent<RectTransform>();
+        RectTransform parentRect = avatar.transform.parent.GetComponent<RectTransform>();
+        Vector2 nativeSize = avatarRect.rect.size;
+        float scaleFactor = Mathf.Min(parentRect.rect.width / nativeSize.x, parentRect.rect.height / nativeSize.y);
+        avatarRect.sizeDelta = nativeSize * scaleFactor;
+        avatarRect.anchorMin = new Vector2(0.5f, 0.5f);
+        avatarRect.anchorMax = new Vector2(0.5f, 0.5f);
+        avatarRect.pivot = new Vector2(0.5f, 0.5f);
+        avatarRect.anchoredPosition = Vector2.zero;
+    }
+
+    private void SetupBars(CharacterInfo info)
+    {
+        var currentHp = info.CurrentHp;
+        var maxHp = info.Attributes.health;
+        hpBarUI.SetValue((float)currentHp / maxHp, $"{currentHp} / {maxHp}");
+        var currentMp = info.CurrentMp;
+        var maxMp = info.Attributes.mana;
+        if (maxMp != 0)
+            mpBarUI.SetValue((float)currentMp / maxMp, $"{currentMp} / {maxMp}");
+        else
+            mpBarUI.gameObject.SetActive(false);
     }
 
     private void ShowSkillInfo()
@@ -62,7 +83,6 @@ public class ShowInfoPopup : PopupBase
         {
             Destroy(child.gameObject);
         }
-
         var skills = _showInfoCharacterParameters.Skills;
         int skillCount = skills.Count;
         float newHeight = skillInfoHeight * skillCount + space * (skillCount - 1);
