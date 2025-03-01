@@ -115,8 +115,8 @@ MonoBehaviour:
     slideBarIcon: {fileID: 21300000, guid: d2e1dabed019e0d4aa252000fd5a7d6e, type: 3}
     characterAttributes:
       maxMoveRange: 6
-      health: 320
-      mana: 280
+      health: 32
+      mana: 28
       atk: 8
       def: 9
       chiDef: 14

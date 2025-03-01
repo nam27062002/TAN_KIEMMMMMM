@@ -110,8 +110,8 @@ MonoBehaviour:
     slideBarIcon: {fileID: 21300000, guid: ba210eef1d5e48448a88c12ecea548a0, type: 3}
     characterAttributes:
       maxMoveRange: 8
-      health: 440
-      mana: 180
+      health: 44
+      mana: 18
       atk: 16
       def: 16
       chiDef: 8
@@ -279,6 +279,7 @@ MonoBehaviour:
   passiveSkills:
   - {fileID: 4073403874055096316}
   goldenAPChance: 0.25
+  CurrentShield: {fileID: 0}
 --- !u!114 &4073403874055096316
 MonoBehaviour:
   m_ObjectHideFlags: 0
