@@ -328,7 +328,8 @@ public class SkillState : CharacterState
 
         if (_skillStateParams.EndTurnAfterFinish)
         {
-            GpManager.HandleEndTurn();
+            // GpManager.HandleEndTurn();
+            GpManager.SetInteract(false);
         }
 
         AlkawaDebug.Log(ELogCategory.CHARACTER,

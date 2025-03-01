@@ -170,10 +170,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
-    public void HandleEndTurn(bool force = false)
+    public void HandleEndTurn()
     {
         if (SelectedCharacter == null) return;
-        if (!_canInteract && !force) return;
+        SetInteract(true);
         if (SelectedCharacter.IsReact)
         {
             SelectedCharacter.HandleEndReact();
@@ -188,7 +188,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 CurrentPlayerIndex = 0;
                 HandleNewRound();
             }
-
+    
             SetMainCharacter();
         }
         OnEndTurn?.Invoke(this, EventArgs.Empty);
@@ -250,6 +250,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void HandleNewRound()
     {
         CurrentRound++;
+        foreach (var item in Characters)
+        {
+            item?.Info.IncreaseActionPointsValue();
+        }
         OnNewRound?.Invoke(this, EventArgs.Empty);
     }
 

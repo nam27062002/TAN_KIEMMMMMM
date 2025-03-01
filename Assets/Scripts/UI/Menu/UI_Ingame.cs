@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -51,15 +52,12 @@ public class UI_Ingame : MenuBase
     private GameplayManager GameplayManager => GameplayManager.Instance;
     private ShowInfoCharacterParameters _characterParams;
     private List<AVT_SpdUI> _avtSpdUI = new();
-    
+
     private readonly List<EffectUI> _effectUIs = new();
-    
-    [Title("Effects")]
-    [SerializeField] private EffectUI effectUI;
+
+    [Title("Effects")] [SerializeField] private EffectUI effectUI;
     [SerializeField] private RectTransform effectsPanel;
-    [SerializeField] private SerializableDictionary<EffectType, Sprite> effectIcons;
-    [SerializeField] private Sprite defaultIcon;
-    
+    [SerializeField] private ContentSizeFitter sizeFitter;
     public override void Open(UIBaseParameters parameters = null)
     {
         base.Open(parameters);
@@ -158,12 +156,46 @@ public class UI_Ingame : MenuBase
                 _avtSpdUI.Add(go.GetComponent<AVT_SpdUI>());
             }
         }
-
-        for (var i = 0; i < _avtSpdUI.Count; i++)
+        var layoutGroup = characterPool.GetComponent<HorizontalLayoutGroup>();
+        if (layoutGroup != null)
         {
-            _avtSpdUI[i].SetupUI(i == GameplayManager.CurrentPlayerIndex, GameplayManager.Characters[i].Type,
-                GameplayManager.Characters[i].characterConfig.slideBarIcon);
+            layoutGroup.enabled = false;
         }
+
+        int count = _avtSpdUI.Count;
+        int centerIndex = (count % 2 == 0) ? count / 2 - 1 : count / 2;
+        int startIndex = GameplayManager.CurrentPlayerIndex - centerIndex;
+        if (startIndex < 0)
+        {
+            startIndex += count;
+        }
+        float spacing = 80f;
+        float fixedY = 0f;
+        if (_avtSpdUI.Count > 0)
+        {
+            fixedY = _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y;
+        }
+        for (int i = 0; i < count; i++)
+        {
+            int index = (startIndex + i) % count;
+            RectTransform avatarRect = _avtSpdUI[index].GetComponent<RectTransform>();
+            Vector2 targetPos = new Vector2(i * spacing, fixedY); 
+            avatarRect.DOAnchorPos(targetPos, 0.5f);
+            bool isFocused = (index == GameplayManager.CurrentPlayerIndex);
+            float targetScale = isFocused ? 1f : 0.7f;
+            _avtSpdUI[index].transform.DOScale(new Vector3(targetScale, targetScale, 1f), 0.5f);
+            
+            _avtSpdUI[index].SetupUI(isFocused,
+                GameplayManager.Characters[index].Type,
+                GameplayManager.Characters[index].characterConfig.slideBarIcon);
+        }
+        
+        // ContentSizeFitter csf = characterPool.GetComponent<ContentSizeFitter>();
+        // if (csf == null)
+        // {
+        //     csf = characterPool.gameObject.AddComponent<ContentSizeFitter>();
+        // }
+        // csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     private void SetCharacterFocus(ShowInfoCharacterParameters characterParams)
@@ -200,19 +232,29 @@ public class UI_Ingame : MenuBase
         SetRound();
         toggle.gameObject.SetActiveIfNeeded(characterParams.Character.characterConfig.hasToggle);
         toggle.isOn = characterParams.Character.Info.IsToggleOn;
-        
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateEffect();
+    }
+
+    private void UpdateEffect()
+    {
+        if (_characterParams == null || _characterParams.Character == null) return;
         foreach (var item in _effectUIs)
         {
             item.DestroyEffect();
         }
+
         _effectUIs.Clear();
         foreach (var item in _characterParams.Character.Info.EffectInfo.Effects)
         {
             var go = Instantiate(effectUI.gameObject, effectsPanel);
             go.transform.SetAsFirstSibling();
             var cpn = go.GetComponent<EffectUI>();
-            effectIcons.TryGetValue(item.EffectType, out var effectIcon);
-            if (effectIcon == null) effectIcon = defaultIcon;
+            UIManager.Instance.effectIcons.TryGetValue(item.EffectType, out var effectIcon);
+            if (effectIcon == null) effectIcon = UIManager.Instance.defaultIcon;
             cpn.Initialize(effectIcon);
             _effectUIs.Add(cpn);
         }

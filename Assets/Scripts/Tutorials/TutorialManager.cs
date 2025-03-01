@@ -9,9 +9,11 @@ using UnityEngine.Serialization;
 
 public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 {
+    // Public fields
     public SerializableDictionary<CharacterType, Character> charactersInTutorial;
     [SerializeField, ReadOnly] private SerializedDictionary<int, TutorialSequence> tutorialClickIndex = new();
-    [FormerlySerializedAs("tutorialConfigSO")] [SerializeField] private TutorialConfig tutorialConfig;
+    [FormerlySerializedAs("tutorialConfigSO")]
+    [SerializeField] private TutorialConfig tutorialConfig;
     public List<GotoPos> lvdGotos;
     public List<GotoPos> dglGotos;
     public List<GotoPos> tnGotos;
@@ -19,36 +21,35 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     public ConversationData conversation_2;
     public ConversationData conversation_3;
     public int tutorialIndex;
-    private Dictionary<CharacterType, List<GotoPos>> gotoPoses = new();
-
-    private Dictionary<CharacterType, Character> charactersDict = new();
-
-    private int _footStep;
     public bool EndTuto;
     public RectTransform arrow;
+
+    // Private fields
+    private Dictionary<CharacterType, List<GotoPos>> gotoPoses = new();
+    private Dictionary<CharacterType, Character> charactersDict = new();
+    private int _footStep;
+
+    #region Initialization
 
     protected override void Awake()
     {
         base.Awake();
-
         gotoPoses[CharacterType.LyVoDanh] = lvdGotos;
         gotoPoses[CharacterType.DoanGiaLinh] = dglGotos;
         gotoPoses[CharacterType.ThietNhan] = tnGotos;
-
         SpawnCharactersInTutorial();
-
         GameplayManager.Instance.OnLoadCharacterFinished += OnLoadCharacterFinished;
+    }
+
+    private void Start()
+    {
+        StartTutorial();
     }
 
     public void AddTutorialClick(int key, TutorialSequence tutorialSequence)
     {
         tutorialClickIndex ??= new SerializedDictionary<int, TutorialSequence>();
         tutorialClickIndex[key] = tutorialSequence;
-    }
-
-    private void Start()
-    {
-        StartTutorial();
     }
 
     public void OnNewRound()
@@ -60,39 +61,66 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void SpawnCharactersInTutorial()
     {
-        foreach (var character in charactersInTutorial)
+        foreach (var kvp in charactersInTutorial)
         {
-            var go = Instantiate(character.Value.gameObject, gotoPoses[character.Key][0].transform.position,
-                Quaternion.identity);
-            var characterComponent = go.GetComponent<Character>();
-            charactersDict[character.Key] = characterComponent;
+            CharacterType characterType = kvp.Key;
+            Character characterPrefab = kvp.Value;
+            Vector3 spawnPosition = gotoPoses[characterType][0].transform.position;
+
+            var go = Instantiate(characterPrefab.gameObject, spawnPosition, Quaternion.identity);
+            Character characterComponent = go.GetComponent<Character>();
+            charactersDict[characterType] = characterComponent;
             characterComponent.HideHpBar();
             go.transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 
+    #endregion
+
+    #region Character Movement & Conversations
+
     private void StartTutorial()
     {
         float duration = 3f;
-        MoveCharacter(duration);
+        MoveCharacters(duration);
         Invoke(nameof(ShowFirstConversation), duration);
     }
 
-    private void MoveCharacter(float time)
+    private void MoveCharacters(float duration)
     {
         _footStep++;
         if (_footStep < lvdGotos.Count)
         {
-            foreach (var character in charactersDict)
+            foreach (var kvp in charactersDict)
             {
-                MoveCharacter(character.Value, gotoPoses[character.Key][_footStep].transform.position, time);
+                CharacterType characterType = kvp.Key;
+                Character character = kvp.Value;
+                if (character != null && gotoPoses[characterType][_footStep] != null)
+                {
+                    MoveCharacter(character, gotoPoses[characterType][_footStep].transform.position, duration);
+                }
             }
         }
     }
 
+    public void MoveCharacter(Character character, Vector3 targetPos, float duration)
+    {
+        if (character == null || character.transform == null)
+            return;
+        
+        AnimationParameterNameType animType = targetPos.x > transform.position.x
+            ? AnimationParameterNameType.MoveRight
+            : AnimationParameterNameType.MoveLeft;
+        character.AnimationData.PlayAnimation(animType);
+
+        character.transform.DOMove(targetPos, duration)
+            .SetEase(Ease.Linear)
+            .SetTarget(character);
+    }
+
     private void ShowFirstConversation()
     {
-        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters
         {
             Conversation = conversation_1.conversation,
             OnEndConversation = OnEndFirstConversation,
@@ -102,7 +130,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void OnEndFirstConversation()
     {
-        MoveCharacter(1);
+        MoveCharacters(1f);
         GameplayManager.Instance.LoadMapGame();
         Invoke(nameof(SetFacing), 1f);
     }
@@ -112,6 +140,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         charactersDict[CharacterType.LyVoDanh].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.DoanGiaLinh].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.ThietNhan].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
+
         charactersDict[CharacterType.ThietNhan].transform.localScale = new Vector3(-1, 1, 1);
         charactersDict[CharacterType.LyVoDanh].transform.localScale = new Vector3(1, 1, 1);
         charactersDict[CharacterType.DoanGiaLinh].transform.localScale = new Vector3(1, 1, 1);
@@ -120,10 +149,12 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     private void OnLoadCharacterFinished(object sender, EventArgs e)
     {
         GameplayManager.Instance.OnLoadCharacterFinished -= OnLoadCharacterFinished;
-        foreach (var character in charactersDict)
-        {
-            character.Value.DestroyCharacter();
-        }
+
+        // foreach (var kvp in charactersDict)
+        // {
+        //     DOTween.Kill(kvp.Value.transform);
+        //     kvp.Value.DestroyCharacter();
+        // }
 
         ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
         GameplayManager.Instance.Characters[0].OnUnSelected();
@@ -132,7 +163,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void ShowSecondConversation()
     {
-        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters
         {
             Conversation = conversation_2.conversation,
             OnEndConversation = OnEndSecondConversation,
@@ -142,24 +173,15 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void ShowFinalConversation()
     {
-        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters
         {
             Conversation = conversation_3.conversation,
             OnEndConversation = OnEndFinal,
         });
     }
-    
-    public void MoveCharacter(Character character, Vector3 targetPos, float duration)
-    {
-        character.AnimationData.PlayAnimation(targetPos.x > transform.position.x
-            ? AnimationParameterNameType.MoveRight
-            : AnimationParameterNameType.MoveLeft);
-        character.transform.DOMove(targetPos, duration).SetEase(Ease.Linear);
-    }
 
     private void OnEndFinal()
     {
-        // HUD.Instance.ShowHUD();
         EndTuto = true;
         GameplayManager.Instance.SetMainCharacter();
         StartCoroutine(ShowTutorial2());
@@ -170,16 +192,19 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         arrow.gameObject.SetActive(true);
         arrow.anchoredPosition = new Vector2(-494.5f, -460.7f);
         arrow.rotation = Quaternion.Euler(0f, 0f, 270f);
-        UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters()
+
+        UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters
         {
             Message = "Sau một vòng, điểm hành động vàng chuyển thành màu xanh và có thể được sử dụng",
         });
         yield return new WaitForSeconds(4f);
-        UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters()
+
+        UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters
         {
             Message = "Điểm hành động đỏ chuyển thành màu vàng. Không thể được sử dụng",
         });
         yield return new WaitForSeconds(4f);
+
         UIManager.Instance.TryClosePopup(PopupType.Message);
         GameplayManager.Instance.IsTutorialLevel = false;
         GameplayManager.Instance.SetMainCharacter();
@@ -206,16 +231,23 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         SetTutorial();
     }
 
+    #endregion
+
+    #region Tutorial Handling
+
     public void OnTutorialClicked(int index, float delayTime = 0f)
     {
-        if (index != tutorialIndex) return;
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY,$"TutorialManager: OnTutorialClicked: {index}");
+        if (index != tutorialIndex)
+            return;
+
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"TutorialManager: OnTutorialClicked: {index}");
         tutorialIndex++;
+
         if (tutorialIndex < tutorialConfig.tutorials.Count)
             Invoke(nameof(SetTutorial), delayTime);
         else
         {
-            AlkawaDebug.Log(ELogCategory.GAMEPLAY,"End Tutorial");
+            AlkawaDebug.Log(ELogCategory.GAMEPLAY, "End Tutorial");
             EndFirstTutorial();
         }
     }
@@ -230,7 +262,9 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void SetTutorial()
     {
-        if (!tutorialClickIndex.ContainsKey(tutorialIndex)) return;
+        if (!tutorialClickIndex.ContainsKey(tutorialIndex))
+            return;
+
         ApplyTutorial(tutorialConfig.tutorials[tutorialIndex]);
         tutorialClickIndex[tutorialIndex].PrepareTutorial();
     }
@@ -250,7 +284,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
         if (tutorial.tutorialTypes.HasFlag(TutorialType.Menu))
         {
-            UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters()
+            UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters
             {
                 Message = tutorial.tutorialMenuText,
             });
@@ -260,4 +294,6 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
             UIManager.Instance.TryClosePopup(PopupType.Message);
         }
     }
+
+    #endregion
 }

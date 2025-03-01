@@ -399,6 +399,7 @@ public abstract class Character : MonoBehaviour
     
     private void DrawLink()
     {
+        if (Info == null) return;
         var coverEffect = Info.CoverEffectData;
         if (coverEffect == null) return;
         linkCharacter.ClearLine();
@@ -423,6 +424,10 @@ public abstract class Character : MonoBehaviour
         if (IsMainCharacter)
         {
             GpManager.HandleEndTurn();
+        }
+        foreach (var item in passiveSkills)
+        {
+            item.UnregisterEvents();
         }
         Destroy(gameObject);
     }

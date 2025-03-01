@@ -15,8 +15,6 @@ public class MapManager : MonoBehaviour
 
     private int _completed;
 #if UNITY_EDITOR
-    private const float DelayIncrement = 0f;
-#else
     private const float DelayIncrement = 0.01f;
 #endif
     private Pathfinding _pathfinding;

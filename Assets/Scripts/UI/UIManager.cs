@@ -10,6 +10,8 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     [SerializeField] private SerializableDictionary<MenuType, UIBase> allMenus = new();
     [SerializeField] private Image greyBackground;
     [SerializeField] private GameObject cheat;
+    public SerializableDictionary<EffectType, Sprite> effectIcons;
+    [SerializeField] public Sprite defaultIcon;
     public UIBase CurrentMenu { get; set; }
     public UIBase CurrentPopup { get; set; }
     

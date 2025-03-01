@@ -409,7 +409,7 @@ public class CharacterInfo
     {
         OnNewRound?.Invoke(this, RoundIndex);
         MoveAmount = 0;
-        IncreaseActionPointsValue();
+        // IncreaseActionPointsValue();
         foreach (var effect in EffectInfo.Effects.ToList()
                      .Where(effect => EffectInfo.TriggerAtStart.Contains(effect.EffectType)))
         {
@@ -503,7 +503,7 @@ public class CharacterInfo
     }
 
 
-    private void IncreaseActionPointsValue()
+    public void IncreaseActionPointsValue()
     {
         IncreasePoints(ActionPoints);
 
