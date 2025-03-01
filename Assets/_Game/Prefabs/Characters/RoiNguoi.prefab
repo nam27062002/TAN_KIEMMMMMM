@@ -111,6 +111,7 @@ MonoBehaviour:
     characterName: "R\u1ED1i Ng\u01B0\u1EDDi "
     characterIcon: {fileID: 21300000, guid: 9d177a0c550955642a0284ccd3e722ba, type: 3}
     slideBarIcon: {fileID: 21300000, guid: f6caf975ae1416944bb10f5941c28f3d, type: 3}
+    characterNoBgIcon: {fileID: 21300000, guid: e6ed10984429b4a40914ef43ab5986a6, type: 3}
     characterAttributes:
       maxMoveRange: 0
       health: 120

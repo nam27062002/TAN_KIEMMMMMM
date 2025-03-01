@@ -15,26 +15,65 @@ public class ShowInfoPopup : PopupBase
     public ProcessBar mpBarUI;
     public Image avatar;
     
+    [Title("Skill Info"), Space]
+    public VerticalLayoutGroup verticalLayoutGroup;
+    public RectTransform container;
+    public SkillInfo_UI skillInfoPrefab; 
+    public float skillInfoHeight;
+    public int space;
+
+    private ShowInfoCharacterParameters _showInfoCharacterParameters;
+
     public override void Open(UIBaseParameters parameters = null)
     {
         base.Open(parameters);
         if (parameters is ShowInfoCharacterParameters showInfoCharacterParameters)
         {
-            characterName.text = showInfoCharacterParameters.Character.characterConfig.characterName;
-            damage.text = showInfoCharacterParameters.Character.Info.GetCurrentDamage().ToString();
-            spd.text =  showInfoCharacterParameters.Character.Info.Attributes.spd.ToString();
-            def.text = showInfoCharacterParameters.Character.Info.GetDef().ToString();
-            chiDef.text = showInfoCharacterParameters.Character.Info.GetChiDef().ToString();
-            avatar.sprite = showInfoCharacterParameters.Character.characterConfig.characterIcon;
+            _showInfoCharacterParameters = showInfoCharacterParameters;
+            var character = showInfoCharacterParameters.Character;
+            var info = character.Info;
+            var config = character.characterConfig;
             
-            var currentHp = showInfoCharacterParameters.Character.Info.CurrentHp;
-            var maxHp = showInfoCharacterParameters.Character.Info.Attributes.health;
-            hpBarUI.SetValue(currentHp * 1f/ maxHp, $"{currentHp} / {maxHp}");
-        
-            var currentMp = showInfoCharacterParameters.Character.Info.CurrentMp;
-            var maxMp = showInfoCharacterParameters.Character.Info.Attributes.mana;
+            characterName.text = config.characterName;
+            damage.text = info.GetCurrentDamage().ToString();
+            spd.text = info.Attributes.spd.ToString();
+            def.text = info.GetDef().ToString();
+            chiDef.text = info.GetChiDef().ToString();
+            avatar.sprite = config.characterNoBgIcon;
+            
+            var currentHp = info.CurrentHp;
+            var maxHp = info.Attributes.health;
+            hpBarUI.SetValue((float)currentHp / maxHp, $"{currentHp} / {maxHp}");
+            
+            var currentMp = info.CurrentMp;
+            var maxMp = info.Attributes.mana;
             if (maxMp != 0)
-                mpBarUI.SetValue(currentMp * 1f/ maxMp, $"{currentMp} / {maxMp}");
+                mpBarUI.SetValue((float)currentMp / maxMp, $"{currentMp} / {maxMp}");
+            else
+                mpBarUI.gameObject.SetActive(false);
+
+            ShowSkillInfo();
+        }
+    }
+
+    private void ShowSkillInfo()
+    {
+        foreach (Transform child in container)
+        {
+            Destroy(child.gameObject);
+        }
+
+        var skills = _showInfoCharacterParameters.Skills;
+        int skillCount = skills.Count;
+        float newHeight = skillInfoHeight * skillCount + space * (skillCount - 1);
+        container.sizeDelta = new Vector2(container.sizeDelta.x, newHeight);
+        verticalLayoutGroup.spacing = space;
+        foreach (var skill in skills)
+        {
+            if (skill.skillIndex == 0) continue;
+            var go = Instantiate(skillInfoPrefab.gameObject, container);
+            var skillInfoUI = go.GetComponent<SkillInfo_UI>();
+            skillInfoUI.Setup(skill);
         }
     }
 

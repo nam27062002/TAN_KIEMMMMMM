@@ -103,6 +103,7 @@ MonoBehaviour:
     characterName: "L\xFD V\xF4 Danh"
     characterIcon: {fileID: 21300000, guid: 16d4b1c00db987b48a4146fb70d10aab, type: 3}
     slideBarIcon: {fileID: 21300000, guid: db80c193a5922034a867789949cb417c, type: 3}
+    characterNoBgIcon: {fileID: 21300000, guid: a791611831f15974aa600c1a8f970a7b, type: 3}
     characterAttributes:
       maxMoveRange: 5
       health: 40

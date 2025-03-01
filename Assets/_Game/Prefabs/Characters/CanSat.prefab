@@ -111,6 +111,7 @@ MonoBehaviour:
     characterName: "C\xE0n S\xE1t"
     characterIcon: {fileID: 21300000, guid: f5daf092a4772df439fed07482e296de, type: 3}
     slideBarIcon: {fileID: 21300000, guid: 6086cfb16a5efb6439d72e955e1b38c1, type: 3}
+    characterNoBgIcon: {fileID: 21300000, guid: 2cf74b2a7543e374da3a8b6072363c78, type: 3}
     characterAttributes:
       maxMoveRange: 7
       health: 180
@@ -163,7 +164,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 16
-      description: 
+      description: "Dancer: H\xECnh \u1EA3nh g\u1ECDi ra l\xE0 m\u1ED9t v\u0169 c\u01A1.
+        T\u0103ng 6 spd v\xE0 4 def cho c\xE0n s\xE1t khi c\xF2n t\u1ED3n t\u1EA1i"
     - icon: {fileID: 21300000, guid: 97ece1ac75e34b64aa8fd4a1aec44dfb, type: 3}
       name: "C\xE0o x\xE9 "
       skillIndex: 2
@@ -174,7 +176,14 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: 
+      description: "Hai nh\xE1t c\xE0o m\u1EA1nh, k\xE9o \u0111\u1ED1i ph\u01B0\u01A1ng
+        v\u1EC1 ph\xEDa C\xE0n S\xE1t (\u0111\u1EBFn \xF4 s\xE1t b\xEAn c\u1EA1nh),
+        g\xE2y s\xE1t th\u01B0\u01A1ng l\xEAn huy\u1EBFt kh\xED v\xE0 n\u1ED9i l\u1EF1c
+        c\u1EE7a m\u1EE5c ti\xEAu. Chi\xEAu th\u1EE9c g\xE2y s\xE1t th\u01B0\u01A1ng
+        hai l\u1EA7n v\xE0 t\xEDnh t\u1EC9 l\u1EC7 ch\xED m\u1EA1ng ri\xEAng. (debuff
+        2). Gi\u1EA3m mp = 1/3 s\xE1t th\u01B0\u01A1ng g\xE2y ra. Chi\xEAu n\xE0y
+        k\xEDch ho\u1EA1t n\u1ED9i t\u1EA1i c\u01B0\u1EDBp AP 2 l\u1EA7n ri\xEAng
+        bi\u1EC7t, nh\u01B0ng ch\u1EC9 c\u01B0\u1EDBp 1 l\u1EA7n."
     movementSkill:
     - icon: {fileID: 21300000, guid: aa1acb52e2c949b42ab3c9eee8184f71, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
@@ -231,7 +240,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 16
-      description: 
+      description: "Assassin: H\xECnh \u1EA3nh g\u1ECDi ra l\xE0 m\u1ED9t n\u1EEF
+        th\xEDch kh\xE1ch. T\u0103ng s\xE1t th\u01B0\u01A1ng t\u1EEB m\u1ECDi ngu\u1ED3n
+        th\xEAm 2 v\xE0 gi\u1EA3m s\u1ED1 c\u1EA7n \u0111\u1EC3 crit \u0111i 1"
     - icon: {fileID: 21300000, guid: f170377e38ba20f429d7932e511f17a1, type: 3}
       name: "C\xE0o x\xE9 "
       skillIndex: 2
@@ -242,7 +253,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: 
+      description: "D\xF9ng b\u1ED1n ng\xF3n tay \u0111\u1EE1 \u0111\xF2n, sau \u0111\xF3
+        \u0111\xE2m hai ng\xF3n c\xE1i v\u1EC1 ph\xEDa \u0111\u1ED1i th\u1EE7. G\xE2y
+        xu\u1EA5t huy\u1EBFt. V\u1EC7t m\xE1u n\u1EA1n nh\xE2n \u0111\u1EC3 l\u1EA1i
+        l\xE0 m\xE1u \u0111\u1ED9c, C\xE0n S\xE1t \u0111\u1EE9ng l\xEAn s\u1EBD \u0111\u01B0\u1EE3c
+        h\u1ED3i m\xE1u, trong khi k\u1EBB kh\xE1c d\u1EABm ph\u1EA3i s\u1EBD c\xF3
+        t\u1EC9 l\u1EC7 tr\xFAng \u0111\u1ED9c. (apply debuff 8). M\xE1u \u0111\u1ED9c 
+        l\xE0 debuff 12. M\xE1u C\xE0n S\xE1t h\u1ED3i = dmg \u0111\u1ED9c (1d4)"
   passiveSkills: []
   dancerPrefab: {fileID: 7333246952435401029, guid: b66becf0d5714cf4199e85604416e8f6, type: 3}
   assassinPrefab: {fileID: 7333246952435401029, guid: a4aca6144b5c1614796279710c2df1a0, type: 3}

@@ -113,6 +113,7 @@ MonoBehaviour:
     characterName: "\u0110o\xE0n Gia Linh"
     characterIcon: {fileID: 21300000, guid: a24519c7d159b76418668e6412e03796, type: 3}
     slideBarIcon: {fileID: 21300000, guid: d2e1dabed019e0d4aa252000fd5a7d6e, type: 3}
+    characterNoBgIcon: {fileID: 21300000, guid: 95b3e18eaf3e22c4eb0d288407578235, type: 3}
     characterAttributes:
       maxMoveRange: 6
       health: 32

@@ -8,6 +8,7 @@ public class CharacterConfig
     public string characterName;
     public Sprite characterIcon;
     public Sprite slideBarIcon;
+    public Sprite characterNoBgIcon;
     public CharacterAttributes characterAttributes;
     public SerializableDictionary<SkillTurnType, int> actionPoints = new();
     public bool hasToggle;
