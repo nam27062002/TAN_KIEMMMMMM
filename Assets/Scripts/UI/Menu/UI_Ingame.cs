@@ -211,8 +211,7 @@ public class UI_Ingame : MenuBase
 
         for (var i = 0; i < characterParams.Skills.Count; i++)
         {
-            skillUI[i].SetSkill(index: i + 1,
-                skillIcon: characterParams.Skills[i].icon,
+            skillUI[i].SetSkill(characterParams.Skills[i],
                 unlock: !characterParams.Character.Info.IsLockSkill,
                 enoughMana: characterParams.Character.Info.CanCastSkill(characterParams.Skills[i]),
                 type: characterParams.Character.Type);
