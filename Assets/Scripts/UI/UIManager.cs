@@ -20,7 +20,11 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         base.Awake();
         SetActiveAllMenus(false);
         SetActiveAllPopups(false);
+#if UNITY_EDITOR
+        cheat.SetActiveIfNeeded(false);
+#else
         cheat.SetActiveIfNeeded(true);
+#endif
     }
 
     protected override void RegisterEvents()

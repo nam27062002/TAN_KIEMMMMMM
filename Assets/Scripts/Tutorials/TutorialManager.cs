@@ -150,11 +150,11 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
     {
         GameplayManager.Instance.OnLoadCharacterFinished -= OnLoadCharacterFinished;
 
-        // foreach (var kvp in charactersDict)
-        // {
-        //     DOTween.Kill(kvp.Value.transform);
-        //     kvp.Value.DestroyCharacter();
-        // }
+        foreach (var kvp in charactersDict)
+        {
+            DOTween.Kill(kvp.Value.transform);
+            kvp.Value.DestroyCharacter();
+        }
 
         ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
         GameplayManager.Instance.Characters[0].OnUnSelected();

@@ -58,6 +58,7 @@ public class UI_Ingame : MenuBase
     [Title("Effects")] [SerializeField] private EffectUI effectUI;
     [SerializeField] private RectTransform effectsPanel;
     [SerializeField] private ContentSizeFitter sizeFitter;
+
     public override void Open(UIBaseParameters parameters = null)
     {
         base.Open(parameters);
@@ -153,49 +154,47 @@ public class UI_Ingame : MenuBase
             _avtSpdUI = new List<AVT_SpdUI>();
             foreach (var go in GameplayManager.Characters.Select(_ => Instantiate(avatarPrefab, characterPool)))
             {
+                var rt = go.GetComponent<RectTransform>();
+                rt.anchorMin = new Vector2(0, 0.5f);
+                rt.anchorMax = new Vector2(0, 0.5f);
+                rt.pivot = new Vector2(0.5f, 0.5f);
                 _avtSpdUI.Add(go.GetComponent<AVT_SpdUI>());
             }
         }
-        var layoutGroup = characterPool.GetComponent<HorizontalLayoutGroup>();
-        if (layoutGroup != null)
-        {
-            layoutGroup.enabled = false;
-        }
-
-        int count = _avtSpdUI.Count;
-        int centerIndex = (count % 2 == 0) ? count / 2 - 1 : count / 2;
-        int startIndex = GameplayManager.CurrentPlayerIndex - centerIndex;
+        
+        var count = _avtSpdUI.Count;
+        var centerIndex = (count % 2 == 0) ? count / 2 - 1 : count / 2;
+        var startIndex = GameplayManager.CurrentPlayerIndex - centerIndex;
         if (startIndex < 0)
         {
             startIndex += count;
         }
-        float spacing = 80f;
-        float fixedY = 0f;
+
+        var spacing = 80f;
+        var fixedY = 0f;
         if (_avtSpdUI.Count > 0)
         {
             fixedY = _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y;
         }
-        for (int i = 0; i < count; i++)
+        var poolRect = characterPool.GetComponent<RectTransform>();
+        var poolWidth = poolRect.rect.width;
+        var totalGroupWidth = (count - 1) * spacing;
+        var offset = (poolWidth - totalGroupWidth) / 2;
+
+        for (var i = 0; i < count; i++)
         {
-            int index = (startIndex + i) % count;
-            RectTransform avatarRect = _avtSpdUI[index].GetComponent<RectTransform>();
-            Vector2 targetPos = new Vector2(i * spacing, fixedY); 
+            var index = (startIndex + i) % count;
+            var avatarRect = _avtSpdUI[index].GetComponent<RectTransform>();
+            var targetPos = new Vector2(offset + i * spacing, fixedY);
             avatarRect.DOAnchorPos(targetPos, 0.5f);
-            bool isFocused = (index == GameplayManager.CurrentPlayerIndex);
-            float targetScale = isFocused ? 1f : 0.7f;
+            var isFocused = (index == GameplayManager.CurrentPlayerIndex);
+            var targetScale = isFocused ? 1f : 0.7f;
             _avtSpdUI[index].transform.DOScale(new Vector3(targetScale, targetScale, 1f), 0.5f);
-            
+
             _avtSpdUI[index].SetupUI(isFocused,
                 GameplayManager.Characters[index].Type,
                 GameplayManager.Characters[index].characterConfig.slideBarIcon);
         }
-        
-        // ContentSizeFitter csf = characterPool.GetComponent<ContentSizeFitter>();
-        // if (csf == null)
-        // {
-        //     csf = characterPool.gameObject.AddComponent<ContentSizeFitter>();
-        // }
-        // csf.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     private void SetCharacterFocus(ShowInfoCharacterParameters characterParams)
