@@ -2888,6 +2888,7 @@ MonoBehaviour:
   skillInfoPrefab: {fileID: 4596031878926302704, guid: b6afef525f1255b42a4ea7e2a65d50f7, type: 3}
   skillInfoHeight: 306
   space: 10
+  skillScrollRect: {fileID: 5943518628918490707}
 --- !u!225 &9029461261502342537
 CanvasGroup:
   m_ObjectHideFlags: 0

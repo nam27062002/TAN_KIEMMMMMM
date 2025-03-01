@@ -21,6 +21,7 @@ public class ShowInfoPopup : PopupBase
     public SkillInfo_UI skillInfoPrefab; 
     public float skillInfoHeight;
     public int space;
+    public ScrollRect skillScrollRect;
 
     private ShowInfoCharacterParameters _showInfoCharacterParameters;
 
@@ -37,6 +38,7 @@ public class ShowInfoPopup : PopupBase
             SetupAvatar(config);
             SetupBars(info);
             ShowSkillInfo();
+            ResetScroll();
         }
     }
 
@@ -84,7 +86,7 @@ public class ShowInfoPopup : PopupBase
             Destroy(child.gameObject);
         }
         var skills = _showInfoCharacterParameters.Skills;
-        int skillCount = skills.Count;
+        int skillCount = skills.Count - 1; // không tính đánh thường
         float newHeight = skillInfoHeight * skillCount + space * (skillCount - 1);
         container.sizeDelta = new Vector2(container.sizeDelta.x, newHeight);
         verticalLayoutGroup.spacing = space;
@@ -99,10 +101,28 @@ public class ShowInfoPopup : PopupBase
 
     public override void Close()
     {
+        ClearSkillInfo();
+        ResetScroll();
         base.Close();
         if (GameplayManager.Instance.IsTutorialLevel)
         {
             TutorialManager.Instance.OnTutorialClicked(13, 0.5f);
+        }
+    }
+
+    private void ClearSkillInfo()
+    {
+        foreach (Transform child in container)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void ResetScroll()
+    {
+        if (skillScrollRect != null)
+        {
+            skillScrollRect.verticalNormalizedPosition = 1;
         }
     }
 }
