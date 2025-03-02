@@ -1255,7 +1255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f44e122f624f12b0234192a4f91d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelConfig: {fileID: 11400000, guid: 109b770cc30afef44be1fd7dca2e99a0, type: 2}
+  levelConfig: {fileID: 11400000, guid: 844bfcde8a69da446847997362a62f85, type: 2}
   allCharacter:
     m_keys: 00000000010000000200000003000000040000000500000008000000
     m_values:
@@ -1267,6 +1267,7 @@ MonoBehaviour:
     - {fileID: 7579461828209338209, guid: 324725251a2f142449578c5e84b4f519, type: 3}
     - {fileID: 2529861749566756791, guid: 6e35315aa9c3b1642bb9c41154cd5ba5, type: 3}
   tutorialPrefab: {fileID: 702396812}
+  IsPauseGameInternal: 0
 --- !u!1001 &2962411132894324362
 PrefabInstance:
   m_ObjectHideFlags: 0

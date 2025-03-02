@@ -22,7 +22,7 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public GameObject showSkillPanel;
     public TextMeshProUGUI skillNameText;
     public TextMeshProUGUI skillDescriptionText;
-    public float delayToShowSkill = 0.5f;
+    private float delayToShowSkill = 1f;
     
     private bool _isHovering;
     private Tween _showTween;

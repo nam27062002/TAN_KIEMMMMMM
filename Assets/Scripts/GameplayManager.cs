@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -109,7 +111,15 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
 
         SortCharacterBySpeed();
-        Invoke(nameof(SetMainCharacter), 5f);
+        if (Characters.Any(p => p is CanSat))
+        {
+            Invoke(nameof(SetMainCharacter), 5f); 
+        }
+        else
+        {
+            SetMainCharacter();
+        }
+
         SetInteract(true);
         HandleNewRound();
         ShowLevelName();
@@ -375,6 +385,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             Enemies.Remove(character);
             if (Enemies.Count == 0)
             {
+                if (SelectedCharacter != null)
+                {
+                    SelectedCharacter.OnUnSelected();
+                }
                 IsPauseGameInternal = true;
                 SetInteract(false);
                 Invoke(nameof(OnWin), 1f);
@@ -432,6 +446,43 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnWin()
     {
+        Sequence winSequence = DOTween.Sequence();
+        foreach (var item in _players)
+        {
+            item.AnimationData.PlayAnimation(AnimationParameterNameType.MoveRight);
+            float moveDistance = 50f;
+            Vector3 targetPosition = item.transform.position + new Vector3(moveDistance, 0, 0);
+            
+            winSequence.Join(item.transform.DOMoveX(targetPosition.x, 8f).SetEase(Ease.Linear));
+        }
+        StartCoroutine(CheckCharactersOutOfCamera());
+    }
+
+    private IEnumerator CheckCharactersOutOfCamera()
+    {
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            Debug.LogError("Main camera not found!");
+            yield break;
+        }
+        bool allOutOfCamera;
+        do
+        {
+            allOutOfCamera = true;
+            foreach (var item in _players)
+            {
+                Vector3 viewportPos = mainCamera.WorldToViewportPoint(item.transform.position);
+                if (viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1)
+                {
+                    allOutOfCamera = false;
+                    break;
+                }
+            }
+            yield return null;
+        } while (!allOutOfCamera);
+
+
         UIManager.Instance.OpenPopup(PopupType.Win);
     }
     
