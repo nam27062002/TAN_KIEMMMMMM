@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 
 public class LevelDesignManager : MonoBehaviour
 {
+    public Camera cam;
     public LevelType levelType;
     public MapManager mapManager;
     public CharacterSpawnerConfig characterSpawnerConfig;
@@ -36,7 +37,7 @@ public class LevelDesignManager : MonoBehaviour
         var levelConfig = ScriptableObject.CreateInstance<LevelConfig>();
         levelConfig.levelType = levelType;
         levelConfig.spawnerConfig = characterSpawnerConfig;
-        
+        levelConfig.cameraSize = cam.orthographicSize;
         var prefabName = $"Level_{levelType}.prefab"; 
         var prefabFullPath = System.IO.Path.Combine(levelPrefabPath, prefabName);
         

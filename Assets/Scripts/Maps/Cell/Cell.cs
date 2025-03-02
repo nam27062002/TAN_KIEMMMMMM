@@ -3,6 +3,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[SelectionBase]
 public class Cell : MonoBehaviour
 {
     [TabGroup("Config"), SerializeField] private CellType cellType = CellType.Walkable;
@@ -23,16 +24,14 @@ public class Cell : MonoBehaviour
     [TabGroup("Shield")] public HpBar hpBar;
     [TabGroup("Shield"), ReadOnly] public Cell mainShieldCell;
     public Cell mainBlockProjectile;
-    
-    private void Start()
-    {
-        shieldSprite.gameObject.SetActiveIfNeeded(false);
-    }
-
     public CellType CellType
     {
         get => cellType;
         set => cellType = value;
+    }
+    private void Start()
+    {
+        shieldSprite.gameObject.SetActiveIfNeeded(false);
     }
 
     public Vector2Int CellPosition
@@ -210,7 +209,7 @@ public class Cell : MonoBehaviour
         hasIcon = false;
     }
 
-    private void OnValidate()
+    public void OnValidate()
     {
         backgroundSprite.enabled = cellType != CellType.CannotWalk;
     }

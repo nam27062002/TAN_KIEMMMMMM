@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelConfig : ScriptableObject
 {
     public string levelName;
+    public float cameraSize;
     public LevelType levelType;
     public CharacterSpawnerConfig spawnerConfig;
     public MapManager mapPrefab;

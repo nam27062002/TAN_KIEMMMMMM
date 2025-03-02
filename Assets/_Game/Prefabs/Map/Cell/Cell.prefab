@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7098682025645839527
 Transform:
   m_ObjectHideFlags: 0
@@ -328,7 +328,7 @@ MonoBehaviour:
   currentShieldHP: 0
   hpBar: {fileID: 2366348360184521792}
   mainShieldCell: {fileID: 0}
-  shieldImpactCells: []
+  mainBlockProjectile: {fileID: 0}
   iconName: 
   hasIcon: 0
 --- !u!60 &4912207362601032240

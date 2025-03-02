@@ -16,6 +16,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     [Title("Tutorials")] [SerializeField] private GameObject tutorialPrefab;
 
+    public Camera cam;
     public bool IsTutorialLevel { get; set; }
 
     /*--------------------events-------------------------*/
@@ -68,6 +69,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         CurrentRound = 0;
         IsPauseGameInternal = false;
+        cam.orthographicSize = levelConfig.cameraSize;
         if (!IsTutorialLevel) LoadMapGame();
     }
 
@@ -385,6 +387,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             Enemies.Remove(character);
             if (Enemies.Count == 0)
             {
+                ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
                 if (SelectedCharacter != null)
                 {
                     SelectedCharacter.OnUnSelected();
@@ -399,6 +402,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             _players.Remove(character);
             if (_players.Count == 0)
             {
+                ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
                 IsPauseGameInternal = true;
                 SetInteract(false);
                 Invoke(nameof(OnLose), 1f);
@@ -449,8 +453,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         Sequence winSequence = DOTween.Sequence();
         foreach (var item in _players)
         {
+            item.UpdateFacing();
             item.AnimationData.PlayAnimation(AnimationParameterNameType.MoveRight);
-            float moveDistance = 50f;
+            float moveDistance = 20f;
             Vector3 targetPosition = item.transform.position + new Vector3(moveDistance, 0, 0);
             
             winSequence.Join(item.transform.DOMoveX(targetPosition.x, 8f).SetEase(Ease.Linear));
@@ -472,7 +477,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             allOutOfCamera = true;
             foreach (var item in _players)
             {
-                Vector3 viewportPos = mainCamera.WorldToViewportPoint(item.transform.position);
+                var pos = item.transform.position;
+                pos.x -= 0.5f;
+                Vector3 viewportPos = mainCamera.WorldToViewportPoint(pos);
                 if (viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1)
                 {
                     allOutOfCamera = false;
@@ -482,8 +489,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             yield return null;
         } while (!allOutOfCamera);
 
+        FinishFirstTutorial();
+    }
 
-        UIManager.Instance.OpenPopup(PopupType.Win);
+    private void FinishFirstTutorial()
+    {
+        
     }
     
     #endregion
