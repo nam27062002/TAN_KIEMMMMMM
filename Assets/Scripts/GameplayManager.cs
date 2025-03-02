@@ -29,9 +29,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
-    private readonly List<Character> _players = new();
-    public readonly List<Character> Enemies = new();
-    public List<Character> Characters { get; private set; } = new();
+    [ShowInInspector] private readonly List<Character> _players = new();
+    [ShowInInspector] public readonly List<Character> Enemies = new();
+    [ShowInInspector] public List<Character> Characters { get; private set; } = new();
     public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? null : Characters[CurrentPlayerIndex];
 
     public Character SelectedCharacter { get; set; }
@@ -69,6 +69,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         CurrentRound = 0;
         IsPauseGameInternal = false;
+        hasTriggered = false;
         cam.orthographicSize = levelConfig.cameraSize;
         if (!IsTutorialLevel) LoadMapGame();
     }
@@ -286,12 +287,18 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void DestroyGameplay()
     {
         ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
-        MapManager.DestroyMap();
         DestroyAllCharacters();
+        MapManager.DestroyMap();
         StartNewGame();
         OnRetry?.Invoke(this, EventArgs.Empty);
     }
 
+    public void NextLevel()
+    {
+        levelConfig = levelConfig.nextLevel;
+        DestroyGameplay();
+    }
+    
     private void DestroyAllCharacters()
     {
         foreach (var character in Characters)
@@ -379,8 +386,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SelectedCharacter.HandleSelectSkill(skillIndex, skillUI);
     }
 
-    public void HandleCharacterDie(Character character)
+    public IEnumerator HandleCharacterDie(Character character)
     {
+        IsPauseGameInternal = false;
+        SetInteract(true);
         Characters.Remove(character);
         if (character.Type == Type.AI)
         {
@@ -406,6 +415,71 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 IsPauseGameInternal = true;
                 SetInteract(false);
                 Invoke(nameof(OnLose), 1f);
+            }
+        }
+        yield return HandleSpecialForLevel1(character);
+    }
+    
+    private IEnumerator HandleSpecialForLevel1(Character character)
+    {
+        if (levelConfig.levelType == LevelType.Level1)
+        {
+            if (character is RoiNguoi && Characters.Any(p => p is ThietNhan))
+            {
+                IsPauseGameInternal = true;
+                SetInteract(false);
+                foreach (var item in Characters.OfType<ThietNhan>().ToList())
+                {
+                    item.OnDie();
+                }
+                if (hasTriggered)
+                    yield return null;
+                else
+                {
+                    SpawnSpecialEnemy();
+                    hasTriggered = true;
+                    yield return new WaitForSeconds(5f);
+                }
+            }
+            else if (character is ThietNhan && !Characters.Any(p => p is ThietNhan))
+            {
+                IsPauseGameInternal = true;
+                SetInteract(false);
+                if (hasTriggered)
+                    yield return null;
+                else
+                {
+                    SpawnSpecialEnemy();
+                    hasTriggered = true;
+                    yield return new WaitForSeconds(5f);
+                }
+            }
+        }
+    }
+
+    private bool hasTriggered = false;
+    
+    private void SpawnSpecialEnemy()
+    {
+
+        foreach (var spawnPoint in levelConfig.specialSpawnerConfig.spawnPoints)
+        {
+            foreach (var point in spawnPoint.Value.points)
+            {
+                var go = Instantiate(allCharacter[spawnPoint.Key], transform);
+                var character = go.GetComponent<Character>();
+                Characters.Add(character);
+                switch (character.Type)
+                {
+                    case Type.AI:
+                        Enemies.Add(character);
+                        break;
+                    case Type.Player:
+                        _players.Add(character);
+                        break;
+                }
+
+                character.Initialize(MapManager.GetCell(point));
             }
         }
     }
@@ -489,12 +563,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             yield return null;
         } while (!allOutOfCamera);
 
-        FinishFirstTutorial();
-    }
-
-    private void FinishFirstTutorial()
-    {
-        
+        UIManager.Instance.OpenPopup(PopupType.Win);
     }
     
     #endregion

@@ -9,7 +9,10 @@ public class LevelConfig : ScriptableObject
     public float cameraSize;
     public LevelType levelType;
     public CharacterSpawnerConfig spawnerConfig;
+    public CharacterSpawnerConfig specialSpawnerConfig;
     public MapManager mapPrefab;
+
+    public LevelConfig nextLevel;
 }
 
 [Serializable]

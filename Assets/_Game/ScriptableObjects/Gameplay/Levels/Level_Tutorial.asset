@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: "M\xE0n h\u01B0\u1EDBng d\u1EABn"
   cameraSize: 5
-  levelType: 1
+  levelType: 0
   spawnerConfig:
     spawnPoints:
       m_keys: 000000000100000002000000
@@ -27,3 +27,4 @@ MonoBehaviour:
         - {x: 3, y: 10}
         - {x: 6, y: 8}
   mapPrefab: {fileID: 1980423763408188603, guid: 417e63c948212724082e659fe45c197a, type: 3}
+  nextLevel: {fileID: 11400000, guid: 4da27f3501b6b0340b294d80e8bd28d0, type: 2}

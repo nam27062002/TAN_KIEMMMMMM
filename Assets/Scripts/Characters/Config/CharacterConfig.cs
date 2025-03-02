@@ -9,7 +9,7 @@ public class CharacterConfig
     public Sprite characterIcon;
     public Sprite slideBarIcon;
     public Sprite characterNoBgIcon;
-    
+    public string story;
     public CharacterAttributes characterAttributes;
     [Space]
     public SerializableDictionary<SkillTurnType, int> actionPoints = new();

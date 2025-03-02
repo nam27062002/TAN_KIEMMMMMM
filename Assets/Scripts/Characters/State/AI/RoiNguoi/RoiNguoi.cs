@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RoiNguoi : AICharacter
@@ -9,7 +10,15 @@ public class RoiNguoi : AICharacter
         base.SetMainCharacter();
         PassiveSkill();
     }
-
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnDie();
+        }
+    }
+#endif
     private void PassiveSkill()
     {
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}]: passive skill");

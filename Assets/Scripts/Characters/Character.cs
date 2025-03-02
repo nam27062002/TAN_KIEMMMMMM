@@ -419,9 +419,13 @@ public abstract class Character : MonoBehaviour
 
     public virtual void OnDie()
     {
+        StartCoroutine(OnDieCoroutine());
+    }
+
+    private IEnumerator OnDieCoroutine()
+    {
         var index = GpManager.Characters.IndexOf(this);
         Info.Cell.CellType = CellType.Walkable;
-        GpManager.HandleCharacterDie(this);
         if (IsMainCharacter)
         {
             GpManager.HandleEndTurn();
@@ -430,10 +434,11 @@ public abstract class Character : MonoBehaviour
         {
             item.UnregisterEvents();
         }
-        Destroy(gameObject);
         ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
+        yield return GpManager.HandleCharacterDie(this);
+        Destroy(gameObject);
     }
-
+    
     public void SetPosition()
     {
         StateMachine.GetCurrentState.SetCharacterPosition();

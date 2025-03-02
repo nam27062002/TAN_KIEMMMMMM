@@ -18,9 +18,8 @@ public class WinPopup : PopupBase
     
       private void OnWinPopup()
       {
-            GameplayManager.Instance.DestroyGameplay();
+            GameplayManager.Instance.NextLevel();
             Close();
-            AlkawaDebug.Log(ELogCategory.UI, "Replay button clicked");
       }
       
 }

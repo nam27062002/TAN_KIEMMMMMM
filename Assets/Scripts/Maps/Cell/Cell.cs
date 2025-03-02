@@ -24,11 +24,13 @@ public class Cell : MonoBehaviour
     [TabGroup("Shield")] public HpBar hpBar;
     [TabGroup("Shield"), ReadOnly] public Cell mainShieldCell;
     public Cell mainBlockProjectile;
+
     public CellType CellType
     {
         get => cellType;
         set => cellType = value;
     }
+
     private void Start()
     {
         shieldSprite.gameObject.SetActiveIfNeeded(false);
@@ -49,6 +51,7 @@ public class Cell : MonoBehaviour
             onComplete?.Invoke();
             return;
         }
+
         transform.localScale = Vector3.zero;
         backgroundSprite.color =
             new Color(backgroundSprite.color.r, backgroundSprite.color.g, backgroundSprite.color.b, 0f);
@@ -57,7 +60,31 @@ public class Cell : MonoBehaviour
         sequence.Join(backgroundSprite.DOFade(1f, 0.5f).SetDelay(delay).SetEase(Ease.Linear));
         sequence.OnComplete(() => { onComplete?.Invoke(); });
     }
-    
+
+    public void DestroyCell()
+    {
+        transform.DOKill();
+        if (backgroundSprite != null) backgroundSprite.DOKill();
+        if (highlightSprite != null) highlightSprite.DOKill();
+        if (shieldSprite != null) shieldSprite.DOKill();
+        if (withinAttackRangeSprite != null) withinAttackRangeSprite.DOKill();
+        if (withinMoveRangeSprite != null) withinMoveRangeSprite.DOKill();
+        if (shieldImpactSprite != null) shieldImpactSprite.DOKill();
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            UnityEditor.Undo.DestroyObjectImmediate(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+#else
+    Destroy(gameObject);
+#endif
+    }
+
     public void SetShield(Type shieldType, int range)
     {
         this.shieldType = shieldType;
@@ -70,6 +97,7 @@ public class Cell : MonoBehaviour
         {
             cell.SetShieldImpact(this);
         }
+
         SetShieldImpact(this);
     }
 
@@ -80,9 +108,10 @@ public class Cell : MonoBehaviour
         {
             cell.SetMainBlockProjectile(this);
         }
+
         SetMainBlockProjectile(this);
     }
-    
+
     public void UnSetMainProjectile()
     {
         var cells = GameplayManager.Instance.MapManager.GetAllHexagonInRange(this, 4);
@@ -90,6 +119,7 @@ public class Cell : MonoBehaviour
         {
             cell.UnSetMainBlockProjectile(this);
         }
+
         UnSetMainBlockProjectile(this);
     }
 
@@ -97,7 +127,8 @@ public class Cell : MonoBehaviour
     {
         currentShieldHP--;
         hpBar.SetValue(currentShieldHP * 1f / shieldHeath);
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: chặn sát thương cho {to.characterConfig.characterName} từ đòn đánh của {from.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.EFFECT,
+            $"Hiểu Nhật Quang Lâm: chặn sát thương cho {to.characterConfig.characterName} từ đòn đánh của {from.characterConfig.characterName}");
         if (currentShieldHP <= 0)
         {
             UnsetShieldImpact(3); // hard code
@@ -111,6 +142,7 @@ public class Cell : MonoBehaviour
         {
             cell.UnsetShieldImpact(this);
         }
+
         UnsetShieldImpact(this);
         shieldSprite.gameObject.SetActiveIfNeeded(false);
         AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: tháp bị phá hủy");
@@ -119,27 +151,27 @@ public class Cell : MonoBehaviour
     private void SetShieldImpact(Cell cell)
     {
         mainShieldCell = cell;
-        shieldImpactSprite.enabled = true; 
+        shieldImpactSprite.enabled = true;
     }
 
     public void UnsetShieldImpact(Cell cell)
     {
         mainShieldCell = null;
-        shieldImpactSprite.enabled = false; 
+        shieldImpactSprite.enabled = false;
     }
-    
+
     private void SetMainBlockProjectile(Cell cell)
     {
         mainBlockProjectile = cell;
-        shieldImpactSprite.enabled = true; 
+        shieldImpactSprite.enabled = true;
     }
 
     private void UnSetMainBlockProjectile(Cell cell)
     {
         mainBlockProjectile = null;
-        shieldImpactSprite.enabled = false; 
+        shieldImpactSprite.enabled = false;
     }
-    
+
     public void ShowFocus()
     {
         highlightSprite.enabled = true;
@@ -180,7 +212,7 @@ public class Cell : MonoBehaviour
     {
         if ((!GameplayManager.Instance.IsTutorialLevel) && Input.GetMouseButtonDown(1))
         {
-            if (cellType == CellType.Character) 
+            if (cellType == CellType.Character)
                 GameplayManager.Instance.ShowInfo(Character);
         }
         else if (Input.GetMouseButtonDown(0))
@@ -188,12 +220,12 @@ public class Cell : MonoBehaviour
             if (!GameplayManager.Instance.IsTutorialLevel) HandleCellClicked();
         }
     }
-    
+
     public void HandleCellClicked()
     {
         GameplayManager.Instance.OnCellClicked(this);
     }
-    
+
 #if UNITY_EDITOR
     [HideInInspector] public string iconName;
     [HideInInspector] public bool hasIcon;

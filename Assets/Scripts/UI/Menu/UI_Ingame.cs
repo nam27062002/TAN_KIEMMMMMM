@@ -73,7 +73,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnUpdateCharacterInfo += GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished += GameplayManagerOnOnSetMainCharacterFinished;
         GameplayManager.OnNewRound += GameplayManagerOnOnNewRound;
-        GameplayManager.OnNewRound += OnRetry;
+        GameplayManager.OnRetry += OnRetry;
         endTurnButton.button.onClick.AddListener(OnEndTurnButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsClick);
         toggle.onValueChanged.AddListener(OnToggleValueChanged);
@@ -86,7 +86,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnUpdateCharacterInfo -= GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished -= GameplayManagerOnOnSetMainCharacterFinished;
         GameplayManager.OnNewRound -= GameplayManagerOnOnNewRound;
-        GameplayManager.OnNewRound -= OnRetry;
+        GameplayManager.OnRetry -= OnRetry;
         endTurnButton.button.onClick.RemoveListener(OnEndTurnButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsClick);
         toggle.onValueChanged.RemoveListener(OnToggleValueChanged);

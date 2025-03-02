@@ -104,6 +104,55 @@ MonoBehaviour:
     characterIcon: {fileID: 21300000, guid: 16d4b1c00db987b48a4146fb70d10aab, type: 3}
     slideBarIcon: {fileID: 21300000, guid: db80c193a5922034a867789949cb417c, type: 3}
     characterNoBgIcon: {fileID: -4477680213585926689, guid: a791611831f15974aa600c1a8f970a7b, type: 3}
+    story: "\u0110\u1ED1i v\u1EDBi h\u1ED9i s\u0103n y\xEAu, g\xE3 l\xE0 m\u1ED9t
+      T\xFAy Tu La \u2013 nh\xE2n v\u1EADt phong v\xE2n c\u1EE7a th\u1EBF h\u1EC7
+      tr\u1EBB. \xC1o tr\u1EAFng tr\xEAn ng\u01B0\u1EDDi, ki\u1EBFm s\u1EAFt n\u01A1i
+      tay, eo \u0111eo b\u1EA7u r\u01B0\u1EE3u hai m\xE0u, t\xF3c bu\u1ED9c s\u1EE3i
+      d\xE2y \u0111\u1ECF m\xE1u. Kh\xF4ng bi\u1EBFt bao nhi\xEAu nhi\u1EC7m v\u1EE5
+      t\u01B0\u1EDFng ch\u1EEBng b\u1EBF t\u1EAFc b\u1ECB g\xE3 gi\u1EA3i quy\u1EBFt,
+      h\xE0ng ch\u1EE5c y\xEAu ma nguy hi\u1EC3m b\u1ECB g\xE3 b\u1EAFt v\u1EC1.
+      \u0110\u1ED1i v\u1EDBi nhi\u1EC1u ng\u01B0\u1EDDi, g\xE3 thanh ni\xEAn th\u01B0\u1EDDng
+      xuy\xEAn quay v\u1EC1 t\u1ED5ng b\u1ED9 trong b\u1ED9 d\u1EA1ng ng\u01B0\u1EDDi
+      n\u1ED3ng n\u1EB7c h\u01A1i men, \xE1o nhu\u1ED9m \u0111\u1EABm m\xE1u \u0111\u1ECF
+      kia ch\xEDnh l\xE0 t\u01B0\u01A1ng lai c\u1EE7a gi\u1EDBi s\u0103n y\xEAu.  
+      \u0110\u1ED1i v\u1EDBi Tam Di\u1EC7n Th\u1EA7n Gi\xE1o \u2013 d\u1ECB gi\xE1o
+      t\xF4n th\u1EDD c\xE1i ch\u1EBFt \u2013 L\xFD V\xF4 Danh l\xE0 m\u1ED9t kh\xE1ch
+      h\xE0ng l\u1EDBn. G\xE3 kh\xF4ng bao gi\u1EDD m\u1EB7c c\u1EA3, ch\u01B0a l\u1EA7n
+      n\xE0o thanh to\xE1n ch\u1EADm d\xF9 ch\u1EC9 m\u1ED9t h\xF4m, v\xE0 m\u1EE5c
+      ti\xEAu g\xE3 ch\u1ECDn th\xEC ch\u01B0a bao gi\u1EDD \u0111\u01A1n gi\u1EA3n.
+      N\u1EBFu kh\xF4ng ph\u1EA3i c\xE1i \u0111\u1EA7u c\u1EE7a c\u1EF1 ph\xFA m\u1ED9t
+      ph\u01B0\u01A1ng th\xEC c\u0169ng l\xE0 t\xEDnh m\u1EA1ng c\u1EE7a quan to
+      m\u1ED9t ch\u1ED1n. R\u1EA5t nhi\u1EC1u gi\xE1o ch\xFAng, th\u1EADm ch\xED
+      l\xE0 c\u1EA3 c\xE1c h\u1ED9 ph\xE1p, \u0111\u1EC1u r\u1EA5t th\xEDch nh\u1EADn
+      nhi\u1EC7m v\u1EE5 c\u1EE7a L\xFD V\xF4 Danh.   \u0110\u1ED1i v\u1EDBi nh\xE0
+      h\u1ECD \u0110o\xE0n \u1EDF l\xE0ng Chi\xEAn \u0110\xE0n, L\xFD V\xF4 Danh
+      l\xE0 k\u1EBB khi\u1EBFn b\u1ECDn h\u1EAFn c\u1EA3m th\u1EA5y v\xF4 c\xF9ng
+      ph\u1EE9c t\u1EA1p. Y\xEAu, ph\u1EA7n v\xEC g\xE3 l\xE0 \u0111\u1ED3 \u0111\u1EC7
+      c\u1EE7a \u0110o\xE0n \u0110\xF4ng H\u1EA3i \u2013 gia ch\u1EE7 \u0111\u1EDDi
+      tr\u01B0\u1EDBc c\u1EE7a h\u1ECD, ph\u1EA7n l\xE0 v\xEC nh\u1EDD c\xF3 g\xE3
+      m\xE0 h\xE0ng n\u0103m l\xE0ng Chi\xEAn \u0110\xE0n thu v\u1EC1 h\xE0ng r\u01B0\u01A1ng
+      b\u1EA1c tr\u1EAFng, tr\u1EDF th\xE0nh tr\u1ECDc ph\xFA nh\u1EA5t nh\xEC thi\xEAn
+      h\u1EA1. C\xF2n h\u1EADn l\xE0 do \u0110o\xE0n \u0110\xF4ng H\u1EA3i v\xEC
+      gi\u1EEF t\xEDnh m\u1EA1ng c\u1EE7a L\xFD V\xF4 Danh m\xE0 \u0111\u1EBFn Thi\xEAn
+      \u0110\xF4 ch\u1ECBu ch\u1EBFt.  H\u1ECD \u0110o\xE0n b\u1ECDn h\u1ECD c\u0169ng
+      v\xEC chuy\u1EC7n n\xE0y m\xE0 b\u1ECB li\xEAn \u0111\u1EDBi, n\u1EBFu kh\xF4ng
+      c\xF3 t\u1EA5m Kim B\xE0i Mi\u1EC5n T\u1EED \u0111\u01B0\u1EE3c Th\u1EA7n T\xF4ng
+      ban cho th\xEC \u0111\xE3 b\u1ECB t\u1ED9i tru di tam t\u1ED9c, ch\u1EBFt kh\xF4ng
+      c\xF2n m\u1ED9t m\u1ED1ng.   \u0110\u1ED1i v\u1EDBi th\u01B0\u01A1ng h\u1ED9i
+      H\u1ED3ng Giang \u2013 th\u01B0\u01A1ng h\u1ED9i l\u1EDBn nh\u1EA5t c\u1EA3
+      n\u01B0\u1EDBc \u2013 L\xFD V\xF4 Danh l\xE0 m\u1ED9t d\u1ECB lo\u1EA1i \u0111\u1EA7y
+      m\xE2u thu\u1EABn.   C\xF2n \u0111\u1ED1i v\u1EDBi Vong \u2013 t\u1ED5 ch\u1EE9c
+      ph\u1EA3n tri\u1EC1u \u0111\xECnh kh\xE9t ti\u1EBFng \u2013 L\xFD V\xF4 Danh
+      c\xF3 \u0111\u1ECBa v\u1ECB kh\xF4ng th\u1EC3 thay th\u1EBF. Kh\xF4ng ch\u1EC9
+      v\xEC g\xE3 l\xE0 \u0111\u1EC7 t\u1EED c\u1EE7a \u0110o\xE0n \u0110\xF4ng H\u1EA3i,
+      ng\u01B0\u1EDDi v\u1EEBa k\u1EBF th\u1EEBa ch\u1EE9c th\u1ED1ng l\u0129nh c\u1EE7a
+      t\u1ED5 ch\u1EE9c, m\xE0 c\xF2n v\xEC d\xF2ng m\xE1u \u0111ang ch\u1EA3y trong
+      ng\u01B0\u1EDDi g\xE3.   L\xFD V\xF4 Danh l\xE0 con trai ru\u1ED9t, ho\xE0ng
+      t\u1EED duy nh\u1EA5t c\u1EE7a Th\u1EA7n T\xF4ng, k\u1EBB c\xF3 quy\u1EC1n
+      \u0111\u01B0\u1EE3c th\u1EEBa h\u01B0\u1EDFng ngai r\u1ED3ng \u1EDF th\xE0nh
+      Thi\xEAn \u0110\xF4.   L\xFD V\xF4 Danh th\u1EC9nh tho\u1EA3ng c\u0169ng t\u1EF1
+      h\u1ECFi, r\u1ED1t cu\u1ED9c \u0111\xE2u m\u1EDBi l\xE0 con ng\u01B0\u1EDDi
+      th\u1EADt c\u1EE7a m\xECnh"
     characterAttributes:
       maxMoveRange: 5
       health: 40

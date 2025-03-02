@@ -18195,25 +18195,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d92ae8255474927988548179e0bd9c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 1137608681}
   levelType: 1
   mapManager: {fileID: 1523172513}
   characterSpawnerConfig:
     spawnPoints:
-      m_keys: 000000000100000002000000
+      m_keys: 000000000100000002000000040000000300000008000000
       m_values:
       - points:
         - {x: 6, y: 3}
       - points:
+        - {x: 4, y: 3}
+      - points:
+        - {x: 2, y: 6}
+        - {x: 1, y: 6}
+        - {x: 2, y: 15}
+        - {x: 3, y: 15}
+        - {x: 7, y: 15}
+        - {x: 8, y: 15}
+        - {x: 10, y: 2}
+        - {x: 11, y: 2}
+      - points:
         - {x: 4, y: 1}
       - points:
-        - {x: 3, y: 10}
-        - {x: 6, y: 8}
+        - {x: 6, y: 0}
+      - points:
+        - {x: 5, y: 19}
   gizmoNames:
-    m_keys: 000000000100000002000000
+    m_keys: 00000000010000000200000003000000040000000500000008000000
     m_values:
-    - LyVoDanh.png
-    - DoanGiaLinh.png
-    - ThietNhan.png
+    - LVD.png
+    - DGL.png
+    - TN.png
+    - HLH.png
+    - PCC.png
+    - CS.png
+    - RN.png
   levelPrefabPath: Assets/_Game/Prefabs/Gameplay/Levels
   levelConfigPath: Assets/_Game/ScriptableObjects/Gameplay/Levels
 --- !u!1001 &1506764531

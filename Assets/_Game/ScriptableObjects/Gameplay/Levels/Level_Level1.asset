@@ -12,18 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3403dd78d6943278cb81825806a5920, type: 3}
   m_Name: Level_Level1
   m_EditorClassIdentifier: 
-  levelName: "M\xE0n 1"
+  levelName: 
   cameraSize: 7
   levelType: 1
   spawnerConfig:
     spawnPoints:
-      m_keys: 000000000100000002000000
+      m_keys: 000000000100000002000000040000000300000008000000
       m_values:
       - points:
         - {x: 6, y: 3}
       - points:
+        - {x: 4, y: 3}
+      - points:
+        - {x: 2, y: 6}
+        - {x: 1, y: 6}
+        - {x: 2, y: 15}
+        - {x: 3, y: 15}
+        - {x: 7, y: 15}
+        - {x: 8, y: 15}
+        - {x: 10, y: 2}
+        - {x: 11, y: 2}
+      - points:
         - {x: 4, y: 1}
       - points:
-        - {x: 3, y: 10}
-        - {x: 6, y: 8}
+        - {x: 6, y: 0}
+      - points:
+        - {x: 5, y: 19}
+  specialSpawnerConfig:
+    spawnPoints:
+      m_keys: 05000000
+      m_values:
+      - points:
+        - {x: 5, y: 21}
   mapPrefab: {fileID: 3131663139777621407, guid: 228d832ae6503fa4eae20aafe0fb662f, type: 3}
+  nextLevel: {fileID: 0}
