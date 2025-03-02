@@ -73,6 +73,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnUpdateCharacterInfo += GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished += GameplayManagerOnOnSetMainCharacterFinished;
         GameplayManager.OnNewRound += GameplayManagerOnOnNewRound;
+        GameplayManager.OnNewRound += OnRetry;
         endTurnButton.button.onClick.AddListener(OnEndTurnButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsClick);
         toggle.onValueChanged.AddListener(OnToggleValueChanged);
@@ -85,6 +86,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnUpdateCharacterInfo -= GameplayManagerOnOnUpdateCharacterInfo;
         GameplayManager.OnSetMainCharacterFinished -= GameplayManagerOnOnSetMainCharacterFinished;
         GameplayManager.OnNewRound -= GameplayManagerOnOnNewRound;
+        GameplayManager.OnNewRound -= OnRetry;
         endTurnButton.button.onClick.RemoveListener(OnEndTurnButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsClick);
         toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
@@ -131,6 +133,29 @@ public class UI_Ingame : MenuBase
         SetRound();
     }
 
+    private void OnRetry(object sender, EventArgs e)
+    {
+        if (_avtSpdUI == null) return;
+        foreach (var item in _avtSpdUI.ToList())
+        {
+            if (item != null)
+            {
+                item.transform.DOKill();
+                var rect = item.GetComponent<RectTransform>();
+                if (rect != null)
+                {
+                    rect.DOKill();
+                }
+
+                item.DestroyObject();
+            }
+
+            _avtSpdUI.Remove(item);
+        }
+
+        _avtSpdUI.Clear();
+    }
+
     #endregion
 
     private void SetObjectActiveWhenCharacterFocus()
@@ -161,7 +186,7 @@ public class UI_Ingame : MenuBase
                 _avtSpdUI.Add(go.GetComponent<AVT_SpdUI>());
             }
         }
-        
+    
         var count = _avtSpdUI.Count;
         var centerIndex = (count % 2 == 0) ? count / 2 - 1 : count / 2;
         var startIndex = GameplayManager.CurrentPlayerIndex - centerIndex;
@@ -186,16 +211,20 @@ public class UI_Ingame : MenuBase
             var index = (startIndex + i) % count;
             var avatarRect = _avtSpdUI[index].GetComponent<RectTransform>();
             var targetPos = new Vector2(offset + i * spacing, fixedY);
-            avatarRect.DOAnchorPos(targetPos, 0.5f);
+            // Gán trực tiếp vị trí thay vì tween
+            avatarRect.anchoredPosition = targetPos;
+        
             var isFocused = (index == GameplayManager.CurrentPlayerIndex);
             var targetScale = isFocused ? 1f : 0.7f;
-            _avtSpdUI[index].transform.DOScale(new Vector3(targetScale, targetScale, 1f), 0.5f);
+            // Gán trực tiếp scale thay vì tween
+            _avtSpdUI[index].transform.localScale = new Vector3(targetScale, targetScale, 1f);
 
             _avtSpdUI[index].SetupUI(isFocused,
                 GameplayManager.Characters[index].Type,
                 GameplayManager.Characters[index].characterConfig.slideBarIcon);
         }
     }
+
 
     private void SetCharacterFocus(ShowInfoCharacterParameters characterParams)
     {
@@ -282,9 +311,24 @@ public class UI_Ingame : MenuBase
 
     public void OnCharacterDeath(int index)
     {
-        _avtSpdUI[index].DestroyObject();
-        _avtSpdUI.RemoveAt(index);
-        Debug.Log($"NT - OnCharacterDeath: {index}");
+        if (index < 0 || index >= _avtSpdUI.Count)
+            return;
+
+        var avatarUI = _avtSpdUI[index];
+        if (avatarUI != null)
+        {
+            avatarUI.transform.DOKill();
+            var rect = avatarUI.GetComponent<RectTransform>();
+            if (rect != null)
+            {
+                rect.DOKill();
+            }
+            _avtSpdUI.Remove(avatarUI);
+            avatarUI.DestroyObject();
+        }
+
+        SetupCharacterFocus();
+        // Debug.Log($"NT - OnCharacterDeath: {index}");
     }
 
     private void OnHpChanged(object sender, int _ = 0)

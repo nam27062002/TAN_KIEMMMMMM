@@ -409,6 +409,8 @@ public abstract class Character : MonoBehaviour
     public void DestroyCharacter()
     {
         Destroy(gameObject);
+        var index = GpManager.Characters.IndexOf(this);
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
         foreach (var item in passiveSkills)
         {
             item.UnregisterEvents();
@@ -417,9 +419,8 @@ public abstract class Character : MonoBehaviour
 
     public virtual void OnDie()
     {
-        Info.Cell.CellType = CellType.Walkable;
         var index = GpManager.Characters.IndexOf(this);
-        ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
+        Info.Cell.CellType = CellType.Walkable;
         GpManager.HandleCharacterDie(this);
         if (IsMainCharacter)
         {
@@ -430,6 +431,7 @@ public abstract class Character : MonoBehaviour
             item.UnregisterEvents();
         }
         Destroy(gameObject);
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
     }
 
     public void SetPosition()

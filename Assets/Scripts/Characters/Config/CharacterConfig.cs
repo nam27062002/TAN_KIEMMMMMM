@@ -9,7 +9,9 @@ public class CharacterConfig
     public Sprite characterIcon;
     public Sprite slideBarIcon;
     public Sprite characterNoBgIcon;
+    
     public CharacterAttributes characterAttributes;
+    [Space]
     public SerializableDictionary<SkillTurnType, int> actionPoints = new();
     public bool hasToggle;
     public DirectionType moveDirection;

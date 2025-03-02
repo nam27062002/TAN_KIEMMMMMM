@@ -22,6 +22,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler OnSetMainCharacterFinished;
     public event EventHandler OnNewRound;
     public event EventHandler OnEndTurn;
+    public event EventHandler OnRetry;
 
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
@@ -38,6 +39,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
     private bool _canInteract;
     public LevelConfig LevelConfig => levelConfig;
+    public bool IsPauseGameInternal = false;
 
     // new
     protected override void Awake()
@@ -63,6 +65,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void StartNewGame()
     {
         CurrentRound = 0;
+        IsPauseGameInternal = false;
         if (!IsTutorialLevel) LoadMapGame();
     }
 
@@ -172,7 +175,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleEndTurn()
     {
-        if (SelectedCharacter == null) return;
+        if (SelectedCharacter == null || IsPauseGameInternal) return;
         SetInteract(true);
         if (SelectedCharacter.IsReact)
         {
@@ -274,6 +277,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         MapManager.DestroyMap();
         DestroyAllCharacters();
         StartNewGame();
+        OnRetry?.Invoke(this, EventArgs.Empty);
     }
 
     private void DestroyAllCharacters()
@@ -371,7 +375,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             Enemies.Remove(character);
             if (Enemies.Count == 0)
             {
-                // Invoke(nameof(OnWin), 1f);
+                IsPauseGameInternal = true;
+                SetInteract(false);
+                Invoke(nameof(OnWin), 1f);
             }
         }
         else
@@ -379,7 +385,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             _players.Remove(character);
             if (_players.Count == 0)
             {
-                // Invoke(nameof(OnLose), 1f);
+                IsPauseGameInternal = true;
+                SetInteract(false);
+                Invoke(nameof(OnLose), 1f);
             }
         }
     }
@@ -415,6 +423,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             character?.UpdateFacing();
         }
+    }
+
+    private void OnLose()
+    {
+        UIManager.Instance.OpenPopup(PopupType.Lose);
+    }
+
+    private void OnWin()
+    {
+        UIManager.Instance.OpenPopup(PopupType.Win);
     }
     
     #endregion

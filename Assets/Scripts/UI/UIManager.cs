@@ -111,6 +111,8 @@ public enum PopupType
     ShowInfo = 4,
     ConfirmPopup = 5,
     React = 6,
+    Win = 7,
+    Lose = 8
 }
 
 public enum MenuType

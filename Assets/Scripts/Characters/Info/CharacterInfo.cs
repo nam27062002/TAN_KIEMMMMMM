@@ -564,7 +564,11 @@ public class CharacterInfo
 
     public int GetCurrentDamage()
     {
+#if UNITY_EDITOR
+        var damage = Attributes.overrideDamage ? Attributes.atkOverride : Attributes.atk;
+#else 
         var damage = Attributes.atk;
+#endif
         foreach (var effectData in EffectInfo.Effects)
         {
             if (effectData.EffectType == EffectType.IncreaseDamage && effectData is ChangeStatEffect changeStatEffect)

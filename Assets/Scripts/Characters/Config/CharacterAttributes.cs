@@ -1,11 +1,14 @@
 ﻿using System;
+using Sirenix.OdinInspector;
+using UnityEngine;
+
 [Serializable]
 public class CharacterAttributes
 {
     public int maxMoveRange;
     public int health;
     public int mana;
-    public int atk;
+    [ShowIf("@!overrideDamage")] public int atk;
     public int def;
     public int chiDef;
     public int spd;
@@ -13,5 +16,8 @@ public class CharacterAttributes
     public RollData hitChangeRollData = new() { rollTime = 1, rollValue = 20 };
     public RollData effectResistanceRollData = new() { rollTime = 1, rollValue = 20 };
     public RollData effectEffectCleanseRollData = new() { rollTime = 1, rollValue = 20 };
-
+    
+    [Title("Override")]
+    public bool overrideDamage;
+    [ShowIf("@overrideDamage")] public int atkOverride;
 }
