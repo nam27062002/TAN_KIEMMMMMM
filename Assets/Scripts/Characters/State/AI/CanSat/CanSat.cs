@@ -9,6 +9,7 @@ public class CanSat : AICharacter
     [SerializeField] private GameObject assassinPrefab;
 
     public Dancer dancer;
+    public Assassin assassin;
 
     protected override void SetStateMachine()
     {
@@ -18,15 +19,26 @@ public class CanSat : AICharacter
             new DamageTakenState(this),
             new CanSat_SkillState(this));
     }
-    
+
     protected override IEnumerator HandleSpecialAction()
     {
         yield return new WaitForSeconds(1f);
-        StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1], SkillTurnType.MyTurn));
+        StartCoroutine(Summer(dancerPrefab, PetType.Dancer, GetSkillInfos(SkillTurnType.MyTurn)[1],
+            SkillTurnType.MyTurn, true));
         yield return new WaitForSeconds(2f);
-        StartCoroutine(Summer(assassinPrefab, GetSkillInfos(SkillTurnType.EnemyTurn)[1], SkillTurnType.EnemyTurn));
+        StartCoroutine(Summer(assassinPrefab, PetType.Assassin, GetSkillInfos(SkillTurnType.EnemyTurn)[1],
+            SkillTurnType.EnemyTurn, true));
     }
-    
+
+
+    public override void OnDie()
+    {
+        base.OnDie();
+        dancer?.DestroyCharacter();
+        assassin?.DestroyCharacter();
+    }
+
+
     protected override void SetSpeed()
     {
         if (GpManager.IsTutorialLevel)
@@ -37,10 +49,10 @@ public class CanSat : AICharacter
         {
             base.SetSpeed();
         }
-        
+
         Info.Speed = 1000;
     }
-    
+
     public override void HandleAIPlay()
     {
         AlkawaDebug.Log(ELogCategory.AI, "HandleAIPlay");
@@ -48,18 +60,18 @@ public class CanSat : AICharacter
         var enemiesInRange = GpManager.GetEnemiesInRange(this, 2, DirectionType.All);
         if (dancer == null && Info.ActionPointsList.Count(p => p == 3) >= 2)
         {
-            StartCoroutine(Summer(dancerPrefab, GetSkillInfos(SkillTurnType.MyTurn)[1], SkillTurnType.MyTurn));
+            StartCoroutine(Summer(dancerPrefab, PetType.Dancer, GetSkillInfos(SkillTurnType.MyTurn)[1],
+                SkillTurnType.MyTurn));
             Info.ReduceActionPoints();
         }
         else if (Info.ActionPointsList.Count(p => p == 3) >= 1 && enemiesInRange.Count > 0)
         {
             Enemy = enemiesInRange[0];
-            HandleCastSkill(GetSkillInfos(SkillTurnType.MyTurn)[2], new List<Character> {Enemy});
-            AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {GetSkillInfos(SkillTurnType.MyTurn)[2].name}");
+            HandleCastSkill(GetSkillInfos(SkillTurnType.MyTurn)[2], new List<Character> { Enemy });
+            AlkawaDebug.Log(ELogCategory.AI, $"HandleAICastSkill: {GetSkillInfos(SkillTurnType.MyTurn)[2].name}");
         }
         else if (TryMoving())
         {
-            
         }
         else
         {
@@ -67,23 +79,40 @@ public class CanSat : AICharacter
         }
     }
 
-    private IEnumerator Summer(GameObject type, SkillInfo skillInfo,SkillTurnType skillTurnType, bool dontNeedActionPoints = false)
+    private IEnumerator Summer(GameObject type, PetType petType, SkillInfo skillInfo, SkillTurnType skillTurnType,
+        bool dontNeedActionPoints = false)
     {
         HandleCastSkill(skillInfo, new List<Character> { this }, skillTurnType, dontNeedActionPoints);
         if (!dontNeedActionPoints) Info.ReduceActionPoints();
         yield return new WaitForSeconds(1f);
-        SpawnEnemy(type);
+        SpawnEnemy(type, petType);
     }
 
-    private void SpawnEnemy(GameObject gameObj)
+    private void SpawnEnemy(GameObject gameObj, PetType type)
     {
         var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, 6, DirectionType.All);
         if (cells is not { Count: > 0 }) return;
         int randomIndex = Random.Range(0, cells.Count);
         var selectedCell = cells[randomIndex];
         var go = Instantiate(gameObj);
-        dancer = go.GetComponent<Dancer>();
-        dancer.Initialize(selectedCell);
-        dancer.owner = this;
+        switch (type)
+        {
+            case PetType.Dancer:
+                dancer = go.GetComponent<Dancer>();
+                dancer.Initialize(selectedCell);
+                dancer.owner = this;
+                break;
+            case PetType.Assassin:
+                assassin = go.GetComponent<Assassin>();
+                assassin.Initialize(selectedCell);
+                assassin.owner = this;
+                break;
+        }
+    }
+
+    private enum PetType
+    {
+        Dancer,
+        Assassin,
     }
 }

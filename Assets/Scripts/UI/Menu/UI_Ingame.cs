@@ -174,16 +174,46 @@ public class UI_Ingame : MenuBase
 
     private void SetupCharacterFocus()
     {
-        if (_avtSpdUI == null || _avtSpdUI.Count == 0)
+        var validCharacters = GameplayManager.Characters.Where(c => c != null).ToList();
+
+        if (_avtSpdUI == null || 
+            !_avtSpdUI.Any() || 
+            _avtSpdUI.Count != validCharacters.Count)
         {
-            _avtSpdUI = new List<AVT_SpdUI>();
-            foreach (var go in GameplayManager.Characters.Select(_ => Instantiate(avatarPrefab, characterPool)))
+            foreach (var item in _avtSpdUI.ToList())
             {
+                if (item != null)
+                {
+                    item.DestroyObject();
+                }
+            }
+            _avtSpdUI = new List<AVT_SpdUI>();
+            
+            foreach (var character in validCharacters)
+            {
+                if (character == null) continue;
+
+                var go = Instantiate(avatarPrefab, characterPool);
+                if (go == null) continue;
+
                 var rt = go.GetComponent<RectTransform>();
-                rt.anchorMin = new Vector2(0, 0.5f);
-                rt.anchorMax = new Vector2(0, 0.5f);
-                rt.pivot = new Vector2(0.5f, 0.5f);
-                _avtSpdUI.Add(go.GetComponent<AVT_SpdUI>());
+                if (rt != null)
+                {
+                    rt.anchorMin = new Vector2(0, 0.5f);
+                    rt.anchorMax = new Vector2(0, 0.5f);
+                    rt.pivot = new Vector2(0.5f, 0.5f);
+                }
+
+                var avtSpd = go.GetComponent<AVT_SpdUI>();
+                if (avtSpd != null)
+                {
+                    _avtSpdUI.Add(avtSpd);
+                }
+                else
+                {
+                    Debug.LogError("AVT_SpdUI component missing on instantiated object");
+                    Destroy(go);
+                }
             }
         }
     

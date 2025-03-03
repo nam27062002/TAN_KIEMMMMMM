@@ -59,6 +59,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         StartNewGame();
     }
 
+#if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            UIManager.Instance.OpenPopup(PopupType.Credit);
+        }
+    }
+#endif
+
     protected override void UnRegisterEvents()
     {
         base.UnRegisterEvents();
@@ -487,6 +497,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             item.OnDie();
         }
+
+        IsPauseGameInternal = true;
     }
 
     private void SpawnSpecialEnemy()
@@ -511,11 +523,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 character.Initialize(MapManager.GetCell(point));
             }
         }
-        Invoke(nameof(SetCanInteract), 5f);
+
+        Invoke(nameof(SetCanInteract), 7f);
     }
 
     private void SetCanInteract()
     {
+        OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
+        IsPauseGameInternal = false;
         ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
     }
 
@@ -592,7 +607,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     }
 
     private Sequence _winSequence;
-    
+
     private void InitializeWinSequence(List<Character> characters)
     {
         _winSequence = DOTween.Sequence();
@@ -608,7 +623,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         character.AnimationData.PlayAnimation(AnimationParameterNameType.MoveRight);
 
         const float moveDuration = 8f;
-        float moveDistance = 20f;
+        float moveDistance = 30f;
         Vector3 targetPosition = character.transform.position + Vector3.right * moveDistance;
 
         _winSequence.Join(character.transform
@@ -654,6 +669,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 CleanupSequence();
                 return true;
             }
+
             if (IsCharacterVisible(character.transform.position, camera))
             {
                 return false;
@@ -687,8 +703,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void ProceedToNextLevel()
     {
-        // UIManager.Instance.OpenPopup(PopupType.Win);
-        NextLevel();
+        if (levelConfig.levelType == LevelType.Tutorial)
+            NextLevel();
+        else if (levelConfig.levelType == LevelType.Level1)
+        {
+            ShowAfterCredit();
+        }
+    }
+
+    private void ShowAfterCredit()
+    {
+        UIManager.Instance.OpenPopup(PopupType.Credit);
     }
 
     #endregion

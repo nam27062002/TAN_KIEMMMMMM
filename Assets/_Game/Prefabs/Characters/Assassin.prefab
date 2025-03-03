@@ -83,7 +83,7 @@ PrefabInstance:
     - target: {fileID: 5687476869882378970, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 1180680478724877210}
+      objectReference: {fileID: 3575283788549774989}
     m_RemovedComponents:
     - {fileID: 3885517116035834783, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
     - {fileID: 4739863392310132876, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
@@ -92,7 +92,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1180680478724877210}
+      addedObject: {fileID: 3575283788549774989}
   m_SourcePrefab: {fileID: 100100000, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
 --- !u!114 &2814240345546387717 stripped
 MonoBehaviour:
@@ -132,7 +132,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 875712613406427802, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
   m_PrefabInstance: {fileID: 7630165100037114847}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1180680478724877210
+--- !u!114 &3575283788549774989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7333246952435401029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45eba8bfe96544118128d3f9601b37aa, type: 3}
+  m_Script: {fileID: 11500000, guid: dd6a865c96f848148ced3d6db80456f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: 7
@@ -152,8 +152,11 @@ MonoBehaviour:
   model: {fileID: 8885421628850033908}
   characterConfig:
     characterHeight: 1
-    characterName: "V\u0169 C\xF4ng"
+    characterName: 
     characterIcon: {fileID: 0}
+    slideBarIcon: {fileID: 0}
+    characterNoBgIcon: {fileID: 0}
+    story: 
     characterAttributes:
       maxMoveRange: 0
       health: 80
@@ -178,6 +181,10 @@ MonoBehaviour:
         rollTime: 1
         rollValue: 20
         add: 0
+      overrideDamage: 0
+      atkOverride: 0
+      overrideMaxMoveRange: 0
+      maxMoveRangeOverride: 0
     actionPoints:
       m_keys: 
       m_values: 

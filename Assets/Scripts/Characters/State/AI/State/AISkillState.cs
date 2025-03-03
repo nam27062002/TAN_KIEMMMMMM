@@ -9,9 +9,9 @@
         base.HandleAllTargetFinish();
         HandleEndTurn();
     }
-
+    
     private void HandleEndTurn()
     {
-        if (!WaitForReact && GpManager.SelectedCharacter != null) GameplayManager.Instance.HandleEndTurn();
+        if (!WaitForReact && GpManager.SelectedCharacter != null ) GameplayManager.Instance.HandleEndTurn();
     }
 }
