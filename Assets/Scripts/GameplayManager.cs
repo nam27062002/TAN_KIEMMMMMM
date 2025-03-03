@@ -71,15 +71,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         CurrentRound = 0;
         IsPauseGameInternal = false;
-        hasTriggered = false;
         cam.orthographicSize = levelConfig.cameraSize;
-        if (!IsTutorialLevel) 
+        if (!IsTutorialLevel)
             ShowStartConversation();
     }
 
     private void ShowStartConversation()
     {
-        if (levelConfig.startConversations is { Count: > 0 })
+        if (levelConfig.startConversations is { Count: > 0 } && !levelConfig.canSkipStartConversation)
         {
             ShowNextStartConversation(0);
         }
@@ -104,7 +103,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             OnEndConversation = () => ShowNextStartConversation(index + 1)
         });
     }
-    
+
     public void LoadMapGame()
     {
         var go = Instantiate(levelConfig.mapPrefab, transform);
@@ -119,6 +118,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             item.DestroyCharacter();
         }
+
         charactersInConversation.Clear();
         Characters.Clear();
         _players.Clear();
@@ -425,7 +425,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SelectedCharacter.HandleSelectSkill(skillIndex, skillUI);
     }
 
-    public IEnumerator HandleCharacterDie(Character character)
+    public void HandleCharacterDie(Character character)
     {
         IsPauseGameInternal = false;
         SetInteract(true);
@@ -458,49 +458,36 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             }
         }
 
-        yield return HandleSpecialForLevel1(character);
+        HandleSpecialForLevel1(character);
     }
 
-    private IEnumerator HandleSpecialForLevel1(Character character)
+    private void HandleSpecialForLevel1(Character character)
     {
-        yield break;
         if (levelConfig.levelType == LevelType.Level1)
         {
             if (character is RoiNguoi && Characters.Any(p => p is ThietNhan))
             {
-                IsPauseGameInternal = true;
-                SetInteract(false);
-                foreach (var item in Characters.OfType<ThietNhan>().ToList())
+                ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
+                var characters = Characters.OfType<ThietNhan>().Cast<Character>().ToList();
+                InitializeWinSequence(characters);
+                StartCoroutine(WaitForCharactersExitCamera(characters));
+                UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
                 {
-                    item.OnDie();
-                }
-
-                if (hasTriggered)
-                    yield return null;
-                else
-                {
-                    SpawnSpecialEnemy();
-                    hasTriggered = true;
-                    yield return new WaitForSeconds(5f);
-                }
-            }
-            else if (character is ThietNhan && !Characters.Any(p => p is ThietNhan))
-            {
-                IsPauseGameInternal = true;
-                SetInteract(false);
-                if (hasTriggered)
-                    yield return null;
-                else
-                {
-                    SpawnSpecialEnemy();
-                    hasTriggered = true;
-                    yield return new WaitForSeconds(5f);
-                }
+                    Conversation = levelConfig.special1Conversation.conversation,
+                    OnEndConversation = OnEndSpecificConversation,
+                });
             }
         }
     }
 
-    private bool hasTriggered = false;
+    private void OnEndSpecificConversation()
+    {
+        SpawnSpecialEnemy();
+        foreach (var item in Characters.OfType<ThietNhan>().ToList())
+        {
+            item.OnDie();
+        }
+    }
 
     private void SpawnSpecialEnemy()
     {
@@ -524,6 +511,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 character.Initialize(MapManager.GetCell(point));
             }
         }
+        Invoke(nameof(SetCanInteract), 5f);
+    }
+
+    private void SetCanInteract()
+    {
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
     }
 
     public List<Character> GetEnemiesInRange(Character character, int range, DirectionType directionType)
@@ -592,57 +585,108 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         });
     }
 
-    private Sequence _winSequence;
-
     private void OnWin()
     {
-        _winSequence = DOTween.Sequence();
-        foreach (var item in _players)
-        {
-            item.UpdateFacing();
-            item.AnimationData.PlayAnimation(AnimationParameterNameType.MoveRight);
-            float moveDistance = 20f;
-            Vector3 targetPosition = item.transform.position + new Vector3(moveDistance, 0, 0);
-            _winSequence.Join(item.transform.DOMoveX(targetPosition.x, 8f).SetEase(Ease.Linear));
-        }
-
-        StartCoroutine(CheckCharactersOutOfCamera());
+        InitializeWinSequence(_players);
+        StartCoroutine(WaitForCharactersExitCamera(_players, ProceedToNextLevel));
     }
 
-    private IEnumerator CheckCharactersOutOfCamera()
+    private Sequence _winSequence;
+    
+    private void InitializeWinSequence(List<Character> characters)
+    {
+        _winSequence = DOTween.Sequence();
+        foreach (var player in characters)
+        {
+            SetupCharacterMovement(player);
+        }
+    }
+
+    private void SetupCharacterMovement(Character character)
+    {
+        character.SetFacing(FacingType.Right);
+        character.AnimationData.PlayAnimation(AnimationParameterNameType.MoveRight);
+
+        const float moveDuration = 8f;
+        float moveDistance = 20f;
+        Vector3 targetPosition = character.transform.position + Vector3.right * moveDistance;
+
+        _winSequence.Join(character.transform
+            .DOMoveX(targetPosition.x, moveDuration)
+            .SetEase(Ease.Linear));
+    }
+
+    private IEnumerator WaitForCharactersExitCamera(List<Character> characters, Action action = null)
+    {
+        yield return WaitUntilAllCharactersExitCamera(characters);
+        CleanupSequence();
+        action?.Invoke();
+    }
+
+    private IEnumerator WaitUntilAllCharactersExitCamera(List<Character> characters)
+    {
+        Camera mainCamera = GetMainCamera();
+        if (mainCamera == null) yield break;
+
+        while (!AreAllCharactersOutOfCamera(characters, mainCamera))
+        {
+            yield return null;
+        }
+    }
+
+    private Camera GetMainCamera()
     {
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
             Debug.LogError("Main camera not found!");
-            yield break;
         }
 
-        bool allOutOfCamera;
-        do
+        return mainCamera;
+    }
+
+    private bool AreAllCharactersOutOfCamera(List<Character> characters, Camera camera)
+    {
+        foreach (var character in characters)
         {
-            allOutOfCamera = true;
-            foreach (var item in _players)
+            if (character == null)
             {
-                var pos = item.transform.position;
-                pos.x -= 0.5f;
-                Vector3 viewportPos = mainCamera.WorldToViewportPoint(pos);
-                if (viewportPos.x >= 0 && viewportPos.x <= 1 && viewportPos.y >= 0 && viewportPos.y <= 1)
-                {
-                    allOutOfCamera = false;
-                    break;
-                }
+                CleanupSequence();
+                return true;
             }
-
-            yield return null;
-        } while (!allOutOfCamera);
-
-        if (_winSequence != null && _winSequence.IsActive())
-        {
-            _winSequence.Kill();
-            _winSequence = null;
+            if (IsCharacterVisible(character.transform.position, camera))
+            {
+                return false;
+            }
         }
 
+        return true;
+    }
+
+    private bool IsCharacterVisible(Vector3 worldPosition, Camera camera)
+    {
+        Vector3 adjustedPosition = worldPosition - Vector3.right * 0.5f;
+        Vector3 viewportPoint = camera.WorldToViewportPoint(adjustedPosition);
+        return IsViewportPointVisible(viewportPoint);
+    }
+
+    private bool IsViewportPointVisible(Vector3 viewportPoint)
+    {
+        return viewportPoint.x.IsBetween(0f, 1f)
+               && viewportPoint.y.IsBetween(0f, 1f);
+    }
+
+
+    private void CleanupSequence()
+    {
+        if (_winSequence == null || !_winSequence.IsActive()) return;
+
+        _winSequence.Kill();
+        _winSequence = null;
+    }
+
+    private void ProceedToNextLevel()
+    {
         // UIManager.Instance.OpenPopup(PopupType.Win);
         NextLevel();
     }

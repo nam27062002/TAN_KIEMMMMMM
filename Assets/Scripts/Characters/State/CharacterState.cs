@@ -35,7 +35,7 @@ public abstract class CharacterState : IState
         SetFacing(facing);
     }
     
-    protected void SetFacing(FacingType facing)
+    public void SetFacing(FacingType facing)
     {
         Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} set facing to {facing}");

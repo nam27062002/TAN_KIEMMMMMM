@@ -333,7 +333,11 @@ public class CharacterInfo
 
     private int CalculateBaseMovement()
     {
+#if UNITY_EDITOR
+        var baseValue = Attributes.overrideMaxMoveRange ? Attributes.maxMoveRangeOverride - MoveAmount : Attributes.maxMoveRange - MoveAmount;
+#else
         var baseValue = Attributes.maxMoveRange - MoveAmount;
+#endif
         var moveBuff = EffectInfo.Effects
             .Where(e => e.EffectType == EffectType.IncreaseMoveRange)
             .Sum(e => ((ChangeStatEffect)e).Value);

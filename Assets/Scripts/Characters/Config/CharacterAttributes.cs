@@ -1,7 +1,5 @@
 ﻿using System;
 using Sirenix.OdinInspector;
-using UnityEngine;
-
 [Serializable]
 public class CharacterAttributes
 {
@@ -20,4 +18,6 @@ public class CharacterAttributes
     [Title("Override")]
     public bool overrideDamage;
     [ShowIf("@overrideDamage")] public int atkOverride;
+    public bool overrideMaxMoveRange;
+    [ShowIf("@overrideMaxMoveRange")] public int maxMoveRangeOverride;
 }

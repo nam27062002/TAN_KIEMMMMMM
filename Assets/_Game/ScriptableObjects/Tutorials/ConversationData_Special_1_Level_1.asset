@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af12f95abbc445285f217f54242142e, type: 3}
+  m_Name: ConversationData_Special_1_Level_1
+  m_EditorClassIdentifier: 
+  conversation:
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 2ac3f8aee4816ff44ae7fbc44e327d95, type: 3}
+    text: "M\u1ECDi ng\u01B0\u1EDDi ch\u1EDD \u1EDF \u0111\xE2y, t\xF4i \u0111u\u1ED5i
+      theo \u0111\xE1m Thi\u1EBFt Nh\xE2n. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
+    text: "Ch\u1EADm \u0111\xE3! C\xF3 v\u1EA5n \u0111\u1EC1... "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: b9f0356a1487a054aa17f9403c763869, type: 3}
+    text: "T\xF4i \u0111\u1ED3ng \xFD v\u1EDBi anh Ch\xEDch. N\u1EBFu kh\xF4ng gi\u1EBFt
+      ch\xFAng, \u0111\u1EC3 ch\xFAng k\xE9o b\u1EA7y quay l\u1EA1i th\xEC m\u1EDBi
+      l\xE0 v\u1EA5n \u0111\u1EC1 l\u1EDBn. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "\xDD c\xF4 l\xE0 h\xE0nh x\u1EED c\u1EE7a \u0111\xE1m Thi\u1EBFt Nh\xE2n
+      n\xE0y v\u1EABn kh\xE1c th\u01B0\u1EDDng?"
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
+    text: "\u0110\xFAng th\u1EBF. B\xECnh th\u01B0\u1EDDng Thi\u1EBFt Nh\xE2n l\u1EA1c
+      \u0111\xE0n s\u1EBD kh\xF4ng c\xF3 chuy\u1EC7n b\u1ECF ch\u1EA1y \u0111\xE2u.
+      Ch\xFAng n\xF3 s\u1EBD \u0111\xE1nh \u0111\u1EBFn l\xFAc ho\u1EB7c l\xE0 ch\xFAng
+      ta ch\u1EBFt, ho\u1EB7c l\xE0 ch\xFAng n\xF3 ch\u1EBFt. Tr\u1EEB phi... "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: b9f0356a1487a054aa17f9403c763869, type: 3}
+    text: "Tr\u1EEB phi, c\xF3 th\u1EE9 g\xEC \u0111\xF3 \u0111\xE1ng s\u1EE3 \u0111\u1EBFn
+      n\u1ED7i \xE1p \u0111\u1EA3o b\u1EA3n n\u0103ng kh\xE1t m\xE1u c\u1EE7a Thi\u1EBFt
+      Nh\xE2n \u0111ang \u0111\u1EBFn \u0111\xE2y. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 2ac3f8aee4816ff44ae7fbc44e327d95, type: 3}
+    text: "Ch\u1EBFt ti\u1EC7t! H\u01B0\u01A1ng, d\u1EABn th\u1ED1ng l\u0129nh r\xFAt
+      lui. T\xF4i \u1EDF l\u1EA1i \u0111o\u1EA1n h\u1EADu. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "Mu\u1ED9n r\u1ED3i. M\u1ECDi ng\u01B0\u1EDDi chu\u1EA9n b\u1ECB ngh\xEAnh
+      chi\u1EBFn! "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "LevelConfig", menuName = "SO/LevelConfig")]
 public class LevelConfig : ScriptableObject
 {
+    public bool canSkipStartConversation;
     public string levelName;
     public float cameraSize;
     public LevelType levelType;
@@ -14,6 +15,9 @@ public class LevelConfig : ScriptableObject
     public List<ConversationData> startConversations = new List<ConversationData>();
     public List<ConversationData> winConversations = new List<ConversationData>();
     public LevelConfig nextLevel;
+    
+    public ConversationData special1Conversation;
+    public ConversationData special2Conversation;
 }
 
 [Serializable]
