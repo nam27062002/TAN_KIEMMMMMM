@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -65,6 +66,14 @@ public class ConversationPopup : PopupBase
                 avatarImage.enabled = false;
             }
 
+            if (data.hasSpawnCharacter)
+            {
+                foreach (var character in data.spawnCharacters.Select(item => Instantiate(item.character.gameObject, item.position, Quaternion.identity)).Select(go => go.GetComponent<Character>()))
+                {
+                    GameplayManager.Instance.charactersInConversation.Add(character);
+                }
+            }
+
             conversationText.text = "";
             if (_typeCoroutine != null)
             {
@@ -78,7 +87,7 @@ public class ConversationPopup : PopupBase
             {
                 StopCoroutine(_autoNextCoroutine);
             }
-
+            
             _autoNextCoroutine = StartCoroutine(AutoNextAfterDelay(autoNextDelay));
         }
         else

@@ -11,7 +11,8 @@ public class LevelConfig : ScriptableObject
     public CharacterSpawnerConfig spawnerConfig;
     public CharacterSpawnerConfig specialSpawnerConfig;
     public MapManager mapPrefab;
-
+    public List<ConversationData> startConversations = new List<ConversationData>();
+    public List<ConversationData> winConversations = new List<ConversationData>();
     public LevelConfig nextLevel;
 }
 

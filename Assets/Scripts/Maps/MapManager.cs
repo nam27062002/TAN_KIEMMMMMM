@@ -14,9 +14,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private SerializableDictionary<Vector2Int, Cell> cells = new();
 
     private int _completed;
-#if UNITY_EDITOR
     private const float DelayIncrement = 0.01f;
-#endif
     private Pathfinding _pathfinding;
     public Vector2Int MapSize => mapSize;
     public SerializableDictionary<Vector2Int, Cell> Cells => cells;

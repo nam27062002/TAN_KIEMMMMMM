@@ -12,7 +12,16 @@ public class ConversationData : ScriptableObject
         public bool useAvt = true;
         [ShowIf(nameof(useAvt))] public Sprite avatar;
         public string text;
+        public bool hasSpawnCharacter;
+        [ShowIf("hasSpawnCharacter")] public List<SpawnCharacter> spawnCharacters = new();
     }
         
     public List<Data> conversation = new List<Data>();
+    
+    [Serializable]
+    public class SpawnCharacter
+    {
+        public Character character;
+        public Vector2 position;
+    }
 }

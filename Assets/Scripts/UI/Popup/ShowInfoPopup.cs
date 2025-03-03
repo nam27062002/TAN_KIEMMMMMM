@@ -14,16 +14,38 @@ public class ShowInfoPopup : PopupBase
     public ProcessBar hpBarUI;
     public ProcessBar mpBarUI;
     public Image avatar;
-    
-    [Title("Skill Info"), Space]
+
+    [Title("Skill Info"), Space] 
+    public GameObject skillScrollObject;
     public VerticalLayoutGroup verticalLayoutGroup;
     public RectTransform container;
     public SkillInfo_UI skillInfoPrefab; 
     public float skillInfoHeight;
     public int space;
     public ScrollRect skillScrollRect;
+    public Image skillPanelImage;
+    public Image skillTitleName;
+
+    [Title("Story Info"), Space]
+    public GameObject storyScrollObject;
+    public RectTransform storyContainer;
+    public TextMeshProUGUI storyText;
+    public Image storyPanelImage;
+    public Image storyTitleName;
 
     private ShowInfoCharacterParameters _showInfoCharacterParameters;
+    [SerializeField] private ScrollType scrollType = ScrollType.Skill;
+    public Button skillButton;
+    public Button storyButton;
+
+    public enum ScrollType
+    {
+        Skill,
+        Story
+    }
+
+    // Thêm ContentSizeFitter vào Editor để dễ kiểm soát
+    [SerializeField, HideInInspector] private ContentSizeFitter storyContentSizeFitter;
 
     public override void Open(UIBaseParameters parameters = null)
     {
@@ -39,6 +61,11 @@ public class ShowInfoPopup : PopupBase
             SetupBars(info);
             ShowSkillInfo();
             ResetScroll();
+            SetupStoryContent(); // Thay thế cho việc gán trực tiếp storyText.text
+            SetScrollUI();
+
+            // Đăng ký sự kiện button click
+            RegisterButtonEvents();
         }
     }
 
@@ -49,6 +76,16 @@ public class ShowInfoPopup : PopupBase
         spd.text = info.Attributes.spd.ToString();
         def.text = info.GetDef().ToString();
         chiDef.text = info.GetChiDef().ToString();
+    }
+
+    private void SetScrollUI()
+    {
+        skillScrollObject.SetActiveIfNeeded(scrollType == ScrollType.Skill);
+        storyScrollObject.SetActiveIfNeeded(scrollType == ScrollType.Story); 
+        skillPanelImage.enabled = scrollType == ScrollType.Skill;
+        storyPanelImage.enabled = scrollType == ScrollType.Story; 
+        skillTitleName.color = scrollType == ScrollType.Skill ? Color.black : Color.white;
+        storyTitleName.color = scrollType == ScrollType.Story ? Color.black : Color.white; // Sửa lỗi logic
     }
 
     private void SetupAvatar(CharacterConfig config)
@@ -86,7 +123,7 @@ public class ShowInfoPopup : PopupBase
             Destroy(child.gameObject);
         }
         var skills = _showInfoCharacterParameters.Skills;
-        int skillCount = skills.Count - 1; // không tính đánh thường
+        int skillCount = skills.Count - 1;
         float newHeight = skillInfoHeight * skillCount + space * (skillCount - 1);
         container.sizeDelta = new Vector2(container.sizeDelta.x, newHeight);
         verticalLayoutGroup.spacing = space;
@@ -99,10 +136,51 @@ public class ShowInfoPopup : PopupBase
         }
     }
 
+    private void SetupStoryContent()
+    {
+        storyText.text = _showInfoCharacterParameters.Character.characterConfig.story;
+        AdjustStoryContainerSize(); 
+    }
+
+    private void AdjustStoryContainerSize()
+    {
+        Canvas.ForceUpdateCanvases();
+        float textHeight = storyText.GetPreferredValues(storyText.text, storyContainer.rect.width, 0).y;
+        storyContainer.sizeDelta = new Vector2(storyContainer.sizeDelta.x, textHeight);
+        
+        if (storyContentSizeFitter != null)
+        {
+            storyContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        }
+    }
+
+    private void RegisterButtonEvents()
+    {
+        skillButton.onClick.RemoveAllListeners();
+        storyButton.onClick.RemoveAllListeners();
+        
+        skillButton.onClick.AddListener(() =>
+        {
+            scrollType = ScrollType.Skill;
+            SetScrollUI();
+            ResetScroll();
+        });
+        
+        storyButton.onClick.AddListener(() =>
+        {
+            scrollType = ScrollType.Story;
+            SetScrollUI();
+            ResetScroll();
+        });
+    }
+
     public override void Close()
     {
+        scrollType = ScrollType.Skill;
         ClearSkillInfo();
         ResetScroll();
+        skillButton.onClick.RemoveAllListeners(); 
+        storyButton.onClick.RemoveAllListeners(); 
         base.Close();
         if (GameplayManager.Instance.IsTutorialLevel)
         {
@@ -125,4 +203,20 @@ public class ShowInfoPopup : PopupBase
             skillScrollRect.verticalNormalizedPosition = 1;
         }
     }
+
+    #if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (storyContainer != null && storyContentSizeFitter == null)
+        {
+            storyContentSizeFitter = storyContainer.GetComponent<ContentSizeFitter>();
+            if (storyContentSizeFitter == null)
+            {
+                storyContentSizeFitter = storyContainer.gameObject.AddComponent<ContentSizeFitter>();
+                storyContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+                storyContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            }
+        }
+    }
+    #endif
 }

@@ -32,6 +32,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [ShowInInspector] private readonly List<Character> _players = new();
     [ShowInInspector] public readonly List<Character> Enemies = new();
     [ShowInInspector] public List<Character> Characters { get; private set; } = new();
+
+    public List<Character> charactersInConversation = new();
     public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? null : Characters[CurrentPlayerIndex];
 
     public Character SelectedCharacter { get; set; }
@@ -71,9 +73,38 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         IsPauseGameInternal = false;
         hasTriggered = false;
         cam.orthographicSize = levelConfig.cameraSize;
-        if (!IsTutorialLevel) LoadMapGame();
+        if (!IsTutorialLevel) 
+            ShowStartConversation();
     }
 
+    private void ShowStartConversation()
+    {
+        if (levelConfig.startConversations is { Count: > 0 })
+        {
+            ShowNextStartConversation(0);
+        }
+        else
+        {
+            LoadMapGame();
+        }
+    }
+
+    private void ShowNextStartConversation(int index)
+    {
+        if (index >= levelConfig.startConversations.Count)
+        {
+            LoadMapGame();
+            return;
+        }
+
+        var conversationData = levelConfig.startConversations[index];
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        {
+            Conversation = conversationData.conversation,
+            OnEndConversation = () => ShowNextStartConversation(index + 1)
+        });
+    }
+    
     public void LoadMapGame()
     {
         var go = Instantiate(levelConfig.mapPrefab, transform);
@@ -116,7 +147,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SortCharacterBySpeed();
         if (Characters.Any(p => p is CanSat))
         {
-            Invoke(nameof(SetMainCharacter), 5f); 
+            Invoke(nameof(SetMainCharacter), 5f);
         }
         else
         {
@@ -204,9 +235,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 CurrentPlayerIndex = 0;
                 HandleNewRound();
             }
-    
+
             SetMainCharacter();
         }
+
         OnEndTurn?.Invoke(this, EventArgs.Empty);
     }
 
@@ -270,6 +302,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             item?.Info.IncreaseActionPointsValue();
         }
+
         OnNewRound?.Invoke(this, EventArgs.Empty);
     }
 
@@ -298,7 +331,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         levelConfig = levelConfig.nextLevel;
         DestroyGameplay();
     }
-    
+
     private void DestroyAllCharacters()
     {
         foreach (var character in Characters)
@@ -313,6 +346,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             return FacingType.Right;
         }
+
         var opponents = character.Type == Type.AI ? _players : Enemies;
         var nearestOpponent = Utils.FindNearestCharacter(character, opponents);
 
@@ -401,9 +435,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 {
                     SelectedCharacter.OnUnSelected();
                 }
+
                 IsPauseGameInternal = true;
                 SetInteract(false);
-                Invoke(nameof(OnWin), 1f);
+                Invoke(nameof(ShowWinConversation), 1f);
             }
         }
         else
@@ -417,11 +452,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 Invoke(nameof(OnLose), 1f);
             }
         }
+
         yield return HandleSpecialForLevel1(character);
     }
-    
+
     private IEnumerator HandleSpecialForLevel1(Character character)
     {
+        yield break;
         if (levelConfig.levelType == LevelType.Level1)
         {
             if (character is RoiNguoi && Characters.Any(p => p is ThietNhan))
@@ -432,6 +469,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 {
                     item.OnDie();
                 }
+
                 if (hasTriggered)
                     yield return null;
                 else
@@ -458,10 +496,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     }
 
     private bool hasTriggered = false;
-    
+
     private void SpawnSpecialEnemy()
     {
-
         foreach (var spawnPoint in levelConfig.specialSpawnerConfig.spawnPoints)
         {
             foreach (var point in spawnPoint.Value.points)
@@ -499,13 +536,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
         character1.Info.Cell = cell2;
         character2.Info.Cell = cell1;
-        
+
         character1.SetPosition();
         character2.SetPosition();
-        
+
         cell1.HideFocus();
         cell2.ShowFocus();
-        
+
         UpdateAllFacing();
     }
 
@@ -522,18 +559,48 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         UIManager.Instance.OpenPopup(PopupType.Lose);
     }
 
+    private void ShowWinConversation()
+    {
+        if (levelConfig.winConversations is { Count: > 0 })
+        {
+            ShowNextConversation(0);
+        }
+        else
+        {
+            OnWin();
+        }
+    }
+
+    private void ShowNextConversation(int index)
+    {
+        if (index >= levelConfig.winConversations.Count)
+        {
+            OnWin();
+            return;
+        }
+
+        var conversationData = levelConfig.winConversations[index];
+        UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+        {
+            Conversation = conversationData.conversation,
+            OnEndConversation = () => ShowNextConversation(index + 1)
+        });
+    }
+
+    private Sequence _winSequence;
+
     private void OnWin()
     {
-        Sequence winSequence = DOTween.Sequence();
+        _winSequence = DOTween.Sequence();
         foreach (var item in _players)
         {
             item.UpdateFacing();
             item.AnimationData.PlayAnimation(AnimationParameterNameType.MoveRight);
             float moveDistance = 20f;
             Vector3 targetPosition = item.transform.position + new Vector3(moveDistance, 0, 0);
-            
-            winSequence.Join(item.transform.DOMoveX(targetPosition.x, 8f).SetEase(Ease.Linear));
+            _winSequence.Join(item.transform.DOMoveX(targetPosition.x, 8f).SetEase(Ease.Linear));
         }
+
         StartCoroutine(CheckCharactersOutOfCamera());
     }
 
@@ -545,6 +612,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             Debug.LogError("Main camera not found!");
             yield break;
         }
+
         bool allOutOfCamera;
         do
         {
@@ -560,12 +628,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                     break;
                 }
             }
+
             yield return null;
         } while (!allOutOfCamera);
 
-        UIManager.Instance.OpenPopup(PopupType.Win);
+        if (_winSequence != null && _winSequence.IsActive())
+        {
+            _winSequence.Kill();
+            _winSequence = null;
+        }
+
+        // UIManager.Instance.OpenPopup(PopupType.Win);
+        NextLevel();
     }
-    
+
     #endregion
 
     #region Tutorial
