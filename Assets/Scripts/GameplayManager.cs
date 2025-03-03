@@ -115,6 +115,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void LoadCharacter()
     {
+        foreach (var item in charactersInConversation)
+        {
+            item.DestroyCharacter();
+        }
+        charactersInConversation.Clear();
         Characters.Clear();
         _players.Clear();
         Enemies.Clear();

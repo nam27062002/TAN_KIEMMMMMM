@@ -28,7 +28,8 @@ public class EmpressesBowstrings : PassiveSkill
     private void Start()
     {
         _currentMoveRange = initialMoveRange;
-        character.Info.MoveAmount = _currentMoveRange;
+        if (character.Info != null) 
+            character.Info.MoveAmount = _currentMoveRange;
         _currentDodgeBonus = initialDodgeBonus;
         IncreaseDodge(_currentDodgeBonus);
     }
@@ -106,6 +107,7 @@ public class EmpressesBowstrings : PassiveSkill
     
     private void IncreaseDodge(int value)
     {
+        if (character.Info == null) return;
         character.Info.Attributes.def += value;
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Né tránh: +{value} def (ban đầu: {character.Info.Attributes.def})");
     }

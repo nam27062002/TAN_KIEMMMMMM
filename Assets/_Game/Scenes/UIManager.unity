@@ -2143,9 +2143,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 218587074}
     m_Modifications:
+    - target: {fileID: 4847523020769597736, guid: 3c6a344bf9c2456439e8872783a6bc93, type: 3}
+      propertyPath: bg
+      value: 
+      objectReference: {fileID: 8360425528843211129}
     - target: {fileID: 7163085337760435159, guid: 3c6a344bf9c2456439e8872783a6bc93, type: 3}
       propertyPath: m_Name
       value: ConversationPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7163085337760435159, guid: 3c6a344bf9c2456439e8872783a6bc93, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050828116069376159, guid: 3c6a344bf9c2456439e8872783a6bc93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8670402574177496599, guid: 3c6a344bf9c2456439e8872783a6bc93, type: 3}
       propertyPath: m_Pivot.x
@@ -2232,6 +2244,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c6a344bf9c2456439e8872783a6bc93, type: 3}
+--- !u!1 &8360425528843211129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8050828116069376159, guid: 3c6a344bf9c2456439e8872783a6bc93, type: 3}
+  m_PrefabInstance: {fileID: 8360425528843211128}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class ConversationPopup : PopupBase
     [SerializeField] private TextMeshProUGUI conversationText;
     [SerializeField] private Button nextButton;
     [SerializeField] private Button skipButton;
-
+    [SerializeField] private GameObject bg;
     private List<ConversationData.Data> _conversationData = null;
 
     [Header("Typewriter Settings")]
@@ -56,6 +56,7 @@ public class ConversationPopup : PopupBase
         if (_currentIndex < _conversationData.Count)
         {
             var data = _conversationData[_currentIndex];
+            
             if (data.useAvt)
             {
                 avatarImage.enabled = true;
@@ -68,18 +69,29 @@ public class ConversationPopup : PopupBase
 
             if (data.hasSpawnCharacter)
             {
-                foreach (var character in data.spawnCharacters.Select(item => Instantiate(item.character.gameObject, item.position, Quaternion.identity)).Select(go => go.GetComponent<Character>()))
+                foreach (var item in data.spawnCharacters)
                 {
+                    var go =  Instantiate(item.character.gameObject, item.position, Quaternion.identity);
+                    var character = go.GetComponent<Character>();
+                    if (item.facingType == FacingType.Left)
+                    {
+                        character.transform.localScale = new Vector3(-1, 1, 1);
+                    }
                     GameplayManager.Instance.charactersInConversation.Add(character);
                 }
             }
 
+            bg.SetActiveIfNeeded(data.text != "");
             conversationText.text = "";
             if (_typeCoroutine != null)
             {
                 StopCoroutine(_typeCoroutine);
             }
 
+            if (data.shake)
+            {
+                TraumaInducer.Instance.Shake();
+            }
             _typeCoroutine = StartCoroutine(TypeText(data.text));
 
             // Reset auto-next coroutine

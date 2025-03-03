@@ -22,13 +22,21 @@ MonoBehaviour:
     spawnCharacters:
     - character: {fileID: 8476363159216195691, guid: b66348842be014b4ba9d986355ab8d8f, type: 3}
       position: {x: -7.885, y: 1.23}
+      canMove: 0
+      facingType: 1
+      targetPosition: {x: 0, y: 0}
     - character: {fileID: 2203334176055078997, guid: fe2068912a251fa4ea416286b601690f, type: 3}
       position: {x: -7.885, y: 0.03000069}
+      canMove: 0
+      facingType: 1
+      targetPosition: {x: 0, y: 0}
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
     text: "N\xF3i c\xF4 l\xE0 ch\xF3 c\xF2n ch\u1ED1i. "
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
     text: "G\xE2u. Nguy\xEAn h\xECnh c\u1EE7a t\xF4i \u0111\xE3 b\u1ECB ng\xE0i \u201Ckh\xF4ng
@@ -36,14 +44,161 @@ MonoBehaviour:
       h\xE0i l\xF2ng ch\u01B0a? "
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
     text: ...
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
     text: "Tr\xF4ng m\u1EB7t anh \u0111\u1ED9t nhi\xEAn nghi\xEAm t\xFAc th\u1EBF
       n\xE0y ch\u1EAFc l\xE0 h\u1EBFt gi\u1EDD \u0111\u1EC3 \u0111\xF9a r\u1ED3i. "
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
+  - useAvt: 0
+    avatar: {fileID: 0}
+    text: 
+    hasSpawnCharacter: 1
+    spawnCharacters:
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: -5.51, y: -3.195}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: -5.035002, y: -3.795}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: 3.039999, y: -3.195}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: 3.514999, y: -2.595}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: 3.514999, y: -0.1949993}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: 3.039999, y: 0.4050001}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: -6.460001, y: 1.605}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    - character: {fileID: 1236668399952266962, guid: 11ee52e218b4d024a9316815f6eb0873, type: 3}
+      position: {x: -5.985001, y: 2.205}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    shake: 0
+  - useAvt: 0
+    avatar: {fileID: 0}
+    text: 
+    hasSpawnCharacter: 1
+    spawnCharacters:
+    - character: {fileID: 2529861749566756791, guid: 6e35315aa9c3b1642bb9c41154cd5ba5, type: 3}
+      position: {x: 7.314999, y: -1.17}
+      canMove: 0
+      facingType: 0
+      targetPosition: {x: 0, y: 0}
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "Ch\xE0o anh giai. Ng\u01B0\u1EDDi ta n\xF3i \xF4ng anh l\xE0 con trai
+      duy nh\u1EA5t c\u1EE7a ph\u1EE5 ho\xE0ng, c\u0169ng l\xE0 minh ch\u1EE9ng cho
+      s\u1EF1 tuy\u1EC7t t\u1EF1 c\u1EE7a d\xF2ng h\u1ECD L\xFD. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "Th\u1EB1ng em c\xF3 h\u01A1i kh\xF4ng ph\u1EE5c, n\xEAn mu\u1ED1n b\u1EAFt
+      \xF4ng anh v\u1EC1 \u0111\u1EB7ng tra r\xF5 th\u1EF1c h\u01B0. Mong \xF4ng
+      anh th\u1EE9c th\u1EDDi m\u1ED9t ch\xFAt, \u0111\u1EEBng \u0111\u1EC3 th\u1EB1ng
+      em n\xE0y ph\u1EA3i n\u1EB7ng tay. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
+    text: "Anh ch\u1EAFc R\u1ED1i Ng\u01B0\u1EDDi hi\u1EC3u nh\u1EEFng g\xEC ch\xFAng
+      ta n\xF3i kh\xF4ng?"
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "H\u1ECFi cho l\u1EC5 ph\xE9p th\xF4i. Nh\xECn c\xE1i m\u1EB7t ng\u01A1
+      ng\u01A1 ng\xE1c ng\xE1c n\xE0y c\u1EE7a n\xF3 ch\xEDn ph\u1EA7n m\u01B0\u1EDDi
+      l\xE0 kh\xF4ng hi\u1EC3u g\xEC r\u1ED3i.  "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "M\u1EB9 ki\u1EBFp, c\xE1i th\u1EE9 n\xE0y m\xE0 c\u0169ng \u0111\xF2i
+      b\xE1o m\u1ED9ng ch\u1EEDi ph\u1EE5 ho\xE0ng tr\xF4i ch\u1EA3y \u0111\u01B0\u1EE3c
+      th\u1EBF \xE1? T\xF4i m\xE0 bi\u1EBFt th\u1EB1ng n\xE0o \u0111\u01A1m \u0111i\u1EC1u
+      b\u1ECBa chuy\u1EC7n tr\u1EAFng tr\u1EE3n nh\u01B0 th\u1EBF, t\xF4i v\u1EB7n
+      c\u1ED5. Th\u1EC1 \u0111\u1EA5y."
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
+    text: "T\u1EF1 tin qu\xE1 nh\u1EC9? Anh qu\xEAn l\xE0 mu\u1ED1n t\xECm ra th\u1EB1ng
+      kh\u1ED1n \u0111\xF3 th\xEC m\xECnh ph\u1EA3i s\u1ED1ng s\xF3t r\u1EDDi kh\u1ECFi
+      \u0111\xE2y \xE0? "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "B\u1ED1n \u0111\xE1nh t\xE1m th\xF4i m\xE0. Nh\xECn th\u1EBF n\xE0o c\u0169ng
+      th\u1EA5y b\xEAn ta m\u1EDBi l\xE0 phe m\u1EA1nh h\u01A1n."
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 0
+    avatar: {fileID: 0}
+    text: 
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 1
+  - useAvt: 1
+    avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
+    text: "Xem! Anh giai kia ch\u1EDD m\xE3i kh\xF4ng th\u1EA5y ch\xFAng ta ho\u1EA3ng
+      s\u1EE3, n\u1ED5i n\xF3ng r\u1ED3i k\xECa. Hai ng\u01B0\u1EDDi n\xF3i \u0111\xFAng
+      kh\xF4ng?"
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
+  - useAvt: 0
+    avatar: {fileID: 0}
+    text: 
+    hasSpawnCharacter: 1
+    spawnCharacters:
+    - character: {fileID: 3872505134893282029, guid: bd7fbed440bef7a4aa1a62c4e9856a3d, type: 3}
+      position: {x: -14, y: -0.5699997}
+      canMove: 1
+      facingType: 1
+      targetPosition: {x: -11.21, y: -0.5699997}
+    - character: {fileID: 3806043014458436532, guid: b4f8af257117aeb4b85def41a59a21f0, type: 3}
+      position: {x: -14, y: -1.77}
+      canMove: 1
+      facingType: 1
+      targetPosition: {x: -10.26, y: -1.77}
+    shake: 0

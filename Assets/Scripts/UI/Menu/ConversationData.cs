@@ -14,6 +14,7 @@ public class ConversationData : ScriptableObject
         public string text;
         public bool hasSpawnCharacter;
         [ShowIf("hasSpawnCharacter")] public List<SpawnCharacter> spawnCharacters = new();
+        public bool shake;
     }
         
     public List<Data> conversation = new List<Data>();
@@ -23,5 +24,8 @@ public class ConversationData : ScriptableObject
     {
         public Character character;
         public Vector2 position;
+        public bool canMove;
+        public FacingType facingType = FacingType.Right;
+        [ShowIf("canMove")] public Vector2 targetPosition;
     }
 }
