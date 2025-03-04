@@ -122,22 +122,22 @@ MonoBehaviour:
       m\u1ED9t \u0111\u1ED9i qu\xE2n \u0111\xF4ng \u0111\u1EBFn m\u01B0\u1EDDi v\u1EA1n,
       \u0111\u1EE7 s\u1EE9c ch\u1ED1ng l\u1EA1i h\u1ECD Tr\u1EA7n l\xE0 \u0111\u1EE7
       th\u1EA5y ti\u1EC1m l\u1EF1c c\u1EE7a l\xE0ng Chi\xEAn \u0110\xE0n kh\u1ED5ng
-      l\u1ED3 \u0111\u1EBFn m\u1EE9c n\xE0o.   C\xF3 c\xE2u k\u1EBB th\u01B0\u1EDDng
+      l\u1ED3 \u0111\u1EBFn m\u1EE9c n\xE0o.\r\n\r\n\r\nC\xF3 c\xE2u k\u1EBB th\u01B0\u1EDDng
       d\xE2n v\u1ED1n kh\xF4ng c\xF3 t\u1ED9i, v\xEC mang ng\u1ECDc qu\xFD m\xE0
       c\xF3 t\u1ED9i. H\u1ECD \u0110o\xE0n ti\u1EC1n mu\xF4n b\u1EA1c v\u1EA1n, hi\u1EC3n
       nhi\xEAn l\xE0 tr\u1EDF th\xE0nh c\xE1i gai trong m\u1EAFt nhi\u1EC1u ng\u01B0\u1EDDi.
       K\u1EBB kh\xF4ng b\u1EB1ng th\xEC \u0111\u1ED1 k\u1ECB, ng\u01B0\u1EDDi c\xF3
-      h\u01A1n th\xEC ki\xEAng d\xE8.   \u0110\u1ED9c D\u1EA1 Xoa ch\xEDnh l\xE0
-      m\u1ED9t con dao g\u0103m b\xE9n nh\u1ECDn m\xE0 h\u1ECD \u0110o\xE0n s\u1EED
-      d\u1EE5ng, v\u1EEBa \u0111\u1EC3 ph\xF2ng th\xE2n, m\xE0 v\u1EEBa \u0111\u1EC3
-      tri\u1EC7t h\u1EA1 \u0111\u1ED1i th\u1EE7.  Nh\u1EEFng l\xE3o h\xE1t rong,
-      c\xE1c ph\u01B0\u1EDDng k\u1EC3 chuy\u1EC7n th\u01B0\u1EDDng hay kh\xE1o nhau
-      nh\u1EEFng giai tho\u1EA1i truy\u1EC1n k\u1EF3 v\u1EC1 th\u1ECB.   \u0110\u1ED3n
+      h\u01A1n th\xEC ki\xEAng d\xE8.\r\n\r\n\r\n\u0110\u1ED9c D\u1EA1 Xoa ch\xEDnh
+      l\xE0 m\u1ED9t con dao g\u0103m b\xE9n nh\u1ECDn m\xE0 h\u1ECD \u0110o\xE0n
+      s\u1EED d\u1EE5ng, v\u1EEBa \u0111\u1EC3 ph\xF2ng th\xE2n, m\xE0 v\u1EEBa \u0111\u1EC3
+      tri\u1EC7t h\u1EA1 \u0111\u1ED1i th\u1EE7.\r\n\r\nNh\u1EEFng l\xE3o h\xE1t
+      rong, c\xE1c ph\u01B0\u1EDDng k\u1EC3 chuy\u1EC7n th\u01B0\u1EDDng hay kh\xE1o
+      nhau nh\u1EEFng giai tho\u1EA1i truy\u1EC1n k\u1EF3 v\u1EC1 th\u1ECB.\r\n\r\n\r\n\u0110\u1ED3n
       r\u1EB1ng \u0110\u1ED9c D\u1EA1 Xoa m\xECnh nh\u1EB9 nh\u01B0 y\u1EBFn, tr\xE8o
       t\u01B0\u1EDDng v\u01B0\u1EE3t v\xE1ch ch\u1EB3ng kh\xE1c n\xE0o \u0111i b\u1ED9
       tr\xEAn \u0111\u1EA5t b\u1EB1ng. Cho d\xF9 c\xF3 l\xE0 t\u01B0 dinh ph\u1EE7
       \u0111\u1EC7 k\xEDn c\u1ED5ng cao t\u01B0\u1EDDng c\xE1ch m\u1EA5y th\xEC y
-      th\u1ECB c\u0169ng d\u1EC5 d\xE0ng \u0111\u1ED9t nh\u1EADp.   \u0110\u1ED9c
+      th\u1ECB c\u0169ng d\u1EC5 d\xE0ng \u0111\u1ED9t nh\u1EADp.\r\n\r\n\r\n\u0110\u1ED9c
       D\u1EA1 Xoa \u0111eo m\u1ED9t c\xE1i chu\xF4ng \u1EDF c\u1ED5 tay, m\u1ED7i
       l\u1EA7n tung m\xECnh l\xE0 chu\xF4ng nh\u1ECF l\u1EA1i k\xEAu nh\u1EEFng ti\u1EBFng
       cao v\xFAt. \u1EA4y th\u1EBF nh\u01B0ng, cho d\xF9 n\u1EA1n nh\xE2n c\xF3 nu\xF4i
@@ -147,38 +147,39 @@ MonoBehaviour:
       c\xF9ng, khi \xE1nh m\u1EB7t tr\u1EDDi \u0111\u1EA7u ti\xEAn r\u1ECDi v\xE0o
       ph\xF2ng n\u1EA1n nh\xE2n, th\u1EE9 \u0111\xF3n l\u1EA5y n\xF3 s\u1EBD ch\u1EC9
       l\xE0 m\u1ED9t c\xE1i th\xE2y ng\u01B0\u1EDDi c\u1EE9ng \u0111\u1EDD, l\u1EA1nh
-      ng\u1EAFt.   C\xF3 nh\u1EEFng c\xE2u chuy\u1EC7n k\u1EC3 \u0110\u1ED9c D\u1EA1
-      Xoa l\xE0 m\u1ED9t v\u1ECB anh h\xF9ng m\xE1 ph\u1EA5n, c\xE2n qu\u1EAFc ch\u1EB3ng
-      k\xE9m \u0111\xE0n \xF4ng. N\u1EA1n nh\xE2n ch\u1EBFt v\xE0o tay y th\u1ECB
-      ch\u1EB3ng ph\u1EA3i h\u1EA1ng tham quan \xF4 l\u1EA1i th\xEC c\u0169ng l\xE0
-      ph\u01B0\u1EDDng tr\u1ECDc ph\xFA \xE1c \xF4n.  L\u1EA1i c\xF3 nh\u1EEFng d\u1ECB
-      b\u1EA3n th\xE1i qu\xE1 h\u01A1n, ho\u1EB7c \u0110\u1ED9c D\u1EA1 Xoa c\xF3
-      t\xE0i phi thi\xEAn \u0111\u1ED9n th\u1ED5, t\xE0i ph\xE9p ch\u1EB3ng kh\xE1c
-      n\xE0o lo\xE0i y\xEAu tinh. Ho\u1EB7c k\u1EC3 y th\u1ECB v\u1ED1n l\xE0 ma
-      qu\u1EF7 \u1EDF \u0110\u1EA5t C\u1ED9i Ngu\u1ED3n chui l\xEAn, ba \u0111\u1EA7u
-      s\xE1u tay, c\xF3 th\u1EC3 h\xF3a th\xE0nh s\u01B0\u01A1ng th\xE0nh kh\xF3i.
-      Th\u1EADm ch\xED c\xF3 k\u1EBB kh\u0103ng kh\u0103ng kh\u1EB3ng \u0111\u1ECBnh
-      r\u1EB1ng \u0110\u1ED9c D\u1EA1 Xoa m\u1EB7t xanh nanh v\xE0ng, c\u1EA3 ng\u01B0\u1EDDi
-      l\xE0 k\u1ECBch \u0111\u1ED9c; m\u1ED9t gi\u1ECDt n\u01B0\u1EDBc b\u1ECDt,
-      m\u1ED9t ch\xFAt m\u1ED3 h\xF4i c\u0169ng c\xF3 th\u1EC3 gi\u1EBFt ng\u01B0\u1EDDi.
-      \u1EA2 l\u1EA1i th\xEDch u\u1ED1ng m\xE1u t\u01B0\u01A1i, \u0103n tinh kh\xED,
-      nh\u1EEFng n\u1EA1n nh\xE2n kia \u0111\u1EC1u b\u1ECB v\u1EA5y ph\u1EA3i n\u01B0\u1EDBc
-      b\u1ECDt l\xFAc \u1EA3 h\u1EA5p thu d\u01B0\u01A1ng kh\xED m\u1EDBi ch\u1EBFt.  
-      Song, t\u1EA5t c\u1EA3 phi\xEAn b\u1EA3n, m\u1EB7c k\u1EC7 k\u1EC3 \u0110\u1ED9c
-      D\u1EA1 Xoa l\xE0 ch\xEDnh di\u1EC7n hay b\u1EA3o y th\u1ECB l\xE0 ph\u01B0\u1EDDng
-      \xE1c \xF4n, \u0111\u1EC1u c\xF3 chung m\u1ED9t t\xECnh ti\u1EBFt. \u0110\xF3
-      l\xE0 ti\u1EBFng c\u01B0\u1EDDi sang s\u1EA3ng, h\xF2a l\u1EABn trong ti\u1EBFng
-      chu\xF4ng, c\u1EA5t l\xEAn \u0111\u1EA7y ma m\u1ECB m\u1ED7i khi \u0110\u1ED9c
-      D\u1EA1 Xoa h\u1EA1 th\u1EE7. Gi\u1ED1ng nh\u01B0 con m\xE8o v\u1EDDn con chu\u1ED9t,
-      t\u1EA5t c\u1EA3 c\xE1c phi\xEAn b\u1EA3n c\u1EE7a \u0110\u1ED9c D\u1EA1 Xoa
-      d\u01B0\u1EDDng nh\u01B0 \u0111\u1EC1u c\xF3 \u0111i\u1EC3m chung l\xE0 th\xEDch
-      h\xE0nh h\u1EA1 m\u1EE5c ti\xEAu, c\u01B0\u1EDDi khanh kh\xE1ch \u0111\u1EA7y
-      \u0111i\xEAn d\u1EA1i khi b\u1ECDn h\u1ECD ch\u1EBFt d\u1EA7n ch\u1EBFt m\xF2n
-      trong c\u01A1n \u0111au \u0111\u1EDBn qu\u1EB1n qu\u1EA1i \u0111\u1EBFn c\xF9ng
-      c\u1EF1c.   C\xF3 l\u1EBD, tr\u1EEB ng\u01B0\u1EDDi c\u1EE7a h\u1ECD \u0110o\xE0n
-      \u1EDF l\xE0ng Chi\xEAn \u0110\xE0n, ch\u1EB3ng ai c\xF3 th\u1EC3 ng\u1EDD
-      \u0110\u1ED9c D\u1EA1 Xoa t\xE0n b\u1EA1o \xE1c \xF4n kia th\u1EF1c ra l\u1EA1i
-      l\xE0 m\u1ED9t thi\u1EBFu n\u1EEF tu\u1ED5i v\u1EEBa tr\u0103ng tr\xF2n"
+      ng\u1EAFt.\r\n\r\n\r\nC\xF3 nh\u1EEFng c\xE2u chuy\u1EC7n k\u1EC3 \u0110\u1ED9c
+      D\u1EA1 Xoa l\xE0 m\u1ED9t v\u1ECB anh h\xF9ng m\xE1 ph\u1EA5n, c\xE2n qu\u1EAFc
+      ch\u1EB3ng k\xE9m \u0111\xE0n \xF4ng. N\u1EA1n nh\xE2n ch\u1EBFt v\xE0o tay
+      y th\u1ECB ch\u1EB3ng ph\u1EA3i h\u1EA1ng tham quan \xF4 l\u1EA1i th\xEC c\u0169ng
+      l\xE0 ph\u01B0\u1EDDng tr\u1ECDc ph\xFA \xE1c \xF4n.\r\n\r\nL\u1EA1i c\xF3
+      nh\u1EEFng d\u1ECB b\u1EA3n th\xE1i qu\xE1 h\u01A1n, ho\u1EB7c \u0110\u1ED9c
+      D\u1EA1 Xoa c\xF3 t\xE0i phi thi\xEAn \u0111\u1ED9n th\u1ED5, t\xE0i ph\xE9p
+      ch\u1EB3ng kh\xE1c n\xE0o lo\xE0i y\xEAu tinh. Ho\u1EB7c k\u1EC3 y th\u1ECB
+      v\u1ED1n l\xE0 ma qu\u1EF7 \u1EDF \u0110\u1EA5t C\u1ED9i Ngu\u1ED3n chui l\xEAn,
+      ba \u0111\u1EA7u s\xE1u tay, c\xF3 th\u1EC3 h\xF3a th\xE0nh s\u01B0\u01A1ng
+      th\xE0nh kh\xF3i. Th\u1EADm ch\xED c\xF3 k\u1EBB kh\u0103ng kh\u0103ng kh\u1EB3ng
+      \u0111\u1ECBnh r\u1EB1ng \u0110\u1ED9c D\u1EA1 Xoa m\u1EB7t xanh nanh v\xE0ng,
+      c\u1EA3 ng\u01B0\u1EDDi l\xE0 k\u1ECBch \u0111\u1ED9c; m\u1ED9t gi\u1ECDt n\u01B0\u1EDBc
+      b\u1ECDt, m\u1ED9t ch\xFAt m\u1ED3 h\xF4i c\u0169ng c\xF3 th\u1EC3 gi\u1EBFt
+      ng\u01B0\u1EDDi. \u1EA2 l\u1EA1i th\xEDch u\u1ED1ng m\xE1u t\u01B0\u01A1i,
+      \u0103n tinh kh\xED, nh\u1EEFng n\u1EA1n nh\xE2n kia \u0111\u1EC1u b\u1ECB
+      v\u1EA5y ph\u1EA3i n\u01B0\u1EDBc b\u1ECDt l\xFAc \u1EA3 h\u1EA5p thu d\u01B0\u01A1ng
+      kh\xED m\u1EDBi ch\u1EBFt.\r\n\r\n\r\nSong, t\u1EA5t c\u1EA3 phi\xEAn b\u1EA3n,
+      m\u1EB7c k\u1EC7 k\u1EC3 \u0110\u1ED9c D\u1EA1 Xoa l\xE0 ch\xEDnh di\u1EC7n
+      hay b\u1EA3o y th\u1ECB l\xE0 ph\u01B0\u1EDDng \xE1c \xF4n, \u0111\u1EC1u c\xF3
+      chung m\u1ED9t t\xECnh ti\u1EBFt. \u0110\xF3 l\xE0 ti\u1EBFng c\u01B0\u1EDDi
+      sang s\u1EA3ng, h\xF2a l\u1EABn trong ti\u1EBFng chu\xF4ng, c\u1EA5t l\xEAn
+      \u0111\u1EA7y ma m\u1ECB m\u1ED7i khi \u0110\u1ED9c D\u1EA1 Xoa h\u1EA1 th\u1EE7.
+      Gi\u1ED1ng nh\u01B0 con m\xE8o v\u1EDDn con chu\u1ED9t, t\u1EA5t c\u1EA3 c\xE1c
+      phi\xEAn b\u1EA3n c\u1EE7a \u0110\u1ED9c D\u1EA1 Xoa d\u01B0\u1EDDng nh\u01B0
+      \u0111\u1EC1u c\xF3 \u0111i\u1EC3m chung l\xE0 th\xEDch h\xE0nh h\u1EA1 m\u1EE5c
+      ti\xEAu, c\u01B0\u1EDDi khanh kh\xE1ch \u0111\u1EA7y \u0111i\xEAn d\u1EA1i
+      khi b\u1ECDn h\u1ECD ch\u1EBFt d\u1EA7n ch\u1EBFt m\xF2n trong c\u01A1n \u0111au
+      \u0111\u1EDBn qu\u1EB1n qu\u1EA1i \u0111\u1EBFn c\xF9ng c\u1EF1c.\r\n\r\n\r\nC\xF3
+      l\u1EBD, tr\u1EEB ng\u01B0\u1EDDi c\u1EE7a h\u1ECD \u0110o\xE0n \u1EDF l\xE0ng
+      Chi\xEAn \u0110\xE0n, ch\u1EB3ng ai c\xF3 th\u1EC3 ng\u1EDD \u0110\u1ED9c D\u1EA1
+      Xoa t\xE0n b\u1EA1o \xE1c \xF4n kia th\u1EF1c ra l\u1EA1i l\xE0 m\u1ED9t thi\u1EBFu
+      n\u1EEF tu\u1ED5i v\u1EEBa tr\u0103ng tr\xF2n."
     characterAttributes:
       maxMoveRange: 6
       health: 32
@@ -205,6 +206,8 @@ MonoBehaviour:
         add: 0
       overrideDamage: 0
       atkOverride: 0
+      overrideMaxMoveRange: 0
+      maxMoveRangeOverride: 0
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000

@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 6900777823432231715}
   - component: {fileID: 3990258015458717892}
   - component: {fileID: 6444927671104646758}
+  - component: {fileID: 584546097839046488}
   m_Layer: 5
   m_Name: CreditPopup
   m_TagString: Untagged
@@ -391,7 +392,7 @@ MonoBehaviour:
   originalScale: {x: 1, y: 1, z: 1}
   panelAnimationTime: 2
   textFadeDuration: 1
-  delayBetweenCredits: 5
+  delayBetweenCredits: 10
   scrollDuration: 5
   contentPanel: {fileID: 993470606961297745}
   creditText: {fileID: 5523085906723709683}
@@ -413,8 +414,112 @@ MonoBehaviour:
     quan l\u1EABn kh\xE1ch quan, team C\xF2 L\xF9i th\u1EADt s\u1EF1 c\u1EA3m k\xEDch
     v\xEC m\u1ECDi ng\u01B0\u1EDDi \u0111\xE3 l\u1EF1a ch\u1ECDn \u1EDF l\u1EA1i
     \u0111\u1EBFn t\u1EADn c\xE1i k\u1EBFt.\_"
-  - 'font-family: Roboto; font-weight: 400; font-size: 46px; line-height: 69px; letter-spacing:
-    0%; text-align: center; '
+  - "N\u1EBFu m\u1ECDi ng\u01B0\u1EDDi th\u1EA5y h\u1EE9ng th\xFA v\u1EDBi nh\xE2n
+    v\u1EADt, th\u1EBF gi\u1EDBi, ho\u1EB7c l\u1ED1i ch\u01A1i c\u1EE7a b\u1EA3n
+    demo, th\xEC team hi v\u1ECDng m\u1ECDi ng\u01B0\u1EDDi c\xF3 th\u1EC3 gi\xFAp
+    b\u1ECDn m\xECnh bi\u1EBFn b\u1EA3n ch\u01A1i th\u1EED n\xE0y tr\u1EDF th\xE0nh
+    m\u1ED9t game ho\xE0n ch\u1EC9nh. C\xF2 L\xF9i team cam k\u1EBFt s\u1EBD kh\u1EAFc
+    ph\u1EE5c, c\u1EA3i thi\u1EC7n nh\u1EEFng v\u1EA5n \u0111\u1EC1 c\xF2n t\u1ED3n
+    \u0111\u1ECDng \u1EDF b\u1EA3n demo \u0111\u1EC3 c\xF3 th\u1EC3 \u0111\u01B0a
+    \u0111\u1EBFn cho ng\u01B0\u1EDDi ch\u01A1i m\u1ED9t s\u1EA3n ph\u1EA9m cu\u1ED1i
+    c\xF9ng ch\u1EA5t l\u01B0\u1EE3ng nh\u1EA5t."
+--- !u!82 &584546097839046488
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4354108467613984823}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 24a41d4384ca1884b9babc17e9d12140, type: 3}
+  m_Resource: {fileID: 8300000, guid: 24a41d4384ca1884b9babc17e9d12140, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5337409204634048598
 GameObject:
   m_ObjectHideFlags: 0

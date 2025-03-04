@@ -2,4 +2,5 @@
 {
     Tutorial,
     Level1,
+    Level2,
 }

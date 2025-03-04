@@ -52,4 +52,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 560e6d913fd0b4441a1edf3e090ec14b, type: 2}
   nextLevel: {fileID: 0}
   special1Conversation: {fileID: 11400000, guid: 771f98c16f8a20840902101d3b7d7dd4, type: 2}
-  special2Conversation: {fileID: 0}
+  special2Conversation: {fileID: 11400000, guid: 418bfb0e70dd32b43afc1871913ef8ec, type: 2}

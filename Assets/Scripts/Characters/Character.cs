@@ -44,6 +44,12 @@ public abstract class Character : MonoBehaviour
     private void Awake()
     {
         SetStateMachine();
+        GpManager.OnEndTurn += GpManagerOnOnEndTurn;
+    }
+    
+    private void GpManagerOnOnEndTurn(object sender, EventArgs e)
+    {
+        _skillStateParams = null;
     }
     
     public void FixedUpdate()

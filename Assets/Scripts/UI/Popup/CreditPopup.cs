@@ -65,7 +65,8 @@ public class CreditPopup : PopupBase
     {
         foreach (string credit in credits)
         {
-            yield return TypewriterEffect(credit, textFadeDuration);
+            creditText.text = credit;
+            // yield return TypewriterEffect(credit, textFadeDuration);
             yield return new WaitForSecondsRealtime(delayBetweenCredits);
         }
     }

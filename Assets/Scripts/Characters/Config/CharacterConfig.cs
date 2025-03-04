@@ -9,6 +9,7 @@ public class CharacterConfig
     public Sprite characterIcon;
     public Sprite slideBarIcon;
     public Sprite characterNoBgIcon;
+    [TextArea(10, 20)]
     public string story;
     public CharacterAttributes characterAttributes;
     [Space]

@@ -88,7 +88,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void ShowStartConversation()
     {
-        if (levelConfig.startConversations is { Count: > 0 } && !levelConfig.canSkipStartConversation)
+        if (levelConfig.startConversations is { Count: > 0 } 
+#if UNITY_EDITOR
+            && !levelConfig.canSkipStartConversation
+#endif
+            )
         {
             ShowNextStartConversation(0);
         }
@@ -484,6 +488,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
                 {
                     Conversation = levelConfig.special1Conversation.conversation,
+                    OnEndConversation = OnEndSpecificConversation,
+                });
+            }
+            else if (character is ThietNhan && !Characters.Any(p => p is ThietNhan) &&
+                     Characters.Any(p => p is RoiNguoi))
+            {
+                ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
+                UIManager.Instance.OpenPopup(PopupType.Conversation, new ConversationPopupParameters()
+                {
+                    Conversation = levelConfig.special2Conversation.conversation,
                     OnEndConversation = OnEndSpecificConversation,
                 });
             }

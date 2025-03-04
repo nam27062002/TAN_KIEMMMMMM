@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3403dd78d6943278cb81825806a5920, type: 3}
   m_Name: Level_Tutorial
   m_EditorClassIdentifier: 
+  canSkipStartConversation: 0
   levelName: "M\xE0n h\u01B0\u1EDBng d\u1EABn"
   cameraSize: 5
-  levelType: 1
+  levelType: 0
   spawnerConfig:
     spawnPoints:
       m_keys: 000000000100000002000000
@@ -31,6 +32,9 @@ MonoBehaviour:
       m_keys: 
       m_values: []
   mapPrefab: {fileID: 1980423763408188603, guid: 417e63c948212724082e659fe45c197a, type: 3}
+  startConversations: []
   winConversations:
   - {fileID: 11400000, guid: 2f8d4cbea8c8e574d87b605739dab8ec, type: 2}
   nextLevel: {fileID: 11400000, guid: 4da27f3501b6b0340b294d80e8bd28d0, type: 2}
+  special1Conversation: {fileID: 0}
+  special2Conversation: {fileID: 0}
