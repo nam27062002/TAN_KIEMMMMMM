@@ -38,6 +38,12 @@ public class CanSat : AICharacter
         assassin?.DestroyCharacter();
     }
 
+    public virtual void DestroyCharacter()
+    {
+        base.DestroyCharacter();
+        dancer?.DestroyCharacter();
+        assassin?.DestroyCharacter();
+    }
 
     protected override void SetSpeed()
     {

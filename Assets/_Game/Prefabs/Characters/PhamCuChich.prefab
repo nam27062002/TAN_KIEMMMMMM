@@ -249,12 +249,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "Phong V\u0169 T\u1ECBch Ch\u01B0\u1EDBng (Sweeping Storm): Ch\u1EC9
-        \u0111\u1ECBnh m\u1ED9t \u0111\u1ED3ng minh, t\u1EA1o m\u1ED9t l\u1EDBp l\xE1
-        ch\u1EAFn cho c\u1EA3 Ch\xEDch v\xE0 \u0111\u1ED3ng \u0111\u1ED9i. Gi\xE1
-        tr\u1ECB c\u1EE7a l\xE1 ch\u1EAFn b\u1EB1ng m\u1ED9t n\u1EEDa gi\xE1 tr\u1ECB
-        g\u1ED1c. Thanh t\u1EA9y c\xE1c thu\u1ED9c t\xEDnh c\xF3 h\u1EA1i c\u1EE7a
-        \u0111\u1ED1i ph\u01B0\u01A1ng khi t\u1EA1o gi\xE1p. (apply debuff 27)"
+      description: "Phong V\u0169 T\u1ECBch Ch\u01B0\u1EDBng : Ch\u1EC9 \u0111\u1ECBnh
+        m\u1ED9t \u0111\u1ED3ng minh, t\u1EA1o m\u1ED9t l\u1EDBp l\xE1 ch\u1EAFn
+        cho c\u1EA3 Ch\xEDch v\xE0 \u0111\u1ED3ng \u0111\u1ED9i. Gi\xE1 tr\u1ECB
+        c\u1EE7a l\xE1 ch\u1EAFn b\u1EB1ng m\u1ED9t n\u1EEDa gi\xE1 tr\u1ECB g\u1ED1c.
+        Thanh t\u1EA9y c\xE1c thu\u1ED9c t\xEDnh c\xF3 h\u1EA1i c\u1EE7a \u0111\u1ED1i
+        ph\u01B0\u01A1ng khi t\u1EA1o gi\xE1p. "
     - icon: {fileID: 21300000, guid: 1b2d23e89f1fd0c458748be4e723a89d, type: 3}
       name: "C\u1ED5 Kh\xED Ti\xEAu Linh"
       skillIndex: 2
@@ -265,12 +265,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: "C\u1ED5 Kh\xED Ti\xEAu Linh (Submerging in the Ancient Atmosphere):
-        s\u1EED d\u1EE5ng ch\xE2n kh\xED r\u1ED1ng m\u1ED9t ti\u1EBFng, ch\u1EA5n
-        nhi\u1EBFp t\xE2m th\u1EA7n m\u1EE5c ti\xEAu. M\u1EE5c ti\xEAu m\u1EA5t 1
-        AP cho t\u1EDBi khi hi\u1EC7u \u1EE9ng k\u1EBFt th\xFAc. Khi\xEAu kh\xEDch
-        m\u1EE5c ti\xEAu v\xE0 k\u1EBB \u0111\u1ECBch trong ph\u1EA1m vi 5 \xF4 quanh
-        m\u1EE5c ti\xEAu. (apply debuff 16)"
+      description: "C\u1ED5 Kh\xED Ti\xEAu Linh : s\u1EED d\u1EE5ng ch\xE2n kh\xED
+        r\u1ED1ng m\u1ED9t ti\u1EBFng, ch\u1EA5n nhi\u1EBFp t\xE2m th\u1EA7n m\u1EE5c
+        ti\xEAu. M\u1EE5c ti\xEAu m\u1EA5t 1 AP cho t\u1EDBi khi hi\u1EC7u \u1EE9ng
+        k\u1EBFt th\xFAc. Khi\xEAu kh\xEDch m\u1EE5c ti\xEAu v\xE0 k\u1EBB \u0111\u1ECBch
+        trong ph\u1EA1m vi 5 \xF4 quanh m\u1EE5c ti\xEAu. "
     - icon: {fileID: 21300000, guid: 334c1b9ed31741d49b05465de26ea373, type: 3}
       name: "H\u1EADn V\u1ECB Ti\xEAu"
       skillIndex: 3
@@ -281,15 +280,14 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "H\u1EADn V\u1ECB Ti\xEAu (Everlasting Blue): li\xEAn t\u1EE5c
-        \u0111\u1EA5m 3 \u0111\xF2n v\xE0o \u0111\u1ECBch th\u1EE7, k\xEDch n\u1ED5
-        l\xE1 ch\u1EAFn, sau \u0111\xF3 ti\u1EBFn v\xE0o tr\u1EA1ng th\xE1i cu\u1ED3ng
-        b\u1EA1o. T\u0103ng s\xE1t th\u01B0\u01A1ng c\u1EE7a \u0111\xF2n \u0111\xE1nh
-        tay kh\xF4ng v\xE0 ph\u1EA1m vi di chuy\u1EC3n th\xEAm 4 \xF4. Trong th\u1EDDi
-        gian hi\u1EC7u \u1EE9ng t\u1ED3n t\u1EA1i, k\u1EBB \u0111\u1ECBch nh\xECn
-        th\u1EA5y Ph\u1EA1m C\u1EF1 Ch\xEDch s\u1EBD c\xF3 t\u1EC9 l\u1EC7 b\u1ECB
-        ho\u1EA3ng s\u1EE3 \u1EDF \u0111\u1EA7u m\u1ED7i v\xF2ng (apply debuff 10
-        m\u1ED7i v\xF2ng)"
+      description: "H\u1EADn V\u1ECB Ti\xEAu : li\xEAn t\u1EE5c \u0111\u1EA5m 3 \u0111\xF2n
+        v\xE0o \u0111\u1ECBch th\u1EE7, k\xEDch n\u1ED5 l\xE1 ch\u1EAFn, sau \u0111\xF3
+        ti\u1EBFn v\xE0o tr\u1EA1ng th\xE1i cu\u1ED3ng b\u1EA1o. T\u0103ng s\xE1t
+        th\u01B0\u01A1ng c\u1EE7a \u0111\xF2n \u0111\xE1nh tay kh\xF4ng v\xE0 ph\u1EA1m
+        vi di chuy\u1EC3n th\xEAm 4 \xF4. Trong th\u1EDDi gian hi\u1EC7u \u1EE9ng
+        t\u1ED3n t\u1EA1i, k\u1EBB \u0111\u1ECBch nh\xECn th\u1EA5y Ph\u1EA1m C\u1EF1
+        Ch\xEDch s\u1EBD c\xF3 t\u1EC9 l\u1EC7 b\u1ECB ho\u1EA3ng s\u1EE3 \u1EDF
+        \u0111\u1EA7u m\u1ED7i v\xF2ng "
     movementSkill:
     - icon: {fileID: 21300000, guid: 5dbd273f544d7004ebcec644e32ed464, type: 3}
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
@@ -312,13 +310,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "B\xEDch Th\u1EE7y Thanh S\u01A1n (Everlasting Beauty): ch\u1EA1y
-        \u0111\u1EBFn g\u1EA7n m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh, t\u1EA1o
-        l\xE1 ch\u1EAFn d\u1EF1a tr\xEAn s\xE1t th\u01B0\u01A1ng m\xE0 v\xF5 k\u1EF9
-        \u0111\u1ED3ng \u0111\u1ED9i g\xE2y ra cho \u0111\u1ECBch th\u1EE7. K\u1EBB
-        \u0111\u1ECBch t\u1EA5n c\xF4ng v\xE0o l\xE1 ch\u1EAFn n\xE0y b\u1ECB ph\u1EA3n
-        ch\u1EA5n, gi\u1EA3m s\xE1t th\u01B0\u01A1ng g\xE2y ra. (apply debuff 11,
-        r\u1ED3i apply debuff 7. S\xE1t th\u01B0\u01A1ng gi\u1EA3m \u0111i = 1d4)"
+      description: "B\xEDch Th\u1EE7y Thanh S\u01A1n : ch\u1EA1y \u0111\u1EBFn g\u1EA7n
+        m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh, t\u1EA1o l\xE1 ch\u1EAFn d\u1EF1a
+        tr\xEAn s\xE1t th\u01B0\u01A1ng m\xE0 v\xF5 k\u1EF9 \u0111\u1ED3ng \u0111\u1ED9i
+        g\xE2y ra cho \u0111\u1ECBch th\u1EE7. K\u1EBB \u0111\u1ECBch t\u1EA5n c\xF4ng
+        v\xE0o l\xE1 ch\u1EAFn n\xE0y b\u1ECB ph\u1EA3n ch\u1EA5n, gi\u1EA3m s\xE1t
+        th\u01B0\u01A1ng g\xE2y ra."
     - icon: {fileID: 21300000, guid: a534078403968c745918d0771f2fde33, type: 3}
       name: "S\u01B0\u01A1ng Nh\u1EA1n Th\xF9y Th\xE0nh"
       skillIndex: 2
@@ -329,12 +326,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "S\u01B0\u01A1ng Nh\u1EA1n Th\xF9y Th\xE0nh (Descending on the
-        Misty Citadel): t\u1EA1o m\u1ED9t l\u1EDBp gi\xE1p s\u01B0\u01A1ng gi\xE1
-        cho t\u1EA5t c\u1EA3 \u0111\u1ED3ng minh trong ph\u1EA1m vi 3 \xF4. \u0110\u1ED1i
-        th\u1EE7 t\u1EA5n c\xF4ng v\xE0o l\u1EDBp gi\xE1p s\u1EBD ch\u1ECBu hi\u1EC7u
-        \u1EE9ng bu\u1ED1t gi\xE1 (apply debuff 16, gi\u1EA3m ph\u1EA1m vi di chuy\u1EC3n
-        = 1d4). Gi\xE1 tr\u1ECB c\u1EE7a gi\xE1p = 5"
+      description: "S\u01B0\u01A1ng Nh\u1EA1n Th\xF9y Th\xE0nh : t\u1EA1o m\u1ED9t
+        l\u1EDBp gi\xE1p s\u01B0\u01A1ng gi\xE1 cho t\u1EA5t c\u1EA3 \u0111\u1ED3ng
+        minh trong ph\u1EA1m vi 3 \xF4. \u0110\u1ED1i th\u1EE7 t\u1EA5n c\xF4ng v\xE0o
+        l\u1EDBp gi\xE1p s\u1EBD ch\u1ECBu hi\u1EC7u \u1EE9ng bu\u1ED1t gi\xE1 .
+        Gi\xE1 tr\u1ECB c\u1EE7a gi\xE1p = 5"
     - icon: {fileID: 21300000, guid: 92d6599197b118248b88e91a7f54c77e, type: 3}
       name: "S\u1EA7u Do T\u1EA1i"
       skillIndex: 3
@@ -345,13 +341,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "S\u1EA7u Do T\u1EA1i (Melancholic Blue): k\xEDch n\u1ED5 l\xE1
-        ch\u1EAFn, sau \u0111\xF3 t\u1EA1o m\u1ED9t l\u1EDBp gi\xE1p cho m\u1EE5c
-        ti\xEAu ch\u1EE7 l\u01B0\u1EE3t. Cho \u0111\u1EBFn h\u1EBFt v\xF2ng sau,
-        t\u1EA5t c\u1EA3 c\xE1c ngu\u1ED3n s\xE1t th\u01B0\u01A1ng ng\u01B0\u1EDDi
-        m\u1EB7c nh\u1EADn v\xE0o tr\u1EDF th\xE0nh 1. Trong th\u1EDDi gian hi\u1EC7u
-        l\u1EF1c, ph\xF2ng th\u1EE7 c\u1EE7a C\u1EF1 Ch\xEDch v\u1EC1 0. (apply debuff
-        21 v\xE0 7)"
+      description: "S\u1EA7u Do T\u1EA1i : k\xEDch n\u1ED5 l\xE1 ch\u1EAFn, sau \u0111\xF3
+        t\u1EA1o m\u1ED9t l\u1EDBp gi\xE1p cho m\u1EE5c ti\xEAu ch\u1EE7 l\u01B0\u1EE3t.
+        Cho \u0111\u1EBFn h\u1EBFt v\xF2ng sau, t\u1EA5t c\u1EA3 c\xE1c ngu\u1ED3n
+        s\xE1t th\u01B0\u01A1ng ng\u01B0\u1EDDi m\u1EB7c nh\u1EADn v\xE0o tr\u1EDF
+        th\xE0nh 1. Trong th\u1EDDi gian hi\u1EC7u l\u1EF1c, ph\xF2ng th\u1EE7 c\u1EE7a
+        C\u1EF1 Ch\xEDch v\u1EC1 0. "
     combatSkill:
     - icon: {fileID: 21300000, guid: 1831d2f14b54a8c4c85470249722a4c7, type: 3}
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
@@ -374,11 +369,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "\u0110an T\xE2m B\u1EA1ch Ph\xE1t (Unwavering Heart): h\u1EA5p
-        th\u1EE5 s\xE1t th\u01B0\u01A1ng \u0111\u1ECBch g\xE2y ra t\u1EA1o n\xEAn
-        l\xE1 ch\u1EAFn. Trong v\xF2ng n\xE0y, s\xE1t th\u01B0\u01A1ng c\u1EE7a \u0111\u1ED3ng
-        \u0111\u1ED9i trong ph\u1EA1m vi 2 \xF4 c\u0169ng \u0111\u01B0\u1EE3c C\u1EF1
-        Ch\xEDch ch\u1ECBu thay. (apply debuff 21 v\xE0 19)"
+      description: "\u0110an T\xE2m B\u1EA1ch Ph\xE1t : h\u1EA5p th\u1EE5 s\xE1t
+        th\u01B0\u01A1ng \u0111\u1ECBch g\xE2y ra t\u1EA1o n\xEAn l\xE1 ch\u1EAFn.
+        Trong v\xF2ng n\xE0y, s\xE1t th\u01B0\u01A1ng c\u1EE7a \u0111\u1ED3ng \u0111\u1ED9i
+        trong ph\u1EA1m vi 2 \xF4 c\u0169ng \u0111\u01B0\u1EE3c C\u1EF1 Ch\xEDch
+        ch\u1ECBu thay."
     - icon: {fileID: 21300000, guid: 07d6b726ee041ef4eb3634fe49385904, type: 3}
       name: "T\xE1 Kh\xE1ch V\xE2n Th\xEA "
       skillIndex: 2
@@ -389,12 +384,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 1
       damageType: 4
-      description: "T\xE1 Kh\xE1ch V\xE2n Th\xEA (Climbing up the Cloud Ladder):
-        ph\u1EA3n l\u1EA1i \u0111\xF2n t\u1EA5n c\xF4ng c\u1EE7a \u0111\u1ECBch,
-        sau \u0111\xF3 g\xE2y hi\u1EC7u \u1EE9ng khi\xEAu kh\xEDch l\xEAn k\u1EBB
-        t\u1EA5n c\xF4ng. \u0110\u1ED3ng th\u1EDDi, c\u1EA5m \u0111\u1ED1i ph\u01B0\u01A1ng
-        s\u1EED d\u1EE5ng v\xF5 k\u1EF9 trong th\u1EDDi gian hi\u1EC7u \u1EE9ng n\xE0y
-        t\u1ED3n t\u1EA1i. (apply debuff 11, 29)"
+      description: "T\xE1 Kh\xE1ch V\xE2n Th\xEA : ph\u1EA3n l\u1EA1i \u0111\xF2n
+        t\u1EA5n c\xF4ng c\u1EE7a \u0111\u1ECBch, sau \u0111\xF3 g\xE2y hi\u1EC7u
+        \u1EE9ng khi\xEAu kh\xEDch l\xEAn k\u1EBB t\u1EA5n c\xF4ng. \u0110\u1ED3ng
+        th\u1EDDi, c\u1EA5m \u0111\u1ED1i ph\u01B0\u01A1ng s\u1EED d\u1EE5ng v\xF5
+        k\u1EF9 trong th\u1EDDi gian hi\u1EC7u \u1EE9ng n\xE0y t\u1ED3n t\u1EA1i. "
     - icon: {fileID: 21300000, guid: be209ed9a9367b04280db00f16dffb43, type: 3}
       name: "Kim H\xE0 T\u1EA1i"
       skillIndex: 3
@@ -405,13 +399,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "(T\xEDch Ni\xEAn Chi\u1EBFn \u0110\u1ECBa) Kim H\xE0 T\u1EA1i
-        [Memories of Blue (Ancient Battlefield)]: k\xEDch n\u1ED5 l\xE1 ch\u1EAFn,
-        sau \u0111\xF3 bi\u1EBFn ph\u1EA1m vi 4 \xF4 quanh C\u1EF1 Ch\xEDch th\xE0nh
-        chi\u1EBFn tr\u01B0\u1EDDng c\u1ED5. Ch\u1EB7n chi\xEAu th\u1EE9c t\u1EA7m
-        xa c\u1EE7a \u0111\u1ED1i th\u1EE7. Qu\xE2n \u0111\u1ECBch ti\u1EBFn v\xE0o
-        ph\u1EA1m vi chi\u1EBFn tr\u01B0\u1EDDng s\u1EBD nh\u1EADn hi\u1EC7u \u1EE9ng
-        ch\u1EA3y m\xE1u (apply debuff 21, apply debuff 8)"
+      description: "Kim H\xE0 T\u1EA1i [Memories of Blue ]: k\xEDch n\u1ED5 l\xE1
+        ch\u1EAFn, sau \u0111\xF3 bi\u1EBFn ph\u1EA1m vi 4 \xF4 quanh C\u1EF1 Ch\xEDch
+        th\xE0nh chi\u1EBFn tr\u01B0\u1EDDng c\u1ED5. Ch\u1EB7n chi\xEAu th\u1EE9c
+        t\u1EA7m xa c\u1EE7a \u0111\u1ED1i th\u1EE7. Qu\xE2n \u0111\u1ECBch ti\u1EBFn
+        v\xE0o ph\u1EA1m vi chi\u1EBFn tr\u01B0\u1EDDng s\u1EBD nh\u1EADn hi\u1EC7u
+        \u1EE9ng ch\u1EA3y m\xE1u "
   passiveSkills: []
   CurrentShield: {fileID: 0}
 --- !u!1 &6907775959439712675 stripped

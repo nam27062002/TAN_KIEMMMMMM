@@ -419,7 +419,7 @@ public abstract class Character : MonoBehaviour
         linkCharacter.SetLine(coverEffect.Actor.transform.position, transform.position);
     }
 
-    public void DestroyCharacter()
+    public virtual void DestroyCharacter()
     {
         Destroy(gameObject);
         var index = GpManager.Characters.IndexOf(this);
