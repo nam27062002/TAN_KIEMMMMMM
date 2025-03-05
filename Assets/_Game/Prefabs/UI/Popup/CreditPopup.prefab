@@ -109,8 +109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 474.81824}
-  m_SizeDelta: {x: 0, y: -949.6365}
+  m_AnchoredPosition: {x: 0, y: 579.81616}
+  m_SizeDelta: {x: 0, y: -1159.6326}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &633372667028538097
 CanvasRenderer:
@@ -151,11 +151,11 @@ MonoBehaviour:
     danh\_\r\n\_\xC1n Thao Giang l\u1ED9 - Ph\u1EA1m S\u01B0 M\u1EA1nh\_\r\n\_B\xE0
     Ch\xE2u c\u1ED5 th\xE1p \u2013 Tr\u1ECBnh Ho\xE0i \u0110\u1EE9c\r\nB\xE0nh Th\xE0nh
     ho\xE0i c\u1ED5 ho\u1EA1 ch\xE1nh s\u1EE9 Nguy\u1EC5n Ph\xE1c Ph\u1EE7 v\u1EADn
-    \u2013 Ng\xF4 Tr\xED H\xF2a\r\n\r\nNh\xE2n s\u1EF1:\r\nTr\u1EA7n L\xE2m V\u0169
-    - creative director, story writer\_\r\n\_Nguy\u1EC5n H\u1ED3ng Vi\u1EC7t \u2013
-    consultant, level designer\_\r\n\_\u0110\u1ED7 Minh Qu\xE2n - CTO game DTPAPP\_\_\r\n\_Tr\u01B0\u01A1ng
-    Nh\u01B0 H\xE0 - senior game artist\_\_\r\n\_Nguy\u1EC5n Th\u1ECB B\u1EA3o Ng\xE2n
-    - senior project manager"
+    \u2013 Ng\xF4 Tr\xED H\xF2a\r\n\r\n\n\n\n\n\nNh\xE2n s\u1EF1:\r\nTr\u1EA7n L\xE2m
+    V\u0169 - creative director, story writer\_\r\n\_Nguy\u1EC5n H\u1ED3ng Vi\u1EC7t
+    \u2013 consultant, level designer\_\r\n\_\u0110\u1ED7 Minh Qu\xE2n - CTO game
+    DTPAPP\_\_\r\n\_Tr\u01B0\u01A1ng Nh\u01B0 H\xE0 - senior game artist\_\_\r\n\_Nguy\u1EC5n
+    Th\u1ECB B\u1EA3o Ng\xE2n - senior project manager\n\n\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -259,8 +259,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -474.81824}
-  m_SizeDelta: {x: 1100, y: 2029.6365}
+  m_AnchoredPosition: {x: 0, y: -579.81616}
+  m_SizeDelta: {x: 1100, y: 2239.6326}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3780023958803938491
 GameObject:
@@ -299,7 +299,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_SizeDelta: {x: 0, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4678630929858586120
 MonoBehaviour:
@@ -392,7 +392,7 @@ MonoBehaviour:
   originalScale: {x: 1, y: 1, z: 1}
   panelAnimationTime: 2
   textFadeDuration: 1
-  delayBetweenCredits: 10
+  delayBetweenCredits: 1
   scrollDuration: 5
   contentPanel: {fileID: 993470606961297745}
   creditText: {fileID: 5523085906723709683}
@@ -423,6 +423,7 @@ MonoBehaviour:
     \u0111\u1ECDng \u1EDF b\u1EA3n demo \u0111\u1EC3 c\xF3 th\u1EC3 \u0111\u01B0a
     \u0111\u1EBFn cho ng\u01B0\u1EDDi ch\u01A1i m\u1ED9t s\u1EA3n ph\u1EA9m cu\u1ED1i
     c\xF9ng ch\u1EA5t l\u01B0\u1EE3ng nh\u1EA5t."
+  rectMask2D: {fileID: 4350433493766308048}
 --- !u!82 &584546097839046488
 AudioSource:
   m_ObjectHideFlags: 0
@@ -895,6 +896,7 @@ GameObject:
   - component: {fileID: 6094645154865155256}
   - component: {fileID: 1175936532522514492}
   - component: {fileID: 1600917933025700958}
+  - component: {fileID: 4350433493766308048}
   m_Layer: 5
   m_Name: Scroll
   m_TagString: Untagged
@@ -917,10 +919,10 @@ RectTransform:
   - {fileID: 6480078808118778372}
   m_Father: {fileID: 6900777823432231715}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6094645154865155256
 CanvasRenderer:
@@ -967,7 +969,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9187585539205471717}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
@@ -990,3 +992,17 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4350433493766308048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9187585539205471717}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}

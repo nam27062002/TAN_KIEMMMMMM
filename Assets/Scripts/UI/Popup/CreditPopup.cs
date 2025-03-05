@@ -18,6 +18,8 @@ public class CreditPopup : PopupBase
     [SerializeField] private ScrollRect scrollRect;
 
     [SerializeField] private List<string> credits = new List<string>();
+
+    [SerializeField] private RectMask2D rectMask2D;
     private Coroutine creditAnimationCoroutine;
 
     public override void Open(UIBaseParameters parameters = null)
@@ -25,6 +27,7 @@ public class CreditPopup : PopupBase
         base.Open(parameters);
         InitializeCredits();
         StartCoroutine(PlayCreditSequence());
+        rectMask2D.enabled = true;
     }
 
     public override void Close()
