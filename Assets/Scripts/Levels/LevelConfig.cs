@@ -15,7 +15,7 @@ public class LevelConfig : ScriptableObject
     public List<ConversationData> startConversations = new List<ConversationData>();
     public List<ConversationData> winConversations = new List<ConversationData>();
     public LevelConfig nextLevel;
-    
+    public float delayIncrement = 0.01f;
     public ConversationData special1Conversation;
     public ConversationData special2Conversation;
 }

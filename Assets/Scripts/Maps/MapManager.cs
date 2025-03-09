@@ -13,8 +13,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private Transform cellHolder;
     [SerializeField] private SerializableDictionary<Vector2Int, Cell> cells = new();
 
-    private int _completed;
-    private const float DelayIncrement = 0.01f;
+    private int _completed;         
     private Pathfinding _pathfinding;
     public Vector2Int MapSize => mapSize;
     public SerializableDictionary<Vector2Int, Cell> Cells => cells;
@@ -38,7 +37,7 @@ public class MapManager : MonoBehaviour
         foreach (var cell in cells)
         {
             cell.Value.gameObject.SetActive(true);
-            var delay = count * DelayIncrement;
+            var delay = count * GameplayManager.Instance.LevelConfig.delayIncrement;
             cell.Value.Initialize(delay, HandleLoadMapFinished);
             count++;
         }

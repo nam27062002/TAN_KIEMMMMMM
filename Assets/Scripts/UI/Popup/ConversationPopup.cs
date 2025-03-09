@@ -20,6 +20,7 @@ public class ConversationPopup : PopupBase
     [Header("Typewriter Settings")]
     [SerializeField] private float typeSpeed = 0.05f;
     [SerializeField] private float autoNextDelay = 5f;
+    [SerializeField] private bool autoNextEnabled = true; // Biến để bật/tắt tự động chuyển thoại
 
     [Header("Character Movement")]
     [SerializeField] private float moveDuration = 3f;
@@ -105,8 +106,24 @@ public class ConversationPopup : PopupBase
         var data = _conversationData[_currentIndex];
         SetupAvatar(data);
         HandleCharacterSpawning(data);
-        StartTextAnimation(data);
-        StartAutoNext();
+
+        if (data.text == "")
+        {
+            bg.SetActiveIfNeeded(false); 
+            StartCoroutine(AutoSkipCoroutine());
+        }
+        else
+        {
+            // Nếu có text, hiển thị text và áp dụng logic hiện tại
+            StartTextAnimation(data);
+            if (autoNextEnabled)
+            {
+                StartAutoNext();
+            }
+        }
+        
+        if (data.shake) 
+            TraumaInducer.Instance.Shake();
     }
 
     private void SetupAvatar(ConversationData.Data data)
@@ -188,8 +205,6 @@ public class ConversationPopup : PopupBase
         
         if (_typeCoroutine != null) StopCoroutine(_typeCoroutine);
         _typeCoroutine = StartCoroutine(TypeTextCoroutine(data.text));
-
-        if (data.shake) TraumaInducer.Instance.Shake();
     }
 
     private IEnumerator TypeTextCoroutine(string text)
@@ -212,6 +227,13 @@ public class ConversationPopup : PopupBase
     {
         yield return new WaitForSecondsRealtime(autoNextDelay);
         OnNextButtonClicked();
+    }
+
+    // Coroutine mới để xử lý skip tự động sau 2 giây nếu không có text
+    private IEnumerator AutoSkipCoroutine()
+    {
+        yield return new WaitForSecondsRealtime(2f); // Đợi 2 giây
+        OnNextButtonClicked(); // Chuyển sang đoạn hội thoại tiếp theo
     }
     #endregion
 

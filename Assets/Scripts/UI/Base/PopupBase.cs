@@ -47,7 +47,7 @@ public abstract class PopupBase : UIBase
         base.Open(parameters);
         StartOpenAnimation();
         Time.timeScale = 0;
-        GameplayManager.Instance.SetInteract(false);
+        if (GameplayManager.HasInstance) GameplayManager.Instance.SetInteract(false);
     }
     
     public override void Close()
@@ -58,7 +58,7 @@ public abstract class PopupBase : UIBase
             OnClose?.Invoke(this, EventArgs.Empty);
             Time.timeScale = 1;
             base.Close();
-            GameplayManager.Instance.SetInteract(true);
+            if (GameplayManager.HasInstance) GameplayManager.Instance.SetInteract(true);
         });   
     }
     

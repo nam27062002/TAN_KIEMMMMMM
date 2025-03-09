@@ -1272,7 +1272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f44e122f624f12b0234192a4f91d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelConfig: {fileID: 11400000, guid: 844bfcde8a69da446847997362a62f85, type: 2}
+  levelConfigs:
+  - {fileID: 11400000, guid: 844bfcde8a69da446847997362a62f85, type: 2}
+  - {fileID: 11400000, guid: 4da27f3501b6b0340b294d80e8bd28d0, type: 2}
   allCharacter:
     m_keys: 00000000010000000200000003000000040000000500000008000000
     m_values:

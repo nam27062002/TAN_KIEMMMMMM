@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI skillIndex;
+    public TextMeshProUGUI mp;
     public Image skillImage;
     public Button skillButton;
     public GameObject lockObject;
@@ -76,6 +77,7 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         skillImage.color = color;
         skillNameText.text = skillInfo.name;
         skillDescriptionText.text = skillInfo.description;
+        mp.text = $"({skillInfo.mpCost}MP)";
     }
 
     private bool CanShowInfo => _skillIndex != 0;

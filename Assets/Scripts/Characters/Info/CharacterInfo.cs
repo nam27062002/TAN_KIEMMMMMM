@@ -436,7 +436,7 @@ public class CharacterInfo
 
     public bool CanCastSkill(SkillInfo skillInfo)
     {
-        return CurrentMp >= skillInfo.mpCost && HasEnoughActionPoints;
+        return (CurrentMp >= skillInfo.mpCost || skillInfo.mpCost == 0) && HasEnoughActionPoints;
     }
 
     #region Action Points

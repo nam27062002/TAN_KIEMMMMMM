@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseGamePopup : PopupBase
@@ -28,6 +29,7 @@ public class PauseGamePopup : PopupBase
 
     private void OnReplayButtonClick()
     {
+        GameplayManager.Instance.IsReplay = true;
         GameplayManager.Instance.DestroyGameplay();
         Close();
         AlkawaDebug.Log(ELogCategory.UI, "Replay button clicked");
@@ -45,6 +47,10 @@ public class PauseGamePopup : PopupBase
 
     private void OnExitButtonClick()
     {
+        SceneLoader.LoadSceneAsync(ESceneType.MainMenu, LoadSceneMode.Additive);
+        SceneLoader.UnloadSceneAsync(ESceneType.Game);
+        UIManager.Instance.CloseCurrentMenu();
+        Close();
         AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked");
     }
 }

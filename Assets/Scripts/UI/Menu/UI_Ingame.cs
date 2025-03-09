@@ -294,6 +294,7 @@ public class UI_Ingame : MenuBase
     private void FixedUpdate()
     {
         UpdateEffect();
+        SetLevelName();
     }
 
     private void UpdateEffect()

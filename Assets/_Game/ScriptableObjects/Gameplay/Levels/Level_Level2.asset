@@ -10,35 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3403dd78d6943278cb81825806a5920, type: 3}
-  m_Name: Level_Level1
+  m_Name: Level_Level2
   m_EditorClassIdentifier: 
   canSkipStartConversation: 0
-  levelName: "M\xE0n 1"
+  levelName: "M\xE0n 2"
   cameraSize: 7
-  levelType: 1
+  levelType: 2
   spawnerConfig:
     spawnPoints:
-      m_keys: 000000000100000002000000040000000300000008000000
+      m_keys: 000000000200000004000000
       m_values:
       - points:
         - {x: 9, y: 3}
       - points:
-        - {x: 7, y: 3}
-      - points:
-        - {x: 2, y: 6}
-        - {x: 1, y: 6}
-        - {x: 2, y: 15}
-        - {x: 3, y: 15}
-        - {x: 7, y: 15}
         - {x: 8, y: 15}
         - {x: 10, y: 5}
         - {x: 11, y: 5}
       - points:
         - {x: 4, y: 1}
-      - points:
-        - {x: 6, y: 0}
-      - points:
-        - {x: 5, y: 19}
   specialSpawnerConfig:
     spawnPoints:
       m_keys: 05000000

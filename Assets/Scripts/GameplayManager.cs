@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using SaveLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
     [Title("Scriptable Objects")] [SerializeField]
-    private LevelConfig levelConfig;
+    private List<LevelConfig> levelConfigs;
+
+    private LevelConfig levelConfig => levelConfigs[SaveLoadManager.currentLevel];
 
     [Title("Characters")] [SerializeField]
     private SerializableDictionary<CharacterType, Character> allCharacter = new();
@@ -45,6 +48,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private bool _canInteract;
     public LevelConfig LevelConfig => levelConfig;
     public bool IsPauseGameInternal = false;
+    public bool IsReplay;
 
     // new
     protected override void Awake()
@@ -88,11 +92,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void ShowStartConversation()
     {
-        if (levelConfig.startConversations is { Count: > 0 } 
-#if UNITY_EDITOR
-            && !levelConfig.canSkipStartConversation
-#endif
-            )
+        if (levelConfig.startConversations is { Count: > 0 } && !CanSkipStartConversation())
         {
             ShowNextStartConversation(0);
         }
@@ -100,6 +100,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             LoadMapGame();
         }
+    }
+
+    private bool CanSkipStartConversation()
+    {
+// #if UNITY_EDITOR
+//         return levelConfig.canSkipStartConversation;
+// #endif
+        if (!IsReplay) return false;
+        IsReplay = false;
+        return true;
     }
 
     private void ShowNextStartConversation(int index)
@@ -120,6 +130,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void LoadMapGame()
     {
+        SaveLoadManager.Instance.SetCurrentLevel((int)levelConfig.levelType);
         var go = Instantiate(levelConfig.mapPrefab, transform);
         MapManager = go.GetComponent<MapManager>();
         MapManager.OnLoadMapFinished += OnLoadMapFinished;
@@ -347,7 +358,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void NextLevel()
     {
-        levelConfig = levelConfig.nextLevel;
+        SaveLoadManager.currentLevel++;
         DestroyGameplay();
     }
 

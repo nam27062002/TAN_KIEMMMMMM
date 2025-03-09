@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CreditPopup : PopupBase
@@ -11,7 +12,10 @@ public class CreditPopup : PopupBase
     [SerializeField] private float textFadeDuration = 1f;
     [SerializeField] private float delayBetweenCredits = 0.5f;
     [SerializeField] private float scrollDuration = 5f;
-
+    [SerializeField] private Button closeCreditsButton;
+    [SerializeField] private Button replayButton;
+    [SerializeField] private Button quitButton;
+    [SerializeField] private GameObject panel;
     [Header("UI References")]
     [SerializeField] private RectTransform contentPanel;
     [SerializeField] private TextMeshProUGUI creditText;
@@ -28,12 +32,40 @@ public class CreditPopup : PopupBase
         InitializeCredits();
         StartCoroutine(PlayCreditSequence());
         rectMask2D.enabled = true;
+        closeCreditsButton.gameObject.SetActiveIfNeeded(false);
+        closeCreditsButton.onClick.AddListener(OpenPanel);
+        replayButton.onClick.AddListener(OnReplayButtonClick);
+        quitButton.onClick.AddListener(OnExitButtonClick);
     }
 
     public override void Close()
     {
         StopAllCoroutines();
+        closeCreditsButton.onClick.RemoveListener(OpenPanel);
+        quitButton.onClick.RemoveListener(OnExitButtonClick);
         base.Close();
+    }
+
+    private void OnReplayButtonClick()
+    {
+        GameplayManager.Instance.IsReplay = true;
+        GameplayManager.Instance.DestroyGameplay();
+        Close();
+        AlkawaDebug.Log(ELogCategory.UI, "Replay button clicked");
+    }
+    
+    private void OnExitButtonClick()
+    {
+        SceneLoader.LoadSceneAsync(ESceneType.MainMenu, LoadSceneMode.Additive);
+        SceneLoader.UnloadSceneAsync(ESceneType.Game);
+        UIManager.Instance.CloseCurrentMenu();
+        Close();
+        AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked");
+    }
+    
+    private void OpenPanel()
+    {
+        panel.SetActive(true);
     }
 
     private void InitializeCredits()
@@ -70,7 +102,11 @@ public class CreditPopup : PopupBase
         {
             creditText.text = credit;
             // yield return TypewriterEffect(credit, textFadeDuration);
+#if UNITY_EDITOR
+            yield return new WaitForSecondsRealtime(0);
+#else
             yield return new WaitForSecondsRealtime(delayBetweenCredits);
+#endif
         }
     }
 
@@ -105,5 +141,6 @@ public class CreditPopup : PopupBase
         }
         
         scrollRect.verticalNormalizedPosition = 0f;
+        closeCreditsButton.gameObject.SetActiveIfNeeded(true);
     }
 }

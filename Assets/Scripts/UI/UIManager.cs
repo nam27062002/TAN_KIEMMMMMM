@@ -73,6 +73,11 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         CurrentMenu.Open();
     }
 
+    public void CloseCurrentMenu()
+    {
+        CurrentMenu?.Close();
+    }
+
     #endregion
     private void OnClosePopup(object sender, EventArgs e)
     {
