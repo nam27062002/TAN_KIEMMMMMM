@@ -11,8 +11,19 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
     [Title("Scriptable Objects")] [SerializeField]
     private List<LevelConfig> levelConfigs;
-
-    private LevelConfig levelConfig => levelConfigs[SaveLoadManager.currentLevel];
+    public LevelType levelType;
+    
+    private LevelConfig levelConfig
+    {
+        get
+        {
+#if UNITY_EDITOR
+            return levelConfigs[(int)levelType];
+#else
+            return levelConfigs[SaveLoadManager.currentLevel];
+#endif
+        }
+    }
 
     [Title("Characters")] [SerializeField]
     private SerializableDictionary<CharacterType, Character> allCharacter = new();

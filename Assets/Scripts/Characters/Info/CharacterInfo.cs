@@ -101,7 +101,7 @@ public class CharacterInfo
     public EffectData CoverFullDamageEffectData =>
         EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_100_Percent);
 
-    private EffectData DragonArmorEffectData =>
+    public EffectData DragonArmorEffectData =>
         EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.DragonArmor);
 
     public ShieldEffect ShieldEffectData => (ShieldEffect)EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Shield);
@@ -270,29 +270,7 @@ public class CharacterInfo
             HandleDamageTaken(-remainder, character);
         }
     }
-
-
-    public void HandleMpChanged(int value)
-    {
-        if (value == 0) return;
-        var dragon = DragonArmorEffectData;
-        if (dragon != null)
-        {
-            if (dragon.Actor != null)
-            {
-                value = Utils.RoundNumber(value * 1f / 2f);
-                dragon.Actor.Info.HandleMpChanged(value);
-            }
-            else
-            {
-                Debug.LogError("Loi roi");
-            }
-        }
-
-        CurrentMp += value;
-        OnMpChanged?.Invoke(this, value);
-    }
-
+    
     public void HandleMoveAmountChanged(int value)
     {
         OnMoveAmount?.Invoke(this, value);
@@ -413,7 +391,6 @@ public class CharacterInfo
     {
         OnNewRound?.Invoke(this, RoundIndex);
         MoveAmount = 0;
-        // IncreaseActionPointsValue();
         foreach (var effect in EffectInfo.Effects.ToList()
                      .Where(effect => EffectInfo.TriggerAtStart.Contains(effect.EffectType)))
         {
@@ -591,7 +568,17 @@ public class CharacterInfo
     {
         ApplyEffects(damageTakenParams.Effects);
         HandleDamageTaken(damageTakenParams);
-        HandleMpChanged(-damageTakenParams.ReducedMana);
+        Character.HandleMpChanged(-damageTakenParams.ReducedMana);
+    }
+
+    public void OnMpChangedInvoke(int value)
+    {
+        OnMpChanged?.Invoke(this, value);
+    }
+    
+    public void OnHpChangedInvoke(int value)
+    {
+        OnHpChanged?.Invoke(this, value);
     }
 
     public void CheckEffectAfterReceiveDamage(DamageTakenParams damageTakenParams)

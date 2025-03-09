@@ -220,7 +220,7 @@ public abstract class Character : MonoBehaviour
 
     private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
-        Info.HandleMpChanged(-Info.SkillInfo.mpCost);
+        HandleMpChanged(-Info.SkillInfo.mpCost);
     
         var skillParams = new SkillStateParams
         {
@@ -235,6 +235,27 @@ public abstract class Character : MonoBehaviour
         SetSkill(skillParams);
         if (!dontNeedActionPoints) Info.ReduceActionPoints();
         UnSelectSkill();
+    }
+    
+    public virtual void HandleMpChanged(int value)
+    {
+        if (value == 0) return;
+        var dragon = Info.DragonArmorEffectData;
+        if (dragon != null)
+        {
+            if (dragon.Actor != null)
+            {
+                value = Utils.RoundNumber(value * 1f / 2f);
+                dragon.Actor.HandleMpChanged(value);
+            }
+            else
+            {
+                Debug.LogError("Loi roi");
+            }
+        }
+
+        Info.CurrentMp += value;
+        Info.OnMpChangedInvoke(value);
     }
 
     protected void HandleCastSkill(SkillInfo skillInfo, List<Character> targets = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
