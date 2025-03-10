@@ -374,6 +374,10 @@ public class UI_Ingame : MenuBase
         var currentMp = _characterParams.Character.Info.CurrentMp;
         var maxMp = _characterParams.Character.Info.Attributes.mana;
         if (maxMp == 0) return;
+        if (currentMp < 0)
+        {
+            currentMp = 0;
+        }
         mpBar.SetValue(currentMp * 1f / maxMp, $"{currentMp} / {maxMp}");
     }
 

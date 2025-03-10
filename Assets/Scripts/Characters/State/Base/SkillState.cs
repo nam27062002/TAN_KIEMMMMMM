@@ -76,7 +76,7 @@ public class SkillState : CharacterState
         GpManager.SetInteract(false);
         TargetCharacters.Clear();
 
-        if (!(stateParams is SkillStateParams skillStateParams))
+        if (stateParams is not SkillStateParams skillStateParams)
         {
             return;
         }
@@ -105,13 +105,11 @@ public class SkillState : CharacterState
             }
         }
 
-        if (CanSetTargetCharactersInternal())
+        if (!CanSetTargetCharactersInternal()) return;
+        var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
+        if (_targetCharacterActions.TryGetValue(key, out var action))
         {
-            var key = (_skillStateParams.SkillTurnType, _skillStateParams.SkillInfo.skillIndex);
-            if (_targetCharacterActions.TryGetValue(key, out var action))
-            {
-                action.Invoke();
-            }
+            action.Invoke();
         }
     }
 
@@ -245,7 +243,7 @@ public class SkillState : CharacterState
                     OnSetDamageTakenFinished = HandleTargetFinish,
                     SkillStateParams = _skillStateParams
                 };
-
+                Character.HandleMpChanged(_skillStateParams.SkillInfo.mpCost); 
                 CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
             }
             else
@@ -275,8 +273,7 @@ public class SkillState : CharacterState
         var shieldCell = target.Info.Cell.mainBlockProjectile;
         return shieldCell != null && shieldCell != Character.Info.Cell.mainBlockProjectile;
     }
-
-
+    
     private IEnumerator HandleApplyDamage(Character target, DamageTakenParams damageTakenParams)
     {
         if (target != Character)

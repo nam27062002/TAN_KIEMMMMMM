@@ -45,10 +45,4 @@
         hp = Utils.RoundNumber(value / 2f);
         return Info.CurrentHp > -hp;
     }
-    
-    protected override void SetSpeed()
-    {
-        base.SetSpeed();
-        Info.Speed = 200;
-    }   
 }

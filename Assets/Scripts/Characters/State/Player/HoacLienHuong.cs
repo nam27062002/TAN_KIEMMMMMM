@@ -16,7 +16,6 @@ public class HoacLienHuong : PlayerCharacter
     protected override void SetSpeed()
     {
         base.SetSpeed();
-        Info.Speed = 100;
     }
     
     protected override bool CanBlockSkill(DamageTakenParams damageTakenParams)

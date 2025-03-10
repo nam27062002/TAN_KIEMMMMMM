@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CharacterAnimationData : MonoBehaviour
@@ -28,6 +29,7 @@ public class CharacterAnimationData : MonoBehaviour
         PlayAnimation(AnimationParameterNameType.Idle);
     }
     
+    [Button("Set Animation Parameter")]
     private void SetAnimationParameterHash()
     {
         animationParameterHash.Clear();
@@ -63,4 +65,5 @@ public enum AnimationParameterNameType
     Skill2,
     Skill3,
     Skill4,
+    Buff,
 }

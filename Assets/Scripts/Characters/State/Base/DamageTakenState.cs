@@ -56,7 +56,15 @@
     private void OnDamageTaken()
     {
         Character.Info.OnDamageTaken(_damageTakenParams);
-        PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
+        if (_damageTakenParams.ReceiveFromCharacter != null &&
+            _damageTakenParams.ReceiveFromCharacter.Type == Character.Type)
+        {
+            PlayAnim(AnimationParameterNameType.Buff, SetDamageTakenFinished); 
+        }
+        else
+        {
+            PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
+        }
     }
     
     protected virtual void SetDamageTakenFinished()

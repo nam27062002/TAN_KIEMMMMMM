@@ -43,7 +43,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
-    [ShowInInspector] private readonly List<Character> _players = new();
+    [ShowInInspector] public readonly List<Character> Players = new();
     [ShowInInspector] public readonly List<Character> Enemies = new();
     [ShowInInspector] public List<Character> Characters { get; private set; } = new();
 
@@ -157,7 +157,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
         charactersInConversation.Clear();
         Characters.Clear();
-        _players.Clear();
+        Players.Clear();
         Enemies.Clear();
         SelectedCharacter = null;
         foreach (var spawnPoint in levelConfig.spawnerConfig.spawnPoints)
@@ -173,7 +173,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                         Enemies.Add(character);
                         break;
                     case Type.Player:
-                        _players.Add(character);
+                        Players.Add(character);
                         break;
                 }
 
@@ -285,6 +285,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnCharacterClicked(Cell cell)
     {
+        if (SelectedCharacter == null) return;
         if (SelectedCharacter.TryCastSkill(cell)) return;
         if (!IsRoundOfPlayer) return;
         if (cell.Character.Type == Type.AI)
@@ -388,7 +389,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             return FacingType.Right;
         }
 
-        var opponents = character.Type == Type.AI ? _players : Enemies;
+        var opponents = character.Type == Type.AI ? Players : Enemies;
         var nearestOpponent = Utils.FindNearestCharacter(character, opponents);
 
         if (nearestOpponent == null)
@@ -404,13 +405,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public Character GetNearestAlly(Character character)
     {
-        var allies = character.Type == Type.AI ? Enemies : _players;
+        var allies = character.Type == Type.AI ? Enemies : Players;
         return Utils.FindNearestCharacter(character, allies);
     }
 
     public Character GetNearestEnemy(Character character)
     {
-        var enemies = character.Type == Type.AI ? _players : Enemies;
+        var enemies = character.Type == Type.AI ? Players : Enemies;
         return Utils.FindNearestCharacter(character, enemies);
     }
 
@@ -484,8 +485,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
         else
         {
-            _players.Remove(character);
-            if (_players.Count == 0)
+            Players.Remove(character);
+            if (Players.Count == 0)
             {
                 ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
                 IsPauseGameInternal = true;
@@ -552,7 +553,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                         Enemies.Add(character);
                         break;
                     case Type.Player:
-                        _players.Add(character);
+                        Players.Add(character);
                         break;
                 }
 
@@ -638,8 +639,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void OnWin()
     {
-        InitializeWinSequence(_players);
-        StartCoroutine(WaitForCharactersExitCamera(_players, ProceedToNextLevel));
+        InitializeWinSequence(Players);
+        StartCoroutine(WaitForCharactersExitCamera(Players, ProceedToNextLevel));
     }
 
     private Sequence _winSequence;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public abstract class AICharacter : Character
 {
@@ -13,6 +15,17 @@ public abstract class AICharacter : Character
             new AIMoveState(this),
             new DamageTakenState(this),
             new AISkillState(this));
+    }
+    
+    public override void SetMainCharacter()
+    {
+        base.SetMainCharacter();
+        if (Info.Cell.mainShieldCell != null)
+        {
+            var damage = Roll.RollDice(1, 4, 0);
+            Info.HandleDamageTaken(-damage, null);
+            Debug.Log($"[{characterConfig.characterName}] Hiểu Nhật Quang Lâm: damage = 1d4 = {damage}");
+        }
     }
     
     public void HandleAIPlayCoroutine()
@@ -33,20 +46,35 @@ public abstract class AICharacter : Character
         }
     }
     
-    protected bool TryMoving()
+    protected virtual bool TryMoving()
     {
         if (Info.GetMoveRange() <= 0) return false;
-        var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, Info.GetMoveRange(), characterConfig.moveDirection);
+        List<Cell> cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, Info.GetMoveRange(), characterConfig.moveDirection);
         if (cells.Count == 0) return false;
-        var random = new System.Random();
-        var randomCell = cells[random.Next(cells.Count)];
-        var path = GpManager.MapManager.FindPath(Info.Cell, randomCell);
+        List<Cell> enemyCells = GpManager.Players.Select(item => item.Info.Cell).ToList();
+
+        Cell targetCell = null;
+        int minDistance = int.MaxValue;
+        foreach (var cell in cells)
+        {
+            foreach (var enemyCell in enemyCells)
+            {
+                var p = MapManager.FindShortestPath(cell, enemyCell);
+                if (p != null && p.Count < minDistance)
+                {
+                    minDistance = p.Count;
+                    targetCell = cell;
+                }
+            }
+        }
+        if (targetCell == null) return false;
+        var path = GpManager.MapManager.FindPath(Info.Cell, targetCell);
         TryMoveToCell(path);
-        AlkawaDebug.Log(ELogCategory.AI,$"move to cell: {randomCell.CellPosition}");
+        AlkawaDebug.Log(ELogCategory.AI,$"move to cell: {targetCell.CellPosition}");
         return true;
     }
     
-    private bool TryCastSkill()
+    protected bool TryCastSkill()
     {
         AlkawaDebug.Log(ELogCategory.AI,"TryCastSkill");
          var skillType = GpManager.GetSkillTurnType(this);

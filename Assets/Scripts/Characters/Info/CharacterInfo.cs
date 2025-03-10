@@ -205,7 +205,7 @@ public class CharacterInfo
         });
     }
 
-    private void HandleDamageTaken(int damage, Character character)
+    public void HandleDamageTaken(int damage, Character character)
     {
         if (damage == 0) return;
         HandleHpChanged(ref damage, character);

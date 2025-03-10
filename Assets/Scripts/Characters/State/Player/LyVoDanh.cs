@@ -30,7 +30,6 @@
         {
             base.SetSpeed();
         }
-        // Info.Speed = 10000;
     }       
     
 }

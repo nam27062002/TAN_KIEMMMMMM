@@ -20,8 +20,6 @@
         {
             base.SetSpeed();
         }
-        
-        Info.Speed = 60;
     }
 
     public int GetVenomousParasite()

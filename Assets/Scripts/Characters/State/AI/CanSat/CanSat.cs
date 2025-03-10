@@ -38,7 +38,7 @@ public class CanSat : AICharacter
         assassin?.DestroyCharacter();
     }
 
-    public virtual void DestroyCharacter()
+    public override void DestroyCharacter()
     {
         base.DestroyCharacter();
         dancer?.DestroyCharacter();
@@ -55,8 +55,6 @@ public class CanSat : AICharacter
         {
             base.SetSpeed();
         }
-
-        Info.Speed = 1000;
     }
 
     public override void HandleAIPlay()

@@ -61,8 +61,12 @@ public class CanSat_SkillState : AISkillState
         var skillDamage = Roll.RollDice(2, 12, 4);
         Debug.Log($"Skill damage = 2d12 +4 = {skillDamage}");
         var realDamage = GetTotalDamage(baseDamage, skillDamage);
-        var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, 1, DirectionType.All);
-        character.TeleportToCell(cells[0]);
+        var path = GpManager.MapManager.FindShortestPath(Character.Info.Cell, character.Info.Cell);
+        if (path.Count > 2)
+        {
+            var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, 1, DirectionType.All);
+            character.TeleportToCell(cells[0]);
+        }
         HandleTakeAP(character);
         return new DamageTakenParams()
         {

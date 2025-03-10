@@ -187,6 +187,12 @@ public abstract class Character : MonoBehaviour
 
     public bool TryCastSkill(Cell cell)
     {
+        if (cell == null)
+        {
+            Debug.LogError("TryCastSkill: cell is null");
+            return false;
+        }
+
         if (Info.SkillInfo == null) return false;
         var damageType = Info.SkillInfo.damageType;
 
@@ -211,6 +217,7 @@ public abstract class Character : MonoBehaviour
             return true;
         }
         return false;
+
     }
     
     public List<SkillInfo> GetSkillInfos(SkillTurnType skillTurnType)
@@ -255,6 +262,10 @@ public abstract class Character : MonoBehaviour
         }
 
         Info.CurrentMp += value;
+        if (Info.CurrentMp < 0)
+        {
+            Info.CurrentMp = 0;
+        }
         Info.OnMpChangedInvoke(value);
     }
 
@@ -455,6 +466,7 @@ public abstract class Character : MonoBehaviour
     {
         var index = GpManager.Characters.IndexOf(this);
         Info.Cell.CellType = CellType.Walkable;
+        Info.Cell.Character = null;
         if (IsMainCharacter)
         {
             GpManager.HandleEndTurn();

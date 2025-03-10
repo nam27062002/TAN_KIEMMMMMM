@@ -106,10 +106,18 @@ public class ShowInfoPopup : PopupBase
     private void SetupBars(CharacterInfo info)
     {
         var currentHp = info.CurrentHp;
+        if (currentHp < 0)
+        {
+            currentHp = 0;
+        }
         var maxHp = info.Attributes.health;
         hpBarUI.SetValue((float)currentHp / maxHp, $"{currentHp} / {maxHp}");
         var currentMp = info.CurrentMp;
         var maxMp = info.Attributes.mana;
+        if (currentMp < 0)
+        {
+            currentMp = 0;
+        }
         if (maxMp != 0)
             mpBarUI.SetValue((float)currentMp / maxMp, $"{currentMp} / {maxMp}");
         else
