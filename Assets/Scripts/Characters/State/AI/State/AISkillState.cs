@@ -21,6 +21,7 @@
             else
             {
                 GpManager.SetSelectedCharacter(GpManager.MainCharacter);
+                GpManager.SetInteract(true);
             }
         }
     }

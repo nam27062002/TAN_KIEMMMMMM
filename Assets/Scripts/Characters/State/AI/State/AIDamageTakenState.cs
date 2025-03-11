@@ -11,13 +11,47 @@ public class AIDamageTakenState : DamageTakenState
  
     protected override bool CanCounter()
     {
+        if (Character.lastDamageTakenCountered)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì đã counter lần trước.");
+            return false;
+        }
+
+        if (Info.CurrentHp > Info.Attributes.health / 2)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: ({Info.CurrentHp}/{Info.Attributes.health})");
+            return false;
+        }
+
         var target = DamageTakenParams.ReceiveFromCharacter;
-        if (target == null) return false;
-        if (Info.MustEndTurn) return true;
+        if (target == null)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì không có mục tiêu.");
+            return false;
+        }
+
+        if (Info.MustEndTurn)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Có thể counter vì phải kết thúc lượt.");
+            return true;
+        }
 
         List<CastSkillData> castSkillData = Character.GetValidSkills(target);
-        if (castSkillData == null || castSkillData.Count == 0) return false;
+        if (castSkillData == null || castSkillData.Count == 0)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì không có kỹ năng hợp lệ.");
+            return false;
+        }
+
+        if (Random.value > 0.3f)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: {Random.value} > 0.3");
+            return false;
+        }
+
         _castSkillData = castSkillData[Random.Range(0, castSkillData.Count)];
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - dùng skill{_castSkillData.SkillInfo.name} lên {target.characterConfig.characterName}");
+
         return true;
     }
     
@@ -27,6 +61,9 @@ public class AIDamageTakenState : DamageTakenState
         DamageTakenParams.CastSkillData = _castSkillData;
         GpManager.SetCharacterReact(Character, DamageTakenParams);
         HandleCastSkill();
+        
+        Character.lastDamageTakenCountered = true;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Đã thực hiện counter thành công, lastDamageTakenCountered được đặt thành true.");
     }
 
     private void HandleCastSkill()
@@ -36,7 +73,7 @@ public class AIDamageTakenState : DamageTakenState
         {
             targets.Add(_castSkillData.CharactersImpact[i]);
         }
-        AlkawaDebug.Log(ELogCategory.SKILL,$"[{Character.characterConfig.characterName}] - Counter {DamageTakenParams.ReceiveFromCharacter.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Counter {DamageTakenParams.ReceiveFromCharacter.characterConfig.characterName}");
         Character.HandleCastSkill(targets, _castSkillData.SkillInfo);
     }
 }

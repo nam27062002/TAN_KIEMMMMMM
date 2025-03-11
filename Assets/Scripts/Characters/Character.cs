@@ -35,6 +35,7 @@ public abstract class Character : MonoBehaviour
     protected MapManager MapManager => GpManager.MapManager;
     
     // Public function
+    public bool lastDamageTakenCountered;
     public CharacterAnimationData AnimationData => characterAnimationData;
     
     // public vitual function
@@ -49,6 +50,11 @@ public abstract class Character : MonoBehaviour
     
     private void GpManagerOnOnEndTurn(object sender, EventArgs e)
     {
+        if (SkillStateParams is { IdleStateParams: { DamageTakenParams: not null } })
+        {
+            SkillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
+        }
+
         SkillStateParams = null;
     }
     
@@ -169,11 +175,7 @@ public abstract class Character : MonoBehaviour
 
     private void OnDamageTakenCounterFinished(FinishApplySkillParams _)
     {
-        if (gameObject == null)
-        {
-            Debug.LogException(new NullReferenceException("OnDamageTakenCounterFinished: gameObject == null"));
-            return;
-        }
+        if (Info.IsDie) return;
         SkillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
         CoroutineDispatcher.Invoke(HandleCounter, 1f);
     }
@@ -486,8 +488,9 @@ public abstract class Character : MonoBehaviour
         {
             item.UnregisterEvents();
         }
-        ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
         GpManager.HandleCharacterDie(this);
+        ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
+       
         Destroy(gameObject);
     }
     

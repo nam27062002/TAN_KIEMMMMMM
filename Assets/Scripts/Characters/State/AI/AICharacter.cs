@@ -8,6 +8,8 @@ public abstract class AICharacter : Character
     public override Type Type => Type.AI;
     protected Character Enemy;
 
+    private int _moveCount = 0;
+
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -39,8 +41,9 @@ public abstract class AICharacter : Character
         Info.GetMoveRange(); // TODO: Clean code
         if (!TryCastSkill())
         {
-            if (!TryMoving())
+            if (!TryMoving() || _moveCount >= 2)
             {
+                _moveCount = 0;
                 GameplayManager.Instance.HandleEndTurn();
             }
         }
@@ -70,6 +73,7 @@ public abstract class AICharacter : Character
         if (targetCell == null) return false;
         var path = GpManager.MapManager.FindPath(Info.Cell, targetCell);
         TryMoveToCell(path);
+        _moveCount++;
         AlkawaDebug.Log(ELogCategory.AI,$"move to cell: {targetCell.CellPosition}");
         return true;
     }

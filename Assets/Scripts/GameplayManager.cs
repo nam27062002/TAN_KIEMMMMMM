@@ -232,6 +232,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SelectedCharacter = character;
         SelectedCharacter.SetSelectedCharacter(idleParams);
         UpdateCharacterInfo();
+        if (SelectedCharacter.Info.IsDie)
+        {
+            HandleEndTurn();
+        }
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
 
@@ -284,8 +288,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
             SetMainCharacter();
         }
-
         OnEndTurn?.Invoke(this, EventArgs.Empty);
+        OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnCharacterClicked(Cell cell)
