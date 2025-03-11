@@ -16,7 +16,7 @@
         if (CanUseHp(value, out var hp))
         {
             Info.CurrentHp += hp;
-            Info.OnHpChangedInvoke(value);
+            Info.OnHpChangedInvoke(hp);
         }
         else
         {

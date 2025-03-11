@@ -226,7 +226,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
-    private void SetSelectedCharacter(Character character, IdleStateParams idleParams = null)
+    public void SetSelectedCharacter(Character character, IdleStateParams idleParams = null)
     {
         SelectedCharacter?.OnUnSelected();
         SelectedCharacter = character;
@@ -258,6 +258,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
+    public void HandleEndTurn(float delay)
+    {
+        CoroutineDispatcher.Invoke(HandleEndTurn, delay);
+    }
+    
     public void HandleEndTurn()
     {
         if (SelectedCharacter == null || IsPauseGameInternal) return;

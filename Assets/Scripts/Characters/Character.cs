@@ -21,7 +21,7 @@ public abstract class Character : MonoBehaviour
     [Title("Settings"), Space(10)] public CharacterConfig characterConfig;
     public SkillConfig skillConfig;
     public List<PassiveSkill> passiveSkills;
-
+    
     public CharacterStateMachine StateMachine { get; set; }
 
     public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
@@ -169,6 +169,11 @@ public abstract class Character : MonoBehaviour
 
     private void OnDamageTakenCounterFinished(FinishApplySkillParams _)
     {
+        if (gameObject == null)
+        {
+            Debug.LogException(new NullReferenceException("OnDamageTakenCounterFinished: gameObject == null"));
+            return;
+        }
         SkillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
         CoroutineDispatcher.Invoke(HandleCounter, 1f);
     }
@@ -475,7 +480,7 @@ public abstract class Character : MonoBehaviour
         Info.Cell.Character = null;
         if (IsMainCharacter)
         {
-            GpManager.HandleEndTurn();
+            GpManager.HandleEndTurn(0.3f);
         }
         foreach (var item in passiveSkills)
         {
@@ -583,6 +588,15 @@ public abstract class Character : MonoBehaviour
 
     
 #if UNITY_EDITOR
+
+    [Button("Reduce Hp Editor")]
+    public void ReduceHpEditor()
+    {
+        Info.CurrentHp -= 2;
+        Info.OnHpChangedInvoke(-2);
+        Info.OnHpChangedInvoke(-2);
+    }
+    
     private void OnValidate()
     {
         if(characterAnimationData == null)
