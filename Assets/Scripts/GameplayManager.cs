@@ -573,8 +573,18 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public List<Character> GetEnemiesInRange(Character character, int range, DirectionType directionType)
     {
+        return GetCharactersInRangeFiltered(character, range, directionType, c => c.Type != character.Type);
+    }
+    
+    public List<Character> GetTeammatesInRange(Character character, int range, DirectionType directionType)
+    {
+        return GetCharactersInRangeFiltered(character, range, directionType, c => c.Type == character.Type);
+    }
+    
+    private List<Character> GetCharactersInRangeFiltered(Character character, int range, DirectionType directionType, Func<Character, bool> filter)
+    {
         var characters = MapManager.GetCharacterInRange(character.Info.Cell, range, directionType);
-        return characters.Where(c => c.Type != character.Type).ToList();
+        return characters.Where(filter).ToList();
     }
 
     public void SwapPlayers(Character character1, Character character2)

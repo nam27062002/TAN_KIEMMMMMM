@@ -93,7 +93,7 @@ public class CharacterInfo
     public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.EffectType == EffectType.BlockSkill);
     private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep);
     private bool HasStunEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Stun);
-    private bool MustEndTurn => HasSleepEffect || HasStunEffect;
+    public bool MustEndTurn => HasSleepEffect || HasStunEffect;
 
     public EffectData CoverEffectData =>
         EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_50_Percent);

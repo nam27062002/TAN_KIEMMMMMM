@@ -13,7 +13,7 @@ public abstract class AICharacter : Character
         StateMachine = new CharacterStateMachine(this,
             new IdleState(this),
             new AIMoveState(this),
-            new DamageTakenState(this),
+            new AIDamageTakenState(this),
             new AISkillState(this));
     }
     
@@ -97,3 +97,4 @@ public abstract class AICharacter : Character
         return false;
     }
 }
+

@@ -12,4 +12,5 @@ public class DamageTakenParams : StateParams
     public bool CanCounter = true;
     public bool WaitCounter;
     public SkillStateParams SkillStateParams;
+    public CastSkillData CastSkillData;
 }

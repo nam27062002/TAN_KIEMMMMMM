@@ -27,8 +27,8 @@ public abstract class Character : MonoBehaviour
     public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
     
     public CharacterInfo Info;
-    protected SkillStateParams _skillStateParams;
-    protected DamageTakenParams _damageTakenParams;
+    protected SkillStateParams SkillStateParams;
+    protected DamageTakenParams DamageTakenParams;
     public bool IsMainCharacter => GpManager.MainCharacter == this;
     // protected function
     protected GameplayManager GpManager => GameplayManager.Instance;
@@ -49,7 +49,7 @@ public abstract class Character : MonoBehaviour
     
     private void GpManagerOnOnEndTurn(object sender, EventArgs e)
     {
-        _skillStateParams = null;
+        SkillStateParams = null;
     }
     
     public void FixedUpdate()
@@ -125,31 +125,31 @@ public abstract class Character : MonoBehaviour
 
     public void HandleCounterLogic(SkillStateParams skillStateParams)
     {
-        _skillStateParams = skillStateParams;
+        SkillStateParams = skillStateParams;
         HandleCounterLogic(skillStateParams.IdleStateParams.DamageTakenParams, true);
     }
     
     private void HandleCounterLogic(DamageTakenParams damageTaken = null, bool waitCounter = false)
     {
         SetIdle();
-        _damageTakenParams = damageTaken ?? GetIdleStateParams().DamageTakenParams;
-        _damageTakenParams.CanCounter = false;
-        _damageTakenParams.WaitCounter = waitCounter;
+        DamageTakenParams = damageTaken ?? GetIdleStateParams().DamageTakenParams;
+        DamageTakenParams.CanCounter = false;
+        DamageTakenParams.WaitCounter = waitCounter;
     
-        if (_damageTakenParams.WaitCounter)
+        if (DamageTakenParams.WaitCounter)
         {
-            _damageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
+            DamageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
         }
         
-        if (!HandleBlockSkillLogic(_damageTakenParams))
+        if (!HandleBlockSkillLogic(DamageTakenParams))
         {
-            OnDamageTaken(_damageTakenParams);
+            OnDamageTaken(DamageTakenParams);
         }
     }
 
     private bool HandleBlockSkillLogic(DamageTakenParams damageTakenParams)
     {
-        if (_skillStateParams != null && CanBlockSkill(damageTakenParams))
+        if (SkillStateParams != null && CanBlockSkill(damageTakenParams))
         {
             damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams
             {
@@ -164,21 +164,21 @@ public abstract class Character : MonoBehaviour
     
     protected virtual bool CanBlockSkill(DamageTakenParams damageTakenParams)
     {
-        return _skillStateParams.SkillInfo.canBlockDamage;
+        return SkillStateParams.SkillInfo.canBlockDamage;
     }
 
     private void OnDamageTakenCounterFinished(FinishApplySkillParams _)
     {
-        _skillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
+        SkillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
         CoroutineDispatcher.Invoke(HandleCounter, 1f);
     }
 
     private void HandleCounter()
     {
-        _skillStateParams.IdleStateParams = null;
-        _skillStateParams.EndTurnAfterFinish = true;
-        _skillStateParams.DamageTakenParams = _damageTakenParams;
-        SetSkill(_skillStateParams);
+        SkillStateParams.IdleStateParams = null;
+        SkillStateParams.EndTurnAfterFinish = true;
+        SkillStateParams.DamageTakenParams = DamageTakenParams;
+        SetSkill(SkillStateParams);
     }
     
     #endregion
@@ -242,6 +242,12 @@ public abstract class Character : MonoBehaviour
         SetSkill(skillParams);
         if (!dontNeedActionPoints) Info.ReduceActionPoints();
         UnSelectSkill();
+    }
+
+    public void HandleCastSkill(List<Character> targets, SkillInfo skillInfo)
+    {
+        Info.SkillInfo = skillInfo;
+        HandleCastSkill(targets);
     }
     
     public virtual void HandleMpChanged(int value)
@@ -512,6 +518,59 @@ public abstract class Character : MonoBehaviour
     }
     
     public virtual int GetSkillActionPoints(SkillTurnType skillTurnType) => characterConfig.actionPoints[skillTurnType];
+   
+    
+    
+    private List<SkillInfo> GetValidSkills()
+    {
+        var skillType = GpManager.GetSkillTurnType(this);
+        return GetSkillInfos(skillType)
+            .Where(skill => Info.CanCastSkill(skill))
+            .ToList();
+    }
+
+    public List<CastSkillData> GetValidSkills(Character character)
+    {
+        if (character == null)
+            throw new ArgumentNullException(nameof(character));
+    
+        var validSkills = GetValidSkills();
+        if (validSkills.Count == 0)
+            return new List<CastSkillData>();
+
+        var isAlly = character.Type == Type;
+        Func<SkillInfo, List<Character>> getTargets;
+        DamageTargetType targetType;
+
+        if (isAlly)
+        {
+            targetType = DamageTargetType.Team;
+            getTargets = skill => GpManager.GetTeammatesInRange(this, skill.range, skill.directionType);
+        }
+        else
+        {
+            targetType = DamageTargetType.Enemies;
+            getTargets = skill => GpManager.GetEnemiesInRange(this, skill.range, skill.directionType);
+        }
+
+        return validSkills.Where(skill => skill.damageType.HasFlag(targetType))
+            .Select(skill => CreateCastSkillData(skill, getTargets))
+            .Where(data => data != null)
+            .ToList();
+    }
+
+    private static CastSkillData CreateCastSkillData(SkillInfo skill, Func<SkillInfo, List<Character>> getTargets)
+    {
+        var targets = getTargets(skill);
+        if (targets.Count == 0) return null;
+
+        return new CastSkillData
+        {
+            SkillInfo = skill,
+            CharactersImpact = targets,
+            MaxCharactersImpact = skill.isDirectionalSkill ? 1 : targets.Count
+        };
+    }
     
 #if UNITY_EDITOR
     private void OnValidate()

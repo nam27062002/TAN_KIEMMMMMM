@@ -16,7 +16,7 @@ public class CanSat : AICharacter
         StateMachine = new CharacterStateMachine(this,
             new IdleState(this),
             new AIMoveState(this),
-            new DamageTakenState(this),
+            new AIDamageTakenState(this),
             new CanSat_SkillState(this));
     }
 

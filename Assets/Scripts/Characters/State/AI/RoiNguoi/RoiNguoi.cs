@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RoiNguoi : AICharacter
 {
-    
     public override void SetMainCharacter()
     {
         base.SetMainCharacter();
