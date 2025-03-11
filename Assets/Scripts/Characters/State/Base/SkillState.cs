@@ -172,7 +172,7 @@ public class SkillState : CharacterState
             Effects = damageParams.Effects,
             OnSetDamageTakenFinished = HandleTargetFinish,
             ReceiveFromCharacter = Character,
-            CanCounter = true,
+            CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != character.Type,
             SkillStateParams = _skillStateParams
         };
     }
@@ -239,7 +239,7 @@ public class SkillState : CharacterState
                 {
                     CanDodge = true,
                     ReceiveFromCharacter = Character,
-                    CanCounter = true,
+                    CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != target.Type,
                     OnSetDamageTakenFinished = HandleTargetFinish,
                     SkillStateParams = _skillStateParams
                 };
