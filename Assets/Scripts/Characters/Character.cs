@@ -532,45 +532,55 @@ public abstract class Character : MonoBehaviour
     public List<CastSkillData> GetValidSkills(Character character)
     {
         if (character == null)
-            throw new ArgumentNullException(nameof(character));
-    
+        {
+            Debug.LogException(new ArgumentNullException(nameof(character)));
+            return null;
+        }
         var validSkills = GetValidSkills();
-        if (validSkills.Count == 0)
-            return new List<CastSkillData>();
-
-        var isAlly = character.Type == Type;
-        Func<SkillInfo, List<Character>> getTargets;
-        DamageTargetType targetType;
-
-        if (isAlly)
+        if (validSkills == null) return null;
+        List<CastSkillData> skills = new List<CastSkillData>();
+        if (character.Type == Type) // Đồng minh
         {
-            targetType = DamageTargetType.Team;
-            getTargets = skill => GpManager.GetTeammatesInRange(this, skill.range, skill.directionType);
+            foreach (var skill in validSkills)
+            {
+                if (skill.damageType.HasFlag(DamageTargetType.Team))
+                {
+                    var teammatesInRange = GpManager.GetTeammatesInRange(this, skill.range, skill.directionType);
+                    if (teammatesInRange.Contains(character))
+                    {
+                        skills.Add(new CastSkillData()
+                        {
+                            SkillInfo = skill,
+                            CharactersImpact = new List<Character>(){character},
+                            MaxCharactersImpact = 1,
+                        });
+                    }
+                }
+            }
         }
-        else
+        else // Đối thủ
         {
-            targetType = DamageTargetType.Enemies;
-            getTargets = skill => GpManager.GetEnemiesInRange(this, skill.range, skill.directionType);
+            foreach (var skill in validSkills)
+            {
+                if (skill.damageType.HasFlag(DamageTargetType.Enemies))
+                {
+                    var enemiesInRange = GpManager.GetEnemiesInRange(this, skill.range, skill.directionType);
+                    if (enemiesInRange.Contains(character))
+                    {
+                        skills.Add(new CastSkillData()
+                        {
+                            SkillInfo = skill,
+                            CharactersImpact =  new List<Character>(){character},
+                            MaxCharactersImpact = 1
+                        });
+                    }
+                }
+            }
         }
 
-        return validSkills.Where(skill => skill.damageType.HasFlag(targetType))
-            .Select(skill => CreateCastSkillData(skill, getTargets))
-            .Where(data => data != null)
-            .ToList();
+        return skills;
     }
 
-    private static CastSkillData CreateCastSkillData(SkillInfo skill, Func<SkillInfo, List<Character>> getTargets)
-    {
-        var targets = getTargets(skill);
-        if (targets.Count == 0) return null;
-
-        return new CastSkillData
-        {
-            SkillInfo = skill,
-            CharactersImpact = targets,
-            MaxCharactersImpact = skill.isDirectionalSkill ? 1 : targets.Count
-        };
-    }
     
 #if UNITY_EDITOR
     private void OnValidate()

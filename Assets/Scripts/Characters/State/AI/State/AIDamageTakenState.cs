@@ -23,9 +23,10 @@ public class AIDamageTakenState : DamageTakenState
     
     protected override void HandleCounter()
     {
+        SetFacing(DamageTakenParams.ReceiveFromCharacter);
         DamageTakenParams.CastSkillData = _castSkillData;
         GpManager.SetCharacterReact(Character, DamageTakenParams);
-        CoroutineDispatcher.Invoke(HandleCastSkill, 1f);
+        HandleCastSkill();
     }
 
     private void HandleCastSkill()

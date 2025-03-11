@@ -177,7 +177,7 @@ MonoBehaviour:
         rollTime: 1
         rollValue: 20
         add: 0
-      overrideDamage: 1
+      overrideDamage: 0
       atkOverride: 100
       overrideMaxMoveRange: 1
       maxMoveRangeOverride: 100

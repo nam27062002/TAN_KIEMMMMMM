@@ -35,6 +35,12 @@ public abstract class CharacterState : IState
         SetFacing(facing);
     }
     
+    public void SetFacing(Character target)
+    {
+        var facing = GpManager.GetFacingType(Character, target);
+        SetFacing(facing);
+    }
+    
     public void SetFacing(FacingType facing)
     {
         Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);

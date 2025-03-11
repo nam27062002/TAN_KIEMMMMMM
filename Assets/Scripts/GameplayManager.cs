@@ -402,6 +402,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         var opponentPosition = nearestOpponent.transform.position;
         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
     }
+    
+    public FacingType GetFacingType(Character character, Character target)
+    {
+        if (character == null)
+        {
+            return FacingType.Right;
+        }
+        var characterPosition = character.transform.position;
+        var opponentPosition = target.transform.position;
+        return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
+    }
 
     public Character GetNearestAlly(Character character)
     {
