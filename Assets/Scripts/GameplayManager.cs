@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DG.Tweening;
-using SaveLoad;
+using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -73,8 +74,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         StartNewGame();
     }
-
-#if UNITY_EDITOR
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
@@ -82,7 +82,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             UIManager.Instance.OpenPopup(PopupType.Credit);
         }
     }
-#endif
 
     protected override void UnRegisterEvents()
     {
@@ -809,6 +808,29 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             character.ShowHpBar();
         }
+    }
+
+    #endregion
+
+    #region Save Load
+
+    public void OnSave()
+    {
+        LevelData levelData = new LevelData();
+        if (Characters == null) return;
+        foreach (var item in Characters)
+        {
+            CharacterData characterData = new CharacterData
+            {
+                characterType = item.characterType,
+                points = item.Info.Cell.CellPosition,
+                currentHp = item.Info.CurrentHp,
+                currentMp = item.Info.CurrentMp
+            };
+            levelData.characterDatas.Add(characterData);
+        }
+        levelData.saveTime = DateTime.Now;
+        SaveLoadManager.Instance.OnSave(0, levelData);
     }
 
     #endregion

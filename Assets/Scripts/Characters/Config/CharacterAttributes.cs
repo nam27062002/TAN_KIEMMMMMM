@@ -20,4 +20,6 @@ public class CharacterAttributes
     [ShowIf("@overrideDamage")] public int atkOverride;
     public bool overrideMaxMoveRange;
     [ShowIf("@overrideMaxMoveRange")] public int maxMoveRangeOverride;
+    public bool overrideMaxHp;
+    [ShowIf("@overrideMaxMoveRange")] public int maxHpOverride;
 }

@@ -17,9 +17,9 @@ public class AIDamageTakenState : DamageTakenState
             return false;
         }
 
-        if (Info.CurrentHp > Info.Attributes.health / 2)
+        if (Info.CurrentHp > Character.GetMaxHp() / 2)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: ({Info.CurrentHp}/{Info.Attributes.health})");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: ({Info.CurrentHp}/{Character.GetMaxHp()})");
             return false;
         }
 

@@ -119,6 +119,7 @@ public enum PopupType
     Win = 7,
     Lose = 8,
     Credit = 9,
+    Splash = 10,
 }
 
 public enum MenuType

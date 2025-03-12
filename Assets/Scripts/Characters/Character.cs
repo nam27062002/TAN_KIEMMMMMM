@@ -42,6 +42,17 @@ public abstract class Character : MonoBehaviour
     public virtual Type Type => Type.None;
     public virtual bool CanEndTurn => false;
     public bool IsReact => GetIdleStateParams() != null;
+    
+    // Info
+    public int GetMaxHp()
+    {
+#if UNITY_EDITOR
+        return Info.Attributes.overrideMaxHp ? Info.Attributes.maxHpOverride : Info.Attributes.health;
+#else
+        return Info.Attributes.health;
+#endif
+    }
+    
     private void Awake()
     {
         SetStateMachine();
@@ -371,7 +382,7 @@ public abstract class Character : MonoBehaviour
     private void OnHpChanged(object sender, int value = 0)
     {
         var currentHp = Info.CurrentHp;
-        var maxHp = Info.Attributes.health;
+        var maxHp = GetMaxHp();
         hpBar.SetValue(currentHp * 1f / maxHp, $"{currentHp} / {maxHp}");
     }
 

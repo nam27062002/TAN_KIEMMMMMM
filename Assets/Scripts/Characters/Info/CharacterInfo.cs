@@ -10,7 +10,7 @@ public class CharacterInfo
         Attributes = characterAttributes;
         Character = character;
 
-        CurrentHp = characterAttributes.health;
+        CurrentHp = Attributes.overrideMaxHp ? characterAttributes.maxHpOverride : characterAttributes.health;
         CurrentMp = characterAttributes.mana;
         _roll = new Roll(this, Character.characterConfig.characterName);
 
@@ -263,7 +263,7 @@ public class CharacterInfo
             remainder = -ShieldAmount;
         }
         
-        OnShieldChanged?.Invoke(this, ShieldAmount * 1f / Attributes.health);
+        OnShieldChanged?.Invoke(this, ShieldAmount * 1f / character.GetMaxHp());
 
         if (remainder > 0)
         {
@@ -711,7 +711,7 @@ public class CharacterInfo
         if (EffectInfo.Effects.All(p => p.EffectType != EffectType.BloodSealEffect))
             return;
         EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.BloodSealEffect);
-        var hpDecreased = Attributes.health - CurrentHp;
+        var hpDecreased = Character.GetMaxHp() - CurrentHp;
         var damage = Utils.RoundNumber(hpDecreased * 1f / 10);
         if (CurrentHp > 0) HandleDamageTaken(-damage, effectData.Actor);
         AlkawaDebug.Log(ELogCategory.SKILL,

@@ -37,6 +37,16 @@ public class PauseGamePopup : PopupBase
 
     private void OnSaveButtonClick()
     {
+        Close();
+        var parameters = new 
+            ConfirmPopupParameters(
+                title: "Lưu trò chơi",
+                message: "Bạn có muốn lưu trò chơi",
+                confirmText: "Lưu",
+                cancelText: "Hủy",
+                confirmAction: () => GameplayManager.Instance.OnSave()
+                );
+        UIManager.Instance.OpenPopup(PopupType.ConfirmPopup, parameters);
         AlkawaDebug.Log(ELogCategory.UI, "Save button clicked");
     }
 

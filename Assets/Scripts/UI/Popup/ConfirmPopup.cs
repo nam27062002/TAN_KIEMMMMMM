@@ -35,8 +35,8 @@ public class ConfirmPopup : PopupBase
 
     private void OnConfirmClicked()
     {
-        _onConfirm?.Invoke();
         Close();
+        _onConfirm?.Invoke();l
     }
 
     private void OnCancelClicked()
