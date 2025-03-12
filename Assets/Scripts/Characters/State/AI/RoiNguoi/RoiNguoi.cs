@@ -9,6 +9,15 @@ public class RoiNguoi : AICharacter
         base.SetMainCharacter();
         PassiveSkill();
     }
+    
+    protected override void SetStateMachine()
+    {
+        StateMachine = new CharacterStateMachine(this,
+            new IdleState(this),
+            new AIMoveState(this),
+            new RoiNguoiDamageTakenState(this),
+            new ThietNhan_SkillState(this));
+    }
 #if UNITY_EDITOR
     private void Update()
     {

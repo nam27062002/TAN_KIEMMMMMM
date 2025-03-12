@@ -177,7 +177,7 @@ MonoBehaviour:
         rollTime: 1
         rollValue: 20
         add: 0
-      overrideDamage: 0
+      overrideDamage: 1
       atkOverride: 100
       overrideMaxMoveRange: 1
       maxMoveRangeOverride: 100
@@ -338,6 +338,7 @@ MonoBehaviour:
   passiveSkills:
   - {fileID: 1068771806723808600}
   - {fileID: 2363098181572934608}
+  lastDamageTakenCountered: 0
 --- !u!114 &1068771806723808600
 MonoBehaviour:
   m_ObjectHideFlags: 0

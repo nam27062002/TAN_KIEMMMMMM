@@ -1276,7 +1276,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 844bfcde8a69da446847997362a62f85, type: 2}
   - {fileID: 11400000, guid: 4da27f3501b6b0340b294d80e8bd28d0, type: 2}
   - {fileID: 11400000, guid: ac34e3e48f3f9d54295d10d8fdbd3bf6, type: 2}
-  levelType: 2
+  levelType: 1
   allCharacter:
     m_keys: 00000000010000000200000003000000040000000500000008000000
     m_values:
