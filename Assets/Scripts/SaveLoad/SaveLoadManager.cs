@@ -72,9 +72,9 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
         {
             Debug.LogError("Failed to save levels: " + e.Message);
         }
-        UIManager.Instance.OpenPopup(PopupType.Splash);
+        
     }
-
+    
     public LevelData OnLoad(int index)
     {
         if (index < 0 || index >= levels.Count)
@@ -111,6 +111,7 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
 [Serializable]
 public class LevelData
 {
+    public LevelType levelType;
     public List<CharacterData> characterDatas = new List<CharacterData>();
     public DateTime saveTime;
 }

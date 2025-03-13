@@ -120,6 +120,7 @@ public enum PopupType
     Lose = 8,
     Credit = 9,
     Splash = 10,
+    LoadProcess = 11,
 }
 
 public enum MenuType

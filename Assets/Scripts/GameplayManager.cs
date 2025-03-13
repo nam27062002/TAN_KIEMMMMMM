@@ -18,6 +18,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         get
         {
+            return levelConfigs[SaveLoadManager.currentLevel];
 #if UNITY_EDITOR
             return levelConfigs[(int)levelType];
 #else
@@ -25,7 +26,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 #endif
         }
     }
-
+    
+    
     [Title("Characters")] [SerializeField]
     private SerializableDictionary<CharacterType, Character> allCharacter = new();
 
@@ -61,7 +63,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public LevelConfig LevelConfig => levelConfig;
     public bool IsPauseGameInternal = false;
     public bool IsReplay;
-
+    private bool _hasOverrideLevelConfig;
     // new
     protected override void Awake()
     {
@@ -93,11 +95,22 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void StartNewGame()
     {
+        TryLoadFromSaveGame();
         CurrentRound = 0;
         IsPauseGameInternal = false;
         cam.orthographicSize = levelConfig.cameraSize;
         if (!IsTutorialLevel)
             ShowStartConversation();
+    }
+
+    private void TryLoadFromSaveGame()
+    {
+        _hasOverrideLevelConfig = false;
+        if (GameManager.Instance.saveIndex == -1) return;
+        _hasOverrideLevelConfig = true;
+        var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
+        SaveLoadManager.currentLevel = (int)levelData.levelType;
+        IsReplay = true;
     }
 
     private void ShowStartConversation()
@@ -159,11 +172,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         Players.Clear();
         Enemies.Clear();
         SelectedCharacter = null;
-        foreach (var spawnPoint in levelConfig.spawnerConfig.spawnPoints)
+        if (_hasOverrideLevelConfig)
         {
-            foreach (var point in spawnPoint.Value.points)
+            var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
+            foreach (var item in levelData.characterDatas)
             {
-                var go = Instantiate(allCharacter[spawnPoint.Key], transform);
+                var go = Instantiate(allCharacter[item.characterType], transform);
                 var character = go.GetComponent<Character>();
                 Characters.Add(character);
                 switch (character.Type)
@@ -175,16 +189,43 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                         Players.Add(character);
                         break;
                 }
-
-                character.Initialize(MapManager.GetCell(point));
-                if (IsTutorialLevel)
-                {
-                    character.HideHpBar();
-                }
+                character.Initialize(MapManager.GetCell(item.points));
+                character.Info.CurrentHp = item.currentHp;
+                character.Info.CurrentMp = item.currentMp;
+                character.Info.OnHpChangedInvoke(0);
+                character.Info.OnMpChangedInvoke(0);
             }
+            GameManager.Instance.saveIndex = -1;
         }
+        else
+        {
+            foreach (var spawnPoint in levelConfig.spawnerConfig.spawnPoints)
+            {
+                foreach (var point in spawnPoint.Value.points)
+                {
+                    var go = Instantiate(allCharacter[spawnPoint.Key], transform);
+                    var character = go.GetComponent<Character>();
+                    Characters.Add(character);
+                    switch (character.Type)
+                    {
+                        case Type.AI:
+                            Enemies.Add(character);
+                            break;
+                        case Type.Player:
+                            Players.Add(character);
+                            break;
+                    }
 
-        SortCharacterBySpeed();
+                    character.Initialize(MapManager.GetCell(point));
+                    if (IsTutorialLevel)
+                    {
+                        character.HideHpBar();
+                    }
+                }
+            }  
+            SortCharacterBySpeed();
+        }
+        
         if (Characters.Any(p => p is CanSat))
         {
             Invoke(nameof(SetMainCharacter), 5f);
@@ -830,9 +871,15 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             levelData.characterDatas.Add(characterData);
         }
         levelData.saveTime = DateTime.Now;
-        SaveLoadManager.Instance.OnSave(0, levelData);
+        levelData.levelType = levelConfig.levelType;
+        SaveLoadManager.Instance.OnSave(SaveLoadManager.Instance.levels.Count, levelData);
+        CoroutineDispatcher.Invoke(ShowNotification, 0.5f);
     }
-
+    
+    public void ShowNotification()
+    {
+        UIManager.Instance.OpenPopup(PopupType.Splash);
+    }
     #endregion
 }
 

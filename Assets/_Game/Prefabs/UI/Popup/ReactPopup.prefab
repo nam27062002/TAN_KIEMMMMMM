@@ -581,6 +581,7 @@ MonoBehaviour:
   highlightable:
     highlightType: 0
     highlightObject: {fileID: 0}
+  reactPopup: {fileID: 0}
 --- !u!1001 &3126751272280769820
 PrefabInstance:
   m_ObjectHideFlags: 0

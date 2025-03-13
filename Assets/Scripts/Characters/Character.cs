@@ -379,7 +379,7 @@ public abstract class Character : MonoBehaviour
         Info.SetSpeed();
     }
     
-    private void OnHpChanged(object sender, int value = 0)
+    public void OnHpChanged(object sender, int value = 0)
     {
         var currentHp = Info.CurrentHp;
         var maxHp = GetMaxHp();

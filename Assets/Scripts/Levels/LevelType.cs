@@ -1,4 +1,7 @@
-﻿public enum LevelType
+﻿using System;
+
+[Serializable]
+public enum LevelType
 {
     Tutorial,
     Level1,

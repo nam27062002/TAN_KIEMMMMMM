@@ -20,9 +20,9 @@ public class MainMenu : MonoBehaviour
           settingGameButton.onClick.AddListener(OnSettingGameClicked);
           exitGameButton.onClick.AddListener(OnExitGameClicked);
           
-#if UNITY_EDITOR
-          startGameButton.onClick.Invoke();
-#endif
+// #if UNITY_EDITOR
+//           startGameButton.onClick.Invoke();
+// #endif
      }
 
      private void OnDestroy()
@@ -35,13 +35,12 @@ public class MainMenu : MonoBehaviour
 
      private void OnStartGameClicked()
      {
-          GameManager.Instance.Loading(ESceneType.Game);
-          SceneLoader.UnloadSceneAsync(ESceneType.MainMenu);
+          GameManager.Instance.StartNewGame();
      }
 
      private void OnLoadGameClicked()
      {
-          
+          UIManager.Instance.OpenPopup(PopupType.LoadProcess);
      }
 
      private void OnSettingGameClicked()

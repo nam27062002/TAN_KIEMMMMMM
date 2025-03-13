@@ -92,7 +92,7 @@ public class CoroutineDispatcher : SingletonMonoBehavior<CoroutineDispatcher>
 
     private static IEnumerator InvokeCoroutine(Action action, float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         action?.Invoke();
     }
 }

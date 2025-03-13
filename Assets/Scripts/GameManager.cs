@@ -6,7 +6,7 @@ using Application = UnityEngine.Application;
 public class GameManager : SingletonMonoBehavior<GameManager>
 {
     private ESceneType _nextScene;
-
+    public int saveIndex = -1;
     #region Action
 
     public Action OnLoadComplete;
@@ -26,6 +26,20 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     {
         SceneLoader.LoadSceneAsync(ESceneType.UIManager, LoadSceneMode.Additive);
         Loading(ESceneType.MainMenu);
+    }
+
+    public void StartGameAtSaveSlot(int saveIndex)
+    {
+        this.saveIndex = saveIndex;
+        Loading(ESceneType.Game);
+        SceneLoader.UnloadSceneAsync(ESceneType.MainMenu);
+    }
+
+    public void StartNewGame()
+    {
+        saveIndex = -1;
+        Loading(ESceneType.Game);
+        SceneLoader.UnloadSceneAsync(ESceneType.MainMenu);
     }
 
     protected override void OnDestroy()
