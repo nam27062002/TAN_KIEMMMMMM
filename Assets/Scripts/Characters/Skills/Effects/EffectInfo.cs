@@ -35,6 +35,7 @@ public class EffectInfo
         EffectType.IncreaseSpd,
         EffectType.ReduceHitChange,
         EffectType.CanSat_TakeAP,
+        EffectType.LifeSteal
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -103,4 +104,5 @@ public enum EffectType
     IncreaseSpd = 39,
     ReduceHitChange = 40,
     CanSat_TakeAP = 41,
+    LifeSteal = 42,
 }

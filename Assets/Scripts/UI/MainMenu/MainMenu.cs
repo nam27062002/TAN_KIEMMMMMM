@@ -20,9 +20,9 @@ public class MainMenu : MonoBehaviour
           settingGameButton.onClick.AddListener(OnSettingGameClicked);
           exitGameButton.onClick.AddListener(OnExitGameClicked);
           
-// #if UNITY_EDITOR
-//           startGameButton.onClick.Invoke();
-// #endif
+#if UNITY_EDITOR
+          startGameButton.onClick.Invoke();
+#endif
      }
 
      private void OnDestroy()

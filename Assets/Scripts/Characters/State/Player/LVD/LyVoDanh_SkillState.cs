@@ -124,7 +124,7 @@ public class LyVoDanh_SkillState : SkillState
                 {
                     EffectType = EffectType.BloodSealEffect,
                     Actor = Character
-                }
+                },
             },
             ReceiveFromCharacter = Character,
         };
@@ -150,6 +150,25 @@ public class LyVoDanh_SkillState : SkillState
             ReceiveFromCharacter = Character
         };
     }
+    
+    protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
+    {
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Mính Đính Quy Lai");
+        return new DamageTakenParams
+        {
+            Effects = new List<EffectData>()
+            {
+                new()
+                {
+                    EffectType = EffectType.LifeSteal,
+                    Actor = Character,
+                    Duration = EffectConfig.BuffRound,
+                }
+            },
+            ReceiveFromCharacter = Character
+        };
+    }
 
     //=====================SKILL 4=====================================
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
@@ -167,6 +186,12 @@ public class LyVoDanh_SkillState : SkillState
                 {
                     EffectType = EffectType.BreakBloodSealDamage,
                     Actor = Character
+                },
+                new ()
+                {
+                    EffectType = EffectType.Stun,
+                    Actor = Character,
+                    Duration = EffectConfig.DebuffRound,
                 }
             },
             ReceiveFromCharacter = Character
@@ -245,6 +270,11 @@ public class LyVoDanh_SkillState : SkillState
         AddTargetCharacters(Character);
     }
 
+    protected override void SetTargetCharacters_Skill3_EnemyTurn()
+    {
+        AddTargetCharacters(Character);
+    }
+    
     protected override void SetTargetCharacters_Skill4_MyTurn()
     {
         var allCharacter = new HashSet<Character>(TargetCharacters);

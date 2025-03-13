@@ -18,7 +18,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         get
         {
-            return levelConfigs[SaveLoadManager.currentLevel];
 #if UNITY_EDITOR
             return levelConfigs[(int)levelType];
 #else

@@ -32,7 +32,11 @@ public class Roll
     public int GetEffectResistance()
     {
         var rollData = _attributes.effectResistanceRollData; 
-        var effectResistance = RollDice(rollData, _characterInfo.GetChiDef() / 4 + 5);
+        var effectResistance = RollDice(rollData, _characterInfo.GetChiDef() / 4);
+        if (_characterInfo.Character.GetSkillTurnType() == SkillTurnType.EnemyTurn)
+        {
+            effectResistance += 5;
+        }
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} + 5 = {effectResistance}");
         return effectResistance;
     }

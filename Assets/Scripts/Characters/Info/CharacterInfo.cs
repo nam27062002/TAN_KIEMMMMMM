@@ -35,6 +35,7 @@ public class CharacterInfo
             { EffectType.IncreaseDef, ApplySimpleEffect },
             { EffectType.IncreaseSpd, ApplySimpleEffect },
             { EffectType.ReduceHitChange, ApplySimpleEffect },
+            { EffectType.LifeSteal, ApplySimpleEffect },
 
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -115,7 +116,7 @@ public class CharacterInfo
     public event EventHandler<int> OnNewRound;
 
     private SkillConfig SkillConfig { get; set; }
-    private Character Character { get; set; }
+    public Character Character { get; set; }
 
     //
     private void HandleDamageTaken(DamageTakenParams damageTakenParams)
