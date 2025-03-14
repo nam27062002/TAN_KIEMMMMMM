@@ -1,9 +1,9 @@
 ﻿public class Dancer : Shadow
 {
-    public override void OnDie()
+    public override void HandleDeath()
     {
         owner.Info.RemoveEffect(EffectType.IncreaseDef, this);
         owner.Info.RemoveEffect(EffectType.IncreaseSpd, this);
-        base.OnDie();
+        base.HandleDeath();
     }
 }

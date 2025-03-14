@@ -31,9 +31,9 @@ public class CanSat : AICharacter
     }
 
 
-    public override void OnDie()
+    public override void HandleDeath()
     {
-        base.OnDie();
+        base.HandleDeath();
         dancer?.DestroyCharacter();
         assassin?.DestroyCharacter();
     }

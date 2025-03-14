@@ -10,10 +10,107 @@ using UnityEngine;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
+    #region Preload
+
+    private void ClearAllData()
+    {
+        _characterDeath[Type.Player].Clear();
+        _characterDeath[Type.AI].Clear();
+        CurrentRound = 0;
+        IsPauseGameInternal = false;
+        cam.orthographicSize = levelConfig.cameraSize;
+        foreach (var character in charactersInConversation)
+        {
+            character.DestroyCharacter();
+        }
+
+        charactersInConversation.Clear();
+        Characters.Clear();
+        Players.Clear();
+        Enemies.Clear();
+        SelectedCharacter = null;
+    }
+
+    #endregion
+
+    #region Characters 
+    private void LoadCharacter()
+    {
+        LoadCharactersFromConfig();
+        ScheduleMainCharacterSetup();
+        InitializeGameState();
+    }
+    
+    private void LoadCharactersFromConfig()
+    {
+        if (_hasOverrideLevelConfig)
+        {
+            LoadFromSavedData();
+            GameManager.Instance.saveIndex = -1;
+        }
+        else
+        {
+            LoadFromSpawnPoints();
+            SortCharacterBySpeed();
+        }
+    }
+
+    private void LoadFromSavedData()
+    {
+        var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
+
+        foreach (var characterData in levelData.characterDatas)
+        {
+            var character = CreateCharacter(characterData.characterType, characterData.points);
+            ApplySavedCharacterState(character, characterData);
+        }
+    }
+
+    private void LoadFromSpawnPoints()
+    {
+        foreach (var character in from spawnPoint in levelConfig.spawnerConfig.spawnPoints from point in spawnPoint.Value.points select CreateCharacter(spawnPoint.Key, point))
+        {
+            HandleTutorialState(character);
+        }
+    }
+    
+    private Character CreateCharacter(CharacterType type, Vector2Int position)
+    {
+        var character = Instantiate(allCharacter[type], transform).GetComponent<Character>();
+        character.Initialize(MapManager.GetCell(position));
+        Characters.Add(character);
+        AddToAppropriateTeamList(character);
+        return character;
+    }
+
+    private void AddToAppropriateTeamList(Character character)
+    {
+        switch (character.Type)
+        {
+            case Type.AI:
+                Enemies.Add(character);
+                break;
+            case Type.Player:
+                Players.Add(character);
+                break;
+        }
+    }
+
+    private void ApplySavedCharacterState(Character character, CharacterData data)
+    {
+        character.Info.CurrentHp = data.currentHp;
+        character.Info.CurrentMp = data.currentMp;
+        character.Info.OnHpChangedInvoke(0);
+        character.Info.OnMpChangedInvoke(0);
+    }
+    #endregion
+    //=================== OLD =====================================================
+    
     [Title("Scriptable Objects")] [SerializeField]
     private List<LevelConfig> levelConfigs;
+
     public LevelType levelType;
-    
+
     private LevelConfig levelConfig
     {
         get
@@ -25,8 +122,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 #endif
         }
     }
-    
-    
+
+
     [Title("Characters")] [SerializeField]
     private SerializableDictionary<CharacterType, Character> allCharacter = new();
 
@@ -49,6 +146,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [ShowInInspector] public readonly List<Character> Enemies = new();
     [ShowInInspector] public List<Character> Characters { get; private set; } = new();
 
+    private Dictionary<Type, List<Character>> _characterDeath = new()
+    {
+        { Type.Player, new List<Character>() },
+        { Type.AI, new List<Character>() }
+    };
+
     public List<Character> charactersInConversation = new();
     public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? null : Characters[CurrentPlayerIndex];
 
@@ -62,7 +165,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public LevelConfig LevelConfig => levelConfig;
     public bool IsPauseGameInternal = false;
     public bool IsReplay;
+
     private bool _hasOverrideLevelConfig;
+
     // new
     protected override void Awake()
     {
@@ -75,7 +180,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         StartNewGame();
     }
-    
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
@@ -94,14 +199,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void StartNewGame()
     {
+        ClearAllData();
         TryLoadFromSaveGame();
-        CurrentRound = 0;
-        IsPauseGameInternal = false;
-        cam.orthographicSize = levelConfig.cameraSize;
         if (!IsTutorialLevel)
             ShowStartConversation();
     }
-
+    
     private void TryLoadFromSaveGame()
     {
         _hasOverrideLevelConfig = false;
@@ -126,9 +229,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool CanSkipStartConversation()
     {
-// #if UNITY_EDITOR
-//         return levelConfig.canSkipStartConversation;
-// #endif
+#if UNITY_EDITOR
+        return levelConfig.canSkipStartConversation;
+#endif
         if (!IsReplay) return false;
         IsReplay = false;
         return true;
@@ -158,82 +261,32 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         MapManager.OnLoadMapFinished += OnLoadMapFinished;
         MapManager.Initialize();
     }
-
-    private void LoadCharacter()
+    
+    private void HandleTutorialState(Character character)
     {
-        foreach (var item in charactersInConversation)
+        if (IsTutorialLevel)
         {
-            item.DestroyCharacter();
+            character.HideHpBar();
         }
+    }
 
-        charactersInConversation.Clear();
-        Characters.Clear();
-        Players.Clear();
-        Enemies.Clear();
-        SelectedCharacter = null;
-        if (_hasOverrideLevelConfig)
-        {
-            var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
-            foreach (var item in levelData.characterDatas)
-            {
-                var go = Instantiate(allCharacter[item.characterType], transform);
-                var character = go.GetComponent<Character>();
-                Characters.Add(character);
-                switch (character.Type)
-                {
-                    case Type.AI:
-                        Enemies.Add(character);
-                        break;
-                    case Type.Player:
-                        Players.Add(character);
-                        break;
-                }
-                character.Initialize(MapManager.GetCell(item.points));
-                character.Info.CurrentHp = item.currentHp;
-                character.Info.CurrentMp = item.currentMp;
-                character.Info.OnHpChangedInvoke(0);
-                character.Info.OnMpChangedInvoke(0);
-            }
-            GameManager.Instance.saveIndex = -1;
-        }
-        else
-        {
-            foreach (var spawnPoint in levelConfig.spawnerConfig.spawnPoints)
-            {
-                foreach (var point in spawnPoint.Value.points)
-                {
-                    var go = Instantiate(allCharacter[spawnPoint.Key], transform);
-                    var character = go.GetComponent<Character>();
-                    Characters.Add(character);
-                    switch (character.Type)
-                    {
-                        case Type.AI:
-                            Enemies.Add(character);
-                            break;
-                        case Type.Player:
-                            Players.Add(character);
-                            break;
-                    }
+    private void ScheduleMainCharacterSetup()
+    {
+        bool needsDelay = Characters.Any(p => p is CanSat);
+        float delay = needsDelay ? 5f : 0f;
 
-                    character.Initialize(MapManager.GetCell(point));
-                    if (IsTutorialLevel)
-                    {
-                        character.HideHpBar();
-                    }
-                }
-            }  
-            SortCharacterBySpeed();
-        }
-        
-        if (Characters.Any(p => p is CanSat))
+        if (delay > 0)
         {
-            Invoke(nameof(SetMainCharacter), 5f);
+            Invoke(nameof(SetMainCharacter), delay);
         }
         else
         {
             SetMainCharacter();
         }
+    }
 
+    private void InitializeGameState()
+    {
         SetInteract(true);
         HandleNewRound();
         ShowLevelName();
@@ -275,6 +328,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             HandleEndTurn();
         }
+
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
     }
 
@@ -305,7 +359,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         CoroutineDispatcher.Invoke(HandleEndTurn, delay);
     }
-    
+
     public void HandleEndTurn()
     {
         if (SelectedCharacter == null || IsPauseGameInternal) return;
@@ -327,6 +381,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
             SetMainCharacter();
         }
+
         OnEndTurn?.Invoke(this, EventArgs.Empty);
         OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
@@ -450,13 +505,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         var opponentPosition = nearestOpponent.transform.position;
         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
     }
-    
+
     public FacingType GetFacingType(Character character, Character target)
     {
         if (character == null)
         {
             return FacingType.Right;
         }
+
         var characterPosition = character.transform.position;
         var opponentPosition = target.transform.position;
         return characterPosition.x > opponentPosition.x ? FacingType.Left : FacingType.Right;
@@ -591,7 +647,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SpawnSpecialEnemy();
         foreach (var item in Characters.OfType<ThietNhan>().ToList())
         {
-            item.OnDie();
+            item.HandleDeath();
         }
 
         IsPauseGameInternal = true;
@@ -634,13 +690,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         return GetCharactersInRangeFiltered(character, range, directionType, c => c.Type != character.Type);
     }
-    
+
     public List<Character> GetTeammatesInRange(Character character, int range, DirectionType directionType)
     {
         return GetCharactersInRangeFiltered(character, range, directionType, c => c.Type == character.Type);
     }
-    
-    private List<Character> GetCharactersInRangeFiltered(Character character, int range, DirectionType directionType, Func<Character, bool> filter)
+
+    private List<Character> GetCharactersInRangeFiltered(Character character, int range, DirectionType directionType,
+        Func<Character, bool> filter)
     {
         var characters = MapManager.GetCharacterInRange(character.Info.Cell, range, directionType);
         return characters.Where(filter).ToList();
@@ -869,16 +926,18 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             };
             levelData.characterDatas.Add(characterData);
         }
+
         levelData.saveTime = DateTime.Now;
         levelData.levelType = levelConfig.levelType;
         SaveLoadManager.Instance.OnSave(SaveLoadManager.Instance.levels.Count, levelData);
         CoroutineDispatcher.Invoke(ShowNotification, 0.5f);
     }
-    
+
     public void ShowNotification()
     {
         UIManager.Instance.OpenPopup(PopupType.Splash);
     }
+
     #endregion
 }
 

@@ -134,7 +134,7 @@ public class CharacterInfo
                 Character = Character,
                 WaitForCounter = false,
             });
-            Character.OnDie();
+            Character.HandleDeath();
         }
         else
         {
@@ -212,7 +212,7 @@ public class CharacterInfo
         HandleHpChanged(ref damage, character);
         if (IsDie)
         {
-            Character.OnDie();
+            Character.HandleDeath();
         }
         else
         {

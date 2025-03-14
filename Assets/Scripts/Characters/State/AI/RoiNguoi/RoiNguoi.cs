@@ -23,7 +23,7 @@ public class RoiNguoi : AICharacter
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnDie();
+            HandleDeath();
         }
     }
 #endif

@@ -15,7 +15,7 @@
         });
     }
     
-    public override void OnDie()
+    public override void HandleDeath()
     {
         Info.Cell.CellType = CellType.Walkable;
         Destroy(gameObject);

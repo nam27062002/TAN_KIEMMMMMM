@@ -1,9 +1,9 @@
 ﻿public class Assassin : Shadow
 {
-    public override void OnDie()
+    public override void HandleDeath()
     {
         owner.Info.RemoveEffect(EffectType.IncreaseDamage, this);
         owner.Info.RemoveEffect(EffectType.ReduceHitChange, this);
-        base.OnDie();
+        base.HandleDeath();
     }
 }

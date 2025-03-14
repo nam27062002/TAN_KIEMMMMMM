@@ -18,6 +18,7 @@ public enum ELogCategory
     SKILL,
     EFFECT,
     GAMEPLAY,
+    EDITOR
 }
 
 public enum ELogSeverity
@@ -53,6 +54,9 @@ public class AlkawaDebug
         CategoryColors[ELogCategory.SKILL] = "#E91E63";
         CategoryColors[ELogCategory.GAMEPLAY] = "#FFEB3B";
         CategoryColors[ELogCategory.EFFECT] = "#FF9800";
+#if !UNITY_EDITOR
+        IgnoredCategories.Add(ELogCategory.EDITOR);
+#endif
     }
 
     [Conditional("USE_DEBUG")]

@@ -7,6 +7,9 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
+    //new 
+    public event EventHandler OnDeath;  
+    // old
     [Title("Character Type")] public CharacterType characterType;
 
     [Title("Animation"), Space] [SerializeField]
@@ -486,23 +489,24 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public virtual void OnDie()
+    public virtual void HandleDeath()
     {
-        var index = GpManager.Characters.IndexOf(this);
-        Info.Cell.CellType = CellType.Walkable;
-        Info.Cell.Character = null;
-        if (IsMainCharacter)
-        {
-            GpManager.HandleEndTurn(0.3f);
-        }
-        foreach (var item in passiveSkills)
-        {
-            item.UnregisterEvents();
-        }
-        GpManager.HandleCharacterDie(this);
-        ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
-       
-        Destroy(gameObject);
+        OnDeath?.Invoke(this, EventArgs.Empty);
+        // var index = GpManager.Characters.IndexOf(this);
+        // Info.Cell.CellType = CellType.Walkable;
+        // Info.Cell.Character = null;
+        // if (IsMainCharacter)
+        // {
+        //     GpManager.HandleEndTurn(0.3f);
+        // }
+        // foreach (var item in passiveSkills)
+        // {
+        //     item.UnregisterEvents();
+        // }
+        // GpManager.HandleCharacterDie(this);
+        // ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
+        //
+        // Destroy(gameObject);
     }
     
     public void SetPosition()
