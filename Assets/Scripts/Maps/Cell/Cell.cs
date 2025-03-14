@@ -204,8 +204,19 @@ public class Cell : MonoBehaviour
 
     public void OnCharacterRegister(Character character)
     {
+        if (character != null)
+        {
+            Character.OnDeath -= OnDeath;
+        }
         Character = character;
+        Character.OnDeath += OnDeath;
         cellType = CellType.Character;
+    }
+
+    private void OnDeath()
+    {
+        cellType = CellType.Character;
+        Character = null;
     }
 
     private void OnMouseOver()

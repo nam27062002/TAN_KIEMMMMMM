@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Action = System.Action;
 using Application = UnityEngine.Application;
@@ -10,7 +11,9 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     #region Action
 
     public Action OnLoadComplete;
-
+    
+    // gameplay
+    public Action OnMainCharacterChanged;
     #endregion
 
     protected override void Awake()
@@ -48,7 +51,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         OnLoadComplete -= HandleLoadComplete;
     }
 
-    public void Loading(ESceneType eSceneType)
+    private void Loading(ESceneType eSceneType)
     {
         SceneLoader.LoadSceneAsync(ESceneType.Loading, LoadSceneMode.Additive);
         _nextScene = eSceneType;

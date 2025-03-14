@@ -30,12 +30,7 @@ public class UI_Ingame : MenuBase
 
     [SerializeField] private UI_Button endTurnButton;
     [SerializeField] private Toggle toggle;
-
-    [Title("Character Index"), Space] [SerializeField]
-    private Transform characterPool;
-
-    [SerializeField] private GameObject avatarPrefab;
-
+    
     [Title("Avatar"), Space] [SerializeField]
     private Image characterIcon;
 
@@ -51,7 +46,6 @@ public class UI_Ingame : MenuBase
 
     private GameplayManager GameplayManager => GameplayManager.Instance;
     private ShowInfoCharacterParameters _characterParams;
-    private List<AVT_SpdUI> _avtSpdUI = new();
 
     private readonly List<EffectUI> _effectUIs = new();
 
@@ -71,9 +65,7 @@ public class UI_Ingame : MenuBase
         base.RegisterEvents();
         GameplayManager.OnLoadCharacterFinished += OnLoadCharacterFinished;
         GameplayManager.OnUpdateCharacterInfo += GameplayManagerOnOnUpdateCharacterInfo;
-        GameplayManager.OnSetMainCharacterFinished += GameplayManagerOnOnSetMainCharacterFinished;
         GameplayManager.OnNewRound += GameplayManagerOnOnNewRound;
-        GameplayManager.OnRetry += OnRetry;
         endTurnButton.button.onClick.AddListener(OnEndTurnButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsClick);
         toggle.onValueChanged.AddListener(OnToggleValueChanged);
@@ -84,9 +76,7 @@ public class UI_Ingame : MenuBase
         base.UnregisterEvents();
         GameplayManager.OnLoadCharacterFinished -= OnLoadCharacterFinished;
         GameplayManager.OnUpdateCharacterInfo -= GameplayManagerOnOnUpdateCharacterInfo;
-        GameplayManager.OnSetMainCharacterFinished -= GameplayManagerOnOnSetMainCharacterFinished;
         GameplayManager.OnNewRound -= GameplayManagerOnOnNewRound;
-        GameplayManager.OnRetry -= OnRetry;
         endTurnButton.button.onClick.RemoveListener(OnEndTurnButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsClick);
         toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
@@ -117,12 +107,7 @@ public class UI_Ingame : MenuBase
     {
         SetCharacterFocus(characterParams);
     }
-
-    private void GameplayManagerOnOnSetMainCharacterFinished(object sender, EventArgs e)
-    {
-        SetupCharacterFocus();
-    }
-
+    
     private void OnEndTurnButtonClicked()
     {
         if (!GameplayManager.IsTutorialLevel) GameplayManager.HandleEndTurn();
@@ -132,30 +117,7 @@ public class UI_Ingame : MenuBase
     {
         SetRound();
     }
-
-    private void OnRetry(object sender, EventArgs e)
-    {
-        if (_avtSpdUI == null) return;
-        foreach (var item in _avtSpdUI.ToList())
-        {
-            if (item != null)
-            {
-                item.transform.DOKill();
-                var rect = item.GetComponent<RectTransform>();
-                if (rect != null)
-                {
-                    rect.DOKill();
-                }
-
-                item.DestroyObject();
-            }
-
-            _avtSpdUI.Remove(item);
-        }
-
-        _avtSpdUI.Clear();
-    }
-
+    
     #endregion
 
     private void SetObjectActiveWhenCharacterFocus()
@@ -171,91 +133,7 @@ public class UI_Ingame : MenuBase
             objects[item].SetActiveIfNeeded(true);
         }
     }
-
-    private void SetupCharacterFocus()
-    {
-        var validCharacters = GameplayManager.Characters.Where(c => c != null).ToList();
-
-        if (_avtSpdUI == null || 
-            !_avtSpdUI.Any() || 
-            _avtSpdUI.Count != validCharacters.Count)
-        {
-            foreach (var item in _avtSpdUI.ToList())
-            {
-                if (item != null)
-                {
-                    item.DestroyObject();
-                }
-            }
-            _avtSpdUI = new List<AVT_SpdUI>();
-            
-            foreach (var character in validCharacters)
-            {
-                if (character == null) continue;
-
-                var go = Instantiate(avatarPrefab, characterPool);
-                if (go == null) continue;
-
-                var rt = go.GetComponent<RectTransform>();
-                if (rt != null)
-                {
-                    rt.anchorMin = new Vector2(0, 0.5f);
-                    rt.anchorMax = new Vector2(0, 0.5f);
-                    rt.pivot = new Vector2(0.5f, 0.5f);
-                }
-
-                var avtSpd = go.GetComponent<AVT_SpdUI>();
-                if (avtSpd != null)
-                {
-                    _avtSpdUI.Add(avtSpd);
-                }
-                else
-                {
-                    Debug.LogError("AVT_SpdUI component missing on instantiated object");
-                    Destroy(go);
-                }
-            }
-        }
     
-        var count = _avtSpdUI.Count;
-        var centerIndex = (count % 2 == 0) ? count / 2 - 1 : count / 2;
-        var startIndex = GameplayManager.CurrentPlayerIndex - centerIndex;
-        if (startIndex < 0)
-        {
-            startIndex += count;
-        }
-
-        var spacing = 80f;
-        var fixedY = 0f;
-        if (_avtSpdUI.Count > 0)
-        {
-            fixedY = _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y;
-        }
-        var poolRect = characterPool.GetComponent<RectTransform>();
-        var poolWidth = poolRect.rect.width;
-        var totalGroupWidth = (count - 1) * spacing;
-        var offset = (poolWidth - totalGroupWidth) / 2;
-
-        for (var i = 0; i < count; i++)
-        {
-            var index = (startIndex + i) % count;
-            var avatarRect = _avtSpdUI[index].GetComponent<RectTransform>();
-            var targetPos = new Vector2(offset + i * spacing, fixedY);
-            // Gán trực tiếp vị trí thay vì tween
-            avatarRect.anchoredPosition = targetPos;
-        
-            var isFocused = (index == GameplayManager.CurrentPlayerIndex);
-            var targetScale = isFocused ? 1f : 0.7f;
-            // Gán trực tiếp scale thay vì tween
-            _avtSpdUI[index].transform.localScale = new Vector3(targetScale, targetScale, 1f);
-
-            _avtSpdUI[index].SetupUI(isFocused,
-                GameplayManager.Characters[index].Type,
-                GameplayManager.Characters[index].characterConfig.slideBarIcon);
-        }
-    }
-
-
     private void SetCharacterFocus(ShowInfoCharacterParameters characterParams)
     {
         if (characterParams.Character == null) return;
@@ -338,28 +216,6 @@ public class UI_Ingame : MenuBase
         {
             item.SetActive(true);
         }
-    }
-
-    public void OnCharacterDeath(int index)
-    {
-        if (index < 0 || index >= _avtSpdUI.Count)
-            return;
-
-        var avatarUI = _avtSpdUI[index];
-        if (avatarUI != null)
-        {
-            avatarUI.transform.DOKill();
-            var rect = avatarUI.GetComponent<RectTransform>();
-            if (rect != null)
-            {
-                rect.DOKill();
-            }
-            _avtSpdUI.Remove(avatarUI);
-            avatarUI.DestroyObject();
-        }
-
-        SetupCharacterFocus();
-        // Debug.Log($"NT - OnCharacterDeath: {index}");
     }
 
     private void OnHpChanged(object sender, int _ = 0)

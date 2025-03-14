@@ -14,16 +14,26 @@ public class AVT_SpdUI : MonoBehaviour
     public Sprite team;
 
     public GameObject focusObject;
-
-    public void SetupUI(bool isFocused, Type characterType, Sprite iconSprite)
+    private Character _character;
+    private TopBar_UI _topBar;
+    
+    public void SetupUI(Character character, TopBar_UI topBar)
     {
-        icon.sprite = iconSprite;
-        background.sprite = isFocused ? main : (characterType == Type.AI ? enemy : team);
-        focusObject.SetActive(isFocused);
+        _topBar = topBar;
+        if (_character != null)
+        {
+            _character.OnDeath -= OnDeath;
+        }
+        _character = character;
+        _character.OnDeath += OnDeath;
+        icon.sprite = _character.characterConfig.slideBarIcon;
+        background.sprite = character.IsMainCharacter ? main : (character.Type == Type.AI ? enemy : team);
+        focusObject.SetActive(character.IsMainCharacter);
     }
-        
-    public void DestroyObject()
+
+    private void OnDeath()
     {
+        _topBar.DestroyAvt(this);
         Destroy(gameObject);
     }
 }

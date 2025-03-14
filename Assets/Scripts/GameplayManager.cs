@@ -10,8 +10,9 @@ using UnityEngine;
 
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
+    
     #region Preload
-
+    
     private void ClearAllData()
     {
         _characterDeath[Type.Player].Clear();
@@ -135,7 +136,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     /*--------------------events-------------------------*/
     public event EventHandler OnLoadCharacterFinished;
     public event EventHandler<ShowInfoCharacterParameters> OnUpdateCharacterInfo;
-    public event EventHandler OnSetMainCharacterFinished;
     public event EventHandler OnNewRound;
     public event EventHandler OnEndTurn;
     public event EventHandler OnRetry;
@@ -313,7 +313,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             {
                 MainCharacter.SetMainCharacter();
                 SetSelectedCharacter(MainCharacter);
-                OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
+                GameManager.Instance.OnMainCharacterChanged?.Invoke();
             }
         }
     }
@@ -383,7 +383,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
 
         OnEndTurn?.Invoke(this, EventArgs.Empty);
-        OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnCharacterClicked(Cell cell)
@@ -681,7 +680,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void SetCanInteract()
     {
-        OnSetMainCharacterFinished?.Invoke(this, EventArgs.Empty);
         IsPauseGameInternal = false;
         ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
     }

@@ -721,6 +721,7 @@ GameObject:
   - component: {fileID: 1873574233203916489}
   - component: {fileID: 8119182776314170983}
   - component: {fileID: 4239560552238658626}
+  - component: {fileID: 4427903701916063224}
   m_Layer: 0
   m_Name: UI_Ingame
   m_TagString: Untagged
@@ -838,6 +839,7 @@ MonoBehaviour:
   - {fileID: 3930719159137987737}
   endTurnButton: {fileID: 3117631404636978253}
   toggle: {fileID: 1386652109905716635}
+  topBarUI: {fileID: 4427903701916063224}
   characterPool: {fileID: 3901129994464654674}
   avatarPrefab: {fileID: 2342203677817219276, guid: e4bd8b9035f36c44182dd24b699e5505, type: 3}
   characterIcon: {fileID: 3891118661840701114}
@@ -854,6 +856,20 @@ MonoBehaviour:
   effectUI: {fileID: 3217594064303171081, guid: 9fb5b6da1b4719a4bbeb164f1134205d, type: 3}
   effectsPanel: {fileID: 883893563324993252}
   sizeFitter: {fileID: 0}
+--- !u!114 &4427903701916063224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3075229839044388698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a477ee7089e4236b411afe84391e416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterPool: {fileID: 3901129994464654674}
+  avatarPrefab: {fileID: 2342203677817219276, guid: e4bd8b9035f36c44182dd24b699e5505, type: 3}
 --- !u!1 &3107887611910728574
 GameObject:
   m_ObjectHideFlags: 0
