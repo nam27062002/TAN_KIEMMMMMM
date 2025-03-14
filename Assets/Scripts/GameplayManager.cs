@@ -105,6 +105,23 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         character.Info.OnMpChangedInvoke(0);
     }
     #endregion
+
+    #region Events
+
+    public event EventHandler OnLoadCharacterFinished;
+    
+    protected override void RegisterEvents()
+    {
+        base.RegisterEvents();
+    }
+    
+    protected override void UnRegisterEvents()
+    {
+        base.UnRegisterEvents();
+        if (MapManager) MapManager.OnLoadMapFinished -= OnLoadMapFinished;
+    }
+
+    #endregion
     //=================== OLD =====================================================
     
     [Title("Scriptable Objects")] [SerializeField]
@@ -134,7 +151,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public bool IsTutorialLevel { get; set; }
 
     /*--------------------events-------------------------*/
-    public event EventHandler OnLoadCharacterFinished;
     public event EventHandler<ShowInfoCharacterParameters> OnUpdateCharacterInfo;
     public event EventHandler OnNewRound;
     public event EventHandler OnEndTurn;
@@ -188,13 +204,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             UIManager.Instance.OpenPopup(PopupType.Credit);
         }
     }
-
-    protected override void UnRegisterEvents()
-    {
-        base.UnRegisterEvents();
-        if (MapManager) MapManager.OnLoadMapFinished -= OnLoadMapFinished;
-    }
-
+    
     #region Main
 
     private void StartNewGame()
@@ -307,7 +317,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             if (MainCharacter == null || MainCharacter.Info.IsDie)
             {
-                HandleEndTurn();
+                HandleEndTurn("Chết khi chuẩn bị đến lượt");
             }
             else
             {
@@ -326,7 +336,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         UpdateCharacterInfo();
         if (SelectedCharacter.Info.IsDie)
         {
-            HandleEndTurn();
+            HandleEndTurn("Chết trong khi focus vào nhân vật (có thể do bị phản công)");
         }
 
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
@@ -355,15 +365,16 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
-    public void HandleEndTurn(float delay)
+    private void HandleEndTurn(float delay,string message)
     {
-        CoroutineDispatcher.Invoke(HandleEndTurn, delay);
+        CoroutineDispatcher.Invoke(() => HandleEndTurn(message), delay);
     }
 
-    public void HandleEndTurn()
+    public void HandleEndTurn(string message)
     {
         if (SelectedCharacter == null || IsPauseGameInternal) return;
         SetInteract(true);
+        Debug.Log($"[{SelectedCharacter}]: End turn - {message}");
         if (SelectedCharacter.IsReact)
         {
             SelectedCharacter.HandleEndReact();
@@ -381,8 +392,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
             SetMainCharacter();
         }
-
         OnEndTurn?.Invoke(this, EventArgs.Empty);
+
     }
 
     private void OnCharacterClicked(Cell cell)
@@ -576,8 +587,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SelectedCharacter.HandleSelectSkill(skillIndex, skillUI);
     }
 
-    public void HandleCharacterDie(Character character)
+    public void HandleCharacterDeath(Character character)
     {
+        if (character.IsMainCharacter)
+        {
+            HandleEndTurn(0.3f, "Chết trong lượt chính");
+        }
         IsPauseGameInternal = false;
         SetInteract(true);
         Characters.Remove(character);

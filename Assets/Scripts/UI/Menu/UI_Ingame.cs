@@ -110,7 +110,7 @@ public class UI_Ingame : MenuBase
     
     private void OnEndTurnButtonClicked()
     {
-        if (!GameplayManager.IsTutorialLevel) GameplayManager.HandleEndTurn();
+        if (!GameplayManager.IsTutorialLevel) GameplayManager.HandleEndTurn("Click vào end turn");
     }
 
     private void GameplayManagerOnOnNewRound(object sender, EventArgs e)

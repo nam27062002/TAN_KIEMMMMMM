@@ -204,7 +204,7 @@ public class Cell : MonoBehaviour
 
     public void OnCharacterRegister(Character character)
     {
-        if (character != null)
+        if (Character != null)
         {
             Character.OnDeath -= OnDeath;
         }
@@ -213,7 +213,7 @@ public class Cell : MonoBehaviour
         cellType = CellType.Character;
     }
 
-    private void OnDeath()
+    private void OnDeath(object sender, Character character)
     {
         cellType = CellType.Character;
         Character = null;

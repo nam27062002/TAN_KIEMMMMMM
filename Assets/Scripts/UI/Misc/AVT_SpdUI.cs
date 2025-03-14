@@ -31,7 +31,7 @@ public class AVT_SpdUI : MonoBehaviour
         focusObject.SetActive(character.IsMainCharacter);
     }
 
-    private void OnDeath()
+    private void OnDeath(object sender, Character character)
     {
         _topBar.DestroyAvt(this);
         Destroy(gameObject);

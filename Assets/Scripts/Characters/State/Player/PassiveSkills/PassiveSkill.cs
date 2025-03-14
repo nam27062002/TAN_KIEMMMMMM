@@ -6,14 +6,19 @@ public abstract class PassiveSkill : MonoBehaviour
     
     public virtual void RegisterEvents()
     {
-        
+        character.OnDeath += OnDeath;
     }
 
     public virtual void UnregisterEvents()
     {
-        
+        character.OnDeath -= OnDeath;
     }
 
+    private void OnDeath(object sender, Character _)
+    {
+        UnregisterEvents();
+    }
+    
     public virtual void OnTrigger()
     {
            

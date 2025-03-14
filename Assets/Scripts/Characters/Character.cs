@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     //new 
-    public Action OnDeath;  
+    public event EventHandler<Character> OnDeath;  
     // old
     [Title("Character Type")] public CharacterType characterType;
 
@@ -491,16 +491,8 @@ public abstract class Character : MonoBehaviour
 
     public virtual void HandleDeath()
     {
-        OnDeath?.Invoke();
-        if (IsMainCharacter)
-        {
-            GpManager.HandleEndTurn(0.3f);
-        }
-        foreach (var item in passiveSkills)
-        {
-            item.UnregisterEvents();
-        }
-        GpManager.HandleCharacterDie(this);
+        OnDeath?.Invoke(this, this);
+        GpManager.HandleCharacterDeath(this);
         Destroy(gameObject);
     }
     

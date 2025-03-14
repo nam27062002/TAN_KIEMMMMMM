@@ -79,7 +79,7 @@ public class CanSat : AICharacter
         }
         else
         {
-            GpManager.HandleEndTurn();
+            GpManager.HandleEndTurn("không thể tiếp tục");
         }
     }
 

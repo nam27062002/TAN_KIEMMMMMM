@@ -641,7 +641,7 @@ public class CharacterInfo
         {
             Debug.Log(
                 $"[{Character.characterConfig.characterName}] sleep = {HasSleepEffect} or stun = {HasStunEffect} => End turn");
-            GameplayManager.Instance.HandleEndTurn();
+            GameplayManager.Instance.HandleEndTurn("Có debuff sleep hoặc stun");
         }
         else
         {

@@ -37,7 +37,7 @@ public class EndTurnTutorial : TutorialSequence
             Tutorial.OnTutorialClicked(index);
         }
 
-        GameplayManager.Instance.HandleEndTurn();
+        GameplayManager.Instance.HandleEndTurn("Clicked vào end turn");
 
     }
 }
