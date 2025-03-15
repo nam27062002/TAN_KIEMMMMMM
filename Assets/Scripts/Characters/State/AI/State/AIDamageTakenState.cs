@@ -11,6 +11,8 @@ public class AIDamageTakenState : DamageTakenState
  
     protected override bool CanCounter()
     {
+        if (!DamageTakenParams.CanCounter) return false;
+        
         if (Character.lastDamageTakenCountered)
         {
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì đã counter lần trước.");
@@ -63,7 +65,7 @@ public class AIDamageTakenState : DamageTakenState
         HandleCastSkill();
         
         Character.lastDamageTakenCountered = true;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Đã thực hiện counter thành công, lastDamageTakenCountered được đặt thành true.");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Đã thực hiện counter thành công");
     }
 
     private void HandleCastSkill()

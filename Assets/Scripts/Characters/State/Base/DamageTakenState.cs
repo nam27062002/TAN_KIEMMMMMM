@@ -23,7 +23,7 @@
         {
             Character.ShowMessage("Né");
         }
-        if (CanCounter() && DamageTakenParams.CanCounter)
+        if (CanCounter())
         {
             HandleCounter();
         }

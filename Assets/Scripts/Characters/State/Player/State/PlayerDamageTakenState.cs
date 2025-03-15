@@ -1,6 +1,10 @@
 ﻿public class PlayerDamageTakenState : DamageTakenState
 {
-    protected override bool CanCounter() => true;
+    protected override bool CanCounter()
+    {
+        return DamageTakenParams.CanCounter;
+    }
+
     public PlayerDamageTakenState(Character character) : base(character)
     {
     }
