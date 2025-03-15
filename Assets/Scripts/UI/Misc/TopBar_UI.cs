@@ -21,7 +21,8 @@ public class TopBar_UI : MonoBehaviour
 
     public void OnDestroy()
     {
-        GameManager.Instance.OnMainCharacterChanged -= UpdateTopBar;
+        if (GameManager.HasInstance)
+            GameManager.Instance.OnMainCharacterChanged -= UpdateTopBar;
     }
 
     private void UpdateTopBar()

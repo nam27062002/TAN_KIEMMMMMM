@@ -95,8 +95,7 @@ public class MapManager : MonoBehaviour
     
         return results;
     }
-
-
+    
     public List<Cell> GetCellsWalkableInRange(Cell cell, int range, DirectionType direction)
     {
         var allCells = _pathfinding.GetHexagonsInMoveRange(cell, range, direction);

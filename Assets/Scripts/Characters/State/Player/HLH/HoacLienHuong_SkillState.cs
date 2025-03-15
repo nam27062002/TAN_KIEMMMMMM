@@ -21,10 +21,11 @@ public class HoacLienHuong_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = Roll.RollDice(1, 4, 0);
+        var deathCount = GpManager.GetCharacterDeathInRange(Character, 10);
+        var skillDamage = Roll.RollDice(1, 4, 0) + deathCount;
         var totalDamage = baseDamage + skillDamage;
-        Debug.Log($"Skill Damage = 1d4 = {skillDamage}");
-        Debug.Log("Chưa tính số thi thể");
+        Debug.Log($"Số thi thể = {deathCount}");
+        Debug.Log($"Skill Damage = 1d4 + {deathCount} = {skillDamage}");
         Debug.Log($"Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
         return new DamageTakenParams
         {

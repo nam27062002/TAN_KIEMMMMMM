@@ -215,7 +215,7 @@ public class Cell : MonoBehaviour
 
     private void OnDeath(object sender, Character character)
     {
-        cellType = CellType.Character;
+        cellType = CellType.Walkable;
         Character = null;
     }
 
