@@ -37,6 +37,7 @@ public class CharacterInfo
             { EffectType.ReduceHitChange, ApplySimpleEffect },
             { EffectType.LifeSteal, ApplySimpleEffect },
             { EffectType.Prone, ApplySimpleEffect },
+            { EffectType.Fear, ApplySimpleEffect },
             
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },

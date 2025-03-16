@@ -182,14 +182,25 @@ public class SkillState : CharacterState
 
     private HitChangeParams GetHitChangeParams(Character character)
     {
-        if (character.Info.EffectInfo.Effects.All(p => p.EffectType != EffectType.Prone))
-            return Info.HitChangeParams;
+        if (character.Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Prone))
+        {
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");
+            var roll1 = Info.HitChangeParams;
+            var roll2 = Info.HitChangeParams;
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
+            return roll1.HitChangeValue > roll2.HitChangeValue ? roll1 : roll2;
+        }
+
+        if (Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Fear && p.Actor == character))
+        {
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{Character.characterConfig.characterName} có hiệu ứng BẤT LỢI");
+            var roll1 = Info.HitChangeParams;
+            var roll2 = Info.HitChangeParams;
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
+            return roll1.HitChangeValue > roll2.HitChangeValue ? roll2 : roll1;
+        }
         
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");
-        var roll1 = Info.HitChangeParams;
-        var roll2 = Info.HitChangeParams;
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
-        return roll1.HitChangeValue > roll2.HitChangeValue ? roll1 : roll2;
+        return Info.HitChangeParams;
     }
 
     private void HandleDamageLogic() => HandleDodgeDamage();

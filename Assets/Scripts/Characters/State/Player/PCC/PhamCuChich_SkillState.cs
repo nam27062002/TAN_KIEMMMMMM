@@ -158,6 +158,15 @@ public class PhamCuChich_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = damage,
+            Effects = new List<EffectData>()
+            {
+                new ()
+                {
+                    EffectType = EffectType.Fear,
+                    Duration = EffectConfig.DebuffRound,
+                    Actor = Character
+                }
+            }
         };
     }
     
