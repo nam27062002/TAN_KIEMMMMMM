@@ -296,14 +296,6 @@ public class DoanGiaLinh_SkillState : SkillState
                 {
                     EffectType = EffectType.RemoveAllPoisonPowder,
                     Actor = Character
-                },
-                new BleedEffect()
-                {
-                    EffectType = EffectType.Bleed,
-                    Actor = Character,
-                    Duration = EffectConfig.DebuffRound,
-                    move = 3,
-                    ap = 2
                 }
             },
             ReceiveFromCharacter = Character

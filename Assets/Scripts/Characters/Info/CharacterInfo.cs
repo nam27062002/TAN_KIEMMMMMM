@@ -536,6 +536,7 @@ public class CharacterInfo
         {
             if (ActionPoints[i] != 3) continue;
             ActionPoints[i] -= pointsToReduce;
+            TryApplyBleedEffectAP(pointsToReduce);
             RemoveAllEffect(EffectType.IncreaseActionPoints);
             return;
         }
@@ -767,10 +768,12 @@ public class CharacterInfo
 
     public void RemoveAllEffect(EffectType effectType)
     {
+#if !ALWAY_APPLY_EFFECT
         var value = EffectInfo.Effects.RemoveAll(p => p.EffectType == effectType);
         if (value <= 0) return;
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
+#endif
     }
 
     public void RemoveEffect(EffectType effectType, Character actor)
@@ -861,6 +864,23 @@ public class CharacterInfo
     private bool IsVenomousEffect(EffectType effectType) =>
         effectType is EffectType.RedDahlia or EffectType.Marigold or EffectType.NightCactus or EffectType.WhiteLotus;
 
+    public void TryApplyBleedEffectWithMove(int moveRange)
+    {
+        var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.EffectType == EffectType.Bleed);
+        if (effect is not BleedEffect bleedEffect) return;
+        var damage = Utils.RoundNumber(moveRange * 1f / bleedEffect.move);
+        AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {moveRange}/3 = {damage} lên {Character.characterConfig.characterName}");
+        HandleDamageTaken(-damage, effect.Actor);
+    }
+    
+    public void TryApplyBleedEffectAP(int ap)
+    {
+        var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.EffectType == EffectType.Bleed);
+        if (effect is not BleedEffect bleedEffect) return;
+        var damage = ap * 2;
+        AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {ap} * 2 = {damage} lên {Character.characterConfig.characterName}");
+        HandleDamageTaken(-damage, effect.Actor);
+    }
     #endregion
 
     #region Roll

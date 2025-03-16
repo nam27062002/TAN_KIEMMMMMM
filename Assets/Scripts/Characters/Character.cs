@@ -125,7 +125,7 @@ public abstract class Character : MonoBehaviour
         ChangeState(ECharacterState.Skill, skillStateParams);
     }
     
-    public virtual void TryMoveToCell(Cell cell)
+    public void TryMoveToCell(Cell cell)
     {
         if (Info.MoveRange != null && Info.MoveRange.Contains(cell))
         {
@@ -133,9 +133,10 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    protected virtual void TryMoveToCell(List<Cell> cells)
+    protected void TryMoveToCell(List<Cell> cells)
     {
         ChangeState(ECharacterState.Move, new MoveStateParams(cells));
+        Info.TryApplyBleedEffectWithMove(cells.Count);
     }
 
     public void ChangeState(ECharacterState newState, StateParams stateParams = null)

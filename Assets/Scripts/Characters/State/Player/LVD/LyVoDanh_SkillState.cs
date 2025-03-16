@@ -187,11 +187,13 @@ public class LyVoDanh_SkillState : SkillState
                     EffectType = EffectType.BreakBloodSealDamage,
                     Actor = Character
                 },
-                new ()
+                new BleedEffect()
                 {
-                    EffectType = EffectType.Stun,
+                    EffectType = EffectType.Bleed,
                     Actor = Character,
                     Duration = EffectConfig.DebuffRound,
+                    ap = 2,
+                    move = 3
                 }
             },
             ReceiveFromCharacter = Character
