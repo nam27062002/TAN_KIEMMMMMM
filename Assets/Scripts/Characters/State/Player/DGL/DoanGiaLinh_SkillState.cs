@@ -142,6 +142,12 @@ public class DoanGiaLinh_SkillState : SkillState
                 Duration = 1,
                 Actor = Character
             },
+            new()
+            {
+                EffectType = EffectType.Prone,
+                Duration =  EffectConfig.DebuffRound,
+                Actor = Character
+            }
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
         return new DamageTakenParams

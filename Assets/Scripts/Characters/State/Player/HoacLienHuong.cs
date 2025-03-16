@@ -16,9 +16,6 @@ public class HoacLienHuong : PlayerCharacter
     protected override void SetSpeed()
     {
         base.SetSpeed();
-    #if UNITY_EDITOR
-        Info.Speed = 10000;
-    #endif
     }
     
     protected override bool CanBlockSkill(DamageTakenParams damageTakenParams)

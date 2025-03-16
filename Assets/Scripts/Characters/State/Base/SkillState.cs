@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -179,7 +180,17 @@ public class SkillState : CharacterState
 
     protected virtual int GetBaseDamage() => Info.BaseDamage;
 
-    private HitChangeParams GetHitChangeParams() => Info.HitChangeParams;
+    private HitChangeParams GetHitChangeParams(Character character)
+    {
+        if (character.Info.EffectInfo.Effects.All(p => p.EffectType != EffectType.Prone))
+            return Info.HitChangeParams;
+        
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");
+        var roll1 = Info.HitChangeParams;
+        var roll2 = Info.HitChangeParams;
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
+        return roll1.HitChangeValue > roll2.HitChangeValue ? roll1 : roll2;
+    }
 
     private void HandleDamageLogic() => HandleDodgeDamage();
 
@@ -226,7 +237,7 @@ public class SkillState : CharacterState
         }
         else
         {
-            var hitChangeParams = GetHitChangeParams();
+            var hitChangeParams = GetHitChangeParams(target);
             var dodge = target.Info.Dodge;
 
             AlkawaDebug.Log(ELogCategory.SKILL,
