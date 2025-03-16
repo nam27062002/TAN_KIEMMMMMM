@@ -17,6 +17,8 @@
         {
             Info.CurrentHp += hp;
             Info.OnHpChangedInvoke(hp);
+            Info.CurrentMp += hp;
+            Info.OnMpChangedInvoke(hp);
         }
         else
         {

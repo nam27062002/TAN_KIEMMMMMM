@@ -252,7 +252,22 @@ public class CharacterInfo
     private void SetDamageDealtInCurrentRound(int damage)
     {
         DamageDealtInCurrentRound += damage;
+        TryApplyLifeStealEffect();
         Debug.Log($"[{Character.characterConfig.characterName}] Sát thương đã gây ra trong round = {DamageDealtInCurrentRound}");
+    }
+
+    private void TryApplyLifeStealEffect()
+    { 
+        var effect = EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.LifeSteal);
+        if (effect is RollEffectData rollEffectData)
+        {
+            var heal = Roll.RollDice(rollEffectData.RollData);
+            CurrentHp += heal;
+            CurrentHp = Mathf.Min(CurrentHp, Character.GetMaxHp());
+            OnHpChangedInvoke(heal);
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}]: Hút máu = {rollEffectData.RollData.rollTime}d{rollEffectData.RollData.rollValue} + {rollEffectData.RollData.add} = {heal}");
+        }
     }
     
     private void HandleShieldChange(Character character)
@@ -623,9 +638,9 @@ public class CharacterInfo
                 case EffectType.Poison:
                 case EffectType.ThietNhan_Poison:
                 {
-                    if (item is PoisonEffectData poisonEffectData)
+                    if (item is RollEffectData poisonEffectData)
                     {
-                        var rollData = poisonEffectData.Damage;
+                        var rollData = poisonEffectData.RollData;
                         var damage = Roll.RollDice(rollData);
                         HandleDamageTaken(-damage, poisonEffectData.Actor);
                         Debug.Log(

@@ -74,12 +74,12 @@ public class CanSat_SkillState : AISkillState
             ReducedMana = Utils.RoundNumber(realDamage * 1f / 3),
             Effects = new List<EffectData>()
             {
-                new PoisonEffectData()
+                new RollEffectData()
                 {
                     EffectType = EffectType.Poison,
                     Actor = Character,
                     Duration = EffectConfig.DebuffRound,
-                    Damage = new RollData(1, 6, 0),
+                    RollData = new RollData(1, 6, 0),
                 }
             }
         };

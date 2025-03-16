@@ -52,7 +52,7 @@ public class EffectInfo
         { EffectType.Taunt, (15, 15)},
         { EffectType.Silence, (10, 10)},
         { EffectType.ReduceAP, (15, 15)},
-        { EffectType.Bleed, (10, 10)},
+        { EffectType.Bleed, (15, 15)},
     };
 
     public void AddEffect(EffectData effect)

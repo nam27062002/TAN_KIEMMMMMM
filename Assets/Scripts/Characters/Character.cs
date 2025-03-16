@@ -491,8 +491,9 @@ public abstract class Character : MonoBehaviour
 
     public virtual void HandleDeath()
     {
-        GpManager.HandleCharacterDeath(this);
+        GpManager.HandleCharacterDeath(this, out var callback);
         OnDeath?.Invoke(this, this);
+        callback?.Invoke();
         Destroy(gameObject);
     }
     

@@ -153,17 +153,17 @@ public class LyVoDanh_SkillState : SkillState
     
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
-        AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Mính Đính Quy Lai");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Mính Đính Quy Lai");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
             {
-                new()
+                new RollEffectData()
                 {
                     EffectType = EffectType.LifeSteal,
                     Actor = Character,
                     Duration = EffectConfig.BuffRound,
+                    RollData = new RollData(1,6,0),
                 }
             },
             ReceiveFromCharacter = Character

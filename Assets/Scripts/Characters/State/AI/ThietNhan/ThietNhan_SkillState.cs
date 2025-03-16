@@ -27,11 +27,11 @@ public class ThietNhan_SkillState : AISkillState
             Damage = totalDamage,
             Effects = new List<EffectData>
             {
-                new PoisonEffectData
+                new RollEffectData
                 {
                     EffectType = EffectType.ThietNhan_Poison,
                     Duration = EffectConfig.DebuffRound,
-                    Damage = new RollData
+                    RollData = new RollData
                     {
                         rollTime = 1,
                         rollValue = 4,

@@ -107,11 +107,11 @@ public class DoanGiaLinh_SkillState : SkillState
                 EffectType = EffectType.NightCactus,
                 Actor = Character,
             },
-            new PoisonEffectData()
+            new RollEffectData()
             {
                 EffectType = EffectType.Poison,
                 Duration = EffectConfig.DebuffRound,
-                Damage = new RollData()
+                RollData = new RollData()
                 {
                     rollTime = 1,
                     rollValue = 4,
@@ -231,6 +231,12 @@ public class DoanGiaLinh_SkillState : SkillState
                 EffectType = EffectType.Sleep,
                 Duration = EffectConfig.DebuffRound,
                 Actor = Character
+            },
+            new()
+            {
+                EffectType = EffectType.Stun,
+                Actor = Character,
+                Duration = EffectConfig.DebuffRound,
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -290,6 +296,14 @@ public class DoanGiaLinh_SkillState : SkillState
                 {
                     EffectType = EffectType.RemoveAllPoisonPowder,
                     Actor = Character
+                },
+                new BleedEffect()
+                {
+                    EffectType = EffectType.Bleed,
+                    Actor = Character,
+                    Duration = EffectConfig.DebuffRound,
+                    move = 3,
+                    ap = 2
                 }
             },
             ReceiveFromCharacter = Character
@@ -308,6 +322,13 @@ public class DoanGiaLinh_SkillState : SkillState
                 {
                     EffectType = EffectType.RemoveAllPoisonPowder,
                     Actor = Character
+                },
+                new RollEffectData()
+                {
+                    EffectType = EffectType.LifeSteal,
+                    Actor = Character,
+                    Duration = EffectConfig.BuffRound,
+                    RollData = new RollData(1,6,0),
                 }
             },
             ReceiveFromCharacter = Character

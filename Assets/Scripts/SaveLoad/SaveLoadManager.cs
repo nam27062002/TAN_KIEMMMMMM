@@ -16,9 +16,6 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
     {
         base.Awake();
         savePath = Application.persistentDataPath + "/levels.json";
-#if UNITY_EDITOR
-        Debug.Log($"SavePath: {savePath}");
-#endif
         try
         {
             if (File.Exists(savePath))
