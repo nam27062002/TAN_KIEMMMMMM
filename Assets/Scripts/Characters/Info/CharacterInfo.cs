@@ -38,6 +38,7 @@ public class CharacterInfo
             { EffectType.LifeSteal, ApplySimpleEffect },
             { EffectType.Prone, ApplySimpleEffect },
             { EffectType.Fear, ApplySimpleEffect },
+            { EffectType.Drunk, ApplySimpleEffect },
             
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -699,7 +700,7 @@ public class CharacterInfo
 #endif
     }
 
-    private void ApplyEffect(EffectData effectData)
+    public void ApplyEffect(EffectData effectData)
     {
         EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,

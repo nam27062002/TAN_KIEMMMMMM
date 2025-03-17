@@ -36,6 +36,7 @@ public class EffectInfo
         EffectType.ReduceHitChange,
         EffectType.CanSat_TakeAP,
         EffectType.LifeSteal,
+        EffectType.Drunk
         
     };
     
@@ -54,6 +55,7 @@ public class EffectInfo
         { EffectType.Silence, (10, 10)},
         { EffectType.ReduceAP, (15, 15)},
         { EffectType.Bleed, (15, 15)},
+        { EffectType.Drunk, (15, 15)},
     };
 
     public void AddEffect(EffectData effect)
@@ -108,4 +110,5 @@ public enum EffectType
     LifeSteal = 42,
     Prone = 43,
     Fear = 44,
+    Drunk = 45
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class LyVoDanh_SkillState : SkillState
 {
@@ -146,6 +147,13 @@ public class LyVoDanh_SkillState : SkillState
                     Duration = EffectConfig.BuffRound,
                     Actor = Character
                 },
+                new DrunkEffect()
+                {
+                    EffectType = EffectType.Drunk,
+                    Actor = Character,
+                    Duration = EffectConfig.BuffRound,
+                    SleepWhileMiss = false,
+                }
             },
             ReceiveFromCharacter = Character
         };
@@ -164,6 +172,40 @@ public class LyVoDanh_SkillState : SkillState
                     Actor = Character,
                     Duration = EffectConfig.BuffRound,
                     RollData = new RollData(1,6,0),
+                },
+                new DrunkEffect()
+                {
+                    EffectType = EffectType.Drunk,
+                    Actor = Character,
+                    Duration = EffectConfig.BuffRound,
+                    SleepWhileMiss = false,
+                }
+            },
+            ReceiveFromCharacter = Character
+        };
+    }
+    
+    protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
+    {
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Liên Vấn");
+        return new DamageTakenParams
+        {
+            Effects = new List<EffectData>()
+            {
+                new ChangeStatEffect()
+                {
+                    EffectType = EffectType.IncreaseDef,
+                    Actor = Character,
+                    Duration = EffectConfig.BuffRound,
+                    Value = 4,
+                },
+                
+                new DrunkEffect()
+                {
+                    EffectType = EffectType.Drunk,
+                    Actor = Character,
+                    Duration = EffectConfig.BuffRound,
+                    SleepWhileMiss = true,
                 }
             },
             ReceiveFromCharacter = Character
@@ -277,6 +319,11 @@ public class LyVoDanh_SkillState : SkillState
         AddTargetCharacters(Character);
     }
     
+    protected override void SetTargetCharacters_Skill3_TeammateTurn()
+    {
+        AddTargetCharacters(Character);
+    }
+    
     protected override void SetTargetCharacters_Skill4_MyTurn()
     {
         var allCharacter = new HashSet<Character>(TargetCharacters);
@@ -305,4 +352,22 @@ public class LyVoDanh_SkillState : SkillState
     }
 
     #endregion
+
+    protected override void HandleApplyDamageOnEnemy(Character character)
+    {
+        base.HandleApplyDamageOnEnemy(character);
+        if (Character.Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Drunk))
+        {
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{CharName} check say");
+            character.Info.ApplyEffects(new List<EffectData>()
+            {
+                new()
+                {
+                    EffectType = EffectType.Sleep,
+                    Duration = EffectConfig.DebuffRound,
+                    Actor = Character
+                }
+            });
+        }
+    }
 }

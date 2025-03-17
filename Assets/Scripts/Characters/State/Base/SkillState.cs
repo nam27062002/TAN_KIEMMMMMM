@@ -257,6 +257,20 @@ public class SkillState : CharacterState
         
             if (hitChangeParams.HitChangeValue < dodge)
             {
+                if (target.Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
+                {
+                    Debug.Log($"{target.characterConfig.characterName} có hiệu ứng say, {CharName} đánh hụt => sleep");
+                    Character.Info.ApplyEffect(                
+                        new EffectData
+                        {
+                            EffectType = EffectType.Sleep,
+                            Duration = EffectConfig.DebuffRound,
+                            Actor = Character
+                        });
+                    var damageParams = GetDamageParams(target);
+                    Character.Info.HandleDamageTaken(-damageParams.Damage, target);
+                    Debug.Log($"{CharName} bị phản sát thương: damage = {damageParams.Damage}");
+                }
                 var dodgeDamageParams = new DamageTakenParams
                 {
                     CanDodge = true,
@@ -295,6 +309,10 @@ public class SkillState : CharacterState
         var shieldCell = target.Info.Cell.mainBlockProjectile;
         return shieldCell != null && shieldCell != Character.Info.Cell.mainBlockProjectile;
     }
+
+    protected virtual void HandleApplyDamageOnEnemy(Character character)
+    {
+    }
     
     private IEnumerator HandleApplyDamage(Character target, DamageTakenParams damageTakenParams)
     {
@@ -302,7 +320,10 @@ public class SkillState : CharacterState
         {
             yield return new WaitUntil(() => !_waitForFeedback);
             yield return new WaitForSecondsRealtime(0.1f);
-
+            if (target.Type != Character.Type)
+            {
+                HandleApplyDamageOnEnemy(target);   
+            }
             if (!target.Info.IsDie)
             {
                 target.OnDamageTaken(damageTakenParams);
