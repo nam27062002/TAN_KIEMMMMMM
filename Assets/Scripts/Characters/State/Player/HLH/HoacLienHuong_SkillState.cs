@@ -103,6 +103,13 @@ public class HoacLienHuong_SkillState : SkillState
         };
     }
     
+    protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
+    {
+        var cell = character.GetBackCell();
+        TeleportToCell(cell);
+        return new DamageTakenParams();
+    }
+    
     //===================== SKILL 4 =====================
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
@@ -184,6 +191,11 @@ public class HoacLienHuong_SkillState : SkillState
     protected override void SetTargetCharacters_Skill3_MyTurn()
     {
         AddTargetCharacters(Character);
+    }
+    
+    protected override void SetTargetCharacters_Skill3_EnemyTurn()
+    {
+        AddTargetCharacters(GpManager.MainCharacter);
     }
     
     //===================== SKILL 4 =====================

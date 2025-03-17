@@ -226,7 +226,7 @@ MonoBehaviour:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
     hasToggle: 0
-    moveDirection: 512
+    moveDirection: 504
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 9319fcf17bb013a40af510e16132c80e, type: 3}

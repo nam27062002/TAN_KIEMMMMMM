@@ -133,6 +133,28 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    public Cell GetBackCell()
+    {
+        Cell result = null;
+        var cells = MapManager.GetHexagonsInMoveRange(Info.Cell, 1, DirectionType.All).ToList();
+        var facing = model.transform.localScale.x == 1f ? FacingType.Right : FacingType.Left;
+        if (facing == FacingType.Right)
+        {
+            result = cells.FirstOrDefault(p => p.CellPosition == new Vector2Int(Info.Cell.CellPosition.x - 1, Info.Cell.CellPosition.y));
+        }
+        else if (facing == FacingType.Left)
+        {
+            result = cells.FirstOrDefault(p => p.CellPosition == new Vector2Int(Info.Cell.CellPosition.x + 1, Info.Cell.CellPosition.y));
+        }
+
+        if (result == null)
+        {
+            result = cells[0];
+        }
+
+        return result;
+    }
+
     protected void TryMoveToCell(List<Cell> cells)
     {
         ChangeState(ECharacterState.Move, new MoveStateParams(cells));
