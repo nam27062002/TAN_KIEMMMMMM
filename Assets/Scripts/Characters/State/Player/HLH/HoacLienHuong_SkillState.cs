@@ -55,6 +55,14 @@ public class HoacLienHuong_SkillState : SkillState
         };
     }
     
+    protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
+    {
+        return new DamageTakenParams()
+        {
+            ReceiveFromCharacter = character
+        };
+    }
+    
     //===================== SKILL 3 =====================
 
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)

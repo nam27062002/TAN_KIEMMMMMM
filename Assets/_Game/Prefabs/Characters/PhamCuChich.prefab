@@ -221,6 +221,8 @@ MonoBehaviour:
       atkOverride: 0
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
+      overrideMaxHp: 0
+      maxHpOverride: 0
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
@@ -401,6 +403,7 @@ MonoBehaviour:
         Qu\xE2n \u0111\u1ECBch ti\u1EBFn v\xE0o ph\u1EA1m vi chi\u1EBFn tr\u01B0\u1EDDng
         s\u1EBD nh\u1EADn hi\u1EC7u \u1EE9ng ch\u1EA3y m\xE1u "
   passiveSkills: []
+  lastDamageTakenCountered: 0
   CurrentShield: {fileID: 0}
 --- !u!1 &6907775959439712675 stripped
 GameObject:

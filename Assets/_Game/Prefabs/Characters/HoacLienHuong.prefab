@@ -192,6 +192,8 @@ MonoBehaviour:
       atkOverride: 0
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
+      overrideMaxHp: 0
+      maxHpOverride: 0
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
@@ -370,6 +372,7 @@ MonoBehaviour:
         k\u1EF9 \u0111\u1ECBch thi tri\u1EC3n gi\u1EEF nguy\xEAn. "
   passiveSkills:
   - {fileID: 4073403874055096316}
+  lastDamageTakenCountered: 0
   goldenAPChance: 0.25
   CurrentShield: {fileID: 0}
 --- !u!114 &4073403874055096316

@@ -125,7 +125,7 @@ public abstract class Character : MonoBehaviour
         ChangeState(ECharacterState.Skill, skillStateParams);
     }
     
-    public void TryMoveToCell(Cell cell)
+    public virtual void TryMoveToCell(Cell cell)
     {
         if (Info.MoveRange != null && Info.MoveRange.Contains(cell))
         {
@@ -217,8 +217,7 @@ public abstract class Character : MonoBehaviour
 
         if (Info.SkillInfo == null) return false;
         var damageType = Info.SkillInfo.damageType;
-
-        if (GpManager.SelectedCharacter.Type == Type.Player && GpManager.MainCharacter.Type == Type.AI && Info.SkillInfo.isDirectionalSkill)
+        if (GpManager.SelectedCharacter.Type == Type.Player && GpManager.MainCharacter.Type == Type.AI && Info.SkillInfo.isDirectionalSkill && !Info.SkillInfo.damageType.HasFlag(DamageTargetType.Move))
         {
             if (cell.Character != GpManager.MainCharacter) return false;
             HandleCastSkill(new List<Character>(){cell.Character});

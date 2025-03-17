@@ -39,6 +39,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         Players.Clear();
         Enemies.Clear();
         SelectedCharacter = null;
+        PreviousSelectedCharacter = null;
     }
 
     #endregion
@@ -139,8 +140,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
         else if (SelectedCharacter == character && character.Type != MainCharacter.Type)
         {
-            Debug.Log($"[{character.characterConfig.characterName}] chết trong lượt counter => quay về lượt chính");
-            callback = () => SetSelectedCharacter(MainCharacter);
+            Debug.Log($"[{character.characterConfig.characterName}] chết trong lượt counter => quay về lượt hiện tại");
+            if (PreviousSelectedCharacter != null)
+                callback = () => SetSelectedCharacter(PreviousSelectedCharacter);
+            else if (MainCharacter != null)
+                callback = () => SetSelectedCharacter(MainCharacter);
+            else
+                callback = () => HandleEndTurn("NONEEEEEEEEEEEEE");
         }
     }
 
@@ -266,6 +272,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? null : Characters[CurrentPlayerIndex];
 
     public Character SelectedCharacter { get; set; }
+    public Character PreviousSelectedCharacter { get; set; }
     private Character _focusedCharacter;
 
     public int CurrentRound { get; private set; }
@@ -425,7 +432,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void SetSelectedCharacter(Character character, IdleStateParams idleParams = null)
     {
         SelectedCharacter?.OnUnSelected();
+        PreviousSelectedCharacter = SelectedCharacter;
         SelectedCharacter = character;
+        
         SelectedCharacter.SetSelectedCharacter(idleParams);
         UpdateCharacterInfo();
         if (SelectedCharacter.Info.IsDie)

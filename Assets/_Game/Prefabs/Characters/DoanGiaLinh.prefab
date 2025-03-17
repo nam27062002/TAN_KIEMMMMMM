@@ -205,9 +205,11 @@ MonoBehaviour:
         rollValue: 20
         add: 0
       overrideDamage: 0
-      atkOverride: 0
+      atkOverride: 100
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
+      overrideMaxHp: 0
+      maxHpOverride: 0
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
@@ -381,6 +383,7 @@ MonoBehaviour:
         v\u1EADt l\xFD m\xE0 b\u1EA3n th\xE2n \u0111\xE1ng l\u1EBD ph\u1EA3i nh\u1EADn. "
   passiveSkills:
   - {fileID: 3033158562719900191}
+  lastDamageTakenCountered: 0
   theAllPoisonScript: {fileID: 3033158562719900191}
 --- !u!114 &3033158562719900191
 MonoBehaviour:
