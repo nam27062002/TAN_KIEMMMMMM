@@ -85,7 +85,7 @@ public class CharacterInfo
     public int MoveAmount { get; set; }
     public int DamageDealtInCurrentRound { get; set; } = 0;
 
-    private int ShieldAmount => ShieldEffectData?.Value ?? 0;
+    private int ShieldAmount => ShieldEffectData?.value ?? 0;
     public bool IsDie => CurrentHp <= 0;
 
     private List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
@@ -94,21 +94,21 @@ public class CharacterInfo
     private readonly Dictionary<EffectType, Action<EffectData>> _effectHandlers;
     public EffectInfo EffectInfo { get; } = new();
 
-    public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.EffectType == EffectType.BlockSkill);
-    private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep);
-    private bool HasStunEffect => EffectInfo.Effects.Any(p => p.EffectType == EffectType.Stun);
+    public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.effectType == EffectType.BlockSkill);
+    private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.effectType == EffectType.Sleep);
+    private bool HasStunEffect => EffectInfo.Effects.Any(p => p.effectType == EffectType.Stun);
     public bool MustEndTurn => HasSleepEffect || HasStunEffect;
 
     public EffectData CoverEffectData =>
-        EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_50_Percent);
+        EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.Cover_50_Percent);
 
     public EffectData CoverFullDamageEffectData =>
-        EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Cover_100_Percent);
+        EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.Cover_100_Percent);
 
     public EffectData DragonArmorEffectData =>
-        EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.DragonArmor);
+        EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.DragonArmor);
 
-    public ShieldEffect ShieldEffectData => (ShieldEffect)EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.Shield);
+    public ShieldEffect ShieldEffectData => (ShieldEffect)EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.Shield);
 
     // Action
     public event EventHandler<int> OnHpChanged;
@@ -148,7 +148,7 @@ public class CharacterInfo
 
     private void TryCover_PhamCuChich_Skill3(ref int damage)
     {
-        if (EffectInfo.Effects.Any(p => p.EffectType == EffectType.Cover_PhamCuChich_Skill3))
+        if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Cover_PhamCuChich_Skill3))
         {
             Debug.Log($"[{Character.characterConfig.characterName}] có buff từ skill 3 của PCC => damage nhận = 1");
             damage = -1;
@@ -164,7 +164,7 @@ public class CharacterInfo
         var rollData = Roll.RollDice(2, 4, 0);
         if (damage > rollData)
         {
-            dragonArmor.Actor.Info.RemoveAllEffect(EffectType.SnakeArmor);
+            dragonArmor.actor.Info.RemoveAllEffect(EffectType.SnakeArmor);
             RemoveAllEffect(EffectType.DragonArmor);
             AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => vỡ khiên");
         }
@@ -181,7 +181,7 @@ public class CharacterInfo
         var fullCover = CoverFullDamageEffectData;
         if (fullCover != null)
         {
-            fullCover.Actor.OnDamageTaken(new DamageTakenParams()
+            fullCover.actor.OnDamageTaken(new DamageTakenParams()
             {
                 CanDodge = false,
                 Damage = -damage,
@@ -200,7 +200,7 @@ public class CharacterInfo
         }
 
         damage = Utils.RoundNumber(damage * 1f / 2);
-        coverEffect.Actor.OnDamageTaken(new DamageTakenParams()
+        coverEffect.actor.OnDamageTaken(new DamageTakenParams()
         {
             CanDodge = false,
             Damage = -damage,
@@ -229,10 +229,10 @@ public class CharacterInfo
         if (ShieldEffectData != null && hp < 0)
         {
             var damage = -hp;
-            var shieldValue = ShieldEffectData.Value;
+            var shieldValue = ShieldEffectData.value;
             if (shieldValue >= damage)
             {
-                ShieldEffectData.Value -= damage;
+                ShieldEffectData.value -= damage;
                 HandleShieldChange(character);
                 hp = 0;
             }
@@ -240,9 +240,9 @@ public class CharacterInfo
             {
                 var remainingDamage = damage - shieldValue;
                 HandleShieldChange(character);
-                ShieldEffectData.Value = 0;
+                ShieldEffectData.value = 0;
                 hp = -remainingDamage;
-                HandleBreakShield(1, ShieldEffectData.Damage);
+                HandleBreakShield(1, ShieldEffectData.damage);
             }
         }
 
@@ -261,15 +261,15 @@ public class CharacterInfo
 
     private void TryApplyLifeStealEffect()
     { 
-        var effect = EffectInfo.Effects.FirstOrDefault(p => p.EffectType == EffectType.LifeSteal);
+        var effect = EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.LifeSteal);
         if (effect is RollEffectData rollEffectData)
         {
-            var heal = Roll.RollDice(rollEffectData.RollData);
+            var heal = Roll.RollDice(rollEffectData.rollData);
             CurrentHp += heal;
             CurrentHp = Mathf.Min(CurrentHp, Character.GetMaxHp());
             OnHpChangedInvoke(heal);
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}]: Hút máu = {rollEffectData.RollData.rollTime}d{rollEffectData.RollData.rollValue} + {rollEffectData.RollData.add} = {heal}");
+                $"[{Character.characterConfig.characterName}]: Hút máu = {rollEffectData.rollData.rollTime}d{rollEffectData.rollData.rollValue} + {rollEffectData.rollData.add} = {heal}");
         }
     }
     
@@ -308,7 +308,7 @@ public class CharacterInfo
 
     public int GetDef()
     {
-        if (EffectInfo.Effects.Any(p => p.EffectType == EffectType.ReduceStat_PhamCuChich_Skill3))
+        if (EffectInfo.Effects.Any(p => p.effectType == EffectType.ReduceStat_PhamCuChich_Skill3))
         {
             return 0;
         }
@@ -319,7 +319,7 @@ public class CharacterInfo
     private bool IsImmobilized()
     {
         return EffectInfo.Effects
-            .Any(effect => effect.EffectType == EffectType.Immobilize);
+            .Any(effect => effect.effectType == EffectType.Immobilize);
     }
 
     private void OnEndTurn(object sender, EventArgs e)
@@ -336,8 +336,8 @@ public class CharacterInfo
         var baseValue = Attributes.maxMoveRange - MoveAmount;
 #endif
         var moveBuff = EffectInfo.Effects
-            .Where(e => e.EffectType == EffectType.IncreaseMoveRange)
-            .Sum(e => ((ChangeStatEffect)e).Value);
+            .Where(e => e.effectType == EffectType.IncreaseMoveRange)
+            .Sum(e => ((ChangeStatEffect)e).value);
         return baseValue + moveBuff;
     }
 
@@ -345,8 +345,8 @@ public class CharacterInfo
     {
         var chiDef = Attributes.chiDef;
         var buff = EffectInfo.Effects
-            .Where(e => e.EffectType == EffectType.ReduceChiDef)
-            .Sum(e => ((ChangeStatEffect)e).Value);
+            .Where(e => e.effectType == EffectType.ReduceChiDef)
+            .Sum(e => ((ChangeStatEffect)e).value);
         return chiDef - buff;
     }
 
@@ -356,23 +356,23 @@ public class CharacterInfo
 
         foreach (var effect in EffectInfo.Effects)
         {
-            switch (effect.EffectType)
+            switch (effect.effectType)
             {
                 case EffectType.ReduceMoveRange:
                 {
                     var reduction = Roll.RollDice(1, 4, 0);
                     AlkawaDebug.Log(
                         ELogCategory.EFFECT,
-                        $"Apply debuff {effect.EffectType}: giảm di chuyển = 1d4 = {reduction}"
+                        $"Apply debuff {effect.effectType}: giảm di chuyển = 1d4 = {reduction}"
                     );
                     totalReduction += reduction;
                     break;
                 }
                 case EffectType.ThietNhan_ReduceMoveRange when effect is ChangeStatEffect changeStatEffect:
-                    totalReduction += changeStatEffect.Value;
+                    totalReduction += changeStatEffect.value;
                     AlkawaDebug.Log(
                         ELogCategory.EFFECT,
-                        $"Apply debuff {effect.EffectType}: giảm di chuyển = {changeStatEffect.Value}"
+                        $"Apply debuff {effect.effectType}: giảm di chuyển = {changeStatEffect.value}"
                     );
                     break;
             }
@@ -384,16 +384,16 @@ public class CharacterInfo
     public void ResetBuffAfter()
     {
         foreach (var effect in EffectInfo.Effects.ToList()
-                     .Where(effect => EffectInfo.TriggerAtEnd.Contains(effect.EffectType)))
+                     .Where(effect => EffectInfo.TriggerAtEnd.Contains(effect.effectType)))
         {
-            effect.Duration--;
-            if (effect.Duration != 0) continue;
+            effect.duration--;
+            if (effect.duration != 0) continue;
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
-            switch (effect.EffectType)
+                $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
+            switch (effect.effectType)
             {
                 case EffectType.Cover_PhamCuChich_Skill3:
-                    effect.Actor.Info.RemoveEffect(EffectType.ReduceStat_PhamCuChich_Skill3, Character);
+                    effect.actor.Info.RemoveEffect(EffectType.ReduceStat_PhamCuChich_Skill3, Character);
                     break;
                 case EffectType.BlockProjectile:
                     if (effect is BlockProjectile projectile)
@@ -411,12 +411,12 @@ public class CharacterInfo
         OnNewRound?.Invoke(this, RoundIndex);
         MoveAmount = 0;
         foreach (var effect in EffectInfo.Effects.ToList()
-                     .Where(effect => EffectInfo.TriggerAtStart.Contains(effect.EffectType)))
+                     .Where(effect => EffectInfo.TriggerAtStart.Contains(effect.effectType)))
         {
-            effect.Duration--;
-            if (effect.Duration != 0) continue;
+            effect.duration--;
+            if (effect.duration != 0) continue;
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+                $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
             EffectInfo.Effects.Remove(effect);
         }
 
@@ -450,7 +450,7 @@ public class CharacterInfo
         
             foreach (ActionPointEffect effect in GetActionPointEffects())
             {
-                foreach (int ap in effect.ActionPoints)
+                foreach (int ap in effect.actionPoints)
                 {
                     combined.Add(ap);
                 }
@@ -461,15 +461,15 @@ public class CharacterInfo
             int skipCount = 0;
             foreach (var effect in EffectInfo.Effects)
             {
-                if (effect.EffectType == EffectType.ThietNhan_BlockAP)
+                if (effect.effectType == EffectType.ThietNhan_BlockAP)
                 {
                     skipCount++;
                 }
-                else if (effect.EffectType == EffectType.ReduceAP && effect is ChangeStatEffect changeStatEffect)
+                else if (effect.effectType == EffectType.ReduceAP && effect is ChangeStatEffect changeStatEffect)
                 {
-                    skipCount += changeStatEffect.Value;
+                    skipCount += changeStatEffect.value;
                 }
-                else if (effect.EffectType == EffectType.CanSat_TakeAP)
+                else if (effect.effectType == EffectType.CanSat_TakeAP)
                 {
                     skipCount += 1;
                 }
@@ -495,7 +495,7 @@ public class CharacterInfo
     {
         foreach (var effect in EffectInfo.Effects)
         {
-            if (effect is ActionPointEffect { EffectType: EffectType.IncreaseActionPoints } ape)
+            if (effect is ActionPointEffect { effectType: EffectType.IncreaseActionPoints } ape)
             {
                 yield return ape;
             }
@@ -509,7 +509,7 @@ public class CharacterInfo
 
         foreach (var effect in GetActionPointEffects())
         {
-            IncreasePoints(effect.ActionPoints);
+            IncreasePoints(effect.actionPoints);
         }
 
         return;
@@ -550,10 +550,10 @@ public class CharacterInfo
         {
             foreach (var effect in effects)
             {
-                for (var i = 0; i < effect.ActionPoints.Count; i++)
+                for (var i = 0; i < effect.actionPoints.Count; i++)
                 {
-                    if (effect.ActionPoints[i] != 3) continue;
-                    effect.ActionPoints[i] -= pointsToReduce;
+                    if (effect.actionPoints[i] != 3) continue;
+                    effect.actionPoints[i] -= pointsToReduce;
                     return true;
                 }
             }
@@ -575,9 +575,9 @@ public class CharacterInfo
 #endif
         foreach (var effectData in EffectInfo.Effects)
         {
-            if (effectData.EffectType == EffectType.IncreaseDamage && effectData is ChangeStatEffect changeStatEffect)
+            if (effectData.effectType == EffectType.IncreaseDamage && effectData is ChangeStatEffect changeStatEffect)
             {
-                damage += changeStatEffect.Value;
+                damage += changeStatEffect.value;
             }
         }
 
@@ -604,11 +604,11 @@ public class CharacterInfo
     public void CheckEffectAfterReceiveDamage(DamageTakenParams damageTakenParams)
     {
         // remove all sleep
-        if (damageTakenParams.Effects.All(p => p.EffectType != EffectType.Sleep))
+        if (damageTakenParams.Effects.All(p => p.effectType != EffectType.Sleep))
         {
-            if (EffectInfo.Effects.Any(p => p.EffectType == EffectType.Sleep))
+            if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Sleep))
             {
-                EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.Sleep);
+                EffectInfo.Effects.RemoveAll(p => p.effectType == EffectType.Sleep);
                 AlkawaDebug.Log(ELogCategory.EFFECT,
                     $"[{Character.characterConfig.characterName}] nhận damage => removed effect: Sleep");
             }
@@ -619,17 +619,17 @@ public class CharacterInfo
     {
         foreach (var item in EffectInfo.Effects.ToList())
         {
-            if (!EffectInfo.AppliedEffect.TryGetValue(item.EffectType, out var value)) continue;
+            if (!EffectInfo.AppliedEffect.TryGetValue(item.effectType, out var value)) continue;
             var effectCleanse = _roll.GetEffectCleanse();
             var baseEffectCleanse = value.Item2;
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"{item.EffectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
+                $"{item.effectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
 #if !ALWAY_APPLY_EFFECT
             if (effectCleanse >= baseEffectCleanse) continue;
             EffectInfo.Effects.Remove(item);
 #endif
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {item.EffectType}");
+                $"[{Character.characterConfig.characterName}] Removed effect: {item.effectType}");
         }
     }
 
@@ -637,18 +637,18 @@ public class CharacterInfo
     {
         foreach (var item in EffectInfo.Effects.ToList())
         {
-            switch (item.EffectType)
+            switch (item.effectType)
             {
                 case EffectType.Poison:
                 case EffectType.ThietNhan_Poison:
                 {
                     if (item is RollEffectData poisonEffectData)
                     {
-                        var rollData = poisonEffectData.RollData;
+                        var rollData = poisonEffectData.rollData;
                         var damage = Roll.RollDice(rollData);
-                        HandleDamageTaken(-damage, poisonEffectData.Actor);
+                        HandleDamageTaken(-damage, poisonEffectData.actor);
                         Debug.Log(
-                            $"[{Character.characterConfig.characterName}] - {item.EffectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
+                            $"[{Character.characterConfig.characterName}] - {item.effectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
                     }
 
                     break;
@@ -675,14 +675,14 @@ public class CharacterInfo
     {
         foreach (var effect in effects)
         {
-            if (_effectHandlers.TryGetValue(effect.EffectType, out var handler))
+            if (_effectHandlers.TryGetValue(effect.effectType, out var handler))
             {
                 handler(effect);
             }
             else
             {
                 AlkawaDebug.Log(ELogCategory.EFFECT,
-                    $"[{Character.characterConfig.characterName}] No handler for effect: {effect.EffectType}");
+                    $"[{Character.characterConfig.characterName}] No handler for effect: {effect.effectType}");
             }
         }
     }
@@ -690,9 +690,9 @@ public class CharacterInfo
     private bool ShouldApplyEffect(EffectData effectData)
     {
         var effectResistance = _roll.GetEffectResistance();
-        var baseEffectResistance = EffectInfo.AppliedEffect[effectData.EffectType].Item1;
+        var baseEffectResistance = EffectInfo.AppliedEffect[effectData.effectType].Item1;
         AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"Debuff {effectData.EffectType}: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+            $"Debuff {effectData.effectType}: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
 #if !ALWAY_APPLY_EFFECT
         return effectResistance < baseEffectResistance;
 #else
@@ -704,20 +704,20 @@ public class CharacterInfo
     {
         EffectInfo.AddEffect(effectData);
         AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"[{Character.characterConfig.characterName}] Added effect: {effectData.EffectType.ToString()}");
+            $"[{Character.characterConfig.characterName}] Added effect: {effectData.effectType.ToString()}");
     }
 
     private void ApplyIncreaseDamage(EffectData effectData)
     {
-        if (effectData is not ChangeStatEffect changeStatEffect || changeStatEffect.Value == 0)
+        if (effectData is not ChangeStatEffect changeStatEffect || changeStatEffect.value == 0)
             return;
         ApplyEffect(effectData);
-        Character.ShowMessage($"Tăng {changeStatEffect.Value} sát thương");
+        Character.ShowMessage($"Tăng {changeStatEffect.value} sát thương");
     }
 
     private void ApplyBlockSkill()
     {
-        var effect = new EffectData { Duration = 1, EffectType = EffectType.BlockSkill };
+        var effect = new EffectData { duration = 1, effectType = EffectType.BlockSkill };
         ApplyEffect(effect);
     }
 
@@ -728,12 +728,12 @@ public class CharacterInfo
 
     private void ApplyBloodSealDamage(EffectData effectData)
     {
-        if (EffectInfo.Effects.All(p => p.EffectType != EffectType.BloodSealEffect))
+        if (EffectInfo.Effects.All(p => p.effectType != EffectType.BloodSealEffect))
             return;
-        EffectInfo.Effects.RemoveAll(p => p.EffectType == EffectType.BloodSealEffect);
+        EffectInfo.Effects.RemoveAll(p => p.effectType == EffectType.BloodSealEffect);
         var hpDecreased = Character.GetMaxHp() - CurrentHp;
         var damage = Utils.RoundNumber(hpDecreased * 1f / 10);
-        if (CurrentHp > 0) HandleDamageTaken(-damage, effectData.Actor);
+        if (CurrentHp > 0) HandleDamageTaken(-damage, effectData.actor);
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
     }
@@ -766,13 +766,13 @@ public class CharacterInfo
 
     private void ApplyRemoveAllPoisonPowder(EffectData effectData)
     {
-        RemoveAllEffect(effectData.EffectType);
+        RemoveAllEffect(effectData.effectType);
     }
 
     public void RemoveAllEffect(EffectType effectType)
     {
 #if !ALWAY_APPLY_EFFECT
-        var value = EffectInfo.Effects.RemoveAll(p => p.EffectType == effectType);
+        var value = EffectInfo.Effects.RemoveAll(p => p.effectType == effectType);
         if (value <= 0) return;
         AlkawaDebug.Log(ELogCategory.EFFECT,
             $"[{Character.characterConfig.characterName}] Removed effect: {effectType.ToString()}");
@@ -784,7 +784,7 @@ public class CharacterInfo
         for (int i = EffectInfo.Effects.Count - 1; i >= 0; i--)
         {
             var item = EffectInfo.Effects[i];
-            if (item.EffectType != effectType || item.Actor != actor) continue;
+            if (item.effectType != effectType || item.actor != actor) continue;
             EffectInfo.Effects.RemoveAt(i);
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Removed effect: {effectType}");
@@ -818,13 +818,13 @@ public class CharacterInfo
         if (effectData is ChangeStatEffect changeStatEffect)
         {
             var removedCount = 0;
-            foreach (var effect in EffectInfo.Effects.ToList().Where(e => IsVenomousEffect(e.EffectType)))
+            foreach (var effect in EffectInfo.Effects.ToList().Where(e => IsVenomousEffect(e.effectType)))
             {
                 EffectInfo.Effects.Remove(effect);
                 AlkawaDebug.Log(ELogCategory.EFFECT,
-                    $"[{Character.characterConfig.characterName}] Removed effect: {effect.EffectType}");
+                    $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
                 removedCount++;
-                if (removedCount >= changeStatEffect.Value)
+                if (removedCount >= changeStatEffect.value)
                     break;
             }
         }
@@ -839,28 +839,28 @@ public class CharacterInfo
         }
         else
         {
-            ShieldEffectData.Duration = changeStatEffect.Duration;
-            ShieldEffectData.Value += changeStatEffect.Value;
-            ShieldEffectData.Damage = Mathf.Max(ShieldEffectData.Damage, changeStatEffect.Damage);
+            ShieldEffectData.duration = changeStatEffect.duration;
+            ShieldEffectData.value += changeStatEffect.value;
+            ShieldEffectData.damage = Mathf.Max(ShieldEffectData.damage, changeStatEffect.damage);
         }
 
         if (ShieldEffectData != null)
         {
-            Debug.Log($"Nhận lượng shield = {changeStatEffect} | lương shield hiện tại = {ShieldEffectData.Value}");
-            Debug.Log($"damage khi nổ shield = {ShieldEffectData.Damage}");
+            Debug.Log($"Nhận lượng shield = {changeStatEffect} | lương shield hiện tại = {ShieldEffectData.value}");
+            Debug.Log($"damage khi nổ shield = {ShieldEffectData.damage}");
             HandleShieldChange(Character);
         }
     }
 
     public int GetPoisonPowder()
     {
-        return EffectInfo.Effects.Count(p => p.EffectType == EffectType.PoisonPowder);
+        return EffectInfo.Effects.Count(p => p.effectType == EffectType.PoisonPowder);
     }
 
     public int CountFlower()
     {
         return EffectInfo.Effects.Count(effect =>
-            effect.EffectType is EffectType.RedDahlia or EffectType.WhiteLotus or EffectType.Marigold
+            effect.effectType is EffectType.RedDahlia or EffectType.WhiteLotus or EffectType.Marigold
                 or EffectType.NightCactus);
     }
 
@@ -869,20 +869,20 @@ public class CharacterInfo
 
     public void TryApplyBleedEffectWithMove(int moveRange)
     {
-        var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.EffectType == EffectType.Bleed);
+        var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.effectType == EffectType.Bleed);
         if (effect is not BleedEffect bleedEffect) return;
         var damage = Utils.RoundNumber(moveRange * 1f / bleedEffect.move);
         AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {moveRange}/3 = {damage} lên {Character.characterConfig.characterName}");
-        HandleDamageTaken(-damage, effect.Actor);
+        HandleDamageTaken(-damage, effect.actor);
     }
     
     public void TryApplyBleedEffectAP(int ap)
     {
-        var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.EffectType == EffectType.Bleed);
+        var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.effectType == EffectType.Bleed);
         if (effect is not BleedEffect bleedEffect) return;
         var damage = ap * 2;
         AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {ap} * 2 = {damage} lên {Character.characterConfig.characterName}");
-        HandleDamageTaken(-damage, effect.Actor);
+        HandleDamageTaken(-damage, effect.actor);
     }
     #endregion
 

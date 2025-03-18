@@ -15,17 +15,17 @@ public class CanSat_SkillState : AISkillState
             {
                 new ChangeStatEffect()
                 {
-                    EffectType = EffectType.IncreaseDef,
-                    Actor = Character,
-                    Value = 4,
-                    Duration = EffectConfig.MAX_ROUND
+                    effectType = EffectType.IncreaseDef,
+                    actor = Character,
+                    value = 4,
+                    duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
-                    EffectType = EffectType.IncreaseSpd,
-                    Actor = Character,
-                    Value = 6,
-                    Duration = EffectConfig.MAX_ROUND
+                    effectType = EffectType.IncreaseSpd,
+                    actor = Character,
+                    value = 6,
+                    duration = EffectConfig.MAX_ROUND
                 }
             }
         };
@@ -39,17 +39,17 @@ public class CanSat_SkillState : AISkillState
             {
                 new ChangeStatEffect()
                 {
-                    EffectType = EffectType.IncreaseDamage,
-                    Actor = Character,
-                    Value = 2,
-                    Duration = EffectConfig.MAX_ROUND
+                    effectType = EffectType.IncreaseDamage,
+                    actor = Character,
+                    value = 2,
+                    duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
-                    EffectType = EffectType.ReduceHitChange,
-                    Actor = Character,
-                    Value = 6,
-                    Duration = EffectConfig.MAX_ROUND
+                    effectType = EffectType.ReduceHitChange,
+                    actor = Character,
+                    value = 6,
+                    duration = EffectConfig.MAX_ROUND
                 }
             }
         };
@@ -76,10 +76,10 @@ public class CanSat_SkillState : AISkillState
             {
                 new RollEffectData()
                 {
-                    EffectType = EffectType.Poison,
-                    Actor = Character,
-                    Duration = EffectConfig.DebuffRound,
-                    RollData = new RollData(1, 6, 0),
+                    effectType = EffectType.Poison,
+                    actor = Character,
+                    duration = EffectConfig.DebuffRound,
+                    rollData = new RollData(1, 6, 0),
                 }
             }
         };
@@ -104,9 +104,9 @@ public class CanSat_SkillState : AISkillState
             {
                 new()
                 {
-                    Duration = 2,
-                    Actor = Character,
-                    EffectType = EffectType.CanSat_TakeAP,
+                    duration = 2,
+                    actor = Character,
+                    effectType = EffectType.CanSat_TakeAP,
                 }
             });
 
@@ -114,10 +114,10 @@ public class CanSat_SkillState : AISkillState
             {
                 new ActionPointEffect()
                 {
-                    Duration = 2,
-                    Actor = Character,
-                    EffectType = EffectType.IncreaseActionPoints,
-                    ActionPoints = new List<int>(3),
+                    duration = 2,
+                    actor = Character,
+                    effectType = EffectType.IncreaseActionPoints,
+                    actionPoints = new List<int>(3),
                 }
             });
         }

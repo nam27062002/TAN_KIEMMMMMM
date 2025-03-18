@@ -19,8 +19,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage,
-                    Actor = Character
+                    effectType = EffectType.BreakBloodSealDamage,
+                    actor = Character
                 }
             }
         };
@@ -35,8 +35,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage,
-                    Actor = Character
+                    effectType = EffectType.BreakBloodSealDamage,
+                    actor = Character
                 }
             }
         };
@@ -51,8 +51,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage,
-                    Actor = Character
+                    effectType = EffectType.BreakBloodSealDamage,
+                    actor = Character
                 }
             }
         };
@@ -75,8 +75,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BloodSealEffect,
-                    Actor = Character
+                    effectType = EffectType.BloodSealEffect,
+                    actor = Character
                 }
             },
             ReceiveFromCharacter = Character,
@@ -99,8 +99,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BloodSealEffect,
-                    Actor = Character
+                    effectType = EffectType.BloodSealEffect,
+                    actor = Character
                 }
             },
             ReceiveFromCharacter = Character,
@@ -123,8 +123,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BloodSealEffect,
-                    Actor = Character
+                    effectType = EffectType.BloodSealEffect,
+                    actor = Character
                 },
             },
             ReceiveFromCharacter = Character,
@@ -142,16 +142,16 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new ChangeStatEffect()
                 {
-                    EffectType = EffectType.IncreaseDamage,
-                    Value = increaseDamage,
-                    Duration = EffectConfig.BuffRound,
-                    Actor = Character
+                    effectType = EffectType.IncreaseDamage,
+                    value = increaseDamage,
+                    duration = EffectConfig.BuffRound,
+                    actor = Character
                 },
                 new DrunkEffect()
                 {
-                    EffectType = EffectType.Drunk,
-                    Actor = Character,
-                    Duration = EffectConfig.BuffRound,
+                    effectType = EffectType.Drunk,
+                    actor = Character,
+                    duration = EffectConfig.BuffRound,
                     SleepWhileMiss = false,
                 }
             },
@@ -168,16 +168,16 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new RollEffectData()
                 {
-                    EffectType = EffectType.LifeSteal,
-                    Actor = Character,
-                    Duration = EffectConfig.BuffRound,
-                    RollData = new RollData(1,6,0),
+                    effectType = EffectType.LifeSteal,
+                    actor = Character,
+                    duration = EffectConfig.BuffRound,
+                    rollData = new RollData(1,6,0),
                 },
                 new DrunkEffect()
                 {
-                    EffectType = EffectType.Drunk,
-                    Actor = Character,
-                    Duration = EffectConfig.BuffRound,
+                    effectType = EffectType.Drunk,
+                    actor = Character,
+                    duration = EffectConfig.BuffRound,
                     SleepWhileMiss = false,
                 }
             },
@@ -194,17 +194,17 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new ChangeStatEffect()
                 {
-                    EffectType = EffectType.IncreaseDef,
-                    Actor = Character,
-                    Duration = EffectConfig.BuffRound,
-                    Value = 4,
+                    effectType = EffectType.IncreaseDef,
+                    actor = Character,
+                    duration = EffectConfig.BuffRound,
+                    value = 4,
                 },
                 
                 new DrunkEffect()
                 {
-                    EffectType = EffectType.Drunk,
-                    Actor = Character,
-                    Duration = EffectConfig.BuffRound,
+                    effectType = EffectType.Drunk,
+                    actor = Character,
+                    duration = EffectConfig.BuffRound,
                     SleepWhileMiss = true,
                 }
             },
@@ -226,14 +226,14 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage,
-                    Actor = Character
+                    effectType = EffectType.BreakBloodSealDamage,
+                    actor = Character
                 },
                 new BleedEffect()
                 {
-                    EffectType = EffectType.Bleed,
-                    Actor = Character,
-                    Duration = EffectConfig.DebuffRound,
+                    effectType = EffectType.Bleed,
+                    actor = Character,
+                    duration = EffectConfig.DebuffRound,
                     ap = 2,
                     move = 3
                 }
@@ -255,8 +255,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage,
-                    Actor = Character,
+                    effectType = EffectType.BreakBloodSealDamage,
+                    actor = Character,
                 }
             },
             ReceiveFromCharacter = Character
@@ -277,8 +277,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage,
-                    Actor = Character,
+                    effectType = EffectType.BreakBloodSealDamage,
+                    actor = Character,
                 }
             },
             ReceiveFromCharacter = Character
@@ -297,8 +297,8 @@ public class LyVoDanh_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.BreakBloodSealDamage,
-                    Actor = Character,
+                    effectType = EffectType.BreakBloodSealDamage,
+                    actor = Character,
                 }
             },
             ReceiveFromCharacter = character
@@ -356,16 +356,16 @@ public class LyVoDanh_SkillState : SkillState
     protected override void HandleApplyDamageOnEnemy(Character character)
     {
         base.HandleApplyDamageOnEnemy(character);
-        if (Character.Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Drunk))
+        if (Character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{CharName} check say");
             character.Info.ApplyEffects(new List<EffectData>()
             {
                 new()
                 {
-                    EffectType = EffectType.Sleep,
-                    Duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    effectType = EffectType.Sleep,
+                    duration = EffectConfig.DebuffRound,
+                    actor = Character
                 }
             });
         }

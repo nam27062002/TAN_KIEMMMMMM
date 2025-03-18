@@ -29,28 +29,28 @@ public class ThietNhan_SkillState : AISkillState
             {
                 new RollEffectData
                 {
-                    EffectType = EffectType.ThietNhan_Poison,
-                    Duration = EffectConfig.DebuffRound,
-                    RollData = new RollData
+                    effectType = EffectType.ThietNhan_Poison,
+                    duration = EffectConfig.DebuffRound,
+                    rollData = new RollData
                     {
                         rollTime = 1,
                         rollValue = 4,
                         add = 0
                     },
-                    Actor = Character
+                    actor = Character
                 },
                 new ChangeStatEffect
                 {
-                    EffectType = EffectType.ThietNhan_ReduceMoveRange,
-                    Duration = EffectConfig.DebuffRound,
-                    Value = 2,
-                    Actor = Character
+                    effectType = EffectType.ThietNhan_ReduceMoveRange,
+                    duration = EffectConfig.DebuffRound,
+                    value = 2,
+                    actor = Character
                 },
                 new()
                 {
-                    EffectType = EffectType.ThietNhan_BlockAP,
-                    Duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    effectType = EffectType.ThietNhan_BlockAP,
+                    duration = EffectConfig.DebuffRound,
+                    actor = Character
                 }
             },
             ReceiveFromCharacter = Character
@@ -81,15 +81,15 @@ public class ThietNhan_SkillState : AISkillState
             {
                 new()
                 {
-                    EffectType = EffectType.Poison,
-                    Duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    effectType = EffectType.Poison,
+                    duration = EffectConfig.DebuffRound,
+                    actor = Character
                 },
                 new()
                 {
-                    EffectType = EffectType.Immobilize,
-                    Duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    effectType = EffectType.Immobilize,
+                    duration = EffectConfig.DebuffRound,
+                    actor = Character
                 }
             }
         };
@@ -114,9 +114,9 @@ public class ThietNhan_SkillState : AISkillState
             {
                 new()
                 {
-                    EffectType = EffectType.ThietNhan_Infected,
-                    Duration = EffectConfig.DebuffRound,
-                    Actor = character
+                    effectType = EffectType.ThietNhan_Infected,
+                    duration = EffectConfig.DebuffRound,
+                    actor = character
                 }
             },
             ReceiveFromCharacter = Character

@@ -38,10 +38,10 @@ public class RoiNguoi : AICharacter
             {
                 new ChangeStatEffect()
                 {
-                    EffectType = EffectType.IncreaseDef,
-                    Actor = this,
-                    Value = 1,
-                    Duration = EffectConfig.MAX_ROUND
+                    effectType = EffectType.IncreaseDef,
+                    actor = this,
+                    value = 1,
+                    duration = EffectConfig.MAX_ROUND
                 },
             });
             foreach (var item in GpManager.Enemies)
@@ -52,10 +52,10 @@ public class RoiNguoi : AICharacter
                     {
                         new ChangeStatEffect()
                         {
-                            EffectType = EffectType.IncreaseDamage,
-                            Actor = this,
-                            Value = 2,
-                            Duration = EffectConfig.MAX_ROUND
+                            effectType = EffectType.IncreaseDamage,
+                            actor = this,
+                            value = 2,
+                            duration = EffectConfig.MAX_ROUND
                         },
                     });
                 }

@@ -110,12 +110,13 @@ public class LevelData
 {
     public LevelType levelType;
     public List<CharacterData> characterDatas = new List<CharacterData>();
-    public DateTime saveTime;
+    public DateTime SaveTime;
 }
 
 [Serializable]
 public class CharacterData
 {
+    public int iD;
     public CharacterType characterType;
     public Vector2Int points;
     public int currentHp;

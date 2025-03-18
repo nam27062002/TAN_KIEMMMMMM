@@ -182,7 +182,7 @@ public class SkillState : CharacterState
 
     private HitChangeParams GetHitChangeParams(Character character)
     {
-        if (character.Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Prone))
+        if (character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Prone))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");
             var roll1 = Info.HitChangeParams;
@@ -191,7 +191,7 @@ public class SkillState : CharacterState
             return roll1.HitChangeValue > roll2.HitChangeValue ? roll1 : roll2;
         }
 
-        if (Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Fear && p.Actor == character))
+        if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Fear && p.actor == character))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{Character.characterConfig.characterName} có hiệu ứng BẤT LỢI");
             var roll1 = Info.HitChangeParams;
@@ -257,15 +257,15 @@ public class SkillState : CharacterState
         
             if (hitChangeParams.HitChangeValue < dodge)
             {
-                if (target.Info.EffectInfo.Effects.Any(p => p.EffectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
+                if (target.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
                 {
                     Debug.Log($"{target.characterConfig.characterName} có hiệu ứng say, {CharName} đánh hụt => sleep");
                     Character.Info.ApplyEffect(                
                         new EffectData
                         {
-                            EffectType = EffectType.Sleep,
-                            Duration = EffectConfig.DebuffRound,
-                            Actor = Character
+                            effectType = EffectType.Sleep,
+                            duration = EffectConfig.DebuffRound,
+                            actor = Character
                         });
                     var damageParams = GetDamageParams(target);
                     Character.Info.HandleDamageTaken(-damageParams.Damage, target);

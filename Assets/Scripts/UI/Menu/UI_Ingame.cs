@@ -189,7 +189,7 @@ public class UI_Ingame : MenuBase
             var go = Instantiate(effectUI.gameObject, effectsPanel);
             go.transform.SetAsFirstSibling();
             var cpn = go.GetComponent<EffectUI>();
-            UIManager.Instance.effectIcons.TryGetValue(item.EffectType, out var effectIcon);
+            UIManager.Instance.effectIcons.TryGetValue(item.effectType, out var effectIcon);
             if (effectIcon == null) effectIcon = UIManager.Instance.defaultIcon;
             cpn.Initialize(effectIcon);
             _effectUIs.Add(cpn);

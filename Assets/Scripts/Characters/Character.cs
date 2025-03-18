@@ -8,6 +8,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     //new 
+    public int CharacterId { get; set; }
     public event EventHandler<Character> OnDeath;  
     // old
     [Title("Character Type")] public CharacterType characterType;
@@ -80,8 +81,9 @@ public abstract class Character : MonoBehaviour
 
     protected abstract void SetStateMachine();
 
-    public void Initialize(Cell cell)
+    public void Initialize(Cell cell, int iD)
     {
+        CharacterId = iD;
         Info = new CharacterInfo(skillConfig, characterConfig.characterAttributes, this);
         skillConfig.SetSkillConfigs();
         SetCell(cell);
@@ -301,10 +303,10 @@ public abstract class Character : MonoBehaviour
         var dragon = Info.DragonArmorEffectData;
         if (dragon != null)
         {
-            if (dragon.Actor != null)
+            if (dragon.actor != null)
             {
                 value = Utils.RoundNumber(value * 1f / 2f);
-                dragon.Actor.HandleMpChanged(value);
+                dragon.actor.HandleMpChanged(value);
             }
             else
             {
@@ -499,7 +501,7 @@ public abstract class Character : MonoBehaviour
         var coverEffect = Info.CoverEffectData;
         if (coverEffect == null) return;
         linkCharacter.ClearLine();
-        linkCharacter.SetLine(coverEffect.Actor.transform.position, transform.position);
+        linkCharacter.SetLine(coverEffect.actor.transform.position, transform.position);
     }
 
     public virtual void DestroyCharacter()

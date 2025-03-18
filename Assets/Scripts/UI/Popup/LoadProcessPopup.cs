@@ -34,7 +34,7 @@ public class LoadProcessPopup : PopupBase
             var go = Instantiate(progression.gameObject, content);
             if (go.TryGetComponent(out Progression progressionComponent))
             {
-                var datetime = item.saveTime;
+                var datetime = item.SaveTime;
                 string timeStr = datetime.ToString("HH:mm:ss");
                 progressionComponent.Init(index, $"save_{index + 1}: {timeStr}");
             }

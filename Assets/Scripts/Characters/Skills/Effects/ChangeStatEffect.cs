@@ -1,6 +1,9 @@
-﻿public class ChangeStatEffect : EffectData
+﻿using System;
+
+[Serializable]
+public class ChangeStatEffect : EffectData
 {
-    public int Value;
+    public int value;
 }
 
 public enum StatType

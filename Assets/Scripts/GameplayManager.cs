@@ -12,12 +12,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
     #region Fields
 
-    private Dictionary<Type, List<Cell>> _characterDeath = new()
+    private readonly Dictionary<Type, List<Cell>> _characterDeath = new()
     {
         { Type.Player, new List<Cell>() },
         { Type.AI, new List<Cell>() }
     };
 
+    private int _currentId = 0;
+    
     #endregion
 
     #region Preload
@@ -40,6 +42,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         Enemies.Clear();
         SelectedCharacter = null;
         PreviousSelectedCharacter = null;
+        _currentId = 0;
     }
 
     #endregion
@@ -77,7 +80,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
         foreach (var characterData in levelData.characterDatas)
         {
-            var character = CreateCharacter(characterData.characterType, characterData.points);
+            var character = CreateCharacter(characterData.characterType, characterData.points, characterData.iD);
             ApplySavedCharacterState(character, characterData);
         }
     }
@@ -86,16 +89,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         foreach (var character in from spawnPoint in levelConfig.spawnerConfig.spawnPoints
                  from point in spawnPoint.Value.points
-                 select CreateCharacter(spawnPoint.Key, point))
+                 select CreateCharacter(spawnPoint.Key, point, _currentId))
         {
+            _currentId++;
             HandleTutorialState(character);
         }
     }
 
-    private Character CreateCharacter(CharacterType type, Vector2Int position)
+    private Character CreateCharacter(CharacterType type, Vector2Int position, int iD)
     {
         var character = Instantiate(allCharacter[type], transform).GetComponent<Character>();
-        character.Initialize(MapManager.GetCell(position));
+        character.Initialize(MapManager.GetCell(position), iD);
         Characters.Add(character);
         AddToAppropriateTeamList(character);
         return character;
@@ -753,7 +757,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                         break;
                 }
 
-                character.Initialize(MapManager.GetCell(point));
+                character.Initialize(MapManager.GetCell(point), _currentId);
+                _currentId++;
             }
         }
 
@@ -1007,7 +1012,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             levelData.characterDatas.Add(characterData);
         }
 
-        levelData.saveTime = DateTime.Now;
+        levelData.SaveTime = DateTime.Now;
         levelData.levelType = levelConfig.levelType;
         SaveLoadManager.Instance.OnSave(SaveLoadManager.Instance.levels.Count, levelData);
         CoroutineDispatcher.Invoke(ShowNotification, 0.5f);

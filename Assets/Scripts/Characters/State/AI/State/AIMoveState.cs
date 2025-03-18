@@ -16,8 +16,8 @@ public class AIMoveState : MoveState
             {
                 new()
                 {
-                    EffectType = EffectType.Bleed,
-                    Duration = EffectConfig.DebuffRound,
+                    effectType = EffectType.Bleed,
+                    duration = EffectConfig.DebuffRound,
                 }
             });
         }

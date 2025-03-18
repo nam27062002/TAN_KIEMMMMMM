@@ -1,4 +1,6 @@
-﻿public class ShieldEffect : ChangeStatEffect
-{
-    public int Damage;
+﻿using System;
+[Serializable]
+public class ShieldEffect : ChangeStatEffect
+{ 
+    public int damage;
 }

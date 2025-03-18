@@ -1,6 +1,8 @@
-﻿public class EffectData
+﻿using System;
+[Serializable]
+public class EffectData
 {
-    public EffectType EffectType;
-    public int Duration;
-    public Character Actor;
+    public EffectType effectType;
+    public int duration;
+    public Character actor;
 }

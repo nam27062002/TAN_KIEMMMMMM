@@ -103,12 +103,12 @@ public class CanSat : AICharacter
         {
             case PetType.Dancer:
                 dancer = go.GetComponent<Dancer>();
-                dancer.Initialize(selectedCell);
+                dancer.Initialize(selectedCell, -1);
                 dancer.owner = this;
                 break;
             case PetType.Assassin:
                 assassin = go.GetComponent<Assassin>();
-                assassin.Initialize(selectedCell);
+                assassin.Initialize(selectedCell, -1);
                 assassin.owner = this;
                 break;
         }

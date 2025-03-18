@@ -1,4 +1,6 @@
-﻿public class RollEffectData : EffectData
+﻿using System;
+[Serializable]
+public class RollEffectData : EffectData
 {
-    public RollData RollData;
+    public RollData rollData;
 }

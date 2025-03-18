@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+[Serializable]
 public class ActionPointEffect : EffectData
-{
-    public List<int> ActionPoints;
+{ 
+    public List<int> actionPoints;
 }

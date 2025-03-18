@@ -42,9 +42,9 @@ public class HoacLienHuong_SkillState : SkillState
         {
             effects.Add(new EffectData()
             {
-                EffectType = EffectType.Cover_50_Percent,
-                Duration = EffectConfig.DebuffRound,
-                Actor = coveredBy,
+                effectType = EffectType.Cover_50_Percent,
+                duration = EffectConfig.DebuffRound,
+                actor = coveredBy,
             });
         }
         Debug.Log($"Liên kết với đồng minh gần nhất: {coveredBy.characterConfig.characterName}");
@@ -83,8 +83,8 @@ public class HoacLienHuong_SkillState : SkillState
         {
             new()
             {
-                EffectType = EffectType.DragonArmor,
-                Actor = character,
+                effectType = EffectType.DragonArmor,
+                actor = character,
             }
         });
         
@@ -94,9 +94,9 @@ public class HoacLienHuong_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.SnakeArmor,
+                    effectType = EffectType.SnakeArmor,
    
-                    Actor = Character,
+                    actor = Character,
                 }
             },
             ReceiveFromCharacter = Character
@@ -123,9 +123,9 @@ public class HoacLienHuong_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.Disarm,
-                    Duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    effectType = EffectType.Disarm,
+                    duration = EffectConfig.DebuffRound,
+                    actor = Character
                 }
             },
             ReceiveFromCharacter = Character
@@ -140,9 +140,9 @@ public class HoacLienHuong_SkillState : SkillState
             {
                 new()
                 {
-                    EffectType = EffectType.Cover_100_Percent,
-                    Duration = 1,
-                    Actor = Character,
+                    effectType = EffectType.Cover_100_Percent,
+                    duration = 1,
+                    actor = Character,
                 }
             },
             ReceiveFromCharacter = Character
