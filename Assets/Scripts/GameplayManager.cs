@@ -239,7 +239,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         get
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || USE_DEBUG
             return levelConfigs[(int)levelType];
 #else
             return levelConfigs[SaveLoadManager.currentLevel];
@@ -269,7 +269,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [ShowInInspector] public List<Character> Characters { get; private set; } = new();
 
     public List<Character> charactersInConversation = new();
-    public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? null : Characters[CurrentPlayerIndex];
+    public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? Characters[0] : Characters[CurrentPlayerIndex];
 
     public Character SelectedCharacter { get; set; }
     public Character PreviousSelectedCharacter { get; set; }
@@ -478,7 +478,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         if (SelectedCharacter == null || IsPauseGameInternal) return;
         SetInteract(true);
         Debug.Log($"[{SelectedCharacter.characterConfig.characterName}]: End turn - {message}");
-        if (SelectedCharacter.IsReact)
+        if (SelectedCharacter.IsCounter)
         {
             SelectedCharacter.HandleEndReact();
         }

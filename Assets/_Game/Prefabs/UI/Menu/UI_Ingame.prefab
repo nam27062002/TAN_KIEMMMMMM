@@ -839,9 +839,6 @@ MonoBehaviour:
   - {fileID: 3930719159137987737}
   endTurnButton: {fileID: 3117631404636978253}
   toggle: {fileID: 1386652109905716635}
-  topBarUI: {fileID: 4427903701916063224}
-  characterPool: {fileID: 3901129994464654674}
-  avatarPrefab: {fileID: 2342203677817219276, guid: e4bd8b9035f36c44182dd24b699e5505, type: 3}
   characterIcon: {fileID: 3891118661840701114}
   hpBar: {fileID: 6440070880285171682}
   mpBar: {fileID: 714355571878135652}
@@ -870,6 +867,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPool: {fileID: 3901129994464654674}
   avatarPrefab: {fileID: 2342203677817219276, guid: e4bd8b9035f36c44182dd24b699e5505, type: 3}
+  avatarSpacing: 80
+  focusedScale: 1
+  unfocusedScale: 0.7
 --- !u!1 &3107887611910728574
 GameObject:
   m_ObjectHideFlags: 0

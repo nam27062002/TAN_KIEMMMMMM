@@ -47,7 +47,7 @@ PluginImporter:
       enabled: 1
       settings: {}
     Win64:
-      enabled: 1
+      enabled: 0
       settings: {}
     WindowsStoreApps:
       enabled: 1

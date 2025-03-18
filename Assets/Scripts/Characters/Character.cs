@@ -44,8 +44,9 @@ public abstract class Character : MonoBehaviour
     // public vitual function
     public virtual Type Type => Type.None;
     public virtual bool CanEndTurn => false;
-    public bool IsReact => GetIdleStateParams() != null;
-    
+    public bool IsCounter => GetIdleStateParams() != null;
+
+    public bool CanUseSkill { get; set; } = true;
     // Info
     public int GetMaxHp()
     {
@@ -59,16 +60,16 @@ public abstract class Character : MonoBehaviour
     private void Awake()
     {
         SetStateMachine();
-        GpManager.OnEndTurn += GpManagerOnOnEndTurn;
+        GpManager.OnEndTurn += OnEndTurn;
     }
     
-    private void GpManagerOnOnEndTurn(object sender, EventArgs e)
+    private void OnEndTurn(object sender, EventArgs e)
     {
         if (SkillStateParams is { IdleStateParams: { DamageTakenParams: not null } })
         {
             SkillStateParams.IdleStateParams.DamageTakenParams.OnSetDamageTakenFinished -= OnDamageTakenCounterFinished;
         }
-
+        CanUseSkill = true;
         SkillStateParams = null;
     }
     
@@ -140,11 +141,11 @@ public abstract class Character : MonoBehaviour
         var facing = model.transform.localScale.x == 1f ? FacingType.Right : FacingType.Left;
         if (facing == FacingType.Right)
         {
-            result = cells.FirstOrDefault(p => p.CellPosition == new Vector2Int(Info.Cell.CellPosition.x - 1, Info.Cell.CellPosition.y));
+            result = cells.FirstOrDefault(p => p.CellPosition == new Vector2Int(Info.Cell.CellPosition.x, Info.Cell.CellPosition.y - 1));
         }
         else if (facing == FacingType.Left)
         {
-            result = cells.FirstOrDefault(p => p.CellPosition == new Vector2Int(Info.Cell.CellPosition.x + 1, Info.Cell.CellPosition.y));
+            result = cells.FirstOrDefault(p => p.CellPosition == new Vector2Int(Info.Cell.CellPosition.x, Info.Cell.CellPosition.y + 1));
         }
 
         if (result == null)
@@ -221,6 +222,7 @@ public abstract class Character : MonoBehaviour
     {
         SkillStateParams.IdleStateParams = null;
         SkillStateParams.EndTurnAfterFinish = true;
+        CanUseSkill = false;
         SkillStateParams.DamageTakenParams = DamageTakenParams;
         SetSkill(SkillStateParams);
     }

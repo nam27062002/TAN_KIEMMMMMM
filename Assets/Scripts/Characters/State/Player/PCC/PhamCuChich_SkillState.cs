@@ -121,6 +121,10 @@ public class PhamCuChich_SkillState : SkillState
         
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
+        if (_skillStateParams == null || _skillStateParams.DamageTakenParams == null)
+        {
+            return new DamageTakenParams();
+        }
         return new DamageTakenParams
         {
             Damage = _skillStateParams.DamageTakenParams.Damage,

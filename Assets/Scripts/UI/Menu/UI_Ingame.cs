@@ -150,7 +150,7 @@ public class UI_Ingame : MenuBase
         {
             skillUI[i].SetSkill(characterParams.Skills[i],
                 unlock: !characterParams.Character.Info.IsLockSkill,
-                enoughMana: characterParams.Character.Info.CanCastSkill(characterParams.Skills[i]),
+                enoughMana: characterParams.Character.Info.CanCastSkill(characterParams.Skills[i]) && _characterParams.Character.CanUseSkill,
                 type: characterParams.Character.Type);
         }
 

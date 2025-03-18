@@ -34,8 +34,8 @@ public class AIDamageTakenState : DamageTakenState
 
         if (Info.MustEndTurn)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Có thể counter vì phải kết thúc lượt.");
-            return true;
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - không thể vì phải kết thúc lượt.");
+            return false;
         }
 
         List<CastSkillData> castSkillData = Character.GetValidSkills(target);
@@ -52,7 +52,7 @@ public class AIDamageTakenState : DamageTakenState
         }
 #endif
         _castSkillData = castSkillData[Random.Range(0, castSkillData.Count)];
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - dùng skill{_castSkillData.SkillInfo.name} lên {target.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - dùng skill {_castSkillData.SkillInfo.name} lên {target.characterConfig.characterName}");
 
         return true;
     }
