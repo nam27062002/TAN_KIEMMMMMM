@@ -506,7 +506,6 @@ public abstract class Character : MonoBehaviour
     {
         Destroy(gameObject);
         var index = GpManager.Characters.IndexOf(this);
-        // ((UI_Ingame)UIManager.Instance.CurrentMenu).OnCharacterDeath(index);
         foreach (var item in passiveSkills)
         {
             item.UnregisterEvents();

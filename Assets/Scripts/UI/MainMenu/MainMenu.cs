@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
           exitGameButton.onClick.AddListener(OnExitGameClicked);
           
 #if UNITY_EDITOR
-          startGameButton.onClick.Invoke();
+          //startGameButton.onClick.Invoke();
 #endif
      }
 

@@ -48,6 +48,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void LoadCharacter()
     {
+        foreach (var character in charactersInConversation)
+        {
+            character.DestroyCharacter();
+        }
         LoadCharactersFromConfig();
         ScheduleMainCharacterSetup();
         InitializeGameState();
@@ -239,7 +243,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         get
         {
-#if UNITY_EDITOR || USE_DEBUG
+#if UNITY_EDITOR
             return levelConfigs[(int)levelType];
 #else
             return levelConfigs[SaveLoadManager.currentLevel];

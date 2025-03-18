@@ -15,14 +15,10 @@ public class LoadProcessPopup : PopupBase
     public override void Open(UIBaseParameters parameters = null)
     {
         base.Open(parameters);
-
-        // Cấu hình anchors và pivot cho contentRect
         contentRect.anchorMin = new Vector2(0, 1);
         contentRect.anchorMax = new Vector2(1, 1);
         contentRect.pivot = new Vector2(0.5f, 1f);
         contentRect.anchoredPosition = new Vector2(0, 0);
-
-        // Cấu hình VerticalLayoutGroup
         contentVerticalLayoutGroup.childAlignment = TextAnchor.UpperCenter;
         contentVerticalLayoutGroup.spacing = spacing;
 
@@ -48,7 +44,7 @@ public class LoadProcessPopup : PopupBase
         if (progressions.Count > 0)
         {
             float contentHeight = height * progressions.Count + (progressions.Count - 1) * spacing;
-            contentRect.sizeDelta = new Vector2(0, contentHeight); // Chiều rộng do anchors quản lý
+            contentRect.sizeDelta = new Vector2(0, contentHeight); 
         }
         else
         {
