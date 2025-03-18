@@ -44,7 +44,7 @@ public class HoacLienHuong_SkillState : SkillState
             {
                 effectType = EffectType.Cover_50_Percent,
                 duration = EffectConfig.DebuffRound,
-                actor = coveredBy,
+                Actor = coveredBy,
             });
         }
         Debug.Log($"Liên kết với đồng minh gần nhất: {coveredBy.characterConfig.characterName}");
@@ -84,7 +84,7 @@ public class HoacLienHuong_SkillState : SkillState
             new()
             {
                 effectType = EffectType.DragonArmor,
-                actor = character,
+                Actor = character,
             }
         });
         
@@ -96,7 +96,7 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     effectType = EffectType.SnakeArmor,
    
-                    actor = Character,
+                    Actor = Character,
                 }
             },
             ReceiveFromCharacter = Character
@@ -125,7 +125,7 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     effectType = EffectType.Disarm,
                     duration = EffectConfig.DebuffRound,
-                    actor = Character
+                    Actor = Character
                 }
             },
             ReceiveFromCharacter = Character
@@ -142,7 +142,7 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     effectType = EffectType.Cover_100_Percent,
                     duration = 1,
-                    actor = Character,
+                    Actor = Character,
                 }
             },
             ReceiveFromCharacter = Character

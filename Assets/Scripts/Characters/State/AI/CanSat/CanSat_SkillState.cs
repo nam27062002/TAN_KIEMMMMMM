@@ -16,14 +16,14 @@ public class CanSat_SkillState : AISkillState
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.IncreaseDef,
-                    actor = Character,
+                    Actor = Character,
                     value = 4,
                     duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.IncreaseSpd,
-                    actor = Character,
+                    Actor = Character,
                     value = 6,
                     duration = EffectConfig.MAX_ROUND
                 }
@@ -40,14 +40,14 @@ public class CanSat_SkillState : AISkillState
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.IncreaseDamage,
-                    actor = Character,
+                    Actor = Character,
                     value = 2,
                     duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.ReduceHitChange,
-                    actor = Character,
+                    Actor = Character,
                     value = 6,
                     duration = EffectConfig.MAX_ROUND
                 }
@@ -77,7 +77,7 @@ public class CanSat_SkillState : AISkillState
                 new RollEffectData()
                 {
                     effectType = EffectType.Poison,
-                    actor = Character,
+                    Actor = Character,
                     duration = EffectConfig.DebuffRound,
                     rollData = new RollData(1, 6, 0),
                 }
@@ -105,7 +105,7 @@ public class CanSat_SkillState : AISkillState
                 new()
                 {
                     duration = 2,
-                    actor = Character,
+                    Actor = Character,
                     effectType = EffectType.CanSat_TakeAP,
                 }
             });
@@ -115,7 +115,7 @@ public class CanSat_SkillState : AISkillState
                 new ActionPointEffect()
                 {
                     duration = 2,
-                    actor = Character,
+                    Actor = Character,
                     effectType = EffectType.IncreaseActionPoints,
                     actionPoints = new List<int>(3),
                 }

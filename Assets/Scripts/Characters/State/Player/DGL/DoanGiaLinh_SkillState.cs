@@ -100,12 +100,12 @@ public class DoanGiaLinh_SkillState : SkillState
             {
                 effectType = EffectType.Immobilize,
                 duration = EffectConfig.DebuffRound,
-                actor = Character,
+                Actor = Character,
             },
             new()
             {
                 effectType = EffectType.NightCactus,
-                actor = Character,
+                Actor = Character,
             },
             new RollEffectData()
             {
@@ -117,7 +117,7 @@ public class DoanGiaLinh_SkillState : SkillState
                     rollValue = 4,
                     add = 0,
                 },
-                actor = Character
+                Actor = Character
             }
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
@@ -140,13 +140,13 @@ public class DoanGiaLinh_SkillState : SkillState
             {
                 effectType = EffectType.ReduceMoveRange,
                 duration = 1,
-                actor = Character
+                Actor = Character
             },
             new()
             {
                 effectType = EffectType.Prone,
                 duration =  EffectConfig.DebuffRound,
-                actor = Character
+                Actor = Character
             }
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
@@ -172,7 +172,7 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 effectType = EffectType.RedDahlia,
-                actor = Character
+                Actor = Character
             },
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -198,13 +198,13 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 effectType = EffectType.WhiteLotus,
-                actor = Character
+                Actor = Character
             },
             new()
             {
                 effectType = EffectType.Sleep,
                 duration = EffectConfig.DebuffRound,
-                actor = Character
+                Actor = Character
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -230,18 +230,18 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 effectType = EffectType.Marigold,
-                actor = Character
+                Actor = Character
             },
             new()
             {
                 effectType = EffectType.Sleep,
                 duration = EffectConfig.DebuffRound,
-                actor = Character
+                Actor = Character
             },
             new()
             {
                 effectType = EffectType.Stun,
-                actor = Character,
+                Actor = Character,
                 duration = EffectConfig.DebuffRound,
             }
         };
@@ -273,12 +273,12 @@ public class DoanGiaLinh_SkillState : SkillState
                 effectType = EffectType.ReduceChiDef,
                 value = stack,
                 duration = EffectConfig.DebuffRound,
-                actor = Character
+                Actor = Character
             },
             new()
             {
                 effectType = EffectType.RemoveAllPoisonPowder,
-                actor = Character
+                Actor = Character
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -301,7 +301,7 @@ public class DoanGiaLinh_SkillState : SkillState
                 new()
                 {
                     effectType = EffectType.RemoveAllPoisonPowder,
-                    actor = Character
+                    Actor = Character
                 }
             },
             ReceiveFromCharacter = Character
@@ -319,12 +319,12 @@ public class DoanGiaLinh_SkillState : SkillState
                 new()
                 {
                     effectType = EffectType.RemoveAllPoisonPowder,
-                    actor = Character
+                    Actor = Character
                 },
                 new RollEffectData()
                 {
                     effectType = EffectType.LifeSteal,
-                    actor = Character,
+                    Actor = Character,
                     duration = EffectConfig.BuffRound,
                     rollData = new RollData(1,6,0),
                 }

@@ -20,8 +20,13 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
         {
             if (File.Exists(savePath))
             {
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.Auto, 
+                };
                 string json = File.ReadAllText(savePath);
-                levels = JsonConvert.DeserializeObject<List<LevelData>>(json);
+                levels = JsonConvert.DeserializeObject<List<LevelData>>(json, settings);
             }
             else
             {
@@ -62,7 +67,12 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
         }
         try
         {
-            string json = JsonConvert.SerializeObject(levels);
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.Auto, 
+            };
+            string json = JsonConvert.SerializeObject(levels, settings);
             File.WriteAllText(savePath, json);
         }
         catch (Exception e)
@@ -121,4 +131,11 @@ public class CharacterData
     public Vector2Int points;
     public int currentHp;
     public int currentMp;
+    public IEffectInfo effectInfo;
+}
+
+[Serializable]
+public class IEffectInfo
+{
+    public List<IEffectData> effects = new List<IEffectData>();
 }

@@ -1,8 +1,9 @@
 ﻿using System;
 [Serializable]
-public class EffectData
+public class EffectData : IEffectData
 {
     public EffectType effectType;
     public int duration;
-    public Character actor;
+    [NonSerialized] public Character Actor;
+    public int characterId;
 }

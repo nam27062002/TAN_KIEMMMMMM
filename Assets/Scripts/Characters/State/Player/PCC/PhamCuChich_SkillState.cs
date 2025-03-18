@@ -20,7 +20,7 @@ public class PhamCuChich_SkillState : SkillState
                 duration = EffectConfig.BuffRound,
                 value = realShield,
                 damage = realShield,
-                actor = Character
+                Actor = Character
             }
         };
         Info.ApplyEffects(effect);
@@ -44,7 +44,7 @@ public class PhamCuChich_SkillState : SkillState
                 duration = EffectConfig.BuffRound,
                 value = shield,
                 damage = 0,
-                actor = Character
+                Actor = Character
             }
         };
         Info.ApplyEffects(effect);
@@ -67,7 +67,7 @@ public class PhamCuChich_SkillState : SkillState
                     duration = EffectConfig.BuffRound,
                     value = _skillStateParams.DamageTakenParams.Damage,
                     damage = _skillStateParams.DamageTakenParams.Damage,
-                    actor = Character
+                    Actor = Character
                 }
             }
         };
@@ -81,7 +81,7 @@ public class PhamCuChich_SkillState : SkillState
             {
                 effectType = EffectType.Taunt,
                 duration = EffectConfig.DebuffRound,
-                actor = Character
+                Actor = Character
             }
         };
 
@@ -91,7 +91,7 @@ public class PhamCuChich_SkillState : SkillState
             {
                 effectType = EffectType.ReduceAP,
                 duration = EffectConfig.DebuffRound,
-                actor = Character,
+                Actor = Character,
                 value = 1
             });
         }
@@ -111,7 +111,7 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.Shield,
                     duration = EffectConfig.BuffRound,
-                    actor = Character, 
+                    Actor = Character, 
                     damage = 5,
                     value = 5
                 }
@@ -134,12 +134,12 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.Taunt,
                     duration = EffectConfig.DebuffRound,
-                    actor = Character
+                    Actor = Character
                 },
                 new()
                 {
                     effectType = EffectType.Silence,
-                    actor = Character
+                    Actor = Character
                 }
             }
         };
@@ -168,7 +168,7 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.Fear,
                     duration = EffectConfig.DebuffRound,
-                    actor = Character
+                    Actor = Character
                 }
             }
         };
@@ -182,7 +182,7 @@ public class PhamCuChich_SkillState : SkillState
             {
                 effectType = EffectType.ReduceStat_PhamCuChich_Skill3,
                 value = 0,
-                actor = character
+                Actor = character
             }
         });
         return new DamageTakenParams
@@ -194,7 +194,7 @@ public class PhamCuChich_SkillState : SkillState
                     effectType = EffectType.Cover_PhamCuChich_Skill3,
                     duration = 2,
                     value = 1,
-                    actor = Character,
+                    Actor = Character,
                 }
             }
         };
@@ -216,7 +216,7 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.BlockProjectile,
                     duration = 3,
-                    actor = Character,
+                    Actor = Character,
                     targetCell = Info.Cell
                 }
             }

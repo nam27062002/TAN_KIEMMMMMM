@@ -25,10 +25,10 @@
             var dragon = Info.DragonArmorEffectData;
             if (dragon != null)
             {
-                if (dragon.actor != null)
+                if (dragon.Actor != null)
                 {
                     value = Utils.RoundNumber(value * 1f / 2f);
-                    dragon.actor.HandleMpChanged(value);
+                    dragon.Actor.HandleMpChanged(value);
                 }
             }
 

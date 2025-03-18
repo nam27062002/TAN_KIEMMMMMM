@@ -13,29 +13,38 @@ MonoBehaviour:
   m_Name: Level_Level2
   m_EditorClassIdentifier: 
   canSkipStartConversation: 1
-  levelName: "M\xE0n 2"
+  levelName: "M\xE0n 1"
   cameraSize: 7
   levelType: 2
   spawnerConfig:
     spawnPoints:
-      m_keys: 030000000200000004000000
+      m_keys: 000000000100000002000000040000000300000008000000
       m_values:
       - points:
         - {x: 9, y: 3}
       - points:
-        - {x: 11, y: 5}
-        - {x: 10, y: 3}
-        - {x: 8, y: 8}
+        - {x: 7, y: 3}
+      - points:
+        - {x: 2, y: 6}
+        - {x: 1, y: 6}
       - points:
         - {x: 4, y: 1}
+      - points:
+        - {x: 6, y: 0}
+      - points:
+        - {x: 5, y: 19}
   specialSpawnerConfig:
     spawnPoints:
-      m_keys: 
-      m_values: []
+      m_keys: 05000000
+      m_values:
+      - points:
+        - {x: 5, y: 21}
   mapPrefab: {fileID: 3131663139777621407, guid: 228d832ae6503fa4eae20aafe0fb662f, type: 3}
-  startConversations: []
-  winConversations: []
+  startConversations:
+  - {fileID: 11400000, guid: b4d194ea6aa231347a92eb4249e9b97a, type: 2}
+  winConversations:
+  - {fileID: 11400000, guid: 560e6d913fd0b4441a1edf3e090ec14b, type: 2}
   nextLevel: {fileID: 0}
   delayIncrement: 0.005
-  special1Conversation: {fileID: 0}
-  special2Conversation: {fileID: 0}
+  special1Conversation: {fileID: 11400000, guid: 771f98c16f8a20840902101d3b7d7dd4, type: 2}
+  special2Conversation: {fileID: 11400000, guid: 418bfb0e70dd32b43afc1871913ef8ec, type: 2}

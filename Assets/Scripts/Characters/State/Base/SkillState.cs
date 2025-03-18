@@ -191,7 +191,7 @@ public class SkillState : CharacterState
             return roll1.HitChangeValue > roll2.HitChangeValue ? roll1 : roll2;
         }
 
-        if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Fear && p.actor == character))
+        if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Fear && p.Actor == character))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{Character.characterConfig.characterName} có hiệu ứng BẤT LỢI");
             var roll1 = Info.HitChangeParams;
@@ -265,7 +265,7 @@ public class SkillState : CharacterState
                         {
                             effectType = EffectType.Sleep,
                             duration = EffectConfig.DebuffRound,
-                            actor = Character
+                            Actor = Character
                         });
                     var damageParams = GetDamageParams(target);
                     Character.Info.HandleDamageTaken(-damageParams.Damage, target);

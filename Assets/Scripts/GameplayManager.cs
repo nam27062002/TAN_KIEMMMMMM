@@ -31,11 +31,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         CurrentRound = 0;
         IsPauseGameInternal = false;
         cam.orthographicSize = levelConfig.cameraSize;
-        foreach (var character in charactersInConversation)
-        {
-            character.DestroyCharacter();
-        }
-
         charactersInConversation.Clear();
         Characters.Clear();
         Players.Clear();
@@ -1000,14 +995,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         LevelData levelData = new LevelData();
         if (Characters == null) return;
-        foreach (var item in Characters)
+        foreach (var character in Characters)
         {
+            
             CharacterData characterData = new CharacterData
             {
-                characterType = item.characterType,
-                points = item.Info.Cell.CellPosition,
-                currentHp = item.Info.CurrentHp,
-                currentMp = item.Info.CurrentMp
+                characterType = character.characterType,
+                points = character.Info.Cell.CellPosition,
+                currentHp = character.Info.CurrentHp,
+                currentMp = character.Info.CurrentMp,
+                iD = character.CharacterId,
+                effectInfo = GetEffects(character),
             };
             levelData.characterDatas.Add(characterData);
         }
@@ -1016,8 +1014,28 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         levelData.levelType = levelConfig.levelType;
         SaveLoadManager.Instance.OnSave(SaveLoadManager.Instance.levels.Count, levelData);
         CoroutineDispatcher.Invoke(ShowNotification, 0.5f);
-    }
 
+        return;
+        
+        IEffectInfo GetEffects(Character character)
+        {
+            var result = new List<IEffectData>();
+            foreach (var item in character.Info.EffectInfo.Effects)
+            {
+                item.characterId = character.CharacterId;
+                if (item is BlockProjectile blockProjectile)
+                {
+                    blockProjectile.position = blockProjectile.targetCell.CellPosition;
+                }
+                result.Add(item);
+            }
+            return new IEffectInfo()
+            {
+                effects = result,
+            };
+        }
+    }
+    
     public void ShowNotification()
     {
         UIManager.Instance.OpenPopup(PopupType.Splash);

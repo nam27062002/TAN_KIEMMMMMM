@@ -96,6 +96,7 @@ public abstract class Character : MonoBehaviour
         ChangeState(ECharacterState.Idle);
         SetPassiveSkills();
         StartCoroutine(HandleSpecialAction());
+        AlkawaDebug.Log(ELogCategory.EDITOR, $"Initialize: {characterConfig.characterName} - {iD}");
     }
 
     public virtual void SetMainCharacter()
@@ -303,10 +304,10 @@ public abstract class Character : MonoBehaviour
         var dragon = Info.DragonArmorEffectData;
         if (dragon != null)
         {
-            if (dragon.actor != null)
+            if (dragon.Actor != null)
             {
                 value = Utils.RoundNumber(value * 1f / 2f);
-                dragon.actor.HandleMpChanged(value);
+                dragon.Actor.HandleMpChanged(value);
             }
             else
             {
@@ -501,7 +502,7 @@ public abstract class Character : MonoBehaviour
         var coverEffect = Info.CoverEffectData;
         if (coverEffect == null) return;
         linkCharacter.ClearLine();
-        linkCharacter.SetLine(coverEffect.actor.transform.position, transform.position);
+        linkCharacter.SetLine(coverEffect.Actor.transform.position, transform.position);
     }
 
     public virtual void DestroyCharacter()

@@ -164,7 +164,7 @@ public class CharacterInfo
         var rollData = Roll.RollDice(2, 4, 0);
         if (damage > rollData)
         {
-            dragonArmor.actor.Info.RemoveAllEffect(EffectType.SnakeArmor);
+            dragonArmor.Actor.Info.RemoveAllEffect(EffectType.SnakeArmor);
             RemoveAllEffect(EffectType.DragonArmor);
             AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => vỡ khiên");
         }
@@ -181,7 +181,7 @@ public class CharacterInfo
         var fullCover = CoverFullDamageEffectData;
         if (fullCover != null)
         {
-            fullCover.actor.OnDamageTaken(new DamageTakenParams()
+            fullCover.Actor.OnDamageTaken(new DamageTakenParams()
             {
                 CanDodge = false,
                 Damage = -damage,
@@ -200,7 +200,7 @@ public class CharacterInfo
         }
 
         damage = Utils.RoundNumber(damage * 1f / 2);
-        coverEffect.actor.OnDamageTaken(new DamageTakenParams()
+        coverEffect.Actor.OnDamageTaken(new DamageTakenParams()
         {
             CanDodge = false,
             Damage = -damage,
@@ -393,7 +393,7 @@ public class CharacterInfo
             switch (effect.effectType)
             {
                 case EffectType.Cover_PhamCuChich_Skill3:
-                    effect.actor.Info.RemoveEffect(EffectType.ReduceStat_PhamCuChich_Skill3, Character);
+                    effect.Actor.Info.RemoveEffect(EffectType.ReduceStat_PhamCuChich_Skill3, Character);
                     break;
                 case EffectType.BlockProjectile:
                     if (effect is BlockProjectile projectile)
@@ -646,7 +646,7 @@ public class CharacterInfo
                     {
                         var rollData = poisonEffectData.rollData;
                         var damage = Roll.RollDice(rollData);
-                        HandleDamageTaken(-damage, poisonEffectData.actor);
+                        HandleDamageTaken(-damage, poisonEffectData.Actor);
                         Debug.Log(
                             $"[{Character.characterConfig.characterName}] - {item.effectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
                     }
@@ -733,7 +733,7 @@ public class CharacterInfo
         EffectInfo.Effects.RemoveAll(p => p.effectType == EffectType.BloodSealEffect);
         var hpDecreased = Character.GetMaxHp() - CurrentHp;
         var damage = Utils.RoundNumber(hpDecreased * 1f / 10);
-        if (CurrentHp > 0) HandleDamageTaken(-damage, effectData.actor);
+        if (CurrentHp > 0) HandleDamageTaken(-damage, effectData.Actor);
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
     }
@@ -784,7 +784,7 @@ public class CharacterInfo
         for (int i = EffectInfo.Effects.Count - 1; i >= 0; i--)
         {
             var item = EffectInfo.Effects[i];
-            if (item.effectType != effectType || item.actor != actor) continue;
+            if (item.effectType != effectType || item.Actor != actor) continue;
             EffectInfo.Effects.RemoveAt(i);
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Removed effect: {effectType}");
@@ -873,7 +873,7 @@ public class CharacterInfo
         if (effect is not BleedEffect bleedEffect) return;
         var damage = Utils.RoundNumber(moveRange * 1f / bleedEffect.move);
         AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {moveRange}/3 = {damage} lên {Character.characterConfig.characterName}");
-        HandleDamageTaken(-damage, effect.actor);
+        HandleDamageTaken(-damage, effect.Actor);
     }
     
     public void TryApplyBleedEffectAP(int ap)
@@ -882,7 +882,7 @@ public class CharacterInfo
         if (effect is not BleedEffect bleedEffect) return;
         var damage = ap * 2;
         AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {ap} * 2 = {damage} lên {Character.characterConfig.characterName}");
-        HandleDamageTaken(-damage, effect.actor);
+        HandleDamageTaken(-damage, effect.Actor);
     }
     #endregion
 

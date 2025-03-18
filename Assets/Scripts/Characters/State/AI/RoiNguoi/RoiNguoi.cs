@@ -39,7 +39,7 @@ public class RoiNguoi : AICharacter
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.IncreaseDef,
-                    actor = this,
+                    Actor = this,
                     value = 1,
                     duration = EffectConfig.MAX_ROUND
                 },
@@ -53,7 +53,7 @@ public class RoiNguoi : AICharacter
                         new ChangeStatEffect()
                         {
                             effectType = EffectType.IncreaseDamage,
-                            actor = this,
+                            Actor = this,
                             value = 2,
                             duration = EffectConfig.MAX_ROUND
                         },
