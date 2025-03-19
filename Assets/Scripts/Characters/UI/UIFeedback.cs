@@ -45,6 +45,7 @@ public class UIFeedback : MonoBehaviour
         }
 
         _effectUIs.Clear();
+        if (character.Info.EffectInfo == null) return; 
         foreach (var item in character.Info.EffectInfo.Effects)
         {
             var go = Instantiate(effectUI.gameObject, effectsPanel);

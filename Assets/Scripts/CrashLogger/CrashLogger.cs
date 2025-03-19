@@ -1,3 +1,4 @@
+#if !UNITY_EDITOR
 using System;
 using System.Net.Http;
 using System.Text;
@@ -196,3 +197,4 @@ namespace Alkawa.Core
         }
     }
 }
+#endif

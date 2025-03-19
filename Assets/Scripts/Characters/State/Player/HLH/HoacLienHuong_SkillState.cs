@@ -132,8 +132,14 @@ public class HoacLienHuong_SkillState : SkillState
         };   
     }
     
-    protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character _)
+    protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
     {
+        var walkAbleCells = GpManager.MapManager.GetAllHexagonInRange(character.Info.Cell, 1);
+        foreach (var item in walkAbleCells.Where(item => item.CellType == CellType.Walkable))
+        {
+            TeleportToCell(item);
+            break;
+        }
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>()
@@ -179,12 +185,6 @@ public class HoacLienHuong_SkillState : SkillState
     //===================== SKILL 3 =====================
     protected override void SetTargetCharacters_Skill3_TeammateTurn()
     {
-        var walkAbleCells = GpManager.MapManager.GetAllHexagonInRange(GpManager.MainCharacter.Info.Cell, 1);
-        foreach (var item in walkAbleCells.Where(item => item.CellType == CellType.Walkable))
-        {
-            TeleportToCell(item);
-            break;
-        }
         AddTargetCharacters(GpManager.MainCharacter);
     }
     

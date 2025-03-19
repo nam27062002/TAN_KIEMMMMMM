@@ -101,16 +101,15 @@ public class CharacterInfo
     private bool HasStunEffect => EffectInfo.Effects.Any(p => p.effectType == EffectType.Stun);
     public bool MustEndTurn => HasSleepEffect || HasStunEffect;
 
-    public EffectData CoverEffectData =>
-        EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.Cover_50_Percent);
+    public EffectData CoverEffectData => EffectInfo?.Effects.FirstOrDefault(p => p.effectType == EffectType.Cover_50_Percent);
 
     public EffectData CoverFullDamageEffectData =>
-        EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.Cover_100_Percent);
+        EffectInfo?.Effects.FirstOrDefault(p => p.effectType == EffectType.Cover_100_Percent);
 
     public EffectData DragonArmorEffectData =>
-        EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.DragonArmor);
+        EffectInfo?.Effects.FirstOrDefault(p => p.effectType == EffectType.DragonArmor);
 
-    public ShieldEffect ShieldEffectData => (ShieldEffect)EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.Shield);
+    public ShieldEffect ShieldEffectData => (ShieldEffect)EffectInfo?.Effects.FirstOrDefault(p => p.effectType == EffectType.Shield);
 
     // Action
     public event EventHandler<int> OnHpChanged;
