@@ -78,6 +78,34 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             var character = CreateCharacter(characterData.characterType, characterData.points, characterData.iD);
             ApplySavedCharacterState(character, characterData);
         }
+
+        foreach (var characterData in levelData.characterDatas)
+        {
+            var character = GetCharacterByID(characterData.iD);
+            if (character != null)
+            {
+                var effects = characterData.effectInfo.effects;
+                foreach (var effect in effects)
+                {
+                    effect.Actor = character;
+                    if (effect is BlockProjectile blockProjectile)
+                    {
+                        blockProjectile.targetCell = MapManager.Cells[blockProjectile.position];
+                    }
+                    
+                    character.Info.ApplyEffect(effect);
+                }
+            }
+            else
+            {
+                Debug.LogError($"không tìm thấy character có id = {characterData.iD}");
+            }
+        }
+    }
+
+    private Character GetCharacterByID(int id)
+    {
+        return Characters.FirstOrDefault(p => p.CharacterId == id);
     }
 
     private void LoadFromSpawnPoints()
@@ -1019,7 +1047,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         
         IEffectInfo GetEffects(Character character)
         {
-            var result = new List<IEffectData>();
+            var result = new List<EffectData>();
             foreach (var item in character.Info.EffectInfo.Effects)
             {
                 item.characterId = character.CharacterId;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
+[Serializable]
 public class CharacterInfo
 {
     public CharacterInfo(SkillConfig skillConfig, CharacterAttributes characterAttributes, Character character)
@@ -92,7 +94,7 @@ public class CharacterInfo
 
     // Buff & Debuff
     private readonly Dictionary<EffectType, Action<EffectData>> _effectHandlers;
-    public EffectInfo EffectInfo { get; } = new();
+    [ShowInInspector] public EffectInfo EffectInfo { get; } = new();
 
     public bool IsLockSkill => EffectInfo.Effects.Any(effect => effect.effectType == EffectType.BlockSkill);
     private bool HasSleepEffect => EffectInfo.Effects.Any(p => p.effectType == EffectType.Sleep);

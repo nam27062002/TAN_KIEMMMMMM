@@ -3379,7 +3379,7 @@ MonoBehaviour:
   skillScrollObject: {fileID: 4954087412915048663}
   verticalLayoutGroup: {fileID: 2023699926942480056}
   container: {fileID: 4032302624983109020}
-  skillInfoPrefab: {fileID: 4596031878926302704, guid: b6afef525f1255b42a4ea7e2a65d50f7, type: 3}
+  skillInfoPrefab: {fileID: 4596031878926302704, guid: 162cc2ef5e8af0a49a6ab1be3e07deba, type: 3}
   skillInfoHeight: 306
   space: 10
   skillScrollRect: {fileID: 5943518628918490707}

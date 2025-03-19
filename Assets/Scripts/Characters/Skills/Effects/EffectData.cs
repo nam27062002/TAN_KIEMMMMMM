@@ -1,6 +1,9 @@
 ﻿using System;
+using Newtonsoft.Json;
+
+[JsonObject(ItemTypeNameHandling = TypeNameHandling.Auto)]
 [Serializable]
-public class EffectData : IEffectData
+public class EffectData
 {
     public EffectType effectType;
     public int duration;

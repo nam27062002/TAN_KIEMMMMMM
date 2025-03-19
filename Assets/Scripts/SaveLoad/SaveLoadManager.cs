@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 
 public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
 {
@@ -137,5 +138,5 @@ public class CharacterData
 [Serializable]
 public class IEffectInfo
 {
-    public List<IEffectData> effects = new List<IEffectData>();
+    [ShowInInspector] public List<EffectData> effects = new List<EffectData>();
 }

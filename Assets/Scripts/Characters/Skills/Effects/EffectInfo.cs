@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
+[Serializable]
 public class EffectInfo
 {
-    public List<EffectData> Effects { get; } = new();
+    [ShowInInspector] public List<EffectData> Effects { get; set; } = new();
 
     public static readonly HashSet<EffectType> TriggerAtStart = new()
     {
