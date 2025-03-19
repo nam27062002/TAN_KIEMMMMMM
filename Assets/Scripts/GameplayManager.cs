@@ -309,7 +309,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public int CurrentRound { get; private set; }
     public int CurrentPlayerIndex { get; private set; }
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
-    private bool _canInteract;
+    public bool CanInteract { get; set; }
     public LevelConfig LevelConfig => levelConfig;
     public bool IsPauseGameInternal = false;
     public bool IsReplay;
@@ -487,7 +487,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void OnCellClicked(Cell cell)
     {
-        if (!_canInteract) return;
+        if (!CanInteract) return;
         switch (cell.CellType)
         {
             case CellType.Character:
@@ -597,7 +597,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void SetInteract(bool active)
     {
-        _canInteract = active;
+        CanInteract = active;
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"Set Interact: {active}");
     }
 
@@ -1023,9 +1023,19 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         LevelData levelData = new LevelData();
         if (Characters == null) return;
-        foreach (var character in Characters)
+        var chars = new List<Character>();
+        for (int i = CurrentPlayerIndex; i < Characters.Count; i++)
         {
-            
+            chars.Add(Characters[i]);
+        }
+
+        for (int i = 0; i < CurrentPlayerIndex; i++)
+        {
+            chars.Add(Characters[i]);
+        }
+        
+        foreach (var character in chars)
+        {
             CharacterData characterData = new CharacterData
             {
                 characterType = character.characterType,

@@ -58,7 +58,8 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return !GameplayManager.Instance.IsTutorialLevel &&
                _isEnoughMana &&
                !_isLocked &&
-               _type == Type.Player;
+               _type == Type.Player &&
+               GameplayManager.Instance.CanInteract;
     }
     
     public void SetSkill(SkillInfo skillInfo, bool unlock, bool enoughMana, Type type)
