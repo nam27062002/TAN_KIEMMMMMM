@@ -329,6 +329,8 @@ public abstract class Character : MonoBehaviour
         HandleCastSkill(targets, null, skillTurnType, dontNeedActionPoints: dontNeedActionPoints);
     }
 
+    public HashSet<Cell> NonDirectionalCells = new HashSet<Cell>();
+    
     public void HandleSelectSkill(int skillIndex, Skill_UI skillUI)
     {
         HideMoveRange();
@@ -342,6 +344,11 @@ public abstract class Character : MonoBehaviour
         }
         else
         {
+            NonDirectionalCells = MapManager.GetAllHexagonInRange(Info.Cell, Info.SkillInfo.range);
+            foreach (var cell in NonDirectionalCells)
+            {
+                cell.ShowSkillRange();
+            }
             HandleCastSkill();
             skillUI.highlightable.Unhighlight();
         }
@@ -518,6 +525,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void HandleDeath()
     {
+        Debug.Log($"HandleDeath: {characterConfig.characterName}");
         GpManager.HandleCharacterDeath(this, out var callback);
         OnDeath?.Invoke(this, this);
         callback?.Invoke();

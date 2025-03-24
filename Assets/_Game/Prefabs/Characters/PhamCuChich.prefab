@@ -391,7 +391,7 @@ MonoBehaviour:
       name: "Kim H\xE0 T\u1EA1i"
       skillIndex: 3
       mpCost: 4
-      range: 1
+      range: 4
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
@@ -403,6 +403,8 @@ MonoBehaviour:
         Qu\xE2n \u0111\u1ECBch ti\u1EBFn v\xE0o ph\u1EA1m vi chi\u1EBFn tr\u01B0\u1EDDng
         s\u1EBD nh\u1EADn hi\u1EC7u \u1EE9ng ch\u1EA3y m\xE1u "
   passiveSkills: []
+  Info:
+    RoundIndex: 0
   lastDamageTakenCountered: 0
   CurrentShield: {fileID: 0}
 --- !u!1 &6907775959439712675 stripped

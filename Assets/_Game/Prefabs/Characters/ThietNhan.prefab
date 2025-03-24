@@ -430,6 +430,8 @@ MonoBehaviour:
         c\xF3 t\u1EC9 l\u1EC7 g\xE2y m\xF9 l\xF2a (apply debuff 30, 31). Version
         2 k apply \u0111\u01B0\u1EE3c status h\xF3a Thi\u1EBFt Nh\xE2n c\u1EE7a skill"
   passiveSkills: []
+  Info:
+    RoundIndex: 0
   lastDamageTakenCountered: 0
 --- !u!1 &1274149462394461964 stripped
 GameObject:

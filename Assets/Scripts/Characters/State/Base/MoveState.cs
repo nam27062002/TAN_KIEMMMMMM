@@ -25,6 +25,10 @@ public class MoveState : CharacterState
         var moveAmount = stateParams.MoveCells.Count - 1;
         Character.Info.MoveAmount += moveAmount;
         Character.Info.HandleMoveAmountChanged(moveAmount);
+        if (Character.IsMainCharacter)
+        {
+            GpManager.SetMainCell(null);
+        }
         var moveSequence = DOTween.Sequence();
         float currentX = Transform.position.x;
         foreach (var cell in stateParams.MoveCells)
@@ -41,6 +45,10 @@ public class MoveState : CharacterState
         moveSequence.OnComplete(() =>
         {
             OnReachToTarget(Character.Info.Cell, stateParams.MoveCells[^1]);
+            if (Character.IsMainCharacter)
+            {
+                GpManager.SetMainCell(Character.Info.Cell);
+            }
         });
         
     }

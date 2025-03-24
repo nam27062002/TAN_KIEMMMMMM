@@ -9,7 +9,7 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
 {
     public List<LevelData> levels = new List<LevelData>();
     private string savePath;
-    public static int currentLevel = 0;
+    private static int currentLevel = 0;
     private const string CURRENT_LEVEL_KEY = "CurrentLevel";
     private const string FINISHED_TUTORIAL_KEY = "FinishedTutorial";
     private const int DEFAULT_LEVEL = 0;

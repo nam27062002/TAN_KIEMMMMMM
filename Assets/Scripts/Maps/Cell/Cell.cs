@@ -15,7 +15,8 @@ public class Cell : MonoBehaviour
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer withinMoveRangeSprite;
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer shieldSprite;
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer shieldImpactSprite;
-
+    [TabGroup("Sprites"), SerializeField] public SpriteRenderer mainCharacterSprite;
+    
     [TabGroup("Shield")] public Sprite shield_100_sprite;
     [TabGroup("Shield")] public Type shieldType;
     [TabGroup("Shield")] public Sprite shield_40_sprite;
@@ -24,7 +25,7 @@ public class Cell : MonoBehaviour
     [TabGroup("Shield")] public HpBar hpBar;
     [TabGroup("Shield"), ReadOnly] public Cell mainShieldCell;
     public Cell mainBlockProjectile;
-
+    
     public CellType CellType
     {
         get => cellType;
@@ -34,6 +35,18 @@ public class Cell : MonoBehaviour
     private void Start()
     {
         shieldSprite.gameObject.SetActiveIfNeeded(false);
+        GameplayManager.Instance.OnSetMainCharacter += InstanceOnOnSetMainCharacter;
+    }
+
+    private void OnDestroy()
+    {
+        if (GameplayManager.HasInstance)
+            GameplayManager.Instance.OnSetMainCharacter -= InstanceOnOnSetMainCharacter;
+    }
+
+    private void InstanceOnOnSetMainCharacter(object sender, Cell e)
+    {
+        mainCharacterSprite.enabled = e == this;
     }
 
     public Vector2Int CellPosition

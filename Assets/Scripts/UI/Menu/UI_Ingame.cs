@@ -150,7 +150,7 @@ public class UI_Ingame : MenuBase
         }
 
         var skills = characterParams.Skills[characterParams.skillTurnType];
-        for (var i = 0; i < characterParams.Skills.Count; i++)
+        for (var i = 0; i < skills.Count; i++)
         {
             skillUI[i].SetSkill(skills[i],
                 unlock: !characterParams.Character.Info.IsLockSkill,
@@ -177,7 +177,7 @@ public class UI_Ingame : MenuBase
     {
         UpdateEffect();
         SetLevelName();
-        skipButton.gameObject.SetActiveIfNeeded(GameplayManager.IsTutorialLevel && SaveLoadManager.Instance.IsFinishedTutorial);
+        skipButton.gameObject.SetActiveIfNeeded(GameplayManager.LevelConfig.levelType == LevelType.Tutorial && SaveLoadManager.Instance.IsFinishedTutorial);
     }
 
     private void UpdateEffect()
@@ -249,9 +249,9 @@ public class UI_Ingame : MenuBase
 
     private void OnSkipButtonClicked()
     {
+        TutorialManager.Instance?.DestroyCharacters();
         DOTween.KillAll();
-        TutorialManager.Instance.DestroyCharacters();
-        GameplayManager.Instance.NextLevel();
+        GameplayManager.Instance?.NextLevel();
     }
 
     private void SetLevelName()

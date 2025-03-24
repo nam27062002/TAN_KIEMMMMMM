@@ -16,7 +16,7 @@
         {
             if (Character == GpManager.MainCharacter)
             {
-                GameplayManager.Instance.HandleEndTurn("Đã dùng xong skill");   
+                GameplayManager.Instance.HandleEndTurn(1f, "Đã dùng xong skill");   
             }
             else
             {

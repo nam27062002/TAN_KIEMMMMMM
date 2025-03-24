@@ -38,6 +38,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SelectedCharacter = null;
         PreviousSelectedCharacter = null;
         _currentId = 0;
+        _process = false;
     }
 
     #endregion
@@ -169,7 +170,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             HandleEndTurn(0.3f, "Chết trong lượt chính");
         }
-        else if (SelectedCharacter == character && character.Type != MainCharacter.Type)
+        else if (SelectedCharacter == character && character.Type != MainCharacter.Type && character.Type == Type.AI)
         {
             Debug.Log($"[{character.characterConfig.characterName}] chết trong lượt counter => quay về lượt hiện tại");
             if (PreviousSelectedCharacter != null)
@@ -264,7 +265,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [Title("Scriptable Objects")] [SerializeField]
     private List<LevelConfig> levelConfigs;
 
-    public LevelType levelType;
+    [SerializeField] private LevelType levelType;
 
     private LevelConfig levelConfig
     {
@@ -293,7 +294,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler OnNewRound;
     public event EventHandler OnEndTurn;
     public event EventHandler OnRetry;
-
+    public event EventHandler<Cell> OnSetMainCharacter; 
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
     [ShowInInspector] public readonly List<Character> Players = new();
@@ -336,6 +337,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             UIManager.Instance.OpenPopup(PopupType.Credit);
         }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            DOTween.KillAll();
+            OnWin();
+        }
     }
 
     #region Main
@@ -354,7 +360,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         if (GameManager.Instance.saveIndex == -1) return;
         _hasOverrideLevelConfig = true;
         var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
-        SaveLoadManager.currentLevel = (int)levelData.levelType;
+        // SaveLoadManager.currentLevel = (int)levelData.levelType;
         IsReplay = true;
     }
 
@@ -455,10 +461,18 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             else
             {
                 MainCharacter.SetMainCharacter();
+                if (MainCharacter != null)
+                    OnSetMainCharacter?.Invoke(this, MainCharacter.Info.Cell);
                 SetSelectedCharacter(MainCharacter);
                 GameManager.Instance.OnMainCharacterChanged?.Invoke();
             }
         }
+        UpdateCharacterInfo();
+    }
+
+    public void SetMainCell(Cell cell)
+    {
+        OnSetMainCharacter?.Invoke(this, cell);
     }
 
     public void SetSelectedCharacter(Character character, IdleStateParams idleParams = null)
@@ -483,6 +497,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             DamageTakenParams = damageTakenParams,
         });
+        UpdateCharacterInfo();
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetCharacterReact: {character.characterConfig.characterName}");
     }
 
@@ -500,7 +515,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
-    private void HandleEndTurn(float delay, string message)
+    public void HandleEndTurn(float delay, string message)
     {
         CoroutineDispatcher.Invoke(() => HandleEndTurn(message), delay);
     }
@@ -628,7 +643,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void NextLevel()
     {
         IsTutorialLevel = false;
-        SaveLoadManager.currentLevel++;
+        // SaveLoadManager.currentLevel++;
         levelType++;
         SaveLoadManager.Instance.IsFinishedTutorial = true;
         DestroyGameplay();
@@ -889,7 +904,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void OnWin()
     {
         InitializeWinSequence(Players);
-        StartCoroutine(WaitForCharactersExitCamera(Players, ProceedToNextLevel));
+        if (!_process) StartCoroutine(WaitForCharactersExitCamera(Players, ProceedToNextLevel));
     }
 
     private Sequence _winSequence;
@@ -987,14 +1002,19 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _winSequence = null;
     }
 
+    private bool _process = false;
+    
     public void ProceedToNextLevel()
     {
+        if (_process) return;
         if (levelConfig.levelType == LevelType.Tutorial)
             NextLevel();
         else if (levelConfig.levelType == LevelType.Level1)
         {
             ShowAfterCredit();
         }
+
+        _process = true;
     }
 
     private void ShowAfterCredit()

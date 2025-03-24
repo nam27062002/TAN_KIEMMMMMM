@@ -30,6 +30,9 @@
         {
             base.SetSpeed();
         }
+#if UNITY_EDITOR
+        Info.Speed = 2000;
+#endif
     }       
     
 }

@@ -230,7 +230,7 @@ MonoBehaviour:
       name: "Hi\u1EC3u Nh\u1EADt Quang L\xE2m"
       skillIndex: 2
       mpCost: 5
-      range: 0
+      range: 3
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
