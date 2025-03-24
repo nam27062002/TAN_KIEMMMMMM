@@ -270,11 +270,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         get
         {
-#if UNITY_EDITOR
             return levelConfigs[(int)levelType];
-#else
-            return levelConfigs[SaveLoadManager.currentLevel];
-#endif
+// #if UNITY_EDITOR
+//             return levelConfigs[(int)levelType];
+// #else
+//             return levelConfigs[SaveLoadManager.currentLevel];
+// #endif
         }
     }
 
@@ -608,16 +609,28 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void DestroyGameplay()
     {
+        if (UIManager.Instance.CurrentPopup is ConversationPopup conversationPopup)
+        {
+            conversationPopup.OnSkipButtonClicked();
+        }
+        foreach (var character in charactersInConversation)
+        {
+            character.DestroyCharacter();
+        }
+        charactersInConversation.Clear();
         ((UI_Ingame)UIManager.Instance.CurrentMenu).HideAllUI();
         DestroyAllCharacters();
-        MapManager.DestroyMap();
+        MapManager?.DestroyMap();
         StartNewGame();
         OnRetry?.Invoke(this, EventArgs.Empty);
     }
 
     public void NextLevel()
     {
+        IsTutorialLevel = false;
         SaveLoadManager.currentLevel++;
+        levelType++;
+        SaveLoadManager.Instance.IsFinishedTutorial = true;
         DestroyGameplay();
     }
 
@@ -974,7 +987,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _winSequence = null;
     }
 
-    private void ProceedToNextLevel()
+    public void ProceedToNextLevel()
     {
         if (levelConfig.levelType == LevelType.Tutorial)
             NextLevel();

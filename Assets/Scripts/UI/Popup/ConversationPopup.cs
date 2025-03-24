@@ -251,7 +251,7 @@ public class ConversationPopup : PopupBase
         DisplayCurrentDialogue();
     }
 
-    private void OnSkipButtonClicked()
+    public void OnSkipButtonClicked()
     {
         ForceFinishAll();
         EndConversation();

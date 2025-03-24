@@ -24,7 +24,7 @@ public class UI_Ingame : MenuBase
     [SerializeField] private TextMeshProUGUI levelName;
     [SerializeField] private TextMeshProUGUI characterFocusName;
     [SerializeField] private TextMeshProUGUI roundIndex;
-
+    
     [Title("Skill"), Space] [SerializeField]
     private List<Skill_UI> skillUI = new();
 
@@ -40,7 +40,8 @@ public class UI_Ingame : MenuBase
 
     [Title("Buttons"), Space] [SerializeField]
     private Button settingsButton;
-
+    [SerializeField] private Button skipButton;
+    
     [Title("Objects"), Space] [SerializeField]
     private SerializableDictionary<UIInGameObjectType, GameObject> objects;
 
@@ -68,6 +69,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnNewRound += GameplayManagerOnOnNewRound;
         endTurnButton.button.onClick.AddListener(OnEndTurnButtonClicked);
         settingsButton.onClick.AddListener(OnSettingsClick);
+        skipButton.onClick.AddListener(OnSkipButtonClicked);
         toggle.onValueChanged.AddListener(OnToggleValueChanged);
     }
 
@@ -79,6 +81,7 @@ public class UI_Ingame : MenuBase
         GameplayManager.OnNewRound -= GameplayManagerOnOnNewRound;
         endTurnButton.button.onClick.RemoveListener(OnEndTurnButtonClicked);
         settingsButton.onClick.RemoveListener(OnSettingsClick);
+        skipButton.onClick.RemoveListener(OnSkipButtonClicked);
         toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
     }
 
@@ -174,6 +177,7 @@ public class UI_Ingame : MenuBase
     {
         UpdateEffect();
         SetLevelName();
+        skipButton.gameObject.SetActiveIfNeeded(GameplayManager.IsTutorialLevel && SaveLoadManager.Instance.IsFinishedTutorial);
     }
 
     private void UpdateEffect()
@@ -241,6 +245,13 @@ public class UI_Ingame : MenuBase
     private void SetRound()
     {
         roundIndex.text = $"Vòng " + GameplayManager.Instance.CurrentRound;
+    }
+
+    private void OnSkipButtonClicked()
+    {
+        DOTween.KillAll();
+        TutorialManager.Instance.DestroyCharacters();
+        GameplayManager.Instance.NextLevel();
     }
 
     private void SetLevelName()

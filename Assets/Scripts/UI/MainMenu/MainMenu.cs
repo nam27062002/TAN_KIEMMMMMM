@@ -45,7 +45,7 @@ public class MainMenu : MonoBehaviour
 
      private void OnSettingGameClicked()
      {
-          
+         
      }
 
      private void OnExitGameClicked()

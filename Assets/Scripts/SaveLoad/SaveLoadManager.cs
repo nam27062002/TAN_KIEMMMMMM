@@ -11,6 +11,7 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
     private string savePath;
     public static int currentLevel = 0;
     private const string CURRENT_LEVEL_KEY = "CurrentLevel";
+    private const string FINISHED_TUTORIAL_KEY = "FinishedTutorial";
     private const int DEFAULT_LEVEL = 0;
 
     protected override void Awake()
@@ -93,6 +94,16 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
         return levels[index];
     }
 
+    public bool IsFinishedTutorial
+    {
+        get => PlayerPrefs.GetInt(FINISHED_TUTORIAL_KEY, 0) == 1;
+        set
+        {
+            PlayerPrefs.SetInt(FINISHED_TUTORIAL_KEY, value ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+    }
+
     public static void LoadLevel()
     {
         currentLevel = PlayerPrefs.HasKey(CURRENT_LEVEL_KEY) ? PlayerPrefs.GetInt(CURRENT_LEVEL_KEY) : DEFAULT_LEVEL;
@@ -108,6 +119,12 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
     {
         PlayerPrefs.SetInt(CURRENT_LEVEL_KEY, currentLevel);
         PlayerPrefs.Save();
+    }
+
+    [Button("Finish Tutorial")]
+    private void SetFinishTutorial()
+    {
+        IsFinishedTutorial = true;
     }
     
     [Button("Clear All Data")]
