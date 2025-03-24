@@ -62,6 +62,7 @@ public abstract class CharacterState : IState
 
     public void SetCharacterPosition()
     {
+        if (Character == null || Info.IsDie) return;
         var pos = Info.Cell.transform.position;
         pos.y += Character.characterConfig.characterHeight / 2f;
         Transform.position = pos;
@@ -69,6 +70,7 @@ public abstract class CharacterState : IState
 
     public void SetIdle()
     {
+        if (Character == null || Info.IsDie) return;
         PlayAnim(AnimationParameterNameType.Idle);
         SetCharacterPosition();
         SetFacing();

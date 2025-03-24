@@ -685,7 +685,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         return new ShowInfoCharacterParameters
         {
             Character = SelectedCharacter,
-            Skills = SelectedCharacter.GetSkillInfos(GetSkillTurnType(SelectedCharacter))
+            Skills = SelectedCharacter.skillConfig.SkillConfigs,
+            skillTurnType = GetSkillTurnType(SelectedCharacter),
         };
     }
 
@@ -701,7 +702,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         var showInfoParams = new ShowInfoCharacterParameters()
         {
             Character = character,
-            Skills = character.GetSkillInfos(GetSkillTurnType(character)),
+            Skills = character.skillConfig.SkillConfigs,
+            skillTurnType = GetSkillTurnType(character),
         };
         UIManager.Instance.OpenPopup(PopupType.ShowInfo, showInfoParams);
     }

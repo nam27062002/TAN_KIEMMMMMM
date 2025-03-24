@@ -146,11 +146,12 @@ public class UI_Ingame : MenuBase
             skill.gameObject.SetActive(false);
         }
 
+        var skills = characterParams.Skills[characterParams.skillTurnType];
         for (var i = 0; i < characterParams.Skills.Count; i++)
         {
-            skillUI[i].SetSkill(characterParams.Skills[i],
+            skillUI[i].SetSkill(skills[i],
                 unlock: !characterParams.Character.Info.IsLockSkill,
-                enoughMana: characterParams.Character.Info.CanCastSkill(characterParams.Skills[i]) && _characterParams.Character.CanUseSkill,
+                enoughMana: characterParams.Character.Info.CanCastSkill(skills[i]) && _characterParams.Character.CanUseSkill,
                 type: characterParams.Character.Type);
         }
 

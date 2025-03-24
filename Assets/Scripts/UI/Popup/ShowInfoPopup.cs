@@ -85,7 +85,7 @@ public class ShowInfoPopup : PopupBase
         skillPanelImage.enabled = scrollType == ScrollType.Skill;
         storyPanelImage.enabled = scrollType == ScrollType.Story; 
         skillTitleName.color = scrollType == ScrollType.Skill ? Color.black : Color.white;
-        storyTitleName.color = scrollType == ScrollType.Story ? Color.black : Color.white; // Sửa lỗi logic
+        storyTitleName.color = scrollType == ScrollType.Story ? Color.black : Color.white; 
     }
 
     private void SetupAvatar(CharacterConfig config)
@@ -130,17 +130,19 @@ public class ShowInfoPopup : PopupBase
         {
             Destroy(child.gameObject);
         }
-        var skills = _showInfoCharacterParameters.Skills;
+        var skills = _showInfoCharacterParameters.Skills[_showInfoCharacterParameters.skillTurnType];
         int skillCount = skills.Count - 1;
         float newHeight = skillInfoHeight * skillCount + space * (skillCount - 1);
         container.sizeDelta = new Vector2(container.sizeDelta.x, newHeight);
         verticalLayoutGroup.spacing = space;
-        foreach (var skill in skills)
+        var count = 1;
+        for (int i = 0; i < skills.Count; i++)
         {
-            if (skill.skillIndex == 0) continue;
+            if (skills[i].skillIndex == 0) {continue;}
             var go = Instantiate(skillInfoPrefab.gameObject, container);
             var skillInfoUI = go.GetComponent<SkillInfo_UI>();
-            skillInfoUI.Setup(skill);
+            skillInfoUI.Setup(_showInfoCharacterParameters.Skills,count, (int)_showInfoCharacterParameters.skillTurnType);
+            count++;
         }
     }
 

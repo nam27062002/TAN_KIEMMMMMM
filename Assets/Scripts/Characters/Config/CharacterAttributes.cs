@@ -21,5 +21,5 @@ public class CharacterAttributes
     public bool overrideMaxMoveRange;
     [ShowIf("@overrideMaxMoveRange")] public int maxMoveRangeOverride;
     public bool overrideMaxHp;
-    [ShowIf("@overrideMaxMoveRange")] public int maxHpOverride;
+    [ShowIf("@overrideMaxHp")] public int maxHpOverride;
 }

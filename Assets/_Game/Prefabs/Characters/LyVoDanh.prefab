@@ -340,6 +340,8 @@ MonoBehaviour:
   passiveSkills:
   - {fileID: 1068771806723808600}
   - {fileID: 2363098181572934608}
+  Info:
+    RoundIndex: 0
   lastDamageTakenCountered: 0
 --- !u!114 &1068771806723808600
 MonoBehaviour:

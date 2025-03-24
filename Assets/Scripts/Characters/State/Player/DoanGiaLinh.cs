@@ -20,9 +20,6 @@
         {
             base.SetSpeed();
         }
-#if UNITY_EDITOR
-        Info.Speed = 100;
-#endif
     }
 
     public int GetVenomousParasite()

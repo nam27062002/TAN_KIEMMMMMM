@@ -498,6 +498,7 @@ public abstract class Character : MonoBehaviour
     
     private void DrawLink()
     {
+        if (this == null || Info.IsDie) return;
         if (Info == null) return;
         var coverEffect = Info.CoverEffectData;
         if (coverEffect == null) return;

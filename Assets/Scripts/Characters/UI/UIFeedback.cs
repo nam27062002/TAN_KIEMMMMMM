@@ -38,6 +38,7 @@ public class UIFeedback : MonoBehaviour
 
     private void UpdateEffect()
     {
+        if (character == null) return;
         if (character.Info == null) return;
         foreach (var item in _effectUIs)
         {

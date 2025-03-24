@@ -109,10 +109,17 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
         PlayerPrefs.SetInt(CURRENT_LEVEL_KEY, currentLevel);
         PlayerPrefs.Save();
     }
-
+    
+    [Button("Clear All Data")]
     public void ClearAll()
     {
         PlayerPrefs.DeleteAll();
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
+        levels.Clear();
+        currentLevel = DEFAULT_LEVEL;
     }
 }
 
