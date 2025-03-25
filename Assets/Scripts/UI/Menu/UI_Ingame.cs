@@ -249,7 +249,16 @@ public class UI_Ingame : MenuBase
 
     private void OnSkipButtonClicked()
     {
-        TutorialManager.Instance?.DestroyCharacters();
+        if (UIManager.Instance.CurrentPopup is ConversationPopup conversationPopup)
+        {
+            conversationPopup.OnSkipButtonClicked();
+        }
+
+        if (TutorialManager.HasInstance)
+        {
+            TutorialManager.Instance?.DestroyCharacters();
+            TutorialManager.Instance?.DestroyTutorial();
+        }
         DOTween.KillAll();
         GameplayManager.Instance?.NextLevel();
     }

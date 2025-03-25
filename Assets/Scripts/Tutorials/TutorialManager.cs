@@ -137,6 +137,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     private void SetFacing()
     {
+        if (charactersDict == null || charactersDict.Count == 0) return;
         charactersDict[CharacterType.LyVoDanh].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.DoanGiaLinh].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
         charactersDict[CharacterType.ThietNhan].AnimationData.PlayAnimation(AnimationParameterNameType.Idle);
@@ -163,6 +164,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
             DOTween.Kill(kvp.Value.transform);
             kvp.Value.DestroyCharacter();
         }
+        charactersDict.Clear();
     }
 
     private void ShowSecondConversation()
@@ -209,9 +211,14 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
         });
         yield return new WaitForSeconds(4f);
 
+        GameplayManager.Instance.SetMainCharacter();
+        DestroyTutorial();
+    }
+
+    public void DestroyTutorial()
+    {
         UIManager.Instance.TryClosePopup(PopupType.Message);
         GameplayManager.Instance.IsTutorialLevel = false;
-        GameplayManager.Instance.SetMainCharacter();
         ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();
         Destroy(gameObject);
     }

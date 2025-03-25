@@ -624,10 +624,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void DestroyGameplay()
     {
-        if (UIManager.Instance.CurrentPopup is ConversationPopup conversationPopup)
-        {
-            conversationPopup.OnSkipButtonClicked();
-        }
         foreach (var character in charactersInConversation)
         {
             character.DestroyCharacter();

@@ -515,6 +515,7 @@ public abstract class Character : MonoBehaviour
 
     public virtual void DestroyCharacter()
     {
+        if (gameObject == null) return;
         Destroy(gameObject);
         var index = GpManager.Characters.IndexOf(this);
         foreach (var item in passiveSkills)
