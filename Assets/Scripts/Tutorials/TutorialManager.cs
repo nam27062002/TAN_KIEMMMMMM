@@ -217,6 +217,7 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
     public void DestroyTutorial()
     {
+        GameplayManager.Instance.OnLoadCharacterFinished -= OnLoadCharacterFinished;
         UIManager.Instance.TryClosePopup(PopupType.Message);
         GameplayManager.Instance.IsTutorialLevel = false;
         ((UI_Ingame)UIManager.Instance.CurrentMenu).ShowAllUI();

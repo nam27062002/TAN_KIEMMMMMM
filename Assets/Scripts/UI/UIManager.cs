@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,12 +16,17 @@ public class UIManager : SingletonMonoBehavior<UIManager>
     [SerializeField] public Sprite defaultIcon;
     public UIBase CurrentMenu { get; set; }
     public UIBase CurrentPopup { get; set; }
+
+    public GameObject notificationGameObject;
+    public TextMeshProUGUI notificationText;
     
     protected override void Awake()
     {
         base.Awake();
         SetActiveAllMenus(false);
         SetActiveAllPopups(false);
+        notificationGameObject.SetActiveIfNeeded(false);
+        notificationText.text = "";
 #if UNITY_EDITOR
         cheat.SetActiveIfNeeded(false);
 #else
@@ -47,6 +54,20 @@ public class UIManager : SingletonMonoBehavior<UIManager>
         {
             cheat.SetActiveIfNeeded(!cheat.activeSelf);
         }
+    }
+
+    public void ShowNotification(string text, float duration)
+    {
+        notificationGameObject.SetActiveIfNeeded(true);
+        notificationText.text = text;
+        CoroutineDispatcher.RunCoroutine(ShowNotificationCoroutine(duration));
+    }
+
+    private IEnumerator ShowNotificationCoroutine(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        notificationGameObject.SetActiveIfNeeded(false);
+        notificationText.text = "";
     }
 
     #region Main Function

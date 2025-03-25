@@ -478,6 +478,11 @@ public abstract class Character : MonoBehaviour
         {
             item.ShowSkillRange();
         }
+
+        if (Info.SkillRange.Count == 0)
+        {
+            UIManager.Instance.ShowNotification("Không có mục tiêu nào trong tầm", 2f);
+        }
     }
     
     private void HideSkillRange()

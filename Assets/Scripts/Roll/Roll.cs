@@ -36,8 +36,12 @@ public class Roll
         if (_characterInfo.Character.GetSkillTurnType() == SkillTurnType.EnemyTurn)
         {
             effectResistance += 5;
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} + 5 = {effectResistance}");
         }
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} + 5 = {effectResistance}");
+        else
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} = {effectResistance}");
+        }
         return effectResistance;
     }
 
