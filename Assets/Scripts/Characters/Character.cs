@@ -565,6 +565,7 @@ public abstract class Character : MonoBehaviour
         Info.Cell = cell;
         var pos = Info.Cell.transform.position;
         pos.y += characterConfig.characterHeight / 2f;
+        pos.z = pos.y;
         transform.position = pos;
         UpdateFacing();
     }

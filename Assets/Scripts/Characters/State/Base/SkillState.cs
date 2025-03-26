@@ -563,6 +563,7 @@ public class SkillState : CharacterState
         SetFacing(Info.Cell.transform.position.x > cell.transform.position.x ? FacingType.Left : FacingType.Right);
         var targetPos = cell.transform.position;
         targetPos.y += Character.characterConfig.characterHeight / 2f;
+        targetPos.z = targetPos.y;
         Character.UnRegisterCell();
         var moveSequence = DOTween.Sequence();
         moveSequence.Append(Transform.DOMove(targetPos, time).SetEase(Ease.Linear));

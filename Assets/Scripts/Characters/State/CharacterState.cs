@@ -64,7 +64,9 @@ public abstract class CharacterState : IState
     {
         if (Character == null || Info.IsDie) return;
         var pos = Info.Cell.transform.position;
+        pos.z = pos.y;
         pos.y += Character.characterConfig.characterHeight / 2f;
+        pos.z = pos.y;
         Transform.position = pos;
     }
 

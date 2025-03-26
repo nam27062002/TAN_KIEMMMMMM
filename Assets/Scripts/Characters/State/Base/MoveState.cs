@@ -35,6 +35,7 @@ public class MoveState : CharacterState
         {
             var targetPos = cell.transform.position;
             targetPos.y += Character.characterConfig.characterHeight / 2f;
+            targetPos.z = targetPos.y;
             PlayAnim(AnimationParameterNameType.MoveLeft);
             PlayAnim(cell.transform.position.x > currentX ? AnimationParameterNameType.MoveRight :
                 AnimationParameterNameType.MoveLeft);

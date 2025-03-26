@@ -1276,7 +1276,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 844bfcde8a69da446847997362a62f85, type: 2}
   - {fileID: 11400000, guid: 4da27f3501b6b0340b294d80e8bd28d0, type: 2}
   - {fileID: 11400000, guid: 177e7fe33ea1977408a78caf30d90c07, type: 2}
-  levelType: 0
+  levelType: 2
   allCharacter:
     m_keys: 00000000010000000200000003000000040000000500000008000000
     m_values:
@@ -1289,6 +1289,7 @@ MonoBehaviour:
     - {fileID: 2529861749566756791, guid: 6e35315aa9c3b1642bb9c41154cd5ba5, type: 3}
   tutorialPrefab: {fileID: 702396812}
   cam: {fileID: 1395371489}
+  mapPrefab: {fileID: 0}
   charactersInConversation: []
   IsPauseGameInternal: 0
   IsReplay: 0
