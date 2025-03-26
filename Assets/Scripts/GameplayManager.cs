@@ -302,10 +302,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     [ShowInInspector] public List<Character> Characters { get; private set; } = new();
 
     public List<Character> charactersInConversation = new();
-    public Character MainCharacter => CurrentPlayerIndex >= Characters.Count ? Characters[0] : Characters[CurrentPlayerIndex];
+    [ShowInInspector] public Character MainCharacter { get; set; }
 
-    public Character SelectedCharacter { get; set; }
-    public Character PreviousSelectedCharacter { get; set; }
+    [ShowInInspector] public Character SelectedCharacter { get; set; }
+    [ShowInInspector] public Character PreviousSelectedCharacter { get; set; }
     private Character _focusedCharacter;
 
     public int CurrentRound { get; private set; }
@@ -444,6 +444,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void SetMainCharacter()
     {
         Debug.Log("======================================================================");
+        MainCharacter = CurrentPlayerIndex >= Characters.Count ? Characters[0] : Characters[CurrentPlayerIndex];
         if (TutorialManager.Instance != null
             && CurrentRound == 2
             && MainCharacter == Characters[0]

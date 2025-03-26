@@ -43,6 +43,17 @@ public class DoanGiaLinh_SkillState : SkillState
         int venomousParasite = GetVenomousParasite();
         if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
         {
+            Info.ApplyEffects(new List<EffectData>()
+            {
+                new PoisonousBloodPoolEffect()
+                {
+                    effectType = EffectType.PoisonousBloodPool,
+                    duration = 2,
+                    Actor = Character,
+                    impacts = GpManager.MapManager.GetAllHexagonInRange(target.Info.Cell, 1).ToList(),
+                }
+            });
+            
             int value = Mathf.Min(flower, venomousParasite);
             SetVenomousParasite(flower - value);
             effects.Add(new ChangeStatEffect()

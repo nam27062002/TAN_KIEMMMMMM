@@ -177,7 +177,9 @@ public class UI_Ingame : MenuBase
     {
         UpdateEffect();
         SetLevelName();
-        skipButton.gameObject.SetActiveIfNeeded(GameplayManager.LevelConfig.levelType == LevelType.Tutorial && SaveLoadManager.Instance.IsFinishedTutorial);
+        skipButton.gameObject.SetActiveIfNeeded(GameplayManager.LevelConfig.levelType == LevelType.Tutorial 
+                                                // && SaveLoadManager.Instance.IsFinishedTutorial
+                                                );
     }
 
     private void UpdateEffect()
@@ -260,6 +262,7 @@ public class UI_Ingame : MenuBase
             TutorialManager.Instance?.DestroyTutorial();
         }
         DOTween.KillAll();
+        GameplayManager.MapManager?.DestroyMap();
         GameplayManager.Instance?.NextLevel();
     }
 

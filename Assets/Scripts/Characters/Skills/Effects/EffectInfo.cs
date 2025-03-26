@@ -39,8 +39,8 @@ public class EffectInfo
         EffectType.ReduceHitChange,
         EffectType.CanSat_TakeAP,
         EffectType.LifeSteal,
-        EffectType.Drunk
-        
+        EffectType.Drunk,
+        EffectType.PoisonousBloodPool,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -113,5 +113,6 @@ public enum EffectType
     LifeSteal = 42,
     Prone = 43,
     Fear = 44,
-    Drunk = 45
+    Drunk = 45,
+    PoisonousBloodPool = 46,
 }

@@ -383,6 +383,8 @@ MonoBehaviour:
         v\u1EADt l\xFD m\xE0 b\u1EA3n th\xE2n \u0111\xE1ng l\u1EBD ph\u1EA3i nh\u1EADn. "
   passiveSkills:
   - {fileID: 3033158562719900191}
+  Info:
+    RoundIndex: 0
   lastDamageTakenCountered: 0
   theAllPoisonScript: {fileID: 3033158562719900191}
 --- !u!114 &3033158562719900191

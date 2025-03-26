@@ -12,7 +12,7 @@ public class AIDamageTakenState : DamageTakenState
     protected override bool CanCounter()
     {
         if (!DamageTakenParams.CanCounter) return false;
-        
+        if (GpManager.SelectedCharacter.Type == Type.AI) return false;
         if (Character.lastDamageTakenCountered)
         {
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì đã counter lần trước.");

@@ -84,7 +84,7 @@ public class TopBar_UI : MonoBehaviour
             var avatarRect = _avtSpdUI[index].GetComponent<RectTransform>();
             var targetPos = new Vector2(offset + i * avatarSpacing, fixedY);
             avatarRect.anchoredPosition = targetPos;
-            var isFocused = (index == Gameplay.CurrentPlayerIndex);
+            var isFocused = Gameplay.Characters[index].IsMainCharacter;
             var targetScale = isFocused ? focusedScale : unfocusedScale;
             _avtSpdUI[index].transform.localScale = new Vector3(targetScale, targetScale, 1f);
             _avtSpdUI[index].SetupUI(Gameplay.Characters[index], this);

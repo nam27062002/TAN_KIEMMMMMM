@@ -182,6 +182,10 @@ public class SkillState : CharacterState
 
     private HitChangeParams GetHitChangeParams(Character character)
     {
+#if UNITY_EDITOR
+        if (character is DoanGiaLinh) return new HitChangeParams() { HitChangeValue = 20, IsCritical = false };
+#endif
+        
         if (character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Prone))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");
@@ -199,7 +203,6 @@ public class SkillState : CharacterState
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
             return roll1.HitChangeValue > roll2.HitChangeValue ? roll2 : roll1;
         }
-        
         return Info.HitChangeParams;
     }
 

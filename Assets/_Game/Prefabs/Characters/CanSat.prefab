@@ -219,6 +219,8 @@ MonoBehaviour:
       atkOverride: 0
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
+      overrideMaxHp: 0
+      maxHpOverride: 0
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
@@ -343,6 +345,9 @@ MonoBehaviour:
         t\u1EC9 l\u1EC7 tr\xFAng \u0111\u1ED9c. . M\xE1u \u0111\u1ED9c  l\xE0 debuff
         12. M\xE1u C\xE0n S\xE1t h\u1ED3i = dmg \u0111\u1ED9c "
   passiveSkills: []
+  Info:
+    RoundIndex: 0
+  lastDamageTakenCountered: 0
   dancerPrefab: {fileID: 7333246952435401029, guid: b66becf0d5714cf4199e85604416e8f6, type: 3}
   assassinPrefab: {fileID: 7333246952435401029, guid: a4aca6144b5c1614796279710c2df1a0, type: 3}
   dancer: {fileID: 7333246952435401029, guid: b66becf0d5714cf4199e85604416e8f6, type: 3}

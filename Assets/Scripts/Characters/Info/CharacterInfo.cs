@@ -41,6 +41,7 @@ public class CharacterInfo
             { EffectType.Prone, ApplySimpleEffect },
             { EffectType.Fear, ApplySimpleEffect },
             { EffectType.Drunk, ApplySimpleEffect },
+            { EffectType.PoisonousBloodPool, ApplySimpleEffect},
             
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },

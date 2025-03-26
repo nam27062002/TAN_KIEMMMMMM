@@ -210,6 +210,8 @@ MonoBehaviour:
     movementSkill: []
     combatSkill: []
   passiveSkills: []
+  Info:
+    RoundIndex: 0
   lastDamageTakenCountered: 0
 --- !u!1 &3910181860838020176 stripped
 GameObject:

@@ -16,6 +16,7 @@ public class Cell : MonoBehaviour
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer shieldSprite;
     [TabGroup("Sprites"), SerializeField] private SpriteRenderer shieldImpactSprite;
     [TabGroup("Sprites"), SerializeField] public SpriteRenderer mainCharacterSprite;
+    [TabGroup("Sprites"), SerializeField] public SpriteRenderer poisonousBloodPool;
     
     [TabGroup("Shield")] public Sprite shield_100_sprite;
     [TabGroup("Shield")] public Type shieldType;

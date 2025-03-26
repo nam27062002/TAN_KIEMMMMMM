@@ -185,6 +185,8 @@ MonoBehaviour:
       atkOverride: 0
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
+      overrideMaxHp: 0
+      maxHpOverride: 0
     actionPoints:
       m_keys: 
       m_values: 
@@ -195,6 +197,9 @@ MonoBehaviour:
     movementSkill: []
     combatSkill: []
   passiveSkills: []
+  Info:
+    RoundIndex: 0
+  lastDamageTakenCountered: 0
   owner: {fileID: 0}
 --- !u!1 &8885421628850033908 stripped
 GameObject:
