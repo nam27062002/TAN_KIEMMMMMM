@@ -84,19 +84,7 @@ public class Cell : MonoBehaviour
         if (withinAttackRangeSprite != null) withinAttackRangeSprite.DOKill();
         if (withinMoveRangeSprite != null) withinMoveRangeSprite.DOKill();
         if (shieldImpactSprite != null) shieldImpactSprite.DOKill();
-
-#if UNITY_EDITOR
-        if (!Application.isPlaying)
-        {
-            UnityEditor.Undo.DestroyObjectImmediate(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-#else
-    Destroy(gameObject);
-#endif
+        Destroy(gameObject);
     }
 
     public void SetShield(Type shieldType, int range)

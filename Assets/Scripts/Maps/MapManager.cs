@@ -151,10 +151,11 @@ public class MapManager : MonoBehaviour
     
     public void DestroyMap()
     {
-        foreach (var cell in cells)
+        foreach (var cell in cells.Values.ToList())
         {
-            cell.Value.DestroyCell();
+            cell.DestroyCell();
         }
+        cells.Clear();
         Destroy(gameObject);
     }
 
