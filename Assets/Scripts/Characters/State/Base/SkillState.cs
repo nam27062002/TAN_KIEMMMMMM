@@ -559,6 +559,10 @@ public class SkillState : CharacterState
 
     protected void MoveToCell(Cell cell, float time)
     {
+        if (Character.IsMainCharacter)
+        {
+            GpManager.SetMainCell(null);
+        }
         ReleaseFacing();
         SetFacing(Info.Cell.transform.position.x > cell.transform.position.x ? FacingType.Left : FacingType.Right);
         var targetPos = cell.transform.position;
@@ -571,6 +575,10 @@ public class SkillState : CharacterState
         {
             Character.SetCell(cell);
             Info.Cell.ShowFocus();
+            if (Character.IsMainCharacter)
+            {
+                GpManager.SetMainCell(cell);
+            }
         });
     }
 

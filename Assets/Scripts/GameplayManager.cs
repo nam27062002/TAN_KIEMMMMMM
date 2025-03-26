@@ -855,7 +855,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
         character1.SetPosition();
         character2.SetPosition();
-
+        if (character1.IsMainCharacter)
+        {
+            SetMainCell(character1.Info.Cell);
+        }
+        else if (character2.IsMainCharacter)
+        {
+            SetMainCell(character2.Info.Cell);
+        }
         cell1.HideFocus();
         cell2.ShowFocus();
 

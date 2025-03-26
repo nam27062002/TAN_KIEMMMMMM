@@ -568,6 +568,11 @@ public abstract class Character : MonoBehaviour
         pos.z = pos.y;
         transform.position = pos;
         UpdateFacing();
+
+        if (IsMainCharacter)
+        {
+            GpManager.SetMainCell(cell);
+        }
     }
     
     public virtual int GetSkillActionPoints(SkillTurnType skillTurnType) => characterConfig.actionPoints[skillTurnType];
