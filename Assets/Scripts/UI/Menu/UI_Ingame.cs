@@ -41,7 +41,7 @@ public class UI_Ingame : MenuBase
 
     [Title("Buttons"), Space] [SerializeField]
     private Button settingsButton;
-    [SerializeField] private Button skipButton;
+    [SerializeField] public Button skipButton;
     
     [Title("Objects"), Space] [SerializeField]
     private SerializableDictionary<UIInGameObjectType, GameObject> objects;
@@ -178,7 +178,7 @@ public class UI_Ingame : MenuBase
     {
         UpdateEffect();
         SetLevelName();
-        skipButton.gameObject.SetActiveIfNeeded(GameplayManager.LevelConfig.levelType == LevelType.Tutorial 
+        skipButton.gameObject.SetActiveIfNeeded(GameplayManager.LevelConfig.levelType == LevelType.Tutorial && GameplayManager.CanShowSkipTutorial
                                                 // && SaveLoadManager.Instance.IsFinishedTutorial
                                                 );
     }
@@ -252,11 +252,11 @@ public class UI_Ingame : MenuBase
 
     private void OnSkipButtonClicked()
     {
-        if (UIManager.Instance.CurrentPopup is ConversationPopup conversationPopup)
-        {
-            conversationPopup.OnSkipButtonClicked();
-        }
-
+        // if (UIManager.Instance.CurrentPopup is ConversationPopup conversationPopup)
+        // {
+        //     conversationPopup.OnSkipButtonClicked();
+        // }
+        UIManager.Instance?.CurrentPopup?.Close();
         if (TutorialManager.HasInstance)
         {
             TutorialManager.Instance?.DestroyCharacters();

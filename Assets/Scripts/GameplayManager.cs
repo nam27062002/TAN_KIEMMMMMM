@@ -11,7 +11,7 @@ using UnityEngine;
 public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 {
     #region Fields
-
+    public bool CanShowSkipTutorial { get; set; } = false;
     private readonly Dictionary<Type, List<Cell>> _characterDeath = new()
     {
         { Type.Player, new List<Cell>() },
@@ -210,6 +210,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
         IsPauseGameInternal = true;
         SetInteract(false);
+        CanShowSkipTutorial = false;
+        SetMainCell(null);
         Invoke(nameof(ShowWinConversation), 1f);
     }
 
@@ -1038,6 +1040,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void SetupTutorial()
     {
         IsTutorialLevel = levelConfig.levelType == LevelType.Tutorial;
+        CanShowSkipTutorial = IsTutorialLevel;
         if (IsTutorialLevel)
         {
             tutorialPrefab.SetActive(true);
