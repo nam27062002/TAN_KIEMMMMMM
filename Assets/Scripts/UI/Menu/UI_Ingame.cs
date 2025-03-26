@@ -263,6 +263,7 @@ public class UI_Ingame : MenuBase
         }
         DOTween.KillAll();
         GameplayManager.MapManager?.DestroyMap();
+        if (GameplayManager.mapPrefab != null) Destroy(GameplayManager.mapPrefab);
         GameplayManager.Instance?.NextLevel();
     }
 

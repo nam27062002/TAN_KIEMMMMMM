@@ -297,6 +297,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler<Cell> OnSetMainCharacter; 
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
+    public GameObject mapPrefab;
     [ShowInInspector] public readonly List<Character> Players = new();
     [ShowInInspector] public readonly List<Character> Enemies = new();
     [ShowInInspector] public List<Character> Characters { get; private set; } = new();
@@ -405,8 +406,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public void LoadMapGame()
     {
         SaveLoadManager.Instance.SetCurrentLevel((int)levelConfig.levelType);
-        var go = Instantiate(levelConfig.mapPrefab, transform);
-        MapManager = go.GetComponent<MapManager>();
+        if (mapPrefab != null)
+        {
+            Destroy(mapPrefab);
+        }
+        mapPrefab  = Instantiate(levelConfig.mapPrefab.gameObject, transform);
+        MapManager = mapPrefab.GetComponent<MapManager>();
         MapManager.OnLoadMapFinished += OnLoadMapFinished;
         MapManager.Initialize();
     }
