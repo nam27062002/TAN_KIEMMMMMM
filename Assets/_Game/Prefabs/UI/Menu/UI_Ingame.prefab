@@ -975,6 +975,9 @@ MonoBehaviour:
   - {fileID: 937488029699225676}
   - {fileID: 3930719159137987737}
   endTurnButton: {fileID: 3117631404636978253}
+  endTurnHighlight:
+    highlightType: 1
+    highlightObject: {fileID: 8998614323419974617}
   toggle: {fileID: 1386652109905716635}
   characterIcon: {fileID: 3891118661840701114}
   hpBar: {fileID: 6440070880285171682}

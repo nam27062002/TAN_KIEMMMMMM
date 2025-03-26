@@ -29,6 +29,7 @@ public class UI_Ingame : MenuBase
     private List<Skill_UI> skillUI = new();
 
     [SerializeField] private UI_Button endTurnButton;
+    [SerializeField] private Highlightable endTurnHighlight;
     [SerializeField] private Toggle toggle;
     
     [Title("Avatar"), Space] [SerializeField]
@@ -261,6 +262,12 @@ public class UI_Ingame : MenuBase
             TutorialManager.Instance?.DestroyCharacters();
             TutorialManager.Instance?.DestroyTutorial();
         }
+        foreach (var item in skillUI)
+        {
+            item.highlightable.Unhighlight();
+            item.tutoHighlightable.Unhighlight();
+        }
+        endTurnHighlight.Unhighlight();
         DOTween.KillAll();
         GameplayManager.MapManager?.DestroyMap();
         if (GameplayManager.mapPrefab != null) Destroy(GameplayManager.mapPrefab);

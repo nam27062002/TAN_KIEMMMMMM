@@ -13,6 +13,7 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Button skillButton;
     public GameObject lockObject;
     public Highlightable highlightable;
+    public Highlightable tutoHighlightable;
     private bool _isEnoughMana;
     private bool _isLocked;
     private int _skillIndex;

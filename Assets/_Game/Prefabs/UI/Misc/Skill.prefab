@@ -222,6 +222,9 @@ MonoBehaviour:
   highlightable:
     highlightType: 1
     highlightObject: {fileID: 1154438086967965303}
+  tutoHighlightable:
+    highlightType: 1
+    highlightObject: {fileID: 2249271290548996545}
   showSkillPanel: {fileID: 5795038972125961360}
   skillNameText: {fileID: 2694237826611562499}
   skillDescriptionText: {fileID: 8477322665149088995}
@@ -1114,6 +1117,11 @@ PrefabInstance:
 --- !u!224 &1071399661610498628 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8774169431515737245, guid: 5289c3b2226ad8b48a8fe6949decc6d9, type: 3}
+  m_PrefabInstance: {fileID: 8582309258045052633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2249271290548996545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7506788777167822616, guid: 5289c3b2226ad8b48a8fe6949decc6d9, type: 3}
   m_PrefabInstance: {fileID: 8582309258045052633}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8658200847044454767
