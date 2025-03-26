@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -57,6 +58,7 @@ public class PauseGamePopup : PopupBase
 
     private void OnExitButtonClick()
     {
+        DOTween.KillAll();
         SceneLoader.LoadSceneAsync(ESceneType.MainMenu, LoadSceneMode.Additive);
         SceneLoader.UnloadSceneAsync(ESceneType.Game);
         UIManager.Instance.CloseCurrentMenu();

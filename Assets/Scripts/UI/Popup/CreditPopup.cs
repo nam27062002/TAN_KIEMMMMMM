@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -33,6 +34,7 @@ public class CreditPopup : PopupBase
         StartCoroutine(PlayCreditSequence());
         rectMask2D.enabled = true;
         closeCreditsButton.gameObject.SetActiveIfNeeded(false);
+        panel.SetActive(false);
         closeCreditsButton.onClick.AddListener(OpenPanel);
         replayButton.onClick.AddListener(OnReplayButtonClick);
         quitButton.onClick.AddListener(OnExitButtonClick);
@@ -56,6 +58,7 @@ public class CreditPopup : PopupBase
     
     private void OnExitButtonClick()
     {
+        DOTween.KillAll();
         SceneLoader.LoadSceneAsync(ESceneType.MainMenu, LoadSceneMode.Additive);
         SceneLoader.UnloadSceneAsync(ESceneType.Game);
         UIManager.Instance.CloseCurrentMenu();
