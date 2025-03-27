@@ -29,6 +29,7 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private bool _isHovering;
     private Tween _showTween;
     private Tween _hideTween;
+    private SkillInfo _skillInfo;
 
     private void Awake()
     {
@@ -65,6 +66,7 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     
     public void SetSkill(SkillInfo skillInfo, bool unlock, bool enoughMana, Type type)
     {
+        _skillInfo = skillInfo;
         _isLocked = !unlock;
         _isEnoughMana = enoughMana;
         _skillIndex = (int)skillInfo.skillIndex;
@@ -88,6 +90,10 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (!CanShowInfo) return;
         _isHovering = true;
+        if (!_skillInfo.isDirectionalSkill)
+        {
+            GameplayManager.Instance.SelectedCharacter.ShowSkillTarget(_skillInfo);   
+        }
         DOTween.Sequence()
             .AppendInterval(delayToShowSkill) 
             .AppendCallback(() =>
@@ -104,6 +110,10 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (!CanShowInfo) return;
         _isHovering = false;
         HideSkillPanel();
+        if (!_skillInfo.isDirectionalSkill && GameplayManager.Instance.SelectedCharacter != null && GameplayManager.Instance.SelectedCharacter.Info.SkillInfo != _skillInfo)
+        {
+            GameplayManager.Instance.SelectedCharacter.HideSkillTarget();
+        }
     }
 
     private void ShowSkillPanel()
@@ -112,7 +122,7 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         showSkillPanel.SetActive(true);
         _showTween = showSkillPanel.transform.DOScale(Vector3.one, 0.3f)
             .From(Vector3.zero)
-            .SetEase(Ease.OutBack); 
+            .SetEase(Ease.OutBack);
     }
 
     private void HideSkillPanel()

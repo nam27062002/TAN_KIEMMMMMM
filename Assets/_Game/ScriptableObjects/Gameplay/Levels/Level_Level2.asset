@@ -18,7 +18,7 @@ MonoBehaviour:
   levelType: 2
   spawnerConfig:
     spawnPoints:
-      m_keys: 03000000010000000800000002000000
+      m_keys: 04000000010000000800000002000000
       m_values:
       - points:
         - {x: 9, y: 3}
@@ -35,8 +35,7 @@ MonoBehaviour:
       - points:
         - {x: 5, y: 21}
   mapPrefab: {fileID: 3131663139777621407, guid: 228d832ae6503fa4eae20aafe0fb662f, type: 3}
-  startConversations:
-  - {fileID: 11400000, guid: b4d194ea6aa231347a92eb4249e9b97a, type: 2}
+  startConversations: []
   winConversations:
   - {fileID: 11400000, guid: 560e6d913fd0b4441a1edf3e090ec14b, type: 2}
   nextLevel: {fileID: 0}

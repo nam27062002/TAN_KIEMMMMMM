@@ -1,6 +1,8 @@
-﻿public class PhamCuChich : PlayerCharacter
+﻿using System;
+public class PhamCuChich : PlayerCharacter
 {
     public Cell CurrentShield;
+    private int _damage;
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -10,6 +12,36 @@
             new PhamCuChich_SkillState(this));
     }
     
+    public override void Initialize(Cell cell, int iD)
+    {
+        base.Initialize(cell, iD);
+        Info.OnReduceHp += InfoOnOnReduceHp;
+    }
+
+    public override void HandleDeath()
+    {
+        Info.OnReduceHp -= InfoOnOnReduceHp;
+        base.HandleDeath();
+    }
+    
+    protected override void OnNewRound(object sender, EventArgs e)
+    {
+        if (_damage != 0)
+        {
+            Info.Attributes.atk -= _damage;
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: new round => Reset damage");
+            _damage = 0;
+        }
+    }
+
+    private void InfoOnOnReduceHp(object sender, int damage)
+    {
+        if (Info == null) return;
+        _damage += damage;
+        Info.Attributes.atk += _damage;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: tăng {damage} damage");
+    }
+
     public override void HandleMpChanged(int value)
     {
         if (value == 0) return;

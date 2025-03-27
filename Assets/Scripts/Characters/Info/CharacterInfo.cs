@@ -119,6 +119,7 @@ public class CharacterInfo
     public event EventHandler<float> OnShieldChanged;
     public event EventHandler<int> OnMoveAmount;
     public event EventHandler<int> OnNewRound;
+    public event EventHandler<int> OnReduceHp; 
 
     private SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
@@ -249,6 +250,8 @@ public class CharacterInfo
         }
 
         CurrentHp += hp;
+        if (hp < 0)
+            OnReduceHp?.Invoke(this, -hp);
         if (character != null) 
             character.Info.SetDamageDealtInCurrentRound(-hp);
         CurrentHp = Math.Max(0, CurrentHp);

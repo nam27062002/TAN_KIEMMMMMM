@@ -62,6 +62,7 @@ public abstract class Character : MonoBehaviour
     {
         SetStateMachine();
         GpManager.OnEndTurn += OnEndTurn;
+        GpManager.OnNewRound += OnNewRound;
     }
     
     private void OnEndTurn(object sender, EventArgs e)
@@ -81,7 +82,7 @@ public abstract class Character : MonoBehaviour
 
     protected abstract void SetStateMachine();
 
-    public void Initialize(Cell cell, int iD)
+    public virtual void Initialize(Cell cell, int iD)
     {
         CharacterId = iD;
         Info = new CharacterInfo(skillConfig, characterConfig.characterAttributes, this);
@@ -354,6 +355,25 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    public void ShowSkillTarget(SkillInfo skillInfo)
+    {
+        HideMoveRange();
+        NonDirectionalCells = MapManager.GetAllHexagonInRange(Info.Cell, skillInfo.range);
+        foreach (var cell in NonDirectionalCells)
+        {
+            cell.ShowSkillRange();
+        }
+    }
+
+    public void HideSkillTarget()
+    {
+        foreach (var cell in NonDirectionalCells)
+        {
+            cell.HideSkillRange();
+        }
+        NonDirectionalCells.Clear();
+    }
+
     private void HandleDirectionalSkill()
     {
         ShowSkillRange();
@@ -534,8 +554,14 @@ public abstract class Character : MonoBehaviour
         Debug.Log($"HandleDeath: {characterConfig.characterName}");
         GpManager.HandleCharacterDeath(this, out var callback);
         OnDeath?.Invoke(this, this);
+        GpManager.OnNewRound -= OnNewRound;
         callback?.Invoke();
         Destroy(gameObject);
+    }
+
+    protected virtual void OnNewRound(object sender, EventArgs e)
+    {
+        
     }
     
     public void SetPosition()

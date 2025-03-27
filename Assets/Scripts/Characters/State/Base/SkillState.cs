@@ -368,11 +368,7 @@ public class SkillState : CharacterState
         HandleAfterDamageTakenFinish();
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
-        foreach (var cell in Character.NonDirectionalCells)
-        {
-            cell.HideSkillRange();
-        }
-        Character.NonDirectionalCells.Clear();
+        Character.HideSkillTarget();
         if (_skillStateParams.EndTurnAfterFinish)
         {
             GpManager.SetInteract(false);
