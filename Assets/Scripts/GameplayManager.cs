@@ -274,12 +274,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         get
         {
             return levelConfigs[(int)levelType];
-// #if UNITY_EDITOR
-//             return levelConfigs[(int)levelType];
-// #else
-//             return levelConfigs[SaveLoadManager.currentLevel];
-// #endif
         }
+        set => levelConfigs[(int)levelType] = value;
     }
 
 
@@ -363,7 +359,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         if (GameManager.Instance.saveIndex == -1) return;
         _hasOverrideLevelConfig = true;
         var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
-        // SaveLoadManager.currentLevel = (int)levelData.levelType;
+        levelType = levelData.levelType;
         IsReplay = true;
     }
 
@@ -381,9 +377,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool CanSkipStartConversation()
     {
-#if UNITY_EDITOR
-        return levelConfig.canSkipStartConversation;
-#endif
+// #if UNITY_EDITOR
+//         return levelConfig.canSkipStartConversation;
+// #endif
         if (!IsReplay) return false;
         IsReplay = false;
         return true;

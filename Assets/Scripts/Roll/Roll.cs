@@ -33,7 +33,7 @@ public class Roll
     {
         var rollData = _attributes.effectResistanceRollData; 
         var effectResistance = RollDice(rollData, _characterInfo.GetChiDef() / 4);
-        if (_characterInfo.Character.GetSkillTurnType() == SkillTurnType.EnemyTurn)
+        if (_characterInfo.Character.GetSkillTurnType() == SkillTurnType.EnemyTurn && _characterInfo.Character == GameplayManager.Instance.SelectedCharacter)
         {
             effectResistance += 5;
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} + 5 = {effectResistance}");
