@@ -38,7 +38,7 @@ public class PhamCuChich : PlayerCharacter
     {
         if (Info == null) return;
         _damage += damage;
-        Info.Attributes.atk += _damage;
+        Info.Attributes.atk += damage;
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: tăng {damage} damage");
     }
 
