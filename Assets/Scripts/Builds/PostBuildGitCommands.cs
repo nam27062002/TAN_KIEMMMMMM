@@ -2,6 +2,8 @@
 using UnityEditor;
 using UnityEngine;
 using System.Diagnostics;
+using Debug = UnityEngine.Debug;
+
 public class PostBuildGitCommands : MonoBehaviour
 {
     [MenuItem("Build/Build Web and Push to Git")]
@@ -16,7 +18,7 @@ public class PostBuildGitCommands : MonoBehaviour
             "Assets/_Game/Scenes/MainMenu.unity",
             "Assets/_Game/Scenes/Loading.unity",
         }; 
-        
+        Debug.Log(Application.dataPath);
         buildPlayerOptions.locationPathName = $"{Application.dataPath}/BUILD_WEB";
         buildPlayerOptions.target = BuildTarget.WebGL;
         buildPlayerOptions.options = BuildOptions.None;
