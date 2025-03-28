@@ -12,14 +12,15 @@ public class AVT_SpdUI : MonoBehaviour
     public Sprite main;
     public Sprite enemy;
     public Sprite team;
-
+    public GameObject startObject;
     public GameObject focusObject;
     private Character _character;
     private TopBar_UI _topBar;
     
-    public void SetupUI(Character character, TopBar_UI topBar)
+    public void SetupUI(Character character, TopBar_UI topBar, bool isStartObject)
     {
         _topBar = topBar;
+        startObject.SetActiveIfNeeded(isStartObject);
         if (_character != null)
         {
             _character.OnDeath -= OnDeath;
