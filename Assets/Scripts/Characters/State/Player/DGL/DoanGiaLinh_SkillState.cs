@@ -186,6 +186,12 @@ public class DoanGiaLinh_SkillState : SkillState
                 effectType = EffectType.RedDahlia,
                 Actor = Character
             },
+            new ()
+            {
+                effectType = EffectType.Fear,
+                duration = EffectConfig.DebuffRound,
+                Actor = Character
+            }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams

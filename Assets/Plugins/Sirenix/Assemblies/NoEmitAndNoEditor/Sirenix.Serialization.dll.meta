@@ -51,6 +51,9 @@ PluginImporter:
       enabled: 1
       settings:
         CPU: 
+    WebGL:
+      enabled: 1
+      settings: {}
     Win:
       enabled: 1
       settings:
