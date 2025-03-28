@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using DG.Tweening;
-using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -30,7 +28,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _characterDeath[Type.AI].Clear();
         CurrentRound = 0;
         IsPauseGameInternal = false;
-        cam.orthographicSize = levelConfig.cameraSize;
         charactersInConversation.Clear();
         Characters.Clear();
         Players.Clear();
@@ -269,14 +266,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     [SerializeField] private LevelType levelType;
 
-    private LevelConfig levelConfig
-    {
-        get
-        {
-            return levelConfigs[(int)levelType];
-        }
-        set => levelConfigs[(int)levelType] = value;
-    }
+    private LevelConfig levelConfig => levelConfigs[(int)levelType];
 
 
     [Title("Characters")] [SerializeField]
@@ -322,7 +312,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         base.Awake();
         UIManager.Instance.OpenMenu(MenuType.InGame);
-        SetupTutorial();
     }
 
     private void Start()
@@ -349,6 +338,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         ClearAllData();
         TryLoadFromSaveGame();
+        cam.orthographicSize = levelConfig.cameraSize;
+        SetupTutorial();
         if (!IsTutorialLevel)
             ShowStartConversation();
     }

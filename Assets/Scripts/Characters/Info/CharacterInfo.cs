@@ -632,11 +632,10 @@ public class CharacterInfo
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"{item.effectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
 #if !ALWAY_APPLY_EFFECT
-            if (effectCleanse >= baseEffectCleanse) continue;
+            if (effectCleanse < baseEffectCleanse) continue;
             EffectInfo.Effects.Remove(item);
 #endif
-            AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {item.effectType}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {item.effectType}");
         }
     }
 

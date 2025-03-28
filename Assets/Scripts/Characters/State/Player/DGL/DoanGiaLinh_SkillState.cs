@@ -314,6 +314,13 @@ public class DoanGiaLinh_SkillState : SkillState
                 {
                     effectType = EffectType.RemoveAllPoisonPowder,
                     Actor = Character
+                },
+                new RollEffectData()
+                {
+                    effectType = EffectType.LifeSteal,
+                    Actor = Character,
+                    duration = EffectConfig.BuffRound,
+                    rollData = new RollData(1,6,0),
                 }
             },
             ReceiveFromCharacter = Character
@@ -333,13 +340,6 @@ public class DoanGiaLinh_SkillState : SkillState
                     effectType = EffectType.RemoveAllPoisonPowder,
                     Actor = Character
                 },
-                new RollEffectData()
-                {
-                    effectType = EffectType.LifeSteal,
-                    Actor = Character,
-                    duration = EffectConfig.BuffRound,
-                    rollData = new RollData(1,6,0),
-                }
             },
             ReceiveFromCharacter = Character
         };
