@@ -6,7 +6,7 @@
         StateMachine = new CharacterStateMachine(this,
             new IdleState(this),
             new MoveState(this),
-            new PlayerDamageTakenState(this),
+            new DoanGiaLinh_DamageTaken(this),
             new DoanGiaLinh_SkillState(this));
     }
     

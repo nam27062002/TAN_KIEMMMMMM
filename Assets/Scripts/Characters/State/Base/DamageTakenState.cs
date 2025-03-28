@@ -42,12 +42,22 @@
         if (DamageTakenParams.ReceiveFromCharacter != null &&
             DamageTakenParams.ReceiveFromCharacter.Type == Character.Type)
         {
-            PlayAnim(AnimationParameterNameType.Buff, SetDamageTakenFinished); 
+            HandleBuff();
         }
         else
         {
-            PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
+            HandleDamage();
         }
+    }
+
+    protected virtual void HandleBuff()
+    {
+        PlayAnim(AnimationParameterNameType.Buff, SetDamageTakenFinished); 
+    }
+
+    protected virtual void HandleDamage()
+    {
+        PlayAnim(AnimationParameterNameType.OnDamageTaken, SetDamageTakenFinished); 
     }
     
     protected virtual void SetDamageTakenFinished()

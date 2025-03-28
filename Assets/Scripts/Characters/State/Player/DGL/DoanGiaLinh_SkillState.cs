@@ -51,6 +51,7 @@ public class DoanGiaLinh_SkillState : SkillState
                     duration = 2,
                     Actor = Character,
                     impacts = GpManager.MapManager.GetAllHexagonInRange(target.Info.Cell, 1).ToList(),
+                    effects = effects,
                 }
             });
             

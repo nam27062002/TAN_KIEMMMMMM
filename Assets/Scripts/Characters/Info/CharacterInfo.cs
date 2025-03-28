@@ -41,7 +41,6 @@ public class CharacterInfo
             { EffectType.Prone, ApplySimpleEffect },
             { EffectType.Fear, ApplySimpleEffect },
             { EffectType.Drunk, ApplySimpleEffect },
-            { EffectType.PoisonousBloodPool, ApplySimpleEffect},
             
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -63,7 +62,8 @@ public class CharacterInfo
             { EffectType.PoisonPowder, ApplyPoisonPowder },
             { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
             { EffectType.VenomousParasite, ApplyVenomousParasite },
-            { EffectType.Shield, ApplyShieldEffect }
+            { EffectType.Shield, ApplyShieldEffect },
+            { EffectType.PoisonousBloodPool, ApplyPoisonousBloodPool},
         };
 
         GameplayManager.Instance.OnEndTurn += OnEndTurn;
@@ -393,8 +393,7 @@ public class CharacterInfo
         {
             effect.duration--;
             if (effect.duration != 0) continue;
-            AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
             switch (effect.effectType)
             {
                 case EffectType.Cover_PhamCuChich_Skill3:
@@ -405,6 +404,9 @@ public class CharacterInfo
                     {
                         projectile.targetCell.UnSetMainProjectile();
                     }
+                    break;
+                case EffectType.PoisonousBloodPool:
+                    RemovePoisonousBloodPool(effect);
                     break;
             }
             EffectInfo.Effects.Remove(effect);
@@ -854,6 +856,29 @@ public class CharacterInfo
             Debug.Log($"Nhận lượng shield = {changeStatEffect} | lương shield hiện tại = {ShieldEffectData.value}");
             Debug.Log($"damage khi nổ shield = {ShieldEffectData.damage}");
             HandleShieldChange(Character);
+        }
+    }
+
+    private void ApplyPoisonousBloodPool(EffectData effectData)
+    {
+        ApplySimpleEffect(effectData);
+        if (effectData is PoisonousBloodPoolEffect poisonousBloodPoolEffect)
+        {
+            foreach (var cell in poisonousBloodPoolEffect.impacts)
+            {
+                cell.poisonousBloodPool.enabled = true;
+            }
+        }
+    }
+
+    private void RemovePoisonousBloodPool(EffectData effectData)
+    {
+        if (effectData is PoisonousBloodPoolEffect poisonousBloodPoolEffect)
+        {
+            foreach (var cell in poisonousBloodPoolEffect.impacts)
+            {
+                cell.poisonousBloodPool.enabled = false;
+            }
         }
     }
 
