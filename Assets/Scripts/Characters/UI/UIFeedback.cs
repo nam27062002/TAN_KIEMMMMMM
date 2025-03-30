@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UIFeedback : MonoBehaviour
@@ -11,18 +9,21 @@ public class UIFeedback : MonoBehaviour
     [SerializeField] private TextMeshProUGUI feedbackText;
     [SerializeField] private Character character;
     private readonly List<EffectUI> _effectUIs = new();
-    [Title("Effects")] [SerializeField] private EffectUI effectUI;
+    
+    [Title("Effects")] 
+    [SerializeField] private EffectUI effectUI;
     [SerializeField] private RectTransform effectsPanel;
+
     private void Start()
     {
         feedbackText.gameObject.SetActiveIfNeeded(false);
     }
-    
+
     public void ShowMessage(string message)
     {
         StartCoroutine(ShowDamageReceiveCoroutine(message));
     }
-    
+
     private IEnumerator ShowDamageReceiveCoroutine(string message)
     {
         feedbackText.gameObject.SetActive(true);
@@ -46,7 +47,7 @@ public class UIFeedback : MonoBehaviour
         }
 
         _effectUIs.Clear();
-        if (character.Info.EffectInfo == null) return; 
+        if (character.Info.EffectInfo == null) return;
         foreach (var item in character.Info.EffectInfo.Effects)
         {
             var go = Instantiate(effectUI.gameObject, effectsPanel);
@@ -58,7 +59,7 @@ public class UIFeedback : MonoBehaviour
             _effectUIs.Add(cpn);
         }
     }
-    
+
     private void OnValidate()
     {
         character ??= GetComponent<Character>();
