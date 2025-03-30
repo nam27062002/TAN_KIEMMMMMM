@@ -87,7 +87,7 @@ public class TopBar_UI : MonoBehaviour
             var isFocused = Gameplay.Characters[index].IsMainCharacter;
             var targetScale = isFocused ? focusedScale : unfocusedScale;
             _avtSpdUI[index].transform.localScale = new Vector3(targetScale, targetScale, 1f);
-            _avtSpdUI[index].SetupUI(Gameplay.Characters[index], this);
+            _avtSpdUI[index].SetupUI(Gameplay.Characters[index], this, index == 0);
         }
     }
 

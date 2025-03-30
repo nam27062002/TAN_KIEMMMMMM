@@ -151,14 +151,12 @@ public class ConversationPopup : PopupBase
 
     private Character InstantiateCharacter(ConversationData.SpawnCharacter spawnData)
     {
-        var instance = Instantiate(spawnData.character.gameObject, spawnData.position, Quaternion.identity);
+        var pos = spawnData.position;
+        var spawnPosition = new Vector3(pos.x, pos.y, pos.y);
+        var instance = Instantiate(spawnData.character.gameObject, spawnPosition, Quaternion.identity);
         var character = instance.GetComponent<Character>();
-        
-        if (spawnData.facingType == FacingType.Left)
-        {
-            character.transform.localScale = new Vector3(-1, 1, 1);
-        }
-        
+        var scaleX = spawnData.facingType == FacingType.Left ? -1f : 1f;
+        character.transform.localScale = new Vector3(scaleX, 1f, 1f);
         return character;
     }
 

@@ -51,6 +51,7 @@ public class DoanGiaLinh_SkillState : SkillState
                     duration = 2,
                     Actor = Character,
                     impacts = GpManager.MapManager.GetAllHexagonInRange(target.Info.Cell, 1).ToList(),
+                    effects = effects,
                 }
             });
             
@@ -185,6 +186,12 @@ public class DoanGiaLinh_SkillState : SkillState
                 effectType = EffectType.RedDahlia,
                 Actor = Character
             },
+            new ()
+            {
+                effectType = EffectType.Fear,
+                duration = EffectConfig.DebuffRound,
+                Actor = Character
+            }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams
@@ -313,6 +320,13 @@ public class DoanGiaLinh_SkillState : SkillState
                 {
                     effectType = EffectType.RemoveAllPoisonPowder,
                     Actor = Character
+                },
+                new RollEffectData()
+                {
+                    effectType = EffectType.LifeSteal,
+                    Actor = Character,
+                    duration = EffectConfig.BuffRound,
+                    rollData = new RollData(1,6,0),
                 }
             },
             ReceiveFromCharacter = Character
@@ -332,13 +346,6 @@ public class DoanGiaLinh_SkillState : SkillState
                     effectType = EffectType.RemoveAllPoisonPowder,
                     Actor = Character
                 },
-                new RollEffectData()
-                {
-                    effectType = EffectType.LifeSteal,
-                    Actor = Character,
-                    duration = EffectConfig.BuffRound,
-                    rollData = new RollData(1,6,0),
-                }
             },
             ReceiveFromCharacter = Character
         };

@@ -41,7 +41,6 @@ public class CharacterInfo
             { EffectType.Prone, ApplySimpleEffect },
             { EffectType.Fear, ApplySimpleEffect },
             { EffectType.Drunk, ApplySimpleEffect },
-            { EffectType.PoisonousBloodPool, ApplySimpleEffect},
             
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -63,7 +62,8 @@ public class CharacterInfo
             { EffectType.PoisonPowder, ApplyPoisonPowder },
             { EffectType.RemoveAllPoisonPowder, ApplyRemoveAllPoisonPowder },
             { EffectType.VenomousParasite, ApplyVenomousParasite },
-            { EffectType.Shield, ApplyShieldEffect }
+            { EffectType.Shield, ApplyShieldEffect },
+            { EffectType.PoisonousBloodPool, ApplyPoisonousBloodPool},
         };
 
         GameplayManager.Instance.OnEndTurn += OnEndTurn;
@@ -119,6 +119,7 @@ public class CharacterInfo
     public event EventHandler<float> OnShieldChanged;
     public event EventHandler<int> OnMoveAmount;
     public event EventHandler<int> OnNewRound;
+    public event EventHandler<int> OnReduceHp; 
 
     private SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
@@ -249,6 +250,8 @@ public class CharacterInfo
         }
 
         CurrentHp += hp;
+        if (hp < 0)
+            OnReduceHp?.Invoke(this, -hp);
         if (character != null) 
             character.Info.SetDamageDealtInCurrentRound(-hp);
         CurrentHp = Math.Max(0, CurrentHp);
@@ -390,8 +393,7 @@ public class CharacterInfo
         {
             effect.duration--;
             if (effect.duration != 0) continue;
-            AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
             switch (effect.effectType)
             {
                 case EffectType.Cover_PhamCuChich_Skill3:
@@ -402,6 +404,9 @@ public class CharacterInfo
                     {
                         projectile.targetCell.UnSetMainProjectile();
                     }
+                    break;
+                case EffectType.PoisonousBloodPool:
+                    RemovePoisonousBloodPool(effect);
                     break;
             }
             EffectInfo.Effects.Remove(effect);
@@ -627,11 +632,10 @@ public class CharacterInfo
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"{item.effectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
 #if !ALWAY_APPLY_EFFECT
-            if (effectCleanse >= baseEffectCleanse) continue;
+            if (effectCleanse < baseEffectCleanse) continue;
             EffectInfo.Effects.Remove(item);
 #endif
-            AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {item.effectType}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Removed effect: {item.effectType}");
         }
     }
 
@@ -851,6 +855,29 @@ public class CharacterInfo
             Debug.Log($"Nhận lượng shield = {changeStatEffect} | lương shield hiện tại = {ShieldEffectData.value}");
             Debug.Log($"damage khi nổ shield = {ShieldEffectData.damage}");
             HandleShieldChange(Character);
+        }
+    }
+
+    private void ApplyPoisonousBloodPool(EffectData effectData)
+    {
+        ApplySimpleEffect(effectData);
+        if (effectData is PoisonousBloodPoolEffect poisonousBloodPoolEffect)
+        {
+            foreach (var cell in poisonousBloodPoolEffect.impacts)
+            {
+                cell.poisonousBloodPool.enabled = true;
+            }
+        }
+    }
+
+    private void RemovePoisonousBloodPool(EffectData effectData)
+    {
+        if (effectData is PoisonousBloodPoolEffect poisonousBloodPoolEffect)
+        {
+            foreach (var cell in poisonousBloodPoolEffect.impacts)
+            {
+                cell.poisonousBloodPool.enabled = false;
+            }
         }
     }
 

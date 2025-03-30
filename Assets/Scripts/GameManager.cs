@@ -23,7 +23,6 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         OnLoadComplete += HandleLoadComplete;
         DOTween.Init(false, false, LogBehaviour.ErrorsOnly);
         DOTween.SetTweensCapacity(500, 125);
-        // Screen.SetResolution(640, 360, FullScreenMode.Windowed);
         Application.runInBackground = true;
     }
 

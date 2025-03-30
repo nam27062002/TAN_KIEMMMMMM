@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using DG.Tweening;
-using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -30,7 +28,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _characterDeath[Type.AI].Clear();
         CurrentRound = 0;
         IsPauseGameInternal = false;
-        cam.orthographicSize = levelConfig.cameraSize;
         charactersInConversation.Clear();
         Characters.Clear();
         Players.Clear();
@@ -269,18 +266,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     [SerializeField] private LevelType levelType;
 
-    private LevelConfig levelConfig
-    {
-        get
-        {
-            return levelConfigs[(int)levelType];
-// #if UNITY_EDITOR
-//             return levelConfigs[(int)levelType];
-// #else
-//             return levelConfigs[SaveLoadManager.currentLevel];
-// #endif
-        }
-    }
+    private LevelConfig levelConfig => levelConfigs[(int)levelType];
 
 
     [Title("Characters")] [SerializeField]
@@ -326,7 +312,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         base.Awake();
         UIManager.Instance.OpenMenu(MenuType.InGame);
-        SetupTutorial();
     }
 
     private void Start()
@@ -353,6 +338,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         ClearAllData();
         TryLoadFromSaveGame();
+        cam.orthographicSize = levelConfig.cameraSize;
+        SetupTutorial();
         if (!IsTutorialLevel)
             ShowStartConversation();
     }
@@ -363,7 +350,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         if (GameManager.Instance.saveIndex == -1) return;
         _hasOverrideLevelConfig = true;
         var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
-        // SaveLoadManager.currentLevel = (int)levelData.levelType;
+        levelType = levelData.levelType;
         IsReplay = true;
     }
 
@@ -381,9 +368,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool CanSkipStartConversation()
     {
-#if UNITY_EDITOR
-        return levelConfig.canSkipStartConversation;
-#endif
+// #if UNITY_EDITOR
+//         return levelConfig.canSkipStartConversation;
+// #endif
         if (!IsReplay) return false;
         IsReplay = false;
         return true;

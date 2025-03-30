@@ -126,6 +126,12 @@ public class LyVoDanh_SkillState : SkillState
                     effectType = EffectType.BloodSealEffect,
                     Actor = Character
                 },
+                new()
+                {
+                    effectType = EffectType.Stun,
+                    Actor = Character,
+                    duration = EffectConfig.DebuffRound,
+                }
             },
             ReceiveFromCharacter = Character,
         };
