@@ -11,8 +11,11 @@ public class CharacterInfo
         SkillConfig = skillConfig;
         Attributes = characterAttributes;
         Character = character;
-
+#if UNITY_EDITOR
         CurrentHp = Attributes.overrideMaxHp ? characterAttributes.maxHpOverride : characterAttributes.health;
+#else
+        CurrentHp = characterAttributes.health;
+#endif
         CurrentMp = characterAttributes.mana;
         _roll = new Roll(this, Character.characterConfig.characterName);
 
