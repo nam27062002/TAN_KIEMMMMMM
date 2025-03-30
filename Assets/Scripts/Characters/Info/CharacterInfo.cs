@@ -94,7 +94,7 @@ public class CharacterInfo
     private int ShieldAmount => ShieldEffectData?.value ?? 0;
     public bool IsDie => CurrentHp <= 0;
 
-    private List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
+    public List<int> ActionPoints { get; set; } = new() { 3, 3, 3 };
 
     // Buff & Debuff
     private readonly Dictionary<EffectType, Action<EffectData>> _effectHandlers;

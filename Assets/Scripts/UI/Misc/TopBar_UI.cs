@@ -63,21 +63,16 @@ public class TopBar_UI : MonoBehaviour
     private void SetUI()
     {
         var count = _avtSpdUI.Count;
-        var centerIndex = (count % 2 == 0) ? count / 2 - 1 : count / 2;
-        var startIndex = Gameplay.CurrentPlayerIndex - centerIndex;
-        if (startIndex < 0)
-        {
-            startIndex += count;
-        }
-        var fixedY = 0f;
-        if (_avtSpdUI.Count > 0)
-        {
-            fixedY = _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y;
-        }
+        if (count == 0) return;
+
+        var startIndex = Gameplay.CurrentPlayerIndex;
+        var fixedY = _avtSpdUI.Count > 0 ? _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y : 0f;
+        var totalGroupWidth = (count - 1) * avatarSpacing;
         var poolRect = characterPool.GetComponent<RectTransform>();
         var poolWidth = poolRect.rect.width;
-        var totalGroupWidth = (count - 1) * avatarSpacing;
+        
         var offset = (poolWidth - totalGroupWidth) / 2;
+
         for (var i = 0; i < count; i++)
         {
             var index = (startIndex + i) % count;
@@ -87,7 +82,7 @@ public class TopBar_UI : MonoBehaviour
             var isFocused = Gameplay.Characters[index].IsMainCharacter;
             var targetScale = isFocused ? focusedScale : unfocusedScale;
             _avtSpdUI[index].transform.localScale = new Vector3(targetScale, targetScale, 1f);
-            _avtSpdUI[index].SetupUI(Gameplay.Characters[index], this, index == 0);
+            _avtSpdUI[index].SetupUI(Gameplay.Characters[index], this, false);
         }
     }
 

@@ -76,7 +76,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             var character = CreateCharacter(characterData.characterType, characterData.points, characterData.iD);
             ApplySavedCharacterState(character, characterData);
         }
-
+        
+        
+        
         foreach (var characterData in levelData.characterDatas)
         {
             var character = GetCharacterByID(characterData.iD);
@@ -93,6 +95,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                     
                     character.Info.ApplyEffect(effect);
                 }
+
+                character.Info.ActionPoints = characterData.actionPoints;
             }
             else
             {
@@ -1078,6 +1082,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 currentMp = character.Info.CurrentMp,
                 iD = character.CharacterId,
                 effectInfo = GetEffects(character),
+                actionPoints = character.Info.ActionPoints,
             };
             levelData.characterDatas.Add(characterData);
         }

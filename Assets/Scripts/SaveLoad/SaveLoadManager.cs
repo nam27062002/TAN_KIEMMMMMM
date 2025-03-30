@@ -154,6 +154,7 @@ public class CharacterData
     public int iD;
     public CharacterType characterType;
     public Vector2Int points;
+    public List<int> actionPoints = new List<int>();
     public int currentHp;
     public int currentMp;
     public IEffectInfo effectInfo;
