@@ -2,6 +2,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Collections;
 
 public class ShowInfoPopup : PopupBase
 {
@@ -127,20 +129,44 @@ public class ShowInfoPopup : PopupBase
         {
             Destroy(child.gameObject);
         }
+
+        var passiveSkill1 = _showInfoCharacterParameters.Character.skillConfig.passtiveSkill1;
+        var passiveSkill2 = _showInfoCharacterParameters.Character.skillConfig.passtiveSkill2;
+
+        bool hasPassiveSkill1 = passiveSkill1 != null && !string.IsNullOrEmpty(passiveSkill1.description);
+        bool hasPassiveSkill2 = passiveSkill2 != null && !string.IsNullOrEmpty(passiveSkill2.description);
+
+        List<GameObject> skillObjects = new List<GameObject>();
+
+        if (hasPassiveSkill1 || hasPassiveSkill2)
+        {
+            var passiveGo = Instantiate(skillInfoPrefab.gameObject, container);
+            var passiveSkillUI = passiveGo.GetComponent<SkillInfo_UI>();
+            passiveSkillUI.SetupPassives(passiveSkill1, passiveSkill2);
+            skillObjects.Add(passiveGo);
+        }
+
         var skills = _showInfoCharacterParameters.Skills[_showInfoCharacterParameters.skillTurnType];
-        int skillCount = skills.Count - 1;
-        float newHeight = skillInfoHeight * skillCount + space * (skillCount - 1);
-        container.sizeDelta = new Vector2(container.sizeDelta.x, newHeight);
-        verticalLayoutGroup.spacing = space;
-        var count = 1;
+        int count = 1;
         for (int i = 0; i < skills.Count; i++)
         {
             if (skills[i].skillIndex == 0) { continue; }
+
             var go = Instantiate(skillInfoPrefab.gameObject, container);
             var skillInfoUI = go.GetComponent<SkillInfo_UI>();
-            skillInfoUI.Setup(_showInfoCharacterParameters.Skills, count, (int)_showInfoCharacterParameters.skillTurnType);
+            skillInfoUI.SetupNormal(
+                _showInfoCharacterParameters.Skills,
+                count,
+                (int)_showInfoCharacterParameters.skillTurnType
+            );
+            skillObjects.Add(go);
             count++;
         }
+
+        int totalSkillCount = skillObjects.Count;
+        float newHeight = skillInfoHeight * totalSkillCount + space * (totalSkillCount - 1);
+        container.sizeDelta = new Vector2(container.sizeDelta.x, newHeight);
+        verticalLayoutGroup.spacing = space;
     }
 
     private void SetupStoryContent()
