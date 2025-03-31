@@ -402,6 +402,36 @@ MonoBehaviour:
         Ch\u1EB7n chi\xEAu th\u1EE9c t\u1EA7m xa c\u1EE7a \u0111\u1ED1i th\u1EE7.
         Qu\xE2n \u0111\u1ECBch ti\u1EBFn v\xE0o ph\u1EA1m vi chi\u1EBFn tr\u01B0\u1EDDng
         s\u1EBD nh\u1EADn hi\u1EC7u \u1EE9ng ch\u1EA3y m\xE1u "
+    passtiveSkill1:
+      icon: {fileID: 0}
+      name: "\u0110\u1ED3ng T\u01B0\u1EDDng Thi\u1EBFt B\xEDch "
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "S\u1EED d\u1EE5ng m\xE1u thay cho 1/2 l\u01B0\u1EE3ng n\u1ED9i
+        l\u1EF1c ti\xEAu hao (passive, toggle \u0111\u01B0\u1EE3c). \u1EDE m\u1ED7i
+        v\xF2ng \u0111\u1EA5u, c\u1ED9ng s\xE1t th\u01B0\u01A1ng b\u1EB1ng s\u1ED1
+        m\xE1u \u0111\xE3 m\u1EA5t."
+    passtiveSkill2:
+      icon: {fileID: 0}
+      name: "B\u1EA5t \u0110\u1ED9ng Nh\u01B0  S\u01A1n"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 4 \xF4. \r\nT\u0103ng
+        m\u1ED9t l\u01B0\u1EE3ng l\u1EDBn h\u1ED9 th\u1EC3 v\xE0 ph\xF2ng ng\u1EF1.
+        Khi ph\u1EA1m vi di chuy\u1EC3n trong v\xF2ng \u0111\u1EA5u c\u1EE7a Ph\u1EA1m
+        C\u1EF1 Ch\xEDch c\xF2n <= 3. M\u1EA5t \u1EDF cu\u1ED1i v\xF2ng"
   passiveSkills: []
   Info:
     RoundIndex: 0

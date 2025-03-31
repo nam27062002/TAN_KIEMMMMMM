@@ -344,6 +344,45 @@ MonoBehaviour:
         h\u1ED3i m\xE1u, trong khi k\u1EBB kh\xE1c d\u1EABm ph\u1EA3i s\u1EBD c\xF3
         t\u1EC9 l\u1EC7 tr\xFAng \u0111\u1ED9c. . M\xE1u \u0111\u1ED9c  l\xE0 debuff
         12. M\xE1u C\xE0n S\xE1t h\u1ED3i = dmg \u0111\u1ED9c "
+    passtiveSkill1:
+      icon: {fileID: 0}
+      name: "N\u1ED9i t\u1EA1i"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "M\xF9: Mi\u1EC5n nhi\u1EC5m k\u1EF9 n\u0103ng c\u1EA7n nh\xECn
+        th\u1EA5y \u0111\u1ED1i th\u1EE7, k\u1EF9 n\u0103ng g\xE2y m\u1EDD m\u1EAFt,
+        blind.\r\nTh\xEDnh gi\xE1c si\xEAu vi\u1EC7t: Nh\u1EA1y c\u1EA3m v\u1EDBi
+        \xE2m thanh, nh\u01B0\u1EE3c \u0111i\u1EC3m khi g\u1EB7p nh\u1EEFng skill
+        li\xEAn quan \u0111\u1EBFn ti\u1EBFng \u0111\u1ED9ng.\r\nC\xE2m: Kh\xF4ng
+        th\u1EC3 b\u1ECB c\xE2m l\u1EB7ng.\r\n\u0110\xF2n \u0111\xE1nh v\xE0 k\u1EF9
+        n\u0103ng: C\xF3 c\u01A1 h\u1ED9i c\u01B0\u1EDBp AP c\u1EE7a \u0111\u1ED1i
+        th\u1EE7. \u0110\u1ECBch roll d20 m\u1ED7i khi tr\xFAng \u0111\xF2n \u0111\xE1nh
+        th\u01B0\u1EDDng ho\u1EB7c v\xF5 k\u1EF9 c\u1EE7a C\xE0n S\xE1t, n\u1EBFu
+        < 10 th\xEC s\u1EBD b\u1ECB c\u01B0\u1EDBp 1 AP. K\xE9o d\xE0i trong 2 v\xF2ng.
+        S\u1ED1 AP c\xF3 th\u1EC3 c\u01B0\u1EDBp t\u1ED1i \u0111a = 2.\r\nT\u1ED3n
+        t\u1EA1i kh\u1EE7ng b\u1ED1: T\u1EA5t c\u1EA3 k\u1EBB \u0111\u1ECBch \u0111\u1EE9ng
+        s\xE1t C\xE0n S\xE1t c\xF3 t\u1EC9 l\u1EC7 b\u1ECB hi\u1EC7u \u1EE9ng ho\u1EA3ng
+        s\u1EE3.\r\n\xC1c linh truy\u1EC1n thuy\u1EBFt: Khi tham chi\u1EBFn, C\xE0n
+        S\xE1t ngay l\u1EADp t\u1EE9c tri\u1EC7u h\u1ED3i v\u0169 c\xF4ng v\xE0 s\xE1t
+        th\u1EE7."
+    passtiveSkill2:
+      icon: {fileID: 0}
+      name: "T\u1ED1c \u0111\u1ED9/Th\xE2n ph\xE1p"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 7 \xF4"
   passiveSkills: []
   Info:
     RoundIndex: 0

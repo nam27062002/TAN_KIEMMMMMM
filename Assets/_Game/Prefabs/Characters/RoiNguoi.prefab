@@ -209,6 +209,31 @@ MonoBehaviour:
     internalSkill: []
     movementSkill: []
     combatSkill: []
+    passtiveSkill1:
+      icon: {fileID: 0}
+      name: "N\u1ED9i t\u1EA1i"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "Khi\u1EBFn nh\u1EEFng sinh v\u1EADt tr\xED tu\u1EC7 th\u1EA5p
+        b\u1EA3o v\u1EC7 m\xECnh"
+    passtiveSkill2:
+      icon: {fileID: 0}
+      name: "T\u1ED1c \u0111\u1ED9/ Th\xE2n ph\xE1p"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "Kh\xF4ng th\u1EC3 di chuy\u1EC3n"
   passiveSkills: []
   Info:
     RoundIndex: 0

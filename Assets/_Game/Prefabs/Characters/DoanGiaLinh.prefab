@@ -381,6 +381,48 @@ MonoBehaviour:
       description: "Thu h\u1ED3i \u0111\u1ED9c ph\u1EA5n t\u1EEB k\u1EBB \u0111ang
         t\u1EA5n c\xF4ng m\xECnh, gi\u1EA3m to\xE0n b\u1ED9 s\xE1t th\u01B0\u01A1ng
         v\u1EADt l\xFD m\xE0 b\u1EA3n th\xE2n \u0111\xE1ng l\u1EBD ph\u1EA3i nh\u1EADn. "
+    passtiveSkill1:
+      icon: {fileID: 0}
+      name: "\u0110\u1ED9c \u0110i\u1EC3n"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "M\u1ED7i 3 m\xE1u m\u1EA5t \u0111i, nh\u1EADn \u0111\u01B0\u1EE3c
+        m\u1ED9t \u201C\u0111\u1ED9c tr\xF9ng\u201D. K\u1EF9 n\u0103ng c\xF3 th\u1EC3
+        c\u1EA5y \u0111\u1ED9c tr\xF9ng l\xEAn ng\u01B0\u1EDDi k\u1EBB \u0111\u1ECBch.
+        \r\n! \u0111\u1ED9c tr\xF9ng: \u0103n hoa n\u1EDF ra t\u1EEB m\u1EE5c ti\xEAu
+        \u0111\u1EC3 tr\u01B0\u1EDFng th\xE0nh, g\xE2y s\xE1t th\u01B0\u01A1ng l\xEAn
+        v\u1EADt ch\u1EE7 v\xE0 t\u1EA1o n\xEAn m\u1ED9t v\u0169ng m\xE1u mang lo\u1EA1i
+        \u0111\u1ED9c t\u01B0\u01A1ng \u1EE9ng trong ph\u1EA1m vi 1 \xF4 xung quanh
+        n\u1EA1n nh\xE2n. \r\n! \u0111\u1ED9c ph\u1EA5n: m\u1ED7i l\u1EA7n nh\xE2n
+        v\u1EADt s\u1EED d\u1EE5ng k\u1EF9 n\u0103ng, t\u1EA5t c\u1EA3 c\xE1c nh\xE2n
+        v\u1EADt kh\xE1c tr\xEAn map \u0111\u1EC1u c\xF3 kh\u1EA3 n\u0103ng nhi\u1EC5m
+        \u0111\u1ED9c ph\u1EA5n. \u0110\u1ED9c ph\u1EA5n c\xF3 th\u1EC3 stack t\u1ED1i
+        \u0111a 5 l\u1EA7n/m\u1EE5c ti\xEAu, tuy kh\xF4ng g\xE2y s\xE1t th\u01B0\u01A1ng
+        tr\u1EF1c ti\u1EBFp nh\u01B0ng c\xF3 th\u1EC3 t\u01B0\u01A1ng t\xE1c v\u1EDBi
+        hoa v\xE0 c\xE1c k\u1EF9 n\u0103ng.\r\n"
+    passtiveSkill2:
+      icon: {fileID: 0}
+      name: "Phi \u0110i\u1EC3u"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 6 \xF4\nPh\u1EA1m
+        vi di chuy\u1EC3n kh\xF4ng th\u1EC3 b\u1ECB gi\u1EA3m xu\u1ED1ng b\u1EDFi
+        hi\u1EC7u \u1EE9ng b\u1EA5t l\u1EE3i. \nKhi \u0111\u1EE9ng trong v\xF9ng
+        m\xE1u \u0111\u1ED9c t\u1EA1o ra b\u1EDFi \u0111\u1ED9c tr\xF9ng v\xE0 b\u1ECB
+        \u0111\xE1nh tr\xFAng th\xEC khi\u1EBFn \u0111\u1ED1i ph\u01B0\u01A1ng nhi\u1EC5m
+        \u0111\u1ED9c."
   passiveSkills:
   - {fileID: 3033158562719900191}
   Info:

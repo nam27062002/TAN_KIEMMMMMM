@@ -340,6 +340,43 @@ MonoBehaviour:
         c\u1EE7a Thi\u1EBFt Nh\xE2n v\u1EA3y ra ngo\xE0i g\xE2y b\u1ECFng, v\xE0
         c\xF3 t\u1EC9 l\u1EC7 g\xE2y m\xF9 l\xF2a (apply debuff 30, 31). Version
         2 k apply \u0111\u01B0\u1EE3c status h\xF3a Thi\u1EBFt Nh\xE2n c\u1EE7a skill"
+    passtiveSkill1:
+      icon: {fileID: 0}
+      name: "N\u1ED9i t\u1EA1i"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "\"T\u01A1 th\u1ECBt c\u1EE7a Thi\u1EBFt Nh\xE2n r\u1EC9 ra m\u1ED9t
+        lo\u1EA1i \u0111\u1ED9c l\xE0m t\xEA li\u1EC7t th\u1EA7n kinh \u0111\u1EC3
+        b\u1EAFt m\u1ED3i. \u0110\xF2n \u0111\xE1nh c\u1EE7a ch\xFAng l\xE0m gi\u1EA3m
+        kho\u1EA3ng c\xE1ch di chuy\u1EC3n c\u1EE7a n\u1EA1n nh\xE2n \u0111i 2 \xF4
+        m\u1ED7i l\u01B0\u1EE3t, v\xE0 c\xF3 t\u1EC9 l\u1EC7 kh\xF3a m\u1ED9t \u0111i\u1EC3m
+        AP c\u1EE7a n\u1EA1n nh\xE2n. \u0110\u1ED9c c\u1EE7a 1 thi\u1EBFt nh\xE2n
+        ch\u1EC9 kh\xF4ng th\u1EC3 stack vs ch\xEDnh n\xF3, nh\u01B0ng c\xF3 th\u1EC3
+        stack v\u1EDBi ngu\u1ED3n c\u1EE7a thi\u1EBFt nh\xE2n kh\xE1c.\nV\xEC c\xF9ng
+        chung m\u1ED9t t\xE2m tr\xED b\u1EA7y \u0111\xE0n, th\u1EBF n\xEAn c\xE1c
+        thi\u1EBFt nh\xE2n \u0111\u1EE9ng g\u1EA7n c\xF3 c\u01A1 h\u1ED9i h\xE0nh
+        \u0111\u1ED9ng ngay khi \u0111\u1ED3ng b\u1ECDn h\xE0nh \u0111\u1ED9ng m\xE0
+        kh\xF4ng ti\xEAu hao AP. \u0110\u1ED5i l\u1EA1i, ch\xFAng kh\xF4ng c\xF3
+        k\u1EF9 n\u0103ng \u0111\u1EB7c bi\u1EC7t khi h\xE0nh \u0111\u1ED9ng \u1EDF
+        l\u01B0\u1EE3t \u0111\u1ED3ng \u0111\u1ED9i.\""
+    passtiveSkill2:
+      icon: {fileID: 0}
+      name: "T\u1ED1c \u0111\u1ED9/ Th\xE2n ph\xE1p"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "10 \xF4, nh\u01B0ng ch\u1EC9 c\xF3 th\u1EC3 \u0111i theo 1 h\u01B0\u1EDBng."
   passiveSkills: []
   Info:
     RoundIndex: 0

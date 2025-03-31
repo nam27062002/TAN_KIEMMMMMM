@@ -367,6 +367,42 @@ MonoBehaviour:
         \u0111\u1ED3ng th\u1EDDi qu\xE9t th\u01B0\u01A1ng t\u1EA5n c\xF4ng ph\u1EA1m
         vi 1 \xF4 quanh m\xECnh. H\u01B0\u1EDBng t\u1EA5n c\xF4ng c\u1EE7a v\xF5
         k\u1EF9 \u0111\u1ECBch thi tri\u1EC3n gi\u1EEF nguy\xEAn. "
+    passtiveSkill1:
+      icon: {fileID: 0}
+      name: "Y\xEAu Cung"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "Sau m\u1ED7i v\xF2ng \u0111\u1EA5u, t\u0103ng s\xE1t th\u01B0\u01A1ng
+        g\xE2y ra th\xEAm 2, gi\u1EA3m s\u1ED1 c\u1EA7n \u0111\u1EC3 crit \u0111i
+        1, \u0111\u1EBFn t\u1ED1i \u0111a l\xE0 6 s\xE1t th\u01B0\u01A1ng v\xE0 3
+        \u0111i\u1EC3m crit. C\u1ED9ng th\xEAm 2d4 s\xE1t th\u01B0\u01A1ng b\u1EA1o
+        k\xEDch. \r\nKhi s\xE1t th\u01B0\u01A1ng c\u1ED9ng th\xEAm c\u1EE7a Y\xEAu
+        Cung \u0111\u1EA1t t\u1ED1i \u0111a, m\u1ED7i \u0111\xF2n \u0111\xE1nh g\xE2y
+        m\u1ED9t l\u01B0\u1EE3ng s\xE1t th\u01B0\u01A1ng nh\u1EA5t \u0111\u1ECBnh
+        l\xEAn b\u1EA3n th\xE2n"
+    passtiveSkill2:
+      icon: {fileID: 0}
+      name: "H\u1ECFa V\u0169"
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 8 \xF4, gi\u1EA3m
+        1 sau m\u1ED7i v\xF2ng, \u0111\u1EBFn t\u1ED1i thi\u1EC3u l\xE0 3 \xF4\r\nKh\u1EDFi
+        \u0111\u1EA7u v\u1EDBi + 4 kh\u1EA3 n\u0103ng tr\xE1nh n\xE9 \u0111\u1ED9c
+        l\u1EADp, gi\u1EA3m d\u1EA7n sau m\u1ED7i v\xF2ng (-1). Khi con s\u1ED1 n\xE0y
+        \u0111\u1EA1t 0, AP s\u1EED d\u1EE5ng trong l\u01B0\u1EE3t \u0111\u1ECBch
+        c\xF3 c\u01A1 h\u1ED9i h\xF3a v\xE0ng thay v\xEC \u0111\u1ECF."
   passiveSkills:
   - {fileID: 4073403874055096316}
   Info:
