@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "TANN KIEMM.sln"
+    "dotnet.defaultSolution": "TAN_KIEMMMMMM.sln",
+    "dotnet.preferCSharpExtension": true
 }

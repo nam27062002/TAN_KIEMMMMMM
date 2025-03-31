@@ -17,7 +17,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     };
 
     private int _currentId = 0;
-    
+
     #endregion
 
     #region Preload
@@ -76,9 +76,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             var character = CreateCharacter(characterData.characterType, characterData.points, characterData.iD);
             ApplySavedCharacterState(character, characterData);
         }
-        
-        
-        
+
+
+
         foreach (var characterData in levelData.characterDatas)
         {
             var character = GetCharacterByID(characterData.iD);
@@ -92,7 +92,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                     {
                         blockProjectile.targetCell = MapManager.Cells[blockProjectile.position];
                     }
-                    
+
                     character.Info.ApplyEffect(effect);
                 }
 
@@ -113,8 +113,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void LoadFromSpawnPoints()
     {
         foreach (var character in from spawnPoint in levelConfig.spawnerConfig.spawnPoints
-                 from point in spawnPoint.Value.points
-                 select CreateCharacter(spawnPoint.Key, point, _currentId))
+                                  from point in spawnPoint.Value.points
+                                  select CreateCharacter(spawnPoint.Key, point, _currentId))
         {
             _currentId++;
             HandleTutorialState(character);
@@ -151,13 +151,30 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         character.Info.OnMpChangedInvoke(0);
     }
 
-    public void HandleCharacterDeath(Character character,out Action callback)
+    public void HandleCharacterDeath(Character character, out Action callback)
     {
+        if (character == null)
+        {
+            Debug.LogException(new System.NullReferenceException("character is null in HandleCharacterDeath"));
+            callback = null;
+            return;
+        }
         callback = null;
         _characterDeath[character.Type].Add(character.Info.Cell);
         IsPauseGameInternal = false;
         SetInteract(true);
+
+        // Lưu lại index của nhân vật bị giết
+        int characterIndex = Characters.IndexOf(character);
+
         Characters.Remove(character);
+
+        // Nếu nhân vật bị giết có index nhỏ hơn CurrentPlayerIndex, giảm CurrentPlayerIndex xuống 1
+        if (characterIndex < CurrentPlayerIndex)
+        {
+            CurrentPlayerIndex--;
+        }
+
         if (character.Type == Type.AI)
         {
             HandleAIDeath(character);
@@ -265,7 +282,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     //=================== OLD =====================================================
 
-    [Title("Scriptable Objects")] [SerializeField]
+    [Title("Scriptable Objects")]
+    [SerializeField]
     private List<LevelConfig> levelConfigs;
 
     [SerializeField] private LevelType levelType;
@@ -273,10 +291,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private LevelConfig levelConfig => levelConfigs[(int)levelType];
 
 
-    [Title("Characters")] [SerializeField]
+    [Title("Characters")]
+    [SerializeField]
     private SerializableDictionary<CharacterType, Character> allCharacter = new();
 
-    [Title("Tutorials")] [SerializeField] private GameObject tutorialPrefab;
+    [Title("Tutorials")][SerializeField] private GameObject tutorialPrefab;
 
     public Camera cam;
     public bool IsTutorialLevel { get; set; }
@@ -286,7 +305,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public event EventHandler OnNewRound;
     public event EventHandler OnEndTurn;
     public event EventHandler OnRetry;
-    public event EventHandler<Cell> OnSetMainCharacter; 
+    public event EventHandler<Cell> OnSetMainCharacter;
     /*---------------------------------------------------*/
     public MapManager MapManager { get; private set; }
     public GameObject mapPrefab;
@@ -372,9 +391,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool CanSkipStartConversation()
     {
-// #if UNITY_EDITOR
-//         return levelConfig.canSkipStartConversation;
-// #endif
+        // #if UNITY_EDITOR
+        //         return levelConfig.canSkipStartConversation;
+        // #endif
         if (!IsReplay) return false;
         IsReplay = false;
         return true;
@@ -403,7 +422,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             Destroy(mapPrefab);
         }
-        mapPrefab  = Instantiate(levelConfig.mapPrefab.gameObject, transform);
+        mapPrefab = Instantiate(levelConfig.mapPrefab.gameObject, transform);
         MapManager = mapPrefab.GetComponent<MapManager>();
         MapManager.OnLoadMapFinished += OnLoadMapFinished;
         MapManager.Initialize();
@@ -479,7 +498,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SelectedCharacter?.OnUnSelected();
         PreviousSelectedCharacter = SelectedCharacter;
         SelectedCharacter = character;
-        
+
         SelectedCharacter.SetSelectedCharacter(idleParams);
         UpdateCharacterInfo();
         if (SelectedCharacter.Info.IsDie)
@@ -1005,7 +1024,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     }
 
     private bool _process = false;
-    
+
     public void ProceedToNextLevel()
     {
         if (_process) return;
@@ -1071,7 +1090,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             chars.Add(Characters[i]);
         }
-        
+
         foreach (var character in chars)
         {
             CharacterData characterData = new CharacterData
@@ -1093,7 +1112,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         CoroutineDispatcher.Invoke(ShowNotification, 0.5f);
 
         return;
-        
+
         IEffectInfo GetEffects(Character character)
         {
             var result = new List<EffectData>();
@@ -1112,7 +1131,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             };
         }
     }
-    
+
     public void ShowNotification()
     {
         UIManager.Instance.OpenPopup(PopupType.Splash);
