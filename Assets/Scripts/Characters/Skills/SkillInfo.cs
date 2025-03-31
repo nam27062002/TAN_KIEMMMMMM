@@ -45,7 +45,7 @@ public class SkillInfo
     [ToggleLeft] 
     public bool canBlockDamage;
     public DamageTargetType damageType;
-    
+    [TextArea(1, 5)]
     public string description;
 }
 

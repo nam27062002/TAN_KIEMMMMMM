@@ -15,11 +15,11 @@ public class ShowInfoPopup : PopupBase
     public ProcessBar mpBarUI;
     public Image avatar;
 
-    [Title("Skill Info"), Space] 
+    [Title("Skill Info"), Space]
     public GameObject skillScrollObject;
     public VerticalLayoutGroup verticalLayoutGroup;
     public RectTransform container;
-    public SkillInfo_UI skillInfoPrefab; 
+    public SkillInfo_UI skillInfoPrefab;
     public float skillInfoHeight;
     public int space;
     public ScrollRect skillScrollRect;
@@ -44,7 +44,6 @@ public class ShowInfoPopup : PopupBase
         Story
     }
 
-    // Thêm ContentSizeFitter vào Editor để dễ kiểm soát
     [SerializeField, HideInInspector] private ContentSizeFitter storyContentSizeFitter;
 
     public override void Open(UIBaseParameters parameters = null)
@@ -61,10 +60,8 @@ public class ShowInfoPopup : PopupBase
             SetupBars(info);
             ShowSkillInfo();
             ResetScroll();
-            SetupStoryContent(); // Thay thế cho việc gán trực tiếp storyText.text
+            SetupStoryContent();
             SetScrollUI();
-
-            // Đăng ký sự kiện button click
             RegisterButtonEvents();
         }
     }
@@ -81,11 +78,11 @@ public class ShowInfoPopup : PopupBase
     private void SetScrollUI()
     {
         skillScrollObject.SetActiveIfNeeded(scrollType == ScrollType.Skill);
-        storyScrollObject.SetActiveIfNeeded(scrollType == ScrollType.Story); 
+        storyScrollObject.SetActiveIfNeeded(scrollType == ScrollType.Story);
         skillPanelImage.enabled = scrollType == ScrollType.Skill;
-        storyPanelImage.enabled = scrollType == ScrollType.Story; 
+        storyPanelImage.enabled = scrollType == ScrollType.Story;
         skillTitleName.color = scrollType == ScrollType.Skill ? Color.black : Color.white;
-        storyTitleName.color = scrollType == ScrollType.Story ? Color.black : Color.white; 
+        storyTitleName.color = scrollType == ScrollType.Story ? Color.black : Color.white;
     }
 
     private void SetupAvatar(CharacterConfig config)
@@ -138,10 +135,10 @@ public class ShowInfoPopup : PopupBase
         var count = 1;
         for (int i = 0; i < skills.Count; i++)
         {
-            if (skills[i].skillIndex == 0) {continue;}
+            if (skills[i].skillIndex == 0) { continue; }
             var go = Instantiate(skillInfoPrefab.gameObject, container);
             var skillInfoUI = go.GetComponent<SkillInfo_UI>();
-            skillInfoUI.Setup(_showInfoCharacterParameters.Skills,count, (int)_showInfoCharacterParameters.skillTurnType);
+            skillInfoUI.Setup(_showInfoCharacterParameters.Skills, count, (int)_showInfoCharacterParameters.skillTurnType);
             count++;
         }
     }
@@ -149,7 +146,7 @@ public class ShowInfoPopup : PopupBase
     private void SetupStoryContent()
     {
         storyText.text = _showInfoCharacterParameters.Character.characterConfig.story;
-        AdjustStoryContainerSize(); 
+        AdjustStoryContainerSize();
     }
 
     private void AdjustStoryContainerSize()
@@ -157,7 +154,7 @@ public class ShowInfoPopup : PopupBase
         Canvas.ForceUpdateCanvases();
         float textHeight = storyText.GetPreferredValues(storyText.text, storyContainer.rect.width, 0).y;
         storyContainer.sizeDelta = new Vector2(storyContainer.sizeDelta.x, textHeight);
-        
+
         if (storyContentSizeFitter != null)
         {
             storyContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
@@ -168,14 +165,14 @@ public class ShowInfoPopup : PopupBase
     {
         skillButton.onClick.RemoveAllListeners();
         storyButton.onClick.RemoveAllListeners();
-        
+
         skillButton.onClick.AddListener(() =>
         {
             scrollType = ScrollType.Skill;
             SetScrollUI();
             ResetScroll();
         });
-        
+
         storyButton.onClick.AddListener(() =>
         {
             scrollType = ScrollType.Story;
@@ -189,8 +186,8 @@ public class ShowInfoPopup : PopupBase
         scrollType = ScrollType.Skill;
         ClearSkillInfo();
         ResetScroll();
-        skillButton.onClick.RemoveAllListeners(); 
-        storyButton.onClick.RemoveAllListeners(); 
+        skillButton.onClick.RemoveAllListeners();
+        storyButton.onClick.RemoveAllListeners();
         base.Close();
         if (GameplayManager.Instance.IsTutorialLevel)
         {
@@ -214,7 +211,7 @@ public class ShowInfoPopup : PopupBase
         }
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     private void OnValidate()
     {
         if (storyContainer != null && storyContentSizeFitter == null)
@@ -228,5 +225,5 @@ public class ShowInfoPopup : PopupBase
             }
         }
     }
-    #endif
+#endif
 }
