@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class TopBar_UI : MonoBehaviour
 {
@@ -8,8 +9,14 @@ public class TopBar_UI : MonoBehaviour
     [SerializeField] private float avatarSpacing = 80f;
     [SerializeField] private float focusedScale = 1f;
     [SerializeField] private float unfocusedScale = 0.7f;
+    [SerializeField] private float animationDuration = 0.5f;
+    [SerializeField] private Ease animationEase = Ease.OutBack;
+    [SerializeField] private float bounceEffectDuration = 0.3f;
+    [SerializeField] private float bounceHeight = 15f;
+    [SerializeField] private Ease bounceEase = Ease.OutQuad;
 
     private readonly List<AVT_SpdUI> _avtSpdUI = new();
+    private readonly List<Tween> _activeTweens = new();
 
     private GameplayManager Gameplay => GameplayManager.Instance;
 
@@ -62,28 +69,73 @@ public class TopBar_UI : MonoBehaviour
 
     private void SetUI()
     {
+        KillAllTweens();
+
         var count = _avtSpdUI.Count;
         if (count == 0) return;
 
         var startIndex = Gameplay.CurrentPlayerIndex;
-        var fixedY = _avtSpdUI.Count > 0 ? _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y : 0f;
-        var totalGroupWidth = (count - 1) * avatarSpacing;
+        var fixedY = _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y;
         var poolRect = characterPool.GetComponent<RectTransform>();
         var poolWidth = poolRect.rect.width;
-        
-        var offset = (poolWidth - totalGroupWidth) / 2;
+        var W = _avtSpdUI[0].GetComponent<RectTransform>().rect.width;
+        var D = avatarSpacing - W * unfocusedScale;
 
-        for (var i = 0; i < count; i++)
+        List<float> scales = new List<float>();
+        for (int i = 0; i < count; i++)
         {
-            var index = (startIndex + i) % count;
-            var avatarRect = _avtSpdUI[index].GetComponent<RectTransform>();
-            var targetPos = new Vector2(offset + i * avatarSpacing, fixedY);
-            avatarRect.anchoredPosition = targetPos;
-            var isFocused = Gameplay.Characters[index].IsMainCharacter;
-            var targetScale = isFocused ? focusedScale : unfocusedScale;
-            _avtSpdUI[index].transform.localScale = new Vector3(targetScale, targetScale, 1f);
-            _avtSpdUI[index].SetupUI(Gameplay.Characters[index], this, false);
+            int index = (startIndex + i) % count;
+            bool isFocused = Gameplay.Characters[index].IsMainCharacter;
+            float S = isFocused ? focusedScale : unfocusedScale;
+            scales.Add(S);
         }
+
+        float sumWidths = 0;
+        for (int i = 0; i < count; i++)
+        {
+            sumWidths += W * scales[i];
+        }
+        float totalWidth = sumWidths + (count - 1) * D;
+        float P = (poolWidth - totalWidth) / 2;
+
+        float leftEdge = P;
+        for (int i = 0; i < count; i++)
+        {
+            int index = (startIndex + i) % count;
+            var avatar = _avtSpdUI[index];
+            var rt = avatar.GetComponent<RectTransform>();
+            float S = scales[i];
+            float centerX = leftEdge + (W * S / 2);
+            bool isMainCharacter = Gameplay.Characters[index].IsMainCharacter;
+
+            Tween scaleTween = rt.DOScale(new Vector3(S, S, 1f), animationDuration)
+                                .SetEase(animationEase);
+            _activeTweens.Add(scaleTween);
+
+            Tween posTween = rt.DOAnchorPos(new Vector2(centerX, fixedY), animationDuration)
+                              .SetEase(animationEase);
+            _activeTweens.Add(posTween);
+
+            leftEdge += W * S + D;
+            avatar.SetupUI(Gameplay.Characters[index], this, false);
+        }
+    }
+
+    private void KillAllTweens()
+    {
+        foreach (var tween in _activeTweens)
+        {
+            if (tween != null && tween.IsActive())
+            {
+                tween.Kill();
+            }
+        }
+        _activeTweens.Clear();
+    }
+
+    private void OnDisable()
+    {
+        KillAllTweens();
     }
 
     private void ClearAllChildren()
