@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class AutoIncrementVersion : IPreprocessBuildWithReport
 {
-    public int callbackOrder { get { return 0; } }
+    public int callbackOrder => 0;
 
     public void OnPreprocessBuild(BuildReport report)
     {
@@ -17,9 +17,9 @@ public class AutoIncrementVersion : IPreprocessBuildWithReport
         {
             try
             {
-                int lastPart = int.Parse(parts[parts.Length - 1]);
+                int lastPart = int.Parse(parts[^1]);
                 lastPart++;
-                parts[parts.Length - 1] = lastPart.ToString();
+                parts[^1] = lastPart.ToString();
                 string newVersion = string.Join(".", parts);
                 
                 PlayerSettings.bundleVersion = newVersion;

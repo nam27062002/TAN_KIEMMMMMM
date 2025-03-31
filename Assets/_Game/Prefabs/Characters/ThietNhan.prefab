@@ -289,9 +289,7 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "L\u1EA5y t\u01A1 th\u1ECBt n\xE9m m\u1ED9t vi\xEAn \u0111\xE1
-        v\u1EC1 ph\xEDa \u0111\u1ED1i th\u1EE7, tr\xEAn vi\xEAn \u0111\xE1 c\xF3
-        d\xEDnh ch\u1EA5t \u0111\u1ED9c c\u1EE7a lo\xE0i Thi\u1EBFt Nh\xE2n. "
+      description: 
     - icon: {fileID: 21300000, guid: 096d26e94d1059447814c91e19e64908, type: 3}
       name: 
       skillIndex: 2
@@ -302,94 +300,7 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "\u1EDE th\xE0nh Thi\xEAn \u0110\xF4 g\u1EA7n \u0111\xE2y x\xF4n
-        xao v\xEC c\xE1i ch\u1EBFt c\u1EE7a m\u1ED9t th\u1EA7y lang.  Tr\u01B0\u1EDBc
-        khi v\u1EE5 \xE1n m\u1EA1ng \u0111\u1EABm m\xE1u x\u1EA3y ra, ng\u01B0\u1EDDi
-        ta v\u1EABn th\u01B0\u1EDDng th\u1EA5y g\xE3 xu\u1EA5t hi\u1EC7n \u1EDF c\xE1c
-        qu\xE1n r\u01B0\u1EE3u, say b\xED t\u1EC9. G\xE3 th\u1EA7y lang d\xF9ng c\xE1i
-        gi\u1ECDng l\u1EA3i nh\u1EA3i l\xE8m b\xE8m k\u1EC3 \u0111i k\u1EC3 l\u1EA1i
-        c\xE2u chuy\u1EC7n c\u0169 r\xEDch, m\xE0 tr\u1EEB \u0111\xE1m tr\u1EBB con
-        ra th\xEC ng\u01B0\u1EDDi n\xE0o ng\u01B0\u1EDDi n\u1EA5y \u0111\u1EC1u \u0111\xE3
-        nghe \u0111\u1EBFn nh\xE0m c\u1EA3 tai.  C\xE2u chuy\u1EC7n c\u1EE7a g\xE3
-        m\u1ED7i ng\xE0y m\u1ED7i kh\xE1c, kh\xF4ng r\xF5 \u0111\u1EA5y l\xE0 con
-        s\xE2u r\u01B0\u1EE3u n\xF3 s\u1EEDa l\u1EA1i hay c\xF2n m\u1EE5c \u0111\xEDch
-        n\xE0o kh\xF4ng ai bi\u1EBFt. Th\u1EBF nh\u01B0ng, c\xF3 m\u1ED9t v\xE0i
-        \xFD ch\xEDnh th\xEC kh\xF4ng bao gi\u1EDD thay \u0111\u1ED5i.  T\u1EC9 nh\u01B0,
-        hoa Tr\u1EA7n Th\u1ED5 Kim Ti\u1EC1n tuy \u201Cc\xE1nh nh\u01B0 b\u1EA1c
-        l\u1ECFng, nh\u1EE5y t\u1EF1a v\xE0ng r\xF2ng\u201D, ngo\u1EA1i h\xECnh r\u1EA5t
-        \u0111\u1EB9p, nh\u01B0ng gi\xE1 tr\u1ECB l\u1EDBn nh\u1EA5t c\u1EE7a n\xF3
-        l\xE0 d\u01B0\u1EE3c hi\u1EC7u. Hoa n\xE0y l\xE0m thu\u1ED1c tr\u1ECB h\u1EE7i
-        th\xEC ch\u1EC9 m\u1ED9t thang th\xF4i, ng\u01B0\u1EDDi b\u1EC7nh s\u1EBD
-        kh\u1ECFi h\u1EB3n sau v\xE0i ng\xE0y. Gi\u1EDBi quy\u1EC1n qu\xFD \u1EDF
-        Thi\xEAn \u0110\xF4 l\u1EA1i ch\u1EC9 th\xEDch c\xE1i v\u1EBB ngo\xE0i v\xE0ng
-        b\u1EA1c c\u1EE7a hoa, chi s\u1ED1 ti\u1EC1n l\u1EDBn gom h\u1EBFt Tr\u1EA7n
-        Th\u1ED5 Kim Ti\u1EC1n mang v\u1EC1 ch\u1EC9 \u0111\u1EC3 th\u01B0\u1EDFng
-        ngo\u1EA1n, th\u1ED5i gi\xE1 v\u1ECB thu\u1ED1c n\xE0y l\xEAn cao ch\xF3t
-        v\xF3t.  L\xFAc th\xEC h\u1EAFn k\u1EC3 do th\u01B0\u01A1ng b\u1EC7nh nh\xE2n,
-        khi th\xEC h\u1EAFn b\u1EA3o do b\u1EA5t m\xE3n v\u1EDBi c\xE1nh quan l\u1EA1i,
-        song k\u1EBFt cu\u1ED9c \u0111\u1EC1u gi\u1ED1ng nhau. Ba n\u0103m tr\u01B0\u1EDBc,
-        g\xE3 th\u1EA7y lang theo m\u1ED9t \u0111o\xE0n h\xE1i hoa \u0111\u1EBFn
-        t\u1EADn hoang m\u1EA1c Tro Tr\u1EAFng \u2013 n\u01A1i thay v\xEC c\xE1t
-        v\xE0ng, tro t\xE0n tr\u1EAFng h\u1EBFu \u0111\xF9n th\xE0nh c\u1ED3n, th\xE0nh
-        b\xE3i ng\xFAt t\u1EA7m m\u1EAFt \u2013 \u0111\u1EC3 t\xECm hoa.  C\u1EA3
-        \u0111o\xE0n b\u1ECB m\u1ED9t \u0111\xE1m qu\xE1i nh\xE2n t\u1EA5n c\xF4ng,
-        v\xE0 cu\u1ED1i c\xF9ng ch\u1EC9 c\xF3 th\u1EA7y lang s\u1ED1ng s\xF3t tr\u1EDF
-        v\u1EC1.  \u0110\xE1m qu\xE1i nh\xE2n trong c\xE2u chuy\u1EC7n c\u1EE7a g\xE3
-        \u2013 nh\u1EEFng k\u1EBB m\xE0 tay th\u1EA7y lang g\u1ECDi l\xE0 Thi\u1EBFt
-        Nh\xE2n \u2013 l\xE0 m\u1ED9t \u0111\xE1m qu\xE1i v\u1EADt hung h\u0103ng,
-        man r\u1EE3. Ch\xFAng kh\xF4ng c\xF3 l\xE0n da, m\u1EAFt l\u1ED3i l\u1EDBn,
-        ch\xE2n m\u1ECDc ra b\xE1nh xe v\xE0 c\xE1nh tay l\xE0 nh\u1EEFng v\xF2i
-        th\u1ECBt \u0111\u1ECF l\xF2m. Mi\xEAu t\u1EA3 l\u1ED1 b\u1ECBch \u0111\u1EBFn
-        n\u1ED7i ch\u1EB3ng ai tin g\xE3, bao g\u1ED3m c\u1EA3 \u0111\xE1m tr\u1EBB
-        con, song th\u1EA7y lang d\u01B0\u1EDDng nh\u01B0 ch\u1EB3ng h\u1EC1 \u0111\u1EC3
-        t\xE2m. H\u1EAFn n\xF3i, s\u1EF1 th\u1EADt cu\u1ED1i c\xF9ng v\u1EABn c\u1EE9
-        l\xE0 s\u1EF1 th\u1EADt. Ng\u01B0\u1EDDi ta r\u1ED3i s\u1EBD ph\u1EA3i thay
-        \u0111\u1ED5i c\xE1ch nh\xECn v\u1EC1 h\u1EAFn, c\u0169ng nh\u01B0 c\xE2u
-        chuy\u1EC7n v\u1EC1 Thi\u1EBFt Nh\xE2n c\u1EE7a h\u1EAFn.  Th\u1EBF r\u1ED3i,
-        ch\u1EB3ng bi\u1EBFt t\u1EEB l\xFAc n\xE0o, tranh v\u1EBD lo\xE0i \u201CThi\u1EBFt
-        Nh\xE2n\u201D \u0111\xFAng theo l\u1EDDi k\u1EC3 c\u1EE7a th\u1EA7y lang
-        xu\u1EA5t hi\u1EC7n \u0111\u1EA7y \u0111\u01B0\u1EDDng, \u0111\u1EA7y ch\u1EE3.
-        Ng\u01B0\u1EDDi l\u1EDBn th\u1EA5y tranh tr\xF4ng qu\xE1i d\u1ECB, b\xE8n
-        mua v\u1EC1 d\u1ECDa \u0111\xE1m tr\u1EBB h\u01B0, th\xE0nh ra l\u1EA1i \u0111\u1EAFt
-        h\xE0ng.  Tr\u01B0\u1EDBc h\xF4m th\u1EA7y lang ch\u1EBFt v\xE0i ng\xE0y,
-        th\u1EA7y lang b\u1EAFt \u0111\u1EA7u kh\u1EB3ng \u0111\u1ECBnh \u0111\xE1m
-        qu\xE1i nh\xE2n trong hoang m\u1EA1c l\xE0 h\u1ED3n ma c\u1EE7a nh\u1EEFng
-        ng\u01B0\u1EDDi ch\u1EBFt v\xEC b\u1EC7nh h\u1EE7i, C\u01A1 th\u1EC3 kh\xF4ng
-        c\xF3 l\u1EDBp da v\xE0 t\u1EE9 chi d\u1ECB h\xECnh d\u1ECB d\u1EA1ng l\xE0
-        c\xE1c L\xFD l\u1EBD h\u1EAFn vi\u1EC7n d\u1EABn. Khi l\u1EDDi \u0111\u1ED3n
-        b\u1EAFt \u0111\u1EA7u lan truy\u1EC1n, v\u01B0\u01A1ng c\xF4ng qu\xFD t\u1ED9c
-        kh\xF4ng c\xF2n s\u0103n \u0111\xF3n Tr\u1EA7n Th\u1ED5 Kim Ti\u1EC1n n\u1EEFa,
-        C\xE1nh th\u01B0\u01A1ng l\xE1i bu\u1ED9c l\xF2ng ph\u1EA3i b\xE1n \u0111\u1ED5
-        b\xE1n th\xE1o h\xE0ng t\u1ED3n cho c\xE1c ti\u1EC7m thu\u1ED1c \u0111\u1EC3
-        b\xF9 l\u1ED7. Th\u1EA7y lang n\u1ECD \u0111\u01B0\u1EE3c th\u1EBF th\xEC
-        kho\xE1i l\u1EAFm. G\xE3 m\u1EB7c b\u1ED9 qu\u1EA7n \xE1o m\u1EDBi chu\u1EA9n
-        b\u1ECB cho ng\xE0y l\u1EC5 Xem Sao, d\u1EA1o kh\u1EAFp l\xE0ng tr\xEAn x\xF3m
-        d\u01B0\u1EDBi c\u1EE9 nh\u01B0 m\u1ED9t anh h\xF9ng, C\xF3 l\u1EBD, trong
-        \u0111\u1EA7u m\xECnh, g\xE3 th\u1EF1c s\u1EF1 ngh\u0129 m\xECnh v\u1EEBa
-        l\xE0m chuy\u1EC7n g\xEC v\u0129 \u0111\u1EA1i l\u1EAFm th\u1EADt, M\u1ED7i
-        l\u1EA7n \u0111i qua tr\u1EA1i h\u1EE7i, th\u1EA5y tranh Thi\u1EBFt Nh\xE2n
-        d\xE1n \u0111\u1EA7y c\xE1c b\u1EDD r\xE0o, ng\u01B0\u1EDDi ta l\u1EA1i b\u1EAFt
-        g\u1EB7p th\u1EA7y lang n\u1ECD c\u01B0\u1EDDi tr\u1ED9m.  Ng\xE0y vui ch\u1EB3ng
-        \u0111\u01B0\u1EE3c bao l\xE2u th\xEC g\xE3 ch\u1EBFt. B\u1ECB \u0111\xE2m
-        ch\u1EBFt trong c\u01A1n say, \u1EDF m\u1ED9t con h\u1EBBm v\u1EAFng ng\u01B0\u1EDDi. 
-        Quan tr\xEAn quan d\u01B0\u1EDBi ch\u1EC9 cho L\xFDnh \u0111i\u1EC1u tra
-        l\u1EA5y l\u1EC7, tr\u1EA5n an m\u1ECDi ng\u01B0\u1EDDi r\u1ED3i \u0111\u1EC3
-        \u0111\u1EA5y. Tr\u1EA7n Th\u1ED5 Kim Ti\u1EC1n l\u1EA7n n\u1EEFa xu\u1EA5t
-        hi\u1EC7n tr\xEAn ch\u1EE3, b\xE1n v\xE0o tay c\xE1c nh\xE0 quy\u1EC1n qu\xFD
-        Thi\xEAn \u0110\xF4 b\u1EB1ng c\xE1i gi\xE1 c\u1EE7a ng\xE0y x\u01B0a. C\xE1nh
-        th\u01B0\u01A1ng l\xE1i x\xE2y cho th\u1EA7y lang m\u1ED9t c\xE1i m\u1ED9
-        to, d\u1EF1ng t\u01B0\u1EE3ng th\u1EDD ph\xFAng r\u1EA5t c\u1EA9n th\u1EADn. 
-        D\xE2n th\xE0nh Thi\xEAn \u0110\xF4 ch\u1EB3ng ai l\u1EA5y l\xE0m l\u1EA1
-        v\u1EC1 c\xE1i ch\u1EBFt c\u1EE7a th\u1EA7y lang, ch\u1EC9 l\xE0 h\u1ECD
-        hi\u1EBFu k\xEC kh\xF4ng hi\u1EC3u r\u1ED1t cu\u1ED9c ai l\xE0 ng\u01B0\u1EDDi
-        \u0111\xE3 gi\u1EBFt g\xE3? Quan? V\u01B0\u01A1ng c\xF4ng qu\xFD t\u1ED9c?
-        C\xE1nh th\u1EA7y thu\u1ED1c? Hay l\xE0 h\u1ED9i l\xE1i th\u01B0\u01A1ng? 
-        C\xF3 l\u1EBD ch\u1EC9 c\xF3 \u0111\xE1m h\u1EE7i l\xE0 h\u1EA1nh ph\xFAc
-        nh\u1EA5t. C\xF3 ng\u01B0\u1EDDi \u0111i qua tr\u1EA1i giam, nghe lo\xE1ng
-        tho\xE1ng b\u1ECDn ch\xFAng n\xF3i chuy\u1EC7n v\u1EDBi nhau. \u0110\u1EE9a
-        n\xE0o \u0111\u1EE9a n\u1EA5y \u0111\u1EC1u \u0111ang \u0103n m\u1EEBng t\u1EEB
-        nay s\u1EBD kh\xF4ng c\xF2n ai b\u1ECBa chuy\u1EC7n \u0111\u1EB7t \u0111i\u1EC1u
-        ch\u1EEDi x\xE9o b\u1ECDn h\u1EAFn n\u1EEFa."
+      description: 
     combatSkill:
     - icon: {fileID: 21300000, guid: 9bf0eafd57dc5c5489f2b349bb9e4af8, type: 3}
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
