@@ -10,10 +10,12 @@ public class ThietNhan_SkillState : AISkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         int baseDamage = GetBaseDamage();
-        int skillDamage = Roll.RollDice(1, 4, 0);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        int skillDamage = Roll.RollDice(1, 4, 0, isCrit);
         int totalDamage = baseDamage + skillDamage;
 
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: Skill Damage = 1d4 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: Skill Damage = {rollTimes}d4 = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Ném Đá: damage = {baseDamage} + {skillDamage} = {totalDamage}");
 
@@ -60,7 +62,9 @@ public class ThietNhan_SkillState : AISkillState
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
         int baseDamage = GetBaseDamage();
-        int skillDamage = Roll.RollDice(1, 4, 0);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        int skillDamage = Roll.RollDice(1, 4, 0, isCrit);
 
         var friends = GpManager.MapManager.GetAllTypeInRange(Info.Cell, CharacterType.ThietNhan, 3);
         skillDamage += friends.Count;
@@ -68,7 +72,7 @@ public class ThietNhan_SkillState : AISkillState
 
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: có {friends.Count} Thiết Nhân đứng cạnh trong 3 ô");
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Ném Đá: Skill Damage = 1d4 + 1 * {friends.Count} = {skillDamage}");
+            $"[{CharName}] Ném Đá: Skill Damage = {rollTimes}d4 + 1 * {friends.Count} = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Ném Đá: damage = {baseDamage} + {skillDamage} = {totalDamage}");
 
@@ -95,16 +99,18 @@ public class ThietNhan_SkillState : AISkillState
         };
     }
 
-    
+
     //===================== SKILL 3 =====================
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
         int baseDamage = GetBaseDamage();
-        int skillDamage = Roll.RollDice(1, 4, 0);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        int skillDamage = Roll.RollDice(1, 4, 0, isCrit);
         int totalDamage = baseDamage + skillDamage;
-        
+
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Lây Nhiễm: Skill Damage = 1d4 = {skillDamage}");
+            $"[{CharName}] Lây Nhiễm: Skill Damage = {rollTimes}d4 = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Lây Nhiễm: damage = {baseDamage} + {skillDamage} = {totalDamage}");
         return new DamageTakenParams()
@@ -122,16 +128,17 @@ public class ThietNhan_SkillState : AISkillState
             ReceiveFromCharacter = Character
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
         return new DamageTakenParams { Damage = GetBaseDamage() };
     }
-    
+
     private int ProcessFriendAttacks(IEnumerable<Character> friends, int totalDamage)
     {
         foreach (var friend in friends)
         {
+            bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
             int roll = Roll.RollDice(1, 20, 0);
             AlkawaDebug.Log(ELogCategory.SKILL, "----------------------------------------------------------");
 
@@ -143,11 +150,12 @@ public class ThietNhan_SkillState : AISkillState
                     $"[{CharName}] Ném Đá: 1d20 = {roll} >= 10 => có thể cùng tấn công");
 
                 int friendBaseDamage = GetBaseDamage();
-                int friendSkillDamage = Roll.RollDice(1, 4, 0);
+                int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+                int friendSkillDamage = Roll.RollDice(1, 4, 0, isCrit);
                 int friendTotalDamage = friendBaseDamage + friendSkillDamage;
                 totalDamage += friendTotalDamage;
 
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: Skill Damage = 1d4 = {friendSkillDamage}");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ném Đá: Skill Damage = {rollTimes}d4 = {friendSkillDamage}");
                 AlkawaDebug.Log(ELogCategory.SKILL,
                     $"[{CharName}] Ném Đá: damage = {friendBaseDamage} + {friendSkillDamage} = {friendTotalDamage}");
             }

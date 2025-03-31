@@ -61,8 +61,10 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = (int)(Roll.RollDice(1, 6, 3) * 1.5f);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * (1d6 + 3) = {skillDamage}");
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        var skillDamage = (int)(Roll.RollDice(1, 6, 3, isCrit) * 1.5f);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * ({rollTimes}d6 + 3) = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
         AlkawaDebug.Log(ELogCategory.SKILL,
@@ -86,8 +88,10 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = (int)(Roll.RollDice(1, 6, 3) * 1.5f);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * 1d6 + 3 = {skillDamage}");
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        var skillDamage = (int)(Roll.RollDice(1, 6, 3, isCrit) * 1.5f);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * ({rollTimes}d6 + 3) = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
         AlkawaDebug.Log(ELogCategory.SKILL,
@@ -110,8 +114,10 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = (int)(Roll.RollDice(1, 6, 3) * 1.5f);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * 1d6 + 3 = {skillDamage}");
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        var skillDamage = (int)(Roll.RollDice(1, 6, 3, isCrit) * 1.5f);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * ({rollTimes}d6 + 3) = {skillDamage}");
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
         AlkawaDebug.Log(ELogCategory.SKILL,
@@ -164,7 +170,7 @@ public class LyVoDanh_SkillState : SkillState
             ReceiveFromCharacter = Character
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Mính Đính Quy Lai");
@@ -190,7 +196,7 @@ public class LyVoDanh_SkillState : SkillState
             ReceiveFromCharacter = Character
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
     {
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Liên Vấn");
@@ -205,7 +211,7 @@ public class LyVoDanh_SkillState : SkillState
                     duration = EffectConfig.BuffRound,
                     value = 4,
                 },
-                
+
                 new DrunkEffect()
                 {
                     effectType = EffectType.Drunk,
@@ -222,9 +228,11 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var rollDamage = Roll.RollDice(2, 4, 2);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(2, isCrit);
+        var rollDamage = Roll.RollDice(2, 4, 2, isCrit);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -251,9 +259,11 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var rollDamage = Roll.RollDice(2, 4, 2);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(2, isCrit);
+        var rollDamage = Roll.RollDice(2, 4, 2, isCrit);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -272,10 +282,12 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var rollDamage = Roll.RollDice(2, 4, 2);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(2, isCrit);
+        var rollDamage = Roll.RollDice(2, 4, 2, isCrit);
         var realDamage = baseDamage + rollDamage;
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Thất Ca Ngâm: damage = {baseDamage} + 2d4 + 2 = {realDamage}");
+            $"[{CharName}] Thất Ca Ngâm: damage = {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -324,12 +336,12 @@ public class LyVoDanh_SkillState : SkillState
     {
         AddTargetCharacters(Character);
     }
-    
+
     protected override void SetTargetCharacters_Skill3_TeammateTurn()
     {
         AddTargetCharacters(Character);
     }
-    
+
     protected override void SetTargetCharacters_Skill4_MyTurn()
     {
         var allCharacter = new HashSet<Character>(TargetCharacters);

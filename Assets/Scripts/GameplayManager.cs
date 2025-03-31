@@ -163,13 +163,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         _characterDeath[character.Type].Add(character.Info.Cell);
         IsPauseGameInternal = false;
         SetInteract(true);
-
-        // Lưu lại index của nhân vật bị giết
         int characterIndex = Characters.IndexOf(character);
-
         Characters.Remove(character);
-
-        // Nếu nhân vật bị giết có index nhỏ hơn CurrentPlayerIndex, giảm CurrentPlayerIndex xuống 1
         if (characterIndex < CurrentPlayerIndex)
         {
             CurrentPlayerIndex--;
@@ -188,15 +183,26 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             HandleEndTurn(0.3f, "Chết trong lượt chính");
         }
-        else if (SelectedCharacter == character && character.Type != MainCharacter.Type && character.Type == Type.AI)
+        else if (SelectedCharacter == character)
         {
-            Debug.Log($"[{character.characterConfig.characterName}] chết trong lượt counter => quay về lượt hiện tại");
-            if (PreviousSelectedCharacter != null)
-                callback = () => SetSelectedCharacter(PreviousSelectedCharacter);
-            else if (MainCharacter != null)
-                callback = () => SetSelectedCharacter(MainCharacter);
+            Debug.Log($"[DEBUG] SelectedCharacter == character: {true}");
+            Debug.Log($"[DEBUG] character.Type != MainCharacter.Type: {character.Type != MainCharacter.Type}");
+            Debug.Log($"[DEBUG] character.Type == Type.AI: {character.Type == Type.AI}");
+
+            if (character.Type != MainCharacter.Type)
+            {
+                Debug.Log($"[{character.characterConfig.characterName}] chết trong lượt counter => quay về lượt hiện tại");
+                if (PreviousSelectedCharacter != null)
+                    callback = () => SetSelectedCharacter(PreviousSelectedCharacter);
+                else if (MainCharacter != null)
+                    callback = () => SetSelectedCharacter(MainCharacter);
+                else
+                    callback = () => HandleEndTurn("NONEEEEEEEEEEEEE");
+            }
             else
-                callback = () => HandleEndTurn("NONEEEEEEEEEEEEE");
+            {
+                Debug.Log($"[WARNING] AI chết nhưng không quay về lượt hiện tại - Character: {character.characterConfig.characterName}, Type: {character.Type}, MainType: {MainCharacter.Type}");
+            }
         }
     }
 
@@ -462,6 +468,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         Debug.Log("======================================================================");
         MainCharacter = CurrentPlayerIndex >= Characters.Count ? Characters[0] : Characters[CurrentPlayerIndex];
+
+        // Reset có thể sử dụng skill khi bắt đầu lượt chính - di chuyển lên trước
+        if (MainCharacter != null)
+        {
+            MainCharacter.CanUseSkill = true;
+        }
+
         if (TutorialManager.Instance != null
             && CurrentRound == 2
             && MainCharacter == Characters[0]

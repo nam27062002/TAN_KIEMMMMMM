@@ -58,8 +58,10 @@ public class CanSat_SkillState : AISkillState
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var skillDamage = Roll.RollDice(2, 12, 4);
-        Debug.Log($"Skill damage = 2d12 +4 = {skillDamage}");
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(2, isCrit);
+        var skillDamage = Roll.RollDice(2, 12, 4, isCrit);
+        Debug.Log($"Skill damage = {rollTimes}d12 + 4 = {skillDamage}");
         var realDamage = GetTotalDamage(baseDamage, skillDamage);
         var path = GpManager.MapManager.FindShortestPath(Character.Info.Cell, character.Info.Cell);
         if (path.Count > 2)
@@ -96,9 +98,10 @@ public class CanSat_SkillState : AISkillState
 
     protected void HandleTakeAP(Character character)
     {
-        var data = Roll.RollDice(1, 20, 0);
-        Debug.Log($"Cướp AP: value = 1d20 = {data}");
-        if (data < 10)
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int d20Roll = Roll.RollDice(1, 20, 0);
+        Debug.Log($"Cướp AP: value = 1d20 = {d20Roll}");
+        if (d20Roll < 10)
         {
             character.Info.ApplyEffects(new List<EffectData>()
             {

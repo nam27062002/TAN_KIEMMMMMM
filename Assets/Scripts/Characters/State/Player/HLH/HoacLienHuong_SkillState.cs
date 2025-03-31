@@ -7,7 +7,7 @@ public class HoacLienHuong_SkillState : SkillState
     public HoacLienHuong_SkillState(Character character) : base(character)
     {
     }
-    
+
     protected override void HandleCastSkill()
     {
         base.HandleCastSkill();
@@ -16,24 +16,26 @@ public class HoacLienHuong_SkillState : SkillState
             MoveToCell(_skillStateParams.TargetCell, 0.5f);
         }
     }
-    
+
     //===================== SKILL 2 =====================
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
         var deathCount = GpManager.GetCharacterDeathInRange(Character, 10);
-        var skillDamage = Roll.RollDice(1, 4, 0) + deathCount;
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        var skillDamage = Roll.RollDice(1, 4, 0, isCrit) + deathCount;
         var totalDamage = baseDamage + skillDamage;
         Debug.Log($"Số thi thể = {deathCount}");
-        Debug.Log($"Skill Damage = 1d4 + {deathCount} = {skillDamage}");
+        Debug.Log($"Skill Damage = {rollTimes}d4 + {deathCount} = {skillDamage}");
         Debug.Log($"Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
         return new DamageTakenParams
         {
             Damage = totalDamage,
             ReceiveFromCharacter = Character
-        };   
+        };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
         var coveredBy = GpManager.GetNearestAlly(Character);
@@ -54,7 +56,7 @@ public class HoacLienHuong_SkillState : SkillState
             ReceiveFromCharacter = character
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
         return new DamageTakenParams()
@@ -62,7 +64,7 @@ public class HoacLienHuong_SkillState : SkillState
             ReceiveFromCharacter = character
         };
     }
-    
+
     //===================== SKILL 3 =====================
 
     protected override DamageTakenParams GetDamageParams_Skill3_MyTurn(Character character)
@@ -76,7 +78,7 @@ public class HoacLienHuong_SkillState : SkillState
         ((HoacLienHuong)character).CurrentShield = Info.Cell;
         return new DamageTakenParams();
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
     {
         Character.Info.ApplyEffects(new List<EffectData>()
@@ -87,7 +89,7 @@ public class HoacLienHuong_SkillState : SkillState
                 Actor = character,
             }
         });
-        
+
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>()
@@ -95,21 +97,21 @@ public class HoacLienHuong_SkillState : SkillState
                 new()
                 {
                     effectType = EffectType.SnakeArmor,
-   
+
                     Actor = Character,
                 }
             },
             ReceiveFromCharacter = Character
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
         var cell = character.GetBackCell();
         TeleportToCell(cell);
         return new DamageTakenParams();
     }
-    
+
     //===================== SKILL 4 =====================
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
@@ -129,9 +131,9 @@ public class HoacLienHuong_SkillState : SkillState
                 }
             },
             ReceiveFromCharacter = Character
-        };   
+        };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
     {
         var walkAbleCells = GpManager.MapManager.GetAllHexagonInRange(character.Info.Cell, 1);
@@ -154,7 +156,7 @@ public class HoacLienHuong_SkillState : SkillState
             ReceiveFromCharacter = Character
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character _)
     {
         var baseDamage = GetBaseDamage();
@@ -165,7 +167,7 @@ public class HoacLienHuong_SkillState : SkillState
             Damage = totalDamage,
         };
     }
-    
+
     //===================== SKILL 2 =====================
     protected override void SetTargetCharacters_Skill2_MyTurn()
     {
@@ -181,31 +183,31 @@ public class HoacLienHuong_SkillState : SkillState
     {
         AddTargetCharacters(Character);
     }
-    
+
     //===================== SKILL 3 =====================
     protected override void SetTargetCharacters_Skill3_TeammateTurn()
     {
         AddTargetCharacters(GpManager.MainCharacter);
     }
-    
+
     protected override void SetTargetCharacters_Skill3_MyTurn()
     {
         AddTargetCharacters(Character);
     }
-    
+
     protected override void SetTargetCharacters_Skill3_EnemyTurn()
     {
         AddTargetCharacters(GpManager.MainCharacter);
     }
-    
+
     //===================== SKILL 4 =====================
-    
+
     protected override void SetTargetCharacters_Skill4_MyTurn()
     {
         var nearestEnemy = GpManager.GetNearestEnemy(Character);
         if (nearestEnemy != null) AddTargetCharacters(nearestEnemy);
     }
-    
+
     protected override void SetTargetCharacters_Skill4_EnemyTurn()
     {
         var focusEnemy = GpManager.MainCharacter;
@@ -218,4 +220,4 @@ public class HoacLienHuong_SkillState : SkillState
             AddTargetCharacters(item);
         }
     }
-}        
+}

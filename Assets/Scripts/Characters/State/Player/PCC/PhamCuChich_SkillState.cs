@@ -6,7 +6,7 @@ public class PhamCuChich_SkillState : SkillState
     public PhamCuChich_SkillState(Character character) : base(character)
     {
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         var shield = GetShieldValue();
@@ -24,7 +24,7 @@ public class PhamCuChich_SkillState : SkillState
             }
         };
         Info.ApplyEffects(effect);
-        
+
         return new DamageTakenParams
         {
             Effects = effect,
@@ -48,13 +48,13 @@ public class PhamCuChich_SkillState : SkillState
             }
         };
         Info.ApplyEffects(effect);
-        
+
         return new DamageTakenParams
         {
             Effects = effect,
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
         return new DamageTakenParams()
@@ -100,7 +100,7 @@ public class PhamCuChich_SkillState : SkillState
             Effects = effect,
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
     {
         return new DamageTakenParams
@@ -111,14 +111,14 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.Shield,
                     duration = EffectConfig.BuffRound,
-                    Actor = Character, 
+                    Actor = Character,
                     damage = 5,
                     value = 5
                 }
             }
         };
     }
-        
+
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
         if (_skillStateParams?.DamageTakenParams == null)
@@ -144,10 +144,13 @@ public class PhamCuChich_SkillState : SkillState
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
-        var damage = Roll.RollDice(3, 4, 0) + 6 + Roll.RollDice(3, 6, 0);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int d4RollTimes = Roll.GetActualRollTimes(3, isCrit);
+        int d6RollTimes = Roll.GetActualRollTimes(3, isCrit);
+        var damage = Roll.RollDice(3, 4, 0, isCrit) + 6 + Roll.RollDice(3, 6, 0, isCrit);
         Info.ApplyEffects(new List<EffectData>()
         {
             new ChangeStatEffect()
@@ -157,8 +160,8 @@ public class PhamCuChich_SkillState : SkillState
                 value = 4,
             }
         });
-        Debug.Log($"Damage =  3d4 + 6 + 3d6 = {damage}");
-        
+        Debug.Log($"Damage = {d4RollTimes}d4 + 6 + {d6RollTimes}d6 = {damage}");
+
         return new DamageTakenParams
         {
             Damage = damage,
@@ -173,7 +176,7 @@ public class PhamCuChich_SkillState : SkillState
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character)
     {
         Info.ApplyEffects(new List<EffectData>()
@@ -199,13 +202,13 @@ public class PhamCuChich_SkillState : SkillState
             }
         };
     }
-    
+
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
     {
         if (((PhamCuChich)Character).CurrentShield != null)
         {
             ((PhamCuChich)Character).CurrentShield.UnSetMainProjectile();
-        }   
+        }
         Info.Cell.SetMainProjectile();
         ((PhamCuChich)Character).CurrentShield = Info.Cell;
         return new DamageTakenParams()
@@ -227,14 +230,16 @@ public class PhamCuChich_SkillState : SkillState
     {
         AddTargetCharacters(Character);
     }
-    
+
     private int GetShieldValue()
     {
-        var shield = Roll.RollDice(2, 6,4);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Lá chắn = 2d6 + 4 = {shield}");
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(2, isCrit);
+        var shield = Roll.RollDice(2, 6, 4, isCrit);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"Lá chắn = {rollTimes}d6 + 4 = {shield}");
         return shield;
     }
-    
+
     protected override void SetTargetCharacters_Skill2_MyTurn()
     {
         var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell, _skillStateParams.SkillInfo);
@@ -243,7 +248,7 @@ public class PhamCuChich_SkillState : SkillState
             AddTargetCharacters(character);
         }
     }
-    
+
     protected override void SetTargetCharacters_Skill3_MyTurn()
     {
         RemoveAllTargetCharacters();
@@ -253,7 +258,7 @@ public class PhamCuChich_SkillState : SkillState
             AddTargetCharacters(character);
         }
     }
-    
+
     protected override void SetTargetCharacters_Skill3_TeammateTurn()
     {
         var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell, _skillStateParams.SkillInfo);
@@ -262,12 +267,12 @@ public class PhamCuChich_SkillState : SkillState
             AddTargetCharacters(character);
         }
     }
-    
+
     protected override void SetTargetCharacters_Skill3_EnemyTurn()
     {
         AddTargetCharacters(GpManager.MainCharacter);
     }
-    
+
     protected override void SetTargetCharacters_Skill4_TeammateTurn()
     {
         AddTargetCharacters(GpManager.MainCharacter);
@@ -282,17 +287,17 @@ public class PhamCuChich_SkillState : SkillState
     {
         BreakShield(3);
     }
-    
+
     protected override void HandleAfterDamageTakenFinish_Skill4_TeammateTurn()
     {
         BreakShield(3);
     }
-    
+
     protected override void HandleAfterDamageTakenFinish_Skill4_EnemyTurn()
     {
         BreakShield(3);
     }
-    
+
     private void BreakShield(int range)
     {
         if (Character.Info.ShieldEffectData == null)

@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 372377375}
   - component: {fileID: 372377376}
   - component: {fileID: 372377377}
+  - component: {fileID: 372377378}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -204,6 +205,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed59034bb31340545bf7a6cc08fbeb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &372377378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372377372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0a31f0888b3e84b9050d0936e59c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showCheatsUI: 1
+  cheatUIPanel: {fileID: 0}
+  cheatStatusText: {fileID: 0}
+  toggleCheatUIKey: 96
+  alwaysCritKey: 99
+  infiniteHPKey: 104
+  infiniteMPKey: 109
+  infiniteAPKey: 97
+  oneHitKillKey: 107
 --- !u!1 &544687009
 GameObject:
   m_ObjectHideFlags: 0

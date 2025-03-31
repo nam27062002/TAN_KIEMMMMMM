@@ -54,7 +54,7 @@ public class DoanGiaLinh_SkillState : SkillState
                     effects = effects,
                 }
             });
-            
+
             int value = Mathf.Min(flower, venomousParasite);
             SetVenomousParasite(flower - value);
             effects.Add(new ChangeStatEffect()
@@ -63,9 +63,11 @@ public class DoanGiaLinh_SkillState : SkillState
                 value = value,
                 duration = -1
             });
-            int extraDamage = Roll.RollDice(1, 6, 0) * value;
+            bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+            int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+            int extraDamage = Roll.RollDice(1, 6, 0, isCrit) * value;
             AlkawaDebug.Log(ELogCategory.SKILL,
-                $"[{CharName}] Độc trùng ăn hoa: damage = {value} * 1d6 = {extraDamage}");
+                $"[{CharName}] Độc trùng ăn hoa: damage = {value} * {rollTimes}d6 = {extraDamage}");
             return currentDamage + extraDamage;
         }
 
@@ -135,7 +137,7 @@ public class DoanGiaLinh_SkillState : SkillState
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
         return new DamageTakenParams
         {
-            Damage = damage, 
+            Damage = damage,
             Effects = effects,
             ReceiveFromCharacter = Character
         };
@@ -164,7 +166,7 @@ public class DoanGiaLinh_SkillState : SkillState
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
         return new DamageTakenParams
         {
-            Damage = damage, 
+            Damage = damage,
             Effects = effects,
             ReceiveFromCharacter = Character
         };
@@ -174,9 +176,11 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         ApplyPoisonPowder(target);
         int baseDamage = GetBaseDamage();
-        int skillDamage = Roll.RollDice(1, 4, 2);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        int skillDamage = Roll.RollDice(1, 4, 2, isCrit);
         int realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thược Dược Đỏ: skill damage = 1d4 + 2 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thược Dược Đỏ: skill damage = {rollTimes}d4 + 2 = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Thược Dược Đỏ: damage = {baseDamage} + {skillDamage} = {realDamage}");
         var effects = new List<EffectData>()
@@ -196,7 +200,7 @@ public class DoanGiaLinh_SkillState : SkillState
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams
         {
-            Damage = realDamage, 
+            Damage = realDamage,
             Effects = effects,
             ReceiveFromCharacter = Character,
         };
@@ -206,9 +210,11 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         ApplyPoisonPowder(target);
         int baseDamage = GetBaseDamage();
-        int skillDamage = Roll.RollDice(1, 4, 2);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        int skillDamage = Roll.RollDice(1, 4, 2, isCrit);
         int realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sen Trắng: skill damage = 1d4 + 2 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Sen Trắng: skill damage = {rollTimes}d4 + 2 = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Sen Trắng: damage = {baseDamage} + {skillDamage} = {realDamage}");
         var effects = new List<EffectData>()
@@ -238,9 +244,11 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         ApplyPoisonPowder(target);
         int baseDamage = GetBaseDamage();
-        int skillDamage = Roll.RollDice(1, 4, 2);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        int skillDamage = Roll.RollDice(1, 4, 2, isCrit);
         int realDamage = baseDamage + skillDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Cúc Vạn Thọ: skill damage = 1d4 + 2 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Cúc Vạn Thọ: skill damage = {rollTimes}d4 + 2 = {skillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Cúc Vạn Thọ: damage = {baseDamage} + {skillDamage} = {realDamage}");
         var effects = new List<EffectData>()
@@ -276,12 +284,14 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         ApplyPoisonPowder(target);
         int baseDamage = GetBaseDamage();
-        int skillDamage = Roll.RollDice(1, 4, 0);
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+        int skillDamage = Roll.RollDice(1, 4, 0, isCrit);
         int stack = target.Info.GetPoisonPowder();
         int totalSkillDamage = skillDamage * stack;
         int realDamage = baseDamage + totalSkillDamage;
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Tuyết Điểm Hồng Phấn: skill damage = 1d4 * {stack} = {totalSkillDamage}");
+            $"[{CharName}] Tuyết Điểm Hồng Phấn: skill damage = {rollTimes}d4 * {stack} = {totalSkillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}");
         var effects = new List<EffectData>()

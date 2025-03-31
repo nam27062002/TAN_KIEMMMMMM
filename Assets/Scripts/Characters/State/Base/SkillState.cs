@@ -185,7 +185,7 @@ public class SkillState : CharacterState
 #if UNITY_EDITOR
         if (character is DoanGiaLinh) return new HitChangeParams() { HitChangeValue = 20, IsCritical = false };
 #endif
-        
+
         if (character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Prone))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");
@@ -257,13 +257,13 @@ public class SkillState : CharacterState
             AlkawaDebug.Log(ELogCategory.SKILL,
                 $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
                 $"[{target.characterConfig.characterName}] Dodge = {dodge}");
-        
+
             if (hitChangeParams.HitChangeValue < dodge)
             {
                 if (target.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
                 {
                     Debug.Log($"{target.characterConfig.characterName} có hiệu ứng say, {CharName} đánh hụt => sleep");
-                    Character.Info.ApplyEffect(                
+                    Character.Info.ApplyEffect(
                         new EffectData
                         {
                             effectType = EffectType.Sleep,
@@ -282,18 +282,31 @@ public class SkillState : CharacterState
                     OnSetDamageTakenFinished = HandleTargetFinish,
                     SkillStateParams = _skillStateParams
                 };
-                Character.HandleMpChanged(_skillStateParams.SkillInfo.mpCost); 
+                Character.HandleMpChanged(_skillStateParams.SkillInfo.mpCost);
                 CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
             }
             else
             {
-                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, GetDamageParams(target)));
+                // Đặt trạng thái crit trước khi tính toán sát thương
+                Roll.SetCriticalHit(hitChangeParams.IsCritical);
+
+                var damageParams = GetDamageParams(target);
+                if (hitChangeParams.IsCritical)
+                {
+                    AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Character.characterConfig.characterName} gây crit vào {target.characterConfig.characterName}");
+                    // Có thể thêm hiệu ứng khi crit ở đây nếu cần
+                }
+
+                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
+
+                // Reset lại trạng thái crit sau khi đã xử lý xong
+                Roll.SetCriticalHit(false);
             }
 
-            _waitForFeedback = true;   
+            _waitForFeedback = true;
         }
     }
-    
+
     private void ProcessFriendlyTarget(Character target)
     {
         var damageParams = GetDamageParams(target);
@@ -316,7 +329,7 @@ public class SkillState : CharacterState
     protected virtual void HandleApplyDamageOnEnemy(Character character)
     {
     }
-    
+
     private IEnumerator HandleApplyDamage(Character target, DamageTakenParams damageTakenParams)
     {
         if (target != Character)
@@ -325,7 +338,7 @@ public class SkillState : CharacterState
             yield return new WaitForSecondsRealtime(0.1f);
             if (target.Type != Character.Type)
             {
-                HandleApplyDamageOnEnemy(target);   
+                HandleApplyDamageOnEnemy(target);
             }
             if (!target.Info.IsDie)
             {
@@ -411,8 +424,23 @@ public class SkillState : CharacterState
         new DamageTakenParams { Damage = GetBaseDamage() };
 
     //===================== SKILL 4 =====================
-    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character) =>
-        new DamageTakenParams { Damage = GetBaseDamage() };
+    protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
+    {
+        var baseDamage = GetBaseDamage(); // Đã được xử lý crit nếu có
+        var rollDamage = Roll.RollDice(2, 4, 2); // Tự động thêm 1 xúc xắc nếu đang trong trạng thái crit
+        var realDamage = baseDamage + rollDamage;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
+        return new DamageTakenParams
+        {
+            Damage = realDamage,
+            ReducedMana = 0,
+            Effects = new List<EffectData>(),
+            OnSetDamageTakenFinished = HandleTargetFinish,
+            ReceiveFromCharacter = Character,
+            CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != character.Type,
+            SkillStateParams = _skillStateParams
+        };
+    }
 
     protected virtual DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character character) =>
         new DamageTakenParams { Damage = GetBaseDamage() };
@@ -481,7 +509,7 @@ public class SkillState : CharacterState
     }
 
     #endregion
-    
+
     #region Set Target Characters
 
     //===================== SKILL 1 =====================
@@ -593,8 +621,9 @@ public class SkillState : CharacterState
 
     protected int GetSkillDamage(RollData rollData)
     {
-        var damage = Roll.RollDice(rollData);
-        Debug.Log($"Skill Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+        var damage = Roll.RollDice(rollData, isCrit);
+        Debug.Log($"Skill Damage = {Roll.GetRollFormula(rollData, rollData.add, isCrit)} = {damage}");
         return damage;
     }
 
