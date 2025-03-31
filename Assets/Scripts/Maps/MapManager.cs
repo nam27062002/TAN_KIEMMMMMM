@@ -37,7 +37,11 @@ public class MapManager : MonoBehaviour
         foreach (var cell in cells)
         {
             cell.Value.gameObject.SetActive(true);
+#if UNITY_EDITOR
+            var delay = 0;
+#else
             var delay = count * GameplayManager.Instance.LevelConfig.delayIncrement;
+#endif
             cell.Value.Initialize(delay, HandleLoadMapFinished);
             count++;
         }
