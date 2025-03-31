@@ -13,17 +13,6 @@ public class AIDamageTakenState : DamageTakenState
     {
         if (!DamageTakenParams.CanCounter) return false;
         if (GpManager.SelectedCharacter.Type == Type.AI) return false;
-        if (Character.lastDamageTakenCountered)
-        {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì đã counter lần trước.");
-            return false;
-        }
-
-        if (Info.CurrentHp > Character.GetMaxHp() / 2)
-        {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: ({Info.CurrentHp}/{Character.GetMaxHp()})");
-            return false;
-        }
 
         var target = DamageTakenParams.ReceiveFromCharacter;
         if (target == null)
@@ -45,11 +34,25 @@ public class AIDamageTakenState : DamageTakenState
             return false;
         }
 #if !UNITY_EDITOR // check counter trên editor
+        
+        if (Character.lastDamageTakenCountered)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì đã counter lần trước.");
+            return false;
+        }
+
+        if (Info.CurrentHp > Character.GetMaxHp() / 2)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: ({Info.CurrentHp}/{Character.GetMaxHp()})");
+            return false;
+        }
+
         if (Random.value > 0.3f)
         {
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: {Random.value} > 0.3");
             return false;
         }
+        
 #endif
         _castSkillData = castSkillData[Random.Range(0, castSkillData.Count)];
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - dùng skill {_castSkillData.SkillInfo.name} lên {target.characterConfig.characterName}");
