@@ -3,33 +3,42 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIFeedback : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI feedbackText;
     [SerializeField] private Character character;
     private readonly List<EffectUI> _effectUIs = new();
-    
-    [Title("Effects")] 
+
+    [Title("Effects")] [SerializeField] private Image bgImage;
     [SerializeField] private EffectUI effectUI;
     [SerializeField] private RectTransform effectsPanel;
 
+    [Title("Colors")]
+    [SerializeField] private Color normalDamageColor = Color.white;
+    [SerializeField] private Color critDamageColor = Color.red;
+
     private void Start()
     {
+        bgImage.enabled = false;
         feedbackText.gameObject.SetActiveIfNeeded(false);
     }
 
-    public void ShowMessage(string message)
+    public void ShowMessage(string message, bool isCrit = false)
     {
-        StartCoroutine(ShowDamageReceiveCoroutine(message));
+        StartCoroutine(ShowDamageReceiveCoroutine(message, isCrit));
     }
 
-    private IEnumerator ShowDamageReceiveCoroutine(string message)
+    private IEnumerator ShowDamageReceiveCoroutine(string message, bool isCrit)
     {
+        bgImage.enabled = isCrit;
         feedbackText.gameObject.SetActive(true);
         feedbackText.text = message;
+        feedbackText.color = isCrit ? critDamageColor : normalDamageColor;
         yield return new WaitForSeconds(1f);
         feedbackText.gameObject.SetActive(false);
+        bgImage.enabled = false;
     }
 
     private void FixedUpdate()

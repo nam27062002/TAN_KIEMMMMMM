@@ -13,4 +13,5 @@ public class DamageTakenParams : StateParams
     public bool WaitCounter;
     public SkillStateParams SkillStateParams;
     public CastSkillData CastSkillData;
+    public bool IsHitCritical { get; set; } = false;
 }

@@ -220,8 +220,8 @@ MonoBehaviour:
       atkOverride: 100
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
-      overrideMaxHp: 0
-      maxHpOverride: 0
+      overrideMaxHp: 1
+      maxHpOverride: 200
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000

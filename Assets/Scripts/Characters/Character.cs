@@ -9,14 +9,15 @@ public abstract class Character : MonoBehaviour
 {
     //new 
     public int CharacterId { get; set; }
-    public event EventHandler<Character> OnDeath;  
+    public event EventHandler<Character> OnDeath;
     // old
     [Title("Character Type")] public CharacterType characterType;
 
-    [Title("Animation"), Space] [SerializeField]
+    [Title("Animation"), Space]
+    [SerializeField]
     private CharacterAnimationData characterAnimationData;
 
-    [Title("References")] 
+    [Title("References")]
     public HpBar hpBar;
     public UIFeedback uiFeedback;
     public LinkCharacter linkCharacter;
@@ -25,11 +26,11 @@ public abstract class Character : MonoBehaviour
     [Title("Settings"), Space(10)] public CharacterConfig characterConfig;
     public SkillConfig skillConfig;
     public List<PassiveSkill> passiveSkills;
-    
+
     public CharacterStateMachine StateMachine { get; set; }
 
     public HashSet<PassiveSkill> PendingPassiveSkillsTrigger { get; set; } = new();
-    
+
     public CharacterInfo Info;
     protected SkillStateParams SkillStateParams;
     protected DamageTakenParams DamageTakenParams;
@@ -37,11 +38,11 @@ public abstract class Character : MonoBehaviour
     // protected function
     protected GameplayManager GpManager => GameplayManager.Instance;
     protected MapManager MapManager => GpManager.MapManager;
-    
+
     // Public function
     public bool lastDamageTakenCountered;
     public CharacterAnimationData AnimationData => characterAnimationData;
-    
+
     // public vitual function
     public virtual Type Type => Type.None;
     public virtual bool CanEndTurn => false;
@@ -57,14 +58,14 @@ public abstract class Character : MonoBehaviour
         return Info.Attributes.health;
 #endif
     }
-    
+
     private void Awake()
     {
         SetStateMachine();
         GpManager.OnEndTurn += OnEndTurn;
         GpManager.OnNewRound += OnNewRound;
     }
-    
+
     private void OnEndTurn(object sender, EventArgs e)
     {
         if (SkillStateParams is { IdleStateParams: { DamageTakenParams: not null } })
@@ -74,7 +75,7 @@ public abstract class Character : MonoBehaviour
         CanUseSkill = true;
         SkillStateParams = null;
     }
-    
+
     public void FixedUpdate()
     {
         DrawLink();
@@ -119,7 +120,7 @@ public abstract class Character : MonoBehaviour
     }
 
     #region Set States
-    
+
     protected virtual void SetIdle(IdleStateParams idleStateParams = null)
     {
         ChangeState(ECharacterState.Idle, idleStateParams);
@@ -129,7 +130,7 @@ public abstract class Character : MonoBehaviour
     {
         ChangeState(ECharacterState.Skill, skillStateParams);
     }
-    
+
     public virtual void TryMoveToCell(Cell cell)
     {
         if (Info.MoveRange != null && Info.MoveRange.Contains(cell))
@@ -176,19 +177,19 @@ public abstract class Character : MonoBehaviour
         SkillStateParams = skillStateParams;
         HandleCounterLogic(skillStateParams.IdleStateParams.DamageTakenParams, true);
     }
-    
+
     private void HandleCounterLogic(DamageTakenParams damageTaken = null, bool waitCounter = false)
     {
         SetIdle();
         DamageTakenParams = damageTaken ?? GetIdleStateParams().DamageTakenParams;
         DamageTakenParams.CanCounter = false;
         DamageTakenParams.WaitCounter = waitCounter;
-    
+
         if (DamageTakenParams.WaitCounter)
         {
             DamageTakenParams.OnSetDamageTakenFinished += OnDamageTakenCounterFinished;
         }
-        
+
         if (!HandleBlockSkillLogic(DamageTakenParams))
         {
             OnDamageTaken(DamageTakenParams);
@@ -205,11 +206,11 @@ public abstract class Character : MonoBehaviour
                 WaitForCounter = true,
             });
             ShowMessage("Chặn sát thương");
-            return true; 
+            return true;
         }
-        return false; 
+        return false;
     }
-    
+
     protected virtual bool CanBlockSkill(DamageTakenParams damageTakenParams)
     {
         return SkillStateParams.SkillInfo.canBlockDamage;
@@ -230,7 +231,7 @@ public abstract class Character : MonoBehaviour
         SkillStateParams.DamageTakenParams = DamageTakenParams;
         SetSkill(SkillStateParams);
     }
-    
+
     #endregion
 
     #region Skills
@@ -248,14 +249,14 @@ public abstract class Character : MonoBehaviour
         if (GpManager.SelectedCharacter.Type == Type.Player && GpManager.MainCharacter.Type == Type.AI && Info.SkillInfo.isDirectionalSkill && !Info.SkillInfo.damageType.HasFlag(DamageTargetType.Move))
         {
             if (cell.Character != GpManager.MainCharacter) return false;
-            HandleCastSkill(new List<Character>(){cell.Character});
+            HandleCastSkill(new List<Character>() { cell.Character });
             return true;
         }
-        
+
         if (damageType.HasFlag(DamageTargetType.Enemies) || damageType.HasFlag(DamageTargetType.Team))
         {
             if (!Info.SkillRange.Contains(cell)) return false;
-            HandleCastSkill(new List<Character>(){cell.Character});
+            HandleCastSkill(new List<Character>() { cell.Character });
             return true;
         }
 
@@ -268,7 +269,7 @@ public abstract class Character : MonoBehaviour
         return false;
 
     }
-    
+
     public List<SkillInfo> GetSkillInfos(SkillTurnType skillTurnType)
     {
         return skillConfig.SkillConfigs[skillTurnType];
@@ -277,7 +278,7 @@ public abstract class Character : MonoBehaviour
     private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
         HandleMpChanged(-Info.SkillInfo.mpCost);
-    
+
         var skillParams = new SkillStateParams
         {
             IdleStateParams = GetIdleStateParams(),
@@ -287,7 +288,7 @@ public abstract class Character : MonoBehaviour
             TargetCell = targetCell,
             Source = this,
         };
-    
+
         SetSkill(skillParams);
         if (!dontNeedActionPoints) Info.ReduceActionPoints();
         UnSelectSkill();
@@ -298,7 +299,7 @@ public abstract class Character : MonoBehaviour
         Info.SkillInfo = skillInfo;
         HandleCastSkill(targets);
     }
-    
+
     public virtual void HandleMpChanged(int value)
     {
         if (value == 0) return;
@@ -331,7 +332,7 @@ public abstract class Character : MonoBehaviour
     }
 
     public HashSet<Cell> NonDirectionalCells = new HashSet<Cell>();
-    
+
     public void HandleSelectSkill(int skillIndex, Skill_UI skillUI)
     {
         HideMoveRange();
@@ -378,7 +379,7 @@ public abstract class Character : MonoBehaviour
     {
         ShowSkillRange();
     }
-    
+
     protected IdleStateParams GetIdleStateParams()
     {
         if (StateMachine.CurrentState is IdleState idleState)
@@ -387,17 +388,17 @@ public abstract class Character : MonoBehaviour
         }
         return null;
     }
-    
+
     public SkillTurnType GetSkillTurnType()
     {
         return GpManager.GetSkillTurnType(this);
     }
-    
+
     private SkillInfo GetSkillInfo(int index)
     {
         return Info.GetSkillInfo(index, GetSkillTurnType());
     }
-    
+
     private void UnSelectSkill()
     {
         Info.SkillInfo = null;
@@ -409,14 +410,14 @@ public abstract class Character : MonoBehaviour
     {
         HandleCounterLogic();
     }
-    
+
     public virtual void OnDamageTaken(DamageTakenParams damageTakenParams)
     {
         ChangeState(ECharacterState.DamageTaken, damageTakenParams);
     }
-    
+
     #endregion
-    
+
     #region Sub
 
     public void SetSelectedCharacter(IdleStateParams idleStateParams = null)
@@ -424,18 +425,18 @@ public abstract class Character : MonoBehaviour
         OnSelected();
         SetIdle(idleStateParams);
     }
-    
+
     public void SetCell(Cell cell)
     {
         Info.Cell = cell;
         cell.OnCharacterRegister(this);
     }
-    
+
     protected virtual void SetSpeed()
     {
         Info.SetSpeed();
     }
-    
+
     public void OnHpChanged(object sender, int value = 0)
     {
         var currentHp = Info.CurrentHp;
@@ -447,7 +448,7 @@ public abstract class Character : MonoBehaviour
     {
         hpBar.SetShield(value);
     }
-    
+
     public void ShowHpBar()
     {
         hpBar.gameObject.SetActiveIfNeeded(true);
@@ -457,7 +458,7 @@ public abstract class Character : MonoBehaviour
     {
         hpBar.gameObject.SetActiveIfNeeded(false);
     }
-    
+
     protected virtual void OnSelected()
     {
         Info.Cell.ShowFocus();
@@ -480,7 +481,7 @@ public abstract class Character : MonoBehaviour
         }
         UnSelectSkill();
     }
-    
+
     public void HideMoveRange()
     {
         if (Info.MoveRange == null || Info.MoveRange.Count == 0) return;
@@ -490,7 +491,7 @@ public abstract class Character : MonoBehaviour
         }
         Info.MoveRange.Clear();
     }
-    
+
     private void ShowSkillRange()
     {
         Info.SkillRange = MapManager.GetHexagonsInAttack(Info.Cell, Info.SkillInfo);
@@ -504,7 +505,7 @@ public abstract class Character : MonoBehaviour
             UIManager.Instance.ShowNotification("Không có mục tiêu nào trong tầm", 2f);
         }
     }
-    
+
     private void HideSkillRange()
     {
         if (Info.SkillRange == null || Info.SkillRange.Count == 0) return;
@@ -515,9 +516,9 @@ public abstract class Character : MonoBehaviour
         Info.SkillRange.Clear();
     }
 
-    public void ShowMessage(string message)
+    public void ShowMessage(string message, bool isCrit = false)
     {
-        uiFeedback.ShowMessage(message);
+        uiFeedback.ShowMessage(message, isCrit);
     }
 
     public void UnRegisterCell()
@@ -527,7 +528,7 @@ public abstract class Character : MonoBehaviour
         Info.Cell.HideFocus();
     }
     #endregion
-    
+
     private void DrawLink()
     {
         if (this == null || Info.IsDie) return;
@@ -561,9 +562,9 @@ public abstract class Character : MonoBehaviour
 
     protected virtual void OnNewRound(object sender, EventArgs e)
     {
-        
+
     }
-    
+
     public void SetPosition()
     {
         StateMachine.GetCurrentState.SetCharacterPosition();
@@ -600,11 +601,11 @@ public abstract class Character : MonoBehaviour
             GpManager.SetMainCell(cell);
         }
     }
-    
+
     public virtual int GetSkillActionPoints(SkillTurnType skillTurnType) => characterConfig.actionPoints[skillTurnType];
-   
-    
-    
+
+
+
     private List<SkillInfo> GetValidSkills()
     {
         var skillType = GpManager.GetSkillTurnType(this);
@@ -635,7 +636,7 @@ public abstract class Character : MonoBehaviour
                         skills.Add(new CastSkillData()
                         {
                             SkillInfo = skill,
-                            CharactersImpact = new List<Character>(){character},
+                            CharactersImpact = new List<Character>() { character },
                             MaxCharactersImpact = 1,
                         });
                     }
@@ -654,7 +655,7 @@ public abstract class Character : MonoBehaviour
                         skills.Add(new CastSkillData()
                         {
                             SkillInfo = skill,
-                            CharactersImpact =  new List<Character>(){character},
+                            CharactersImpact = new List<Character>() { character },
                             MaxCharactersImpact = 1
                         });
                     }
@@ -665,7 +666,7 @@ public abstract class Character : MonoBehaviour
         return skills;
     }
 
-    
+
 #if UNITY_EDITOR
 
     [Button("Reduce Hp Editor")]
@@ -675,25 +676,25 @@ public abstract class Character : MonoBehaviour
         Info.OnHpChangedInvoke(-2);
         Info.OnHpChangedInvoke(-2);
     }
-    
+
     private void OnValidate()
     {
-        if(characterAnimationData == null)
+        if (characterAnimationData == null)
         {
             characterAnimationData = GetComponentInChildren<CharacterAnimationData>();
         }
 
-        if(model == null)
+        if (model == null)
         {
             model = gameObject.FindChildByName("Model");
         }
 
-        if(hpBar == null)
+        if (hpBar == null)
         {
             hpBar = GetComponentInChildren<HpBar>();
         }
 
-        if(uiFeedback == null)
+        if (uiFeedback == null)
         {
             uiFeedback = GetComponentInChildren<UIFeedback>();
         }
@@ -703,7 +704,7 @@ public abstract class Character : MonoBehaviour
             linkCharacter = GetComponentInChildren<LinkCharacter>();
         }
         passiveSkills = GetComponents<PassiveSkill>().ToList();
-        
+
         skillConfig.OnValidate();
     }
 #endif

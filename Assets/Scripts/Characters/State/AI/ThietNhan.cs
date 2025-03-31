@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ThietNhan : AICharacter
 {
-    private int _moveCountTN = 0;
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -18,7 +17,7 @@ public class ThietNhan : AICharacter
     public override void SetMainCharacter()
     {
         base.SetMainCharacter();
-        _moveCountTN = 0;
+        MoveCount = 0;
     }
     
     protected override void SetSpeed()
@@ -35,13 +34,13 @@ public class ThietNhan : AICharacter
     
     protected override bool TryMoving()
     {
-        if (_moveCountTN >= 1) return false;
+        if (MoveCount >= 1) return false;
         return base.TryMoving();
     }
 
     public override void TryMoveToCell(Cell cell)
     {
         base.TryMoveToCell(cell);
-        _moveCountTN++;
+        MoveCount++;
     }
 }

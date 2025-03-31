@@ -44,7 +44,7 @@ public class CharacterInfo
             { EffectType.Prone, ApplySimpleEffect },
             { EffectType.Fear, ApplySimpleEffect },
             { EffectType.Drunk, ApplySimpleEffect },
-            
+
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Immobilize, TryCheckEffectResistanceAndApplyEffect },
@@ -58,7 +58,7 @@ public class CharacterInfo
             { EffectType.Silence, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ReduceAP, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Bleed, TryCheckEffectResistanceAndApplyEffect },
-            
+
             { EffectType.IncreaseDamage, ApplyIncreaseDamage },
             { EffectType.BlockSkill, _ => ApplyBlockSkill() },
             { EffectType.BreakBloodSealDamage, ApplyBloodSealDamage },
@@ -122,7 +122,7 @@ public class CharacterInfo
     public event EventHandler<float> OnShieldChanged;
     public event EventHandler<int> OnMoveAmount;
     public event EventHandler<int> OnNewRound;
-    public event EventHandler<int> OnReduceHp; 
+    public event EventHandler<int> OnReduceHp;
 
     private SkillConfig SkillConfig { get; set; }
     public Character Character { get; set; }
@@ -147,7 +147,8 @@ public class CharacterInfo
         }
         else
         {
-            Character.ShowMessage($"{-damage}");
+            bool isCrit = damageTakenParams.IsHitCritical || (CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive());
+            Character.ShowMessage($"{-damage}", isCrit);
             OnHpChanged?.Invoke(this, damageTakenParams.Damage);
         }
     }
@@ -255,7 +256,7 @@ public class CharacterInfo
         CurrentHp += hp;
         if (hp < 0)
             OnReduceHp?.Invoke(this, -hp);
-        if (character != null) 
+        if (character != null)
             character.Info.SetDamageDealtInCurrentRound(-hp);
         CurrentHp = Math.Max(0, CurrentHp);
     }
@@ -268,7 +269,7 @@ public class CharacterInfo
     }
 
     private void TryApplyLifeStealEffect()
-    { 
+    {
         var effect = EffectInfo.Effects.FirstOrDefault(p => p.effectType == EffectType.LifeSteal);
         if (effect is RollEffectData rollEffectData)
         {
@@ -280,7 +281,7 @@ public class CharacterInfo
                 $"[{Character.characterConfig.characterName}]: Hút máu = {rollEffectData.rollData.rollTime}d{rollEffectData.rollData.rollValue} + {rollEffectData.rollData.add} = {heal}");
         }
     }
-    
+
     private void HandleShieldChange(Character character)
     {
         int remainder = 0;
@@ -289,7 +290,7 @@ public class CharacterInfo
         {
             remainder = -ShieldAmount;
         }
-        
+
         OnShieldChanged?.Invoke(this, ShieldAmount * 1f / character.GetMaxHp());
 
         if (remainder > 0)
@@ -297,7 +298,7 @@ public class CharacterInfo
             HandleDamageTaken(-remainder, character);
         }
     }
-    
+
     public void HandleMoveAmountChanged(int value)
     {
         OnMoveAmount?.Invoke(this, value);
@@ -367,15 +368,15 @@ public class CharacterInfo
             switch (effect.effectType)
             {
                 case EffectType.ReduceMoveRange:
-                {
-                    var reduction = Roll.RollDice(1, 4, 0);
-                    AlkawaDebug.Log(
-                        ELogCategory.EFFECT,
-                        $"Apply debuff {effect.effectType}: giảm di chuyển = 1d4 = {reduction}"
-                    );
-                    totalReduction += reduction;
-                    break;
-                }
+                    {
+                        var reduction = Roll.RollDice(1, 4, 0);
+                        AlkawaDebug.Log(
+                            ELogCategory.EFFECT,
+                            $"Apply debuff {effect.effectType}: giảm di chuyển = 1d4 = {reduction}"
+                        );
+                        totalReduction += reduction;
+                        break;
+                    }
                 case EffectType.ThietNhan_ReduceMoveRange when effect is ChangeStatEffect changeStatEffect:
                     totalReduction += changeStatEffect.value;
                     AlkawaDebug.Log(
@@ -452,12 +453,12 @@ public class CharacterInfo
         get
         {
             List<int> combined = new List<int>();
-        
+
             foreach (int ap in ActionPoints)
             {
                 combined.Add(ap);
             }
-        
+
             foreach (ActionPointEffect effect in GetActionPointEffects())
             {
                 foreach (int ap in effect.actionPoints)
@@ -465,7 +466,7 @@ public class CharacterInfo
                     combined.Add(ap);
                 }
             }
-        
+
             combined.Reverse();
 
             int skipCount = 0;
@@ -484,23 +485,23 @@ public class CharacterInfo
                     skipCount += 1;
                 }
             }
-        
+
             if (skipCount >= combined.Count)
             {
                 return new List<int>();
             }
-        
+
             List<int> temp = new List<int>();
             for (int i = skipCount; i < combined.Count; i++)
             {
                 temp.Add(combined[i]);
             }
-        
+
             temp.Reverse();
             return temp;
         }
     }
-    
+
     private IEnumerable<ActionPointEffect> GetActionPointEffects()
     {
         foreach (var effect in EffectInfo.Effects)
@@ -538,9 +539,9 @@ public class CharacterInfo
 
     public void ReduceActionPoints()
     {
-// #if UNITY_EDITOR
-//         return;
-// #endif
+        // #if UNITY_EDITOR
+        //         return;
+        // #endif
         var pointsToReduce = Character.GetSkillActionPoints(Character.GetSkillTurnType());
 
         if (TryReducePoints(GetActionPointEffects())) return;
@@ -605,7 +606,7 @@ public class CharacterInfo
     {
         OnMpChanged?.Invoke(this, value);
     }
-    
+
     public void OnHpChangedInvoke(int value)
     {
         OnHpChanged?.Invoke(this, value);
@@ -650,18 +651,18 @@ public class CharacterInfo
             {
                 case EffectType.Poison:
                 case EffectType.ThietNhan_Poison:
-                {
-                    if (item is RollEffectData poisonEffectData)
                     {
-                        var rollData = poisonEffectData.rollData;
-                        var damage = Roll.RollDice(rollData);
-                        HandleDamageTaken(-damage, poisonEffectData.Actor);
-                        Debug.Log(
-                            $"[{Character.characterConfig.characterName}] - {item.effectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
-                    }
+                        if (item is RollEffectData poisonEffectData)
+                        {
+                            var rollData = poisonEffectData.rollData;
+                            var damage = Roll.RollDice(rollData);
+                            HandleDamageTaken(-damage, poisonEffectData.Actor);
+                            Debug.Log(
+                                $"[{Character.characterConfig.characterName}] - {item.effectType}: Damage = {rollData.rollTime}d{rollData.rollValue} + {rollData.add} = {damage}");
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
@@ -801,7 +802,7 @@ public class CharacterInfo
         }
     }
 
-    
+
     public void HandleBreakShield(int range, int damage)
     {
         var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell,
@@ -904,16 +905,16 @@ public class CharacterInfo
         var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.effectType == EffectType.Bleed);
         if (effect is not BleedEffect bleedEffect) return;
         var damage = Utils.RoundNumber(moveRange * 1f / bleedEffect.move);
-        AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {moveRange}/3 = {damage} lên {Character.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Thất Ca ngâm gây {moveRange}/3 = {damage} lên {Character.characterConfig.characterName}");
         HandleDamageTaken(-damage, effect.Actor);
     }
-    
+
     public void TryApplyBleedEffectAP(int ap)
     {
         var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.effectType == EffectType.Bleed);
         if (effect is not BleedEffect bleedEffect) return;
         var damage = ap * 2;
-        AlkawaDebug.Log(ELogCategory.EFFECT,$"Thất Ca ngâm gây {ap} * 2 = {damage} lên {Character.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Thất Ca ngâm gây {ap} * 2 = {damage} lên {Character.characterConfig.characterName}");
         HandleDamageTaken(-damage, effect.Actor);
     }
     #endregion

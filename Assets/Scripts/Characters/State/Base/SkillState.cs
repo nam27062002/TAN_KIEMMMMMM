@@ -287,19 +287,21 @@ public class SkillState : CharacterState
             }
             else
             {
-                // Đặt trạng thái crit trước khi tính toán sát thương
-                Roll.SetCriticalHit(hitChangeParams.IsCritical);
+                // Đặt trạng thái crit 
+                bool isCrit = hitChangeParams.IsCritical;
+                Roll.SetCriticalHit(isCrit);
 
                 var damageParams = GetDamageParams(target);
-                if (hitChangeParams.IsCritical)
+                damageParams.IsHitCritical = isCrit; // Thêm thông tin crit
+
+                if (isCrit)
                 {
                     AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Character.characterConfig.characterName} gây crit vào {target.characterConfig.characterName}");
-                    // Có thể thêm hiệu ứng khi crit ở đây nếu cần
                 }
 
                 CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
 
-                // Reset lại trạng thái crit sau khi đã xử lý xong
+                // Reset lại trạng thái crit
                 Roll.SetCriticalHit(false);
             }
 
