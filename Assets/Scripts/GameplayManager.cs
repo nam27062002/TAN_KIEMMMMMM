@@ -193,15 +193,38 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             foreach (var effect in effects)
             {
                 effect.Actor = character;
-                if (effect is BlockProjectile blockProjectile)
-                {
-                    blockProjectile.targetCell = MapManager.Cells[blockProjectile.position];
-                }
-
+                
+                // Gọi OnAfterLoad cho tất cả hiệu ứng
+                effect.OnAfterLoad(MapManager);
+                
                 character.Info.ApplyEffect(effect);
             }
-
+            
+            // Đảm bảo cập nhật visual cho shield nếu có
+            if (character.Info.ShieldEffectData != null)
+            {
+                character.Info.UpdateShieldVisual();
+            }
+            
             character.Info.ActionPoints = characterData.actionPoints;
+
+            // Khôi phục shield cho Hoắc Liên Hương
+            if (character is HoacLienHuong hlh && characterData.shieldCellPosition.HasValue)
+            {
+                var shieldCell = MapManager.GetCell(characterData.shieldCellPosition.Value);
+                if (shieldCell != null)
+                {
+                    // Tạo shield và cập nhật visual
+                    shieldCell.SetShield(character.Type, 3);
+                    hlh.CurrentShield = shieldCell;
+                }
+            }
+        }
+
+        // Sau khi áp dụng tất cả hiệu ứng
+        foreach (var character in Characters)
+        {
+            character.Info.InitializeEffectVisuals();
         }
 
         CurrentRound = levelData.currentRound;
@@ -1259,6 +1282,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 actionPoints = character.Info.ActionPoints,
                 isShadow = false
             };
+            
+            // Thêm xử lý đặc biệt cho Hoắc Liên Hương
+            if (character is HoacLienHuong hlh && hlh.CurrentShield != null)
+            {
+                // Lưu vị trí cell shield
+                characterData.shieldCellPosition = hlh.CurrentShield.CellPosition;
+            }
+            
             levelData.characterDatas.Add(characterData);
         }
 
@@ -1294,10 +1325,21 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             foreach (var item in character.Info.EffectInfo.Effects)
             {
                 item.characterId = character.CharacterId;
+                
                 if (item is BlockProjectile blockProjectile)
                 {
                     blockProjectile.position = blockProjectile.targetCell.CellPosition;
                 }
+                else if (item is PoisonousBloodPoolEffect poisonPool)
+                {
+                    // Lưu vị trí của các cell bị ảnh hưởng
+                    poisonPool.impactPositions.Clear();
+                    foreach (var cell in poisonPool.impacts)
+                    {
+                        poisonPool.impactPositions.Add(cell.CellPosition);
+                    }
+                }
+                
                 result.Add(item);
             }
             return new IEffectInfo()

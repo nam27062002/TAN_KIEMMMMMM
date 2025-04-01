@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class HoacLienHuong : PlayerCharacter
 {
     [SerializeField] private float goldenAPChance = 0.25f;
-    public Cell CurrentShield;
+    [NonSerialized] public Cell CurrentShield;
+    public Vector2Int CurrentShieldPosition; // Vị trí của shield để lưu trong save
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -32,7 +34,7 @@ public class HoacLienHuong : PlayerCharacter
     {
         if (skillTurnType == SkillTurnType.EnemyTurn)
         {
-            float roll = Random.value;
+            float roll = UnityEngine.Random.value;
             int ap = roll < 0.25f ? 1 : 2;
             AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Lượt địch - Kết quả roll AP: {roll} => AP = {ap}");
             

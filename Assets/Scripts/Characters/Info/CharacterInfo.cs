@@ -956,4 +956,41 @@ public class CharacterInfo
     }
 
     #endregion
+
+    // Thêm phương thức để khởi tạo lại các hiệu ứng visual sau khi load
+    public void InitializeEffectVisuals()
+    {
+        foreach (var effect in EffectInfo.Effects)
+        {
+            switch (effect.effectType)
+            {
+                case EffectType.Drunk:
+                    // TODO: Khôi phục hiệu ứng visual cho drunk
+                    break;
+                case EffectType.Shield:
+                    // Cập nhật hiển thị shield
+                    OnShieldChanged?.Invoke(this, ShieldAmount * 1f / Character.GetMaxHp());
+                    break;
+                case EffectType.Poison:
+                case EffectType.ThietNhan_Poison:
+                    // TODO: Khôi phục hiệu ứng visual cho poison
+                    break;
+                // Thêm các hiệu ứng khác cần khôi phục visual
+            }
+        }
+
+        // Xử lý riêng cho Hoắc Liên Hương shield
+        if (Character is HoacLienHuong hlh && hlh.CurrentShield != null)
+        {
+            hlh.CurrentShield.SetShield(Character.Type, 3);
+        }
+    }
+
+    public void UpdateShieldVisual()
+    {
+        if (ShieldEffectData != null)
+        {
+            OnShieldChanged?.Invoke(this, ShieldAmount * 1f / Character.GetMaxHp());
+        }
+    }
 }

@@ -164,6 +164,9 @@ public class CharacterData
     public bool isShadow = false;
     public int ownerID = -1;
     public CharacterType shadowType = CharacterType.CanSat; // Giá trị mặc định
+    
+    // Thêm trường cho Hoắc Liên Hương shield
+    public Vector2Int? shieldCellPosition;
 }
 
 [Serializable]
