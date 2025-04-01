@@ -69,40 +69,146 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void LoadFromSavedData()
     {
+        // Đặt flag trước khi tạo nhân vật
+        CanSat.IsLoadingFromSave = true;
+        
         var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
+        
+        // Tách danh sách nhân vật thường và bóng
+        var normalCharacters = levelData.characterDatas.Where(c => !c.isShadow).ToList();
+        var shadowCharacters = levelData.characterDatas.Where(c => c.isShadow).ToList();
 
-        foreach (var characterData in levelData.characterDatas)
+        // Tìm các CanSat trước và đánh dấu loadedFromSave = true
+        Dictionary<CharacterType, bool> isCanSatType = new Dictionary<CharacterType, bool>();
+        foreach (var charData in normalCharacters)
         {
-            var character = CreateCharacter(characterData.characterType, characterData.points, characterData.iD);
-            ApplySavedCharacterState(character, characterData);
+            if (allCharacter[charData.characterType].GetComponent<CanSat>() != null)
+            {
+                isCanSatType[charData.characterType] = true;
+            }
         }
 
-
-
-        foreach (var characterData in levelData.characterDatas)
+        // Tạo các nhân vật thường
+        Dictionary<int, Character> idToCharacter = new Dictionary<int, Character>();
+        foreach (var characterData in normalCharacters)
         {
-            var character = GetCharacterByID(characterData.iD);
-            if (character != null)
+            // Nếu là CanSat, cần setup trước khi Initialize
+            if (isCanSatType.ContainsKey(characterData.characterType) && isCanSatType[characterData.characterType])
             {
-                var effects = characterData.effectInfo.effects;
-                foreach (var effect in effects)
+                var canSatGO = Instantiate(allCharacter[characterData.characterType], transform);
+                var canSat = canSatGO.GetComponent<CanSat>();
+                canSat.loadedFromSave = true;
+                
+                canSat.Initialize(MapManager.GetCell(characterData.points), characterData.iD);
+                ApplySavedCharacterState(canSat, characterData);
+                
+                Characters.Add(canSat);
+                AddToAppropriateTeamList(canSat);
+                idToCharacter[canSat.CharacterId] = canSat;
+            }
+            else
+            {
+                // Các nhân vật khác xử lý bình thường
+                var character = CreateCharacter(characterData.characterType, characterData.points, characterData.iD);
+                ApplySavedCharacterState(character, characterData);
+                idToCharacter[character.CharacterId] = character;
+            }
+        }
+
+        // Tạo các bóng
+        foreach (var shadowData in shadowCharacters)
+        {
+            GameObject shadowPrefab = null;
+            CharacterType shadowType = shadowData.shadowType;
+            
+            // Kiểm tra và lấy prefab của bóng từ CanSat owner
+            if (idToCharacter.TryGetValue(shadowData.ownerID, out var owner) && owner is CanSat canSat)
+            {
+                // Dùng enum để so sánh
+                if (shadowType == CharacterType.Dancer)
+                    shadowPrefab = canSat.dancerPrefab;
+                else if (shadowType == CharacterType.Assassin)
+                    shadowPrefab = canSat.assassinPrefab;
+                
+                if (shadowPrefab == null)
                 {
-                    effect.Actor = character;
+                    Debug.LogError($"Không thể tìm thấy prefab cho bóng loại {shadowType}");
+                    continue;
+                }
+                
+                // Tạo bóng
+                var go = Instantiate(shadowPrefab);
+                Shadow shadow = null;
+                
+                // Dùng enum để kiểm tra loại shadow
+                if (shadowType == CharacterType.Dancer)
+                    shadow = go.GetComponent<Dancer>();
+                else if (shadowType == CharacterType.Assassin)
+                    shadow = go.GetComponent<Assassin>();
+                    
+                if (shadow == null)
+                {
+                    Debug.LogError($"Không thể tạo bóng loại {shadowType}");
+                    Destroy(go);
+                    continue;
+                }
+                    
+                shadow.Initialize(MapManager.GetCell(shadowData.points), shadowData.iD);
+                shadow.Info.CurrentHp = shadowData.currentHp;
+                shadow.Info.CurrentMp = shadowData.currentMp;
+                shadow.Info.OnHpChangedInvoke(0);
+                shadow.Info.OnMpChangedInvoke(0);
+                
+                // Gán owner
+                shadow.owner = canSat;
+                
+                // Gọi SetShadow với enum
+                canSat.SetShadow(shadow, shadowType);
+                
+                // Xử lý effects
+                foreach (var effect in shadowData.effectInfo.effects)
+                {
+                    effect.Actor = shadow;
                     if (effect is BlockProjectile blockProjectile)
                     {
                         blockProjectile.targetCell = MapManager.Cells[blockProjectile.position];
                     }
 
-                    character.Info.ApplyEffect(effect);
+                    shadow.Info.ApplyEffect(effect);
                 }
-
-                character.Info.ActionPoints = characterData.actionPoints;
+                
+                shadow.Info.ActionPoints = shadowData.actionPoints;
             }
             else
             {
-                Debug.LogError($"không tìm thấy character có id = {characterData.iD}");
+                Debug.LogError($"Không tìm thấy owner với ID {shadowData.ownerID} cho bóng loại {shadowType}");
             }
         }
+
+        // Áp dụng effects cho nhân vật thường
+        foreach (var characterData in normalCharacters)
+        {
+            var character = idToCharacter[characterData.iD];
+            var effects = characterData.effectInfo.effects;
+            foreach (var effect in effects)
+            {
+                effect.Actor = character;
+                if (effect is BlockProjectile blockProjectile)
+                {
+                    blockProjectile.targetCell = MapManager.Cells[blockProjectile.position];
+                }
+
+                character.Info.ApplyEffect(effect);
+            }
+
+            character.Info.ActionPoints = characterData.actionPoints;
+        }
+
+        CurrentRound = levelData.currentRound;
+        Debug.Log($"Loaded game from save slot {GameManager.Instance.saveIndex}, current round: {CurrentRound}");
+
+        // Đặt lại flag sau khi đã tạo xong
+        CanSat.IsLoadingFromSave = false;
     }
 
     private Character GetCharacterByID(int id)
@@ -444,11 +550,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private void ScheduleMainCharacterSetup()
     {
+        // Nếu load từ save, gọi SetMainCharacter ngay lập tức
+        if (_hasOverrideLevelConfig)
+        {
+            SetMainCharacter();
+            return;
+        }
+        
+        // Chỉ có độ trễ khi tạo mới game
         bool needsDelay = Characters.Any(p => p is CanSat);
         float delay = needsDelay ? 5f : 0f;
 
         if (delay > 0)
         {
+            Debug.Log("Đang đợi CanSat khởi tạo các bóng...");
             Invoke(nameof(SetMainCharacter), delay);
         }
         else
@@ -460,7 +575,18 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void InitializeGameState()
     {
         SetInteract(true);
-        HandleNewRound();
+        
+        // Chỉ gọi HandleNewRound nếu không load từ save
+        if (!_hasOverrideLevelConfig)
+        {
+            HandleNewRound();
+        }
+        else
+        {
+            // Chỉ thông báo round hiện tại mà không tăng lên
+            OnNewRound?.Invoke(this, EventArgs.Empty);
+        }
+        
         ShowLevelName();
     }
 
@@ -1093,6 +1219,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         LevelData levelData = new LevelData();
         if (Characters == null) return;
+        
+        // Xử lý các character thông thường
         var chars = new List<Character>();
         for (int i = CurrentPlayerIndex; i < Characters.Count; i++)
         {
@@ -1104,6 +1232,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             chars.Add(Characters[i]);
         }
 
+        // Tìm và lưu tất cả các bóng của Càn Sát
+        var shadows = new List<(Shadow shadow, CanSat owner)>();
+        foreach (var character in Characters)
+        {
+            if (character is CanSat canSat)
+            {
+                if (canSat.dancer != null)
+                    shadows.Add((canSat.dancer, canSat));
+                if (canSat.assassin != null)
+                    shadows.Add((canSat.assassin, canSat));
+            }
+        }
+
+        // Lưu các character thường
         foreach (var character in chars)
         {
             CharacterData characterData = new CharacterData
@@ -1115,16 +1257,36 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 iD = character.CharacterId,
                 effectInfo = GetEffects(character),
                 actionPoints = character.Info.ActionPoints,
+                isShadow = false
             };
             levelData.characterDatas.Add(characterData);
         }
 
+        // Lưu các bóng
+        foreach (var (shadow, owner) in shadows)
+        {
+            CharacterData shadowData = new CharacterData
+            {
+                characterType = shadow.characterType,
+                points = shadow.Info.Cell.CellPosition,
+                currentHp = shadow.Info.CurrentHp,
+                currentMp = shadow.Info.CurrentMp,
+                iD = shadow.CharacterId,
+                effectInfo = GetEffects(shadow),
+                actionPoints = shadow.Info.ActionPoints,
+                isShadow = true,
+                ownerID = owner.CharacterId,
+                shadowType = shadow.characterType
+            };
+            levelData.characterDatas.Add(shadowData);
+        }
+
         levelData.SaveTime = DateTime.Now;
         levelData.levelType = levelConfig.levelType;
+        levelData.currentRound = CurrentRound;
+        
         SaveLoadManager.Instance.OnSave(SaveLoadManager.Instance.levels.Count, levelData);
         CoroutineDispatcher.Invoke(ShowNotification, 0.5f);
-
-        return;
 
         IEffectInfo GetEffects(Character character)
         {

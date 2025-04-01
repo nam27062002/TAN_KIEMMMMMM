@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class CanSat : AICharacter
 {
-    [SerializeField] private GameObject dancerPrefab;
-    [SerializeField] private GameObject assassinPrefab;
+    [SerializeField] public GameObject dancerPrefab;
+    [SerializeField] public GameObject assassinPrefab;
 
     public Dancer dancer;
     public Assassin assassin;
+    public bool loadedFromSave = false;
+
+    // Thêm biến static
+    public static bool IsLoadingFromSave = false;
 
     protected override void SetStateMachine()
     {
@@ -20,8 +24,21 @@ public class CanSat : AICharacter
             new CanSat_SkillState(this));
     }
 
+    public override void Initialize(Cell targetCell, int characterId)
+    {
+        loadedFromSave = false;
+        base.Initialize(targetCell, characterId);
+    }
+
     protected override IEnumerator HandleSpecialAction()
     {
+        // Kiểm tra cả biến instance và biến static
+        if (loadedFromSave || IsLoadingFromSave) 
+        {
+            Debug.Log("Skip HandleSpecialAction due to loading from save");
+            yield break;
+        }
+        
         yield return new WaitForSeconds(1f);
         StartCoroutine(Summer(dancerPrefab, PetType.Dancer, GetSkillInfos(SkillTurnType.MyTurn)[1],
             SkillTurnType.MyTurn, true));
@@ -30,6 +47,22 @@ public class CanSat : AICharacter
             SkillTurnType.EnemyTurn, true));
     }
 
+    // Thêm phương thức để gán dancer/assassin khi load từ save
+    public void SetShadow(Shadow shadow, CharacterType shadowType)
+    {
+        if (shadowType == CharacterType.Dancer)
+        {
+            dancer = shadow as Dancer;
+            if (dancer != null)
+                dancer.owner = this;
+        }
+        else if (shadowType == CharacterType.Assassin)
+        {
+            assassin = shadow as Assassin;
+            if (assassin != null)
+                assassin.owner = this;
+        }
+    }
 
     public override void HandleDeath()
     {

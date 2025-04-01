@@ -146,6 +146,7 @@ public class LevelData
     public LevelType levelType;
     public List<CharacterData> characterDatas = new List<CharacterData>();
     public DateTime SaveTime;
+    public int currentRound;
 }
 
 [Serializable]
@@ -158,6 +159,11 @@ public class CharacterData
     public int currentHp;
     public int currentMp;
     public IEffectInfo effectInfo;
+    
+    // Thay đổi: Sử dụng CharacterType thay vì string
+    public bool isShadow = false;
+    public int ownerID = -1;
+    public CharacterType shadowType = CharacterType.CanSat; // Giá trị mặc định
 }
 
 [Serializable]
