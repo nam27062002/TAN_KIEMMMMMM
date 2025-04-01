@@ -322,7 +322,34 @@ public class CharacterInfo
             return 0;
         }
 
-        return Attributes.def;
+        int add = 0;
+        foreach (var effect in EffectInfo.Effects)
+        {
+            if (effect is ChangeStatEffect changeStatEffect)
+            {
+                if (effect.effectType == EffectType.IncreaseDef)
+                {
+                    add += changeStatEffect.value;
+                }
+            }
+        }
+        return Attributes.def + add;
+    }
+
+    public int GetSpd()
+    {
+        int add = 0;
+        foreach (var effect in EffectInfo.Effects)
+        {
+            if (effect is ChangeStatEffect changeStatEffect)
+            {
+                if (effect.effectType == EffectType.IncreaseSpd)
+                {
+                    add += changeStatEffect.value;
+                }
+            }
+        }
+        return Attributes.spd + add;
     }
 
     private bool IsImmobilized()
@@ -539,9 +566,6 @@ public class CharacterInfo
 
     public void ReduceActionPoints()
     {
-        // #if UNITY_EDITOR
-        //         return;
-        // #endif
         var pointsToReduce = Character.GetSkillActionPoints(Character.GetSkillTurnType());
 
         if (TryReducePoints(GetActionPointEffects())) return;

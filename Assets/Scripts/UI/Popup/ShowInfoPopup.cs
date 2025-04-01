@@ -72,7 +72,7 @@ public class ShowInfoPopup : PopupBase
     {
         characterName.text = config.characterName;
         damage.text = info.GetCurrentDamage().ToString();
-        spd.text = info.Attributes.spd.ToString();
+        spd.text = info.GetSpd().ToString();
         def.text = info.GetDef().ToString();
         chiDef.text = info.GetChiDef().ToString();
     }

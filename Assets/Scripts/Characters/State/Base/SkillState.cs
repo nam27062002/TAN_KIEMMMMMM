@@ -166,6 +166,14 @@ public class SkillState : CharacterState
         var damageParams = _damageParamsHandlers.TryGetValue(key, out var handler)
             ? handler(character)
             : new DamageTakenParams();
+        
+        // Kiểm tra null cho Character và MainCharacter
+        bool canCounter = false;
+        if (Character != null && GpManager.MainCharacter != null && character != null)
+        {
+            canCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != character.Type;
+        }
+        
         return new DamageTakenParams
         {
             Damage = damageParams.Damage,
@@ -173,7 +181,7 @@ public class SkillState : CharacterState
             Effects = damageParams.Effects,
             OnSetDamageTakenFinished = HandleTargetFinish,
             ReceiveFromCharacter = Character,
-            CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != character.Type,
+            CanCounter = canCounter,
             SkillStateParams = _skillStateParams
         };
     }

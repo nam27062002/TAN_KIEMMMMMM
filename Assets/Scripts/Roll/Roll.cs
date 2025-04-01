@@ -65,12 +65,7 @@ public class Roll
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Giải hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} = {effectCleanse}");
         return effectCleanse;
     }
-
-    public bool IsCritical(int value)
-    {
-        return _attributes.hitChangeRollData.rollValue == value;
-    }
-
+    
     public int GetDodge()
     {
         return _characterInfo.GetDef() + _attributes.spd / 2;

@@ -9,6 +9,10 @@ public class CanSat_SkillState : AISkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
+        Debug.Log($"[CanSat] Skill 2 (My Turn) - Applying buffs to {Character.characterConfig.characterName}:");
+        Debug.Log($"  - Buff: IncreaseDef +4 (Duration: {EffectConfig.MAX_ROUND} rounds)");
+        Debug.Log($"  - Buff: IncreaseSpd +6 (Duration: {EffectConfig.MAX_ROUND} rounds)");
+        
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>()
@@ -33,6 +37,10 @@ public class CanSat_SkillState : AISkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
+        Debug.Log($"[CanSat] Skill 2 (Enemy Turn) - Applying buffs to {Character.characterConfig.characterName}:");
+        Debug.Log($"  - Buff: IncreaseDamage +2 (Duration: {EffectConfig.MAX_ROUND} rounds)");
+        Debug.Log($"  - Buff: ReduceHitChange +6 (Duration: {EffectConfig.MAX_ROUND} rounds)");
+        
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>()
