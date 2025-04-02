@@ -829,11 +829,78 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         DestroyGameplay();
     }
 
-    private void DestroyAllCharacters()
+    public void DestroyAllCharacters()
     {
+        // Đầu tiên, lưu các nhân vật CanSat và hủy bóng trước
+        var canSatCharacters = Characters.OfType<CanSat>().ToList();
+        foreach (var canSat in canSatCharacters)
+        {
+            // Hủy dancer trước
+            if (canSat.dancer != null)
+            {
+                canSat.dancer.DestroyCharacter();
+                canSat.dancer = null;
+            }
+
+            // Hủy assassin trước
+            if (canSat.assassin != null)
+            {
+                canSat.assassin.DestroyCharacter();
+                canSat.assassin = null;
+            }
+        }
+
+        // Sau đó hủy các nhân vật còn lại
         foreach (var character in Characters)
         {
             character.DestroyCharacter();
+        }
+
+        // Xóa danh sách nhân vật sau khi đã hủy
+        Characters.Clear();
+        Players.Clear();
+        Enemies.Clear();
+    }
+
+    // Thêm phương thức OnDisable để cleanup khi scene bị unload
+    private void OnDisable()
+    {
+        // Cleanup các shadow objects có thể còn lại
+        var existingCanSats = FindObjectsOfType<CanSat>();
+        foreach (var canSat in existingCanSats)
+        {
+            if (canSat.dancer != null)
+            {
+                canSat.dancer.DestroyCharacter();
+                canSat.dancer = null;
+            }
+
+            if (canSat.assassin != null) 
+            {
+                canSat.assassin.DestroyCharacter();
+                canSat.assassin = null;
+            }
+        }
+    }
+
+    // Thêm phương thức OnApplicationQuit để cleanup khi thoát game
+    private void OnApplicationQuit()
+    {
+        // Tương tự như OnDisable để đảm bảo cleanup
+        var existingCanSats = FindObjectsOfType<CanSat>();
+        foreach (var canSat in existingCanSats)
+        {
+            if (canSat.dancer != null)
+            {
+                canSat.dancer.DestroyCharacter();
+                canSat.dancer = null;
+            }
+
+            if (canSat.assassin != null)
+            {
+                canSat.assassin.DestroyCharacter();
+                canSat.assassin = null;
+            }
         }
     }
 

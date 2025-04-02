@@ -409,7 +409,7 @@ MonoBehaviour:
     RoundIndex: 0
   lastDamageTakenCountered: 0
   goldenAPChance: 0.25
-  CurrentShield: {fileID: 0}
+  CurrentShieldPosition: {x: 0, y: 0}
 --- !u!114 &4073403874055096316
 MonoBehaviour:
   m_ObjectHideFlags: 0

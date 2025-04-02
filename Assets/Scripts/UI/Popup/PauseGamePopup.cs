@@ -59,6 +59,27 @@ public class PauseGamePopup : PopupBase
     private void OnExitButtonClick()
     {
         DOTween.KillAll();
+        
+        // Gọi DestroyAllCharacters để đảm bảo các bóng của CanSat được hủy
+        var canSats = FindObjectsOfType<CanSat>();
+        foreach (var canSat in canSats)
+        {
+            if (canSat.dancer != null)
+            {
+                canSat.dancer.DestroyCharacter();
+                canSat.dancer = null;
+            }
+
+            if (canSat.assassin != null)
+            {
+                canSat.assassin.DestroyCharacter();
+                canSat.assassin = null;
+            }
+        }
+        
+        // Gọi hủy tất cả các nhân vật
+        GameplayManager.Instance.DestroyAllCharacters();
+        
         SceneLoader.LoadSceneAsync(ESceneType.MainMenu, LoadSceneMode.Additive);
         SceneLoader.UnloadSceneAsync(ESceneType.Game);
         UIManager.Instance.CloseCurrentMenu();

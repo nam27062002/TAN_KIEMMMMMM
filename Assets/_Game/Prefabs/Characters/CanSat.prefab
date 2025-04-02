@@ -391,6 +391,7 @@ MonoBehaviour:
   assassinPrefab: {fileID: 7333246952435401029, guid: a4aca6144b5c1614796279710c2df1a0, type: 3}
   dancer: {fileID: 7333246952435401029, guid: b66becf0d5714cf4199e85604416e8f6, type: 3}
   assassin: {fileID: 0}
+  loadedFromSave: 0
 --- !u!1 &3488727249622327364 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}

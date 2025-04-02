@@ -196,6 +196,30 @@ MonoBehaviour:
     internalSkill: []
     movementSkill: []
     combatSkill: []
+    passtiveSkill1:
+      icon: {fileID: 0}
+      name: 
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
+    passtiveSkill2:
+      icon: {fileID: 0}
+      name: 
+      skillIndex: 0
+      mpCost: 0
+      range: 0
+      directionType: 512
+      isDirectionalSkill: 0
+      canOverrideSetTargetCharacters: 0
+      canBlockDamage: 0
+      damageType: 0
+      description: 
   passiveSkills: []
   Info:
     RoundIndex: 0

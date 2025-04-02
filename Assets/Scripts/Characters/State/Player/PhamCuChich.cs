@@ -3,6 +3,8 @@ public class PhamCuChich : PlayerCharacter
 {
     public Cell CurrentShield;
     private int _damage;
+    private int _damageLostInCurrentRound;
+    
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -32,14 +34,21 @@ public class PhamCuChich : PlayerCharacter
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: new round => Reset damage");
             _damage = 0;
         }
+        
+        if (_damageLostInCurrentRound > 0)
+        {
+            _damage = _damageLostInCurrentRound;
+            Info.Attributes.atk += _damage;
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: Áp dụng {_damage} damage từ máu đã mất ở round trước");
+            _damageLostInCurrentRound = 0;
+        }
     }
 
     private void InfoOnOnReduceHp(object sender, int damage)
     {
         if (Info == null) return;
-        _damage += damage;
-        Info.Attributes.atk += damage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: tăng {damage} damage");
+        _damageLostInCurrentRound += damage;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: Lưu {damage} damage, tổng {_damageLostInCurrentRound} (sẽ áp dụng ở round tiếp theo)");
     }
 
     public override void HandleMpChanged(int value)
