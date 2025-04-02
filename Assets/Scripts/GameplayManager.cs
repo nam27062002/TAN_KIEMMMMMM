@@ -156,6 +156,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 shadow.Initialize(MapManager.GetCell(shadowData.points), shadowData.iD);
                 shadow.Info.CurrentHp = shadowData.currentHp;
                 shadow.Info.CurrentMp = shadowData.currentMp;
+                shadow.Info.MoveAmount = shadowData.moveAmount;
+                shadow.Info.IsFirstRoundAfterLoad = true;
                 shadow.Info.OnHpChangedInvoke(0);
                 shadow.Info.OnMpChangedInvoke(0);
                 
@@ -276,6 +278,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         character.Info.CurrentHp = data.currentHp;
         character.Info.CurrentMp = data.currentMp;
+        character.Info.MoveAmount = data.moveAmount;
+        character.Info.IsFirstRoundAfterLoad = true;
         character.Info.OnHpChangedInvoke(0);
         character.Info.OnMpChangedInvoke(0);
     }
@@ -1280,7 +1284,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 iD = character.CharacterId,
                 effectInfo = GetEffects(character),
                 actionPoints = character.Info.ActionPoints,
-                isShadow = false
+                isShadow = false,
+                moveAmount = character.Info.MoveAmount
             };
             
             // Thêm xử lý đặc biệt cho Hoắc Liên Hương
@@ -1307,7 +1312,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 actionPoints = shadow.Info.ActionPoints,
                 isShadow = true,
                 ownerID = owner.CharacterId,
-                shadowType = shadow.characterType
+                shadowType = shadow.characterType,
+                moveAmount = shadow.Info.MoveAmount
             };
             levelData.characterDatas.Add(shadowData);
         }

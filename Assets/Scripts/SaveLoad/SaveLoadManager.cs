@@ -167,6 +167,9 @@ public class CharacterData
     
     // Thêm trường cho Hoắc Liên Hương shield
     public Vector2Int? shieldCellPosition;
+    
+    // Thêm trường lưu MoveAmount 
+    public int moveAmount;
 }
 
 [Serializable]

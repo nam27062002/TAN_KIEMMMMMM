@@ -76,8 +76,8 @@ public class CharacterInfo
     public int RoundIndex = 0;
     public Cell Cell { get; set; }
     public HashSet<Cell> MoveRange { get; set; } = new();
-
     public HashSet<Cell> SkillRange { get; set; } = new();
+    public bool IsFirstRoundAfterLoad { get; set; } = false; // Biến cờ đánh dấu lần đầu sau khi load
 
     // Skill
     public SkillInfo SkillInfo { get; set; }
@@ -447,7 +447,19 @@ public class CharacterInfo
     public void ResetBuffBefore()
     {
         OnNewRound?.Invoke(this, RoundIndex);
-        MoveAmount = 0;
+        
+        // Chỉ reset MoveAmount nếu không phải lần đầu tiên sau khi load
+        if (!IsFirstRoundAfterLoad)
+        {
+            MoveAmount = 0;
+        }
+        else
+        {
+            // Đánh dấu là đã xử lý lần đầu sau khi load
+            IsFirstRoundAfterLoad = false;
+            Debug.Log($"[{Character.characterConfig.characterName}] Giữ nguyên MoveAmount = {MoveAmount} từ save");
+        }
+        
         foreach (var effect in EffectInfo.Effects.ToList()
                      .Where(effect => EffectInfo.TriggerAtStart.Contains(effect.effectType)))
         {
