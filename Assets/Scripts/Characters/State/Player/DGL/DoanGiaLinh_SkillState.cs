@@ -74,6 +74,21 @@ public class DoanGiaLinh_SkillState : SkillState
         return currentDamage;
     }
 
+    // Thêm phương thức để trích xuất logic hút độc phấn và hồi máu
+    private int DrainPoisonPowderAndHeal(Character target, string skillName)
+    {
+        int stack = target.Info.GetPoisonPowder();
+        if (stack <= 0) return stack;
+        
+        int healAmount = Mathf.Max(1, stack); // Tối thiểu là 1
+        Character.Info.CurrentHp += healAmount;
+        Character.Info.CurrentHp = Mathf.Min(Character.Info.CurrentHp, Character.GetMaxHp());
+        Character.Info.OnHpChangedInvoke(healAmount);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {skillName}: Hút {stack} độc phấn => Hồi {healAmount} máu");
+        
+        return stack;
+    }
+
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character target)
     {
         ApplyPoisonPowder(target);
@@ -287,13 +302,18 @@ public class DoanGiaLinh_SkillState : SkillState
         bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
         int rollTimes = Roll.GetActualRollTimes(1, isCrit);
         int skillDamage = Roll.RollDice(1, 4, 0, isCrit);
-        int stack = target.Info.GetPoisonPowder();
+        
+        // Hút độc phấn và hồi máu
+        int stack = DrainPoisonPowderAndHeal(target, "Tuyết Điểm Hồng Phấn");
+        
         int totalSkillDamage = skillDamage * stack;
         int realDamage = baseDamage + totalSkillDamage;
+        
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Tuyết Điểm Hồng Phấn: skill damage = {rollTimes}d4 * {stack} = {totalSkillDamage}");
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}");
+        
         var effects = new List<EffectData>()
         {
             new ChangeStatEffect()
@@ -309,7 +329,9 @@ public class DoanGiaLinh_SkillState : SkillState
                 Actor = Character
             }
         };
+        
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
+        
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -322,6 +344,10 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         ApplyPoisonPowder(target);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Hồng Ti");
+        
+        // Hút độc phấn và hồi máu
+        DrainPoisonPowderAndHeal(target, "Hồng Ti");
+        
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
@@ -347,16 +373,27 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         ApplyPoisonPowder(target);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Kim Tước Mai");
+        
+        // Hút độc phấn và hồi máu
+        DrainPoisonPowderAndHeal(target, "Kim Tước Mai");
+        
+        int damage = 0;
+        var effects = new List<EffectData>()
+        {
+            new()
+            {
+                effectType = EffectType.RemoveAllPoisonPowder,
+                Actor = Character
+            },
+        };
+        
+        // Áp dụng sát thương từ độc trùng ăn hoa
+        damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
+        
         return new DamageTakenParams
         {
-            Effects = new List<EffectData>()
-            {
-                new()
-                {
-                    effectType = EffectType.RemoveAllPoisonPowder,
-                    Actor = Character
-                },
-            },
+            Damage = damage,
+            Effects = effects,
             ReceiveFromCharacter = Character
         };
     }
