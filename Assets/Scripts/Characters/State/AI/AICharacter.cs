@@ -81,23 +81,42 @@ public abstract class AICharacter : Character
     protected bool TryCastSkill()
     {
         AlkawaDebug.Log(ELogCategory.AI,"TryCastSkill");
-         var skillType = GpManager.GetSkillTurnType(this);
-         List<SkillInfo> skills = GetSkillInfos(skillType);
+        var skillType = GpManager.GetSkillTurnType(this);
+        List<SkillInfo> skills = GetSkillInfos(skillType);
         
-         for (int i = 0; i < skills.Count; i++)
-         {
-             if (Info.CanCastSkill(skills[i]) && skills[i].isDirectionalSkill && skills[i].damageType.HasFlag(DamageTargetType.Enemies))
-             {
-                 var enemiesInRange = GpManager.GetEnemiesInRange(this, skills[i].range, skills[i].directionType);
-                 if (enemiesInRange.Count > 0)
-                 {
-                     Enemy = enemiesInRange[0];
-                     HandleCastSkill(skills[i], new List<Character> {Enemy});
-                     AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {skills[i].name}");
-                     return true;
-                 }
-             }
-         }
+        // Danh sách lưu trữ các cặp (skill, danh sách kẻ địch trong tầm)
+        List<(SkillInfo skill, List<Character> enemies)> validSkills = new List<(SkillInfo, List<Character>)>();
+        
+        // Tìm tất cả skill thỏa mãn điều kiện
+        foreach (var skill in skills)
+        {
+            if (Info.CanCastSkill(skill) && skill.isDirectionalSkill && skill.damageType.HasFlag(DamageTargetType.Enemies))
+            {
+                var enemiesInRange = GpManager.GetEnemiesInRange(this, skill.range, skill.directionType);
+                if (enemiesInRange.Count > 0)
+                {
+                    validSkills.Add((skill, enemiesInRange));
+                }
+            }
+        }
+        
+        // Nếu có skill thỏa mãn, chọn ngẫu nhiên một skill
+        if (validSkills.Count > 0)
+        {
+            // Chọn ngẫu nhiên một index trong danh sách skill thỏa mãn
+            int randomIndex = UnityEngine.Random.Range(0, validSkills.Count);
+            var selectedSkill = validSkills[randomIndex];
+            
+            // Chọn kẻ địch ngẫu nhiên trong tầm (tùy chọn)
+            int randomEnemyIndex = UnityEngine.Random.Range(0, selectedSkill.enemies.Count);
+            Enemy = selectedSkill.enemies[randomEnemyIndex];
+            
+            // Thực hiện skill
+            HandleCastSkill(selectedSkill.skill, new List<Character> {Enemy});
+            AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill (Random): {selectedSkill.skill.name} targeting {Enemy.characterConfig.characterName}");
+            return true;
+        }
+        
         return false;
     }
 }
