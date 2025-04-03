@@ -22,7 +22,6 @@ MonoBehaviour:
       m_values:
       - points:
         - {x: 10, y: 5}
-        - {x: 9, y: 5}
       - points:
         - {x: 8, y: 5}
   specialSpawnerConfig:

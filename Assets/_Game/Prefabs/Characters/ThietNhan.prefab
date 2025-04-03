@@ -329,7 +329,7 @@ MonoBehaviour:
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
       mpCost: 6
-      range: 0
+      range: 100
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
