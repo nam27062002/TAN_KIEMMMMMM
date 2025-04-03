@@ -4,17 +4,32 @@ using UnityEngine;
 
 public class HoacLienHuong_SkillState : SkillState
 {
+    private HoacLienHuong _hlhCharacter;
+    
     public HoacLienHuong_SkillState(Character character) : base(character)
     {
+        _hlhCharacter = character as HoacLienHuong;
     }
 
     protected override void HandleCastSkill()
     {
+        // Reset cờ khi bắt đầu kỹ năng mới
+        _hlhCharacter?.ResetSelfDamageFlag();
+        
         base.HandleCastSkill();
         if (_skillStateParams.SkillInfo.skillIndex == SkillIndex.ActiveSkill2)
         {
             MoveToCell(_skillStateParams.TargetCell, 0.5f);
         }
+    }
+
+    // Override các phương thức tấn công để gây sát thương lên bản thân khi đạt tối đa
+    protected override void HandleApplyDamageOnEnemy(Character character)
+    {
+        base.HandleApplyDamageOnEnemy(character);
+        
+        // Kiểm tra và gây sát thương lên bản thân nếu đạt tối đa
+        _hlhCharacter?.ApplySelfDamageIfMaxDamage();
     }
 
     //===================== SKILL 2 =====================
@@ -34,6 +49,38 @@ public class HoacLienHuong_SkillState : SkillState
             Damage = totalDamage,
             ReceiveFromCharacter = Character
         };
+    }
+
+    // Override phương thức lấy sát thương cơ bản để thêm sát thương cộng thêm và hiệu ứng crit
+    protected override int GetBaseDamage()
+    {
+        var baseDamage = base.GetBaseDamage();
+        
+        // Thêm sát thương cộng thêm từ Yêu Cung
+        if (_hlhCharacter != null)
+        {
+            int additionalDamage = _hlhCharacter.GetAdditionalDamage();
+            baseDamage += additionalDamage;
+            
+            if (additionalDamage > 0)
+            {
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yêu Cung: Cộng thêm {additionalDamage} sát thương cơ bản");
+            }
+            
+            // Nếu đạt tối đa, có cơ hội thêm 2d4 sát thương (coi như là hiệu ứng bạo kích)
+            if (_hlhCharacter.IsMaxAdditionalDamage())
+            {
+                // Xác suất 20% gây sát thương bạo kích
+                if (Random.value <= 0.2f)
+                {
+                    int critDamage = Roll.RollDice(2, 4, 0);
+                    baseDamage += critDamage;
+                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yêu Cung đạt tối đa: Kích hoạt bạo kích, cộng thêm {critDamage} sát thương (2d4)");
+                }
+            }
+        }
+        
+        return baseDamage;
     }
 
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
@@ -76,6 +123,10 @@ public class HoacLienHuong_SkillState : SkillState
         }
         Info.Cell.SetShield(Character.Type, 3);
         ((HoacLienHuong)character).CurrentShield = Info.Cell;
+        
+        // Gây sát thương lên bản thân nếu đạt tối đa
+        _hlhCharacter?.ApplySelfDamageIfMaxDamage();
+        
         return new DamageTakenParams();
     }
 
@@ -118,6 +169,10 @@ public class HoacLienHuong_SkillState : SkillState
         var baseDamage = GetBaseDamage();
         var skillDamage = GetSkillDamage(new RollData(2, 4, 2));
         var totalDamage = GetTotalDamage(baseDamage, skillDamage);
+        
+        // Gây sát thương lên bản thân nếu đạt tối đa
+        _hlhCharacter?.ApplySelfDamageIfMaxDamage();
+        
         return new DamageTakenParams
         {
             Damage = totalDamage,
@@ -219,5 +274,15 @@ public class HoacLienHuong_SkillState : SkillState
         {
             AddTargetCharacters(item);
         }
+    }
+
+    protected override DamageTakenParams GetDamageParams_Skill1_MyTurn(Character character)
+    {
+        var damageParams = base.GetDamageParams_Skill1_MyTurn(character);
+        
+        // Gây sát thương lên bản thân nếu đạt tối đa
+        _hlhCharacter?.ApplySelfDamageIfMaxDamage();
+        
+        return damageParams;
     }
 }
