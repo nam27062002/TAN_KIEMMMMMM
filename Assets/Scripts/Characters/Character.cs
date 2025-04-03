@@ -337,22 +337,44 @@ public abstract class Character : MonoBehaviour
     {
         HideMoveRange();
         UnSelectSkill();
-        if (Info.SkillInfo == GetSkillInfo(skillIndex)) return;
+        
+        // Kiểm tra tính hợp lệ của skillIndex trước khi gọi GetSkillInfo
+        SkillInfo selectedSkill = GetSkillInfo(skillIndex);
+        if (selectedSkill == null)
+        {
+            Debug.LogWarning($"[{characterConfig.characterName}] HandleSelectSkill: Không tìm thấy skill với index {skillIndex}");
+            return;
+        }
+        
+        if (Info.SkillInfo == selectedSkill) return;
         UnSelectSkill();
-        Info.SkillInfo = GetSkillInfo(skillIndex);
+        Info.SkillInfo = selectedSkill;
+        
         if (Info.SkillInfo.isDirectionalSkill)
         {
             HandleDirectionalSkill();
         }
         else
         {
-            NonDirectionalCells = MapManager.GetAllHexagonInRange(Info.Cell, Info.SkillInfo.range);
-            foreach (var cell in NonDirectionalCells)
+            if (Info.Cell == null)
             {
-                cell.ShowSkillRange();
+                Debug.LogWarning($"[{characterConfig.characterName}] HandleSelectSkill: Cell của nhân vật là null!");
+                return;
+            }
+            
+            NonDirectionalCells = MapManager.GetAllHexagonInRange(Info.Cell, Info.SkillInfo.range);
+            if (NonDirectionalCells != null)
+            {
+                foreach (var cell in NonDirectionalCells)
+                {
+                    cell.ShowSkillRange();
+                }
             }
             HandleCastSkill();
-            skillUI.highlightable.Unhighlight();
+            if (skillUI != null)
+            {
+                skillUI.highlightable.Unhighlight();
+            }
         }
     }
 
@@ -494,7 +516,19 @@ public abstract class Character : MonoBehaviour
 
     private void ShowSkillRange()
     {
+        if (Info == null || Info.Cell == null || Info.SkillInfo == null)
+        {
+            Debug.LogWarning($"[{characterConfig.characterName}] ShowSkillRange: Info, Cell hoặc SkillInfo là null!");
+            return;
+        }
+        
         Info.SkillRange = MapManager.GetHexagonsInAttack(Info.Cell, Info.SkillInfo);
+        if (Info.SkillRange == null)
+        {
+            Debug.LogWarning($"[{characterConfig.characterName}] ShowSkillRange: Không thể lấy được SkillRange!");
+            return;
+        }
+        
         foreach (var item in Info.SkillRange)
         {
             item.ShowSkillRange();

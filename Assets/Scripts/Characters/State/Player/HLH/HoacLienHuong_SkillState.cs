@@ -285,4 +285,31 @@ public class HoacLienHuong_SkillState : SkillState
         
         return damageParams;
     }
+
+    protected override void TeleportToCell(Cell cell)
+    {
+        if (cell == null)
+        {
+            Debug.LogWarning($"[{CharName}] TeleportToCell: Cell đích là null!");
+            return;
+        }
+
+        // Gọi phương thức của lớp cha
+        base.TeleportToCell(cell);
+        
+        // Cập nhật CurrentShield nếu có
+        if (_hlhCharacter != null && cell.mainShieldCell == cell)
+        {
+            _hlhCharacter.CurrentShield = cell;
+            _hlhCharacter.CurrentShieldPosition = cell.CellPosition;
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Cập nhật CurrentShield = {cell.CellPosition}");
+        }
+        
+        // Cập nhật MainCell nếu là nhân vật chính
+        if (Character.IsMainCharacter)
+        {
+            GpManager.SetMainCell(cell);
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Cập nhật MainCell = {cell.CellPosition}");
+        }
+    }
 }

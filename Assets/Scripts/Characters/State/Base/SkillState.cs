@@ -616,8 +616,35 @@ public class SkillState : CharacterState
         });
     }
 
-    protected void TeleportToCell(Cell cell)
+    protected virtual void TeleportToCell(Cell cell)
     {
+        if (cell == null)
+        {
+            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Cell đích là null!");
+            return;
+        }
+
+        if (Info == null || Info.Cell == null)
+        {
+            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Info hoặc Info.Cell là null!");
+            
+            // Thử teleport theo cách khác
+            if (Character != null && Character.Info != null)
+            {
+                cell.Character = Character;
+                cell.CellType = CellType.Character;
+                Character.Info.Cell = cell;
+                SetCharacterPosition();
+                SetFacing();
+                
+                if (Character.IsMainCharacter)
+                {
+                    GpManager.SetMainCell(cell);
+                }
+            }
+            return;
+        }
+
         Info.Cell.HideFocus();
         Info.Cell.Character = null;
         Info.Cell.CellType = CellType.Walkable;
@@ -627,6 +654,12 @@ public class SkillState : CharacterState
         Character.Info.Cell = cell;
         SetCharacterPosition();
         SetFacing();
+        
+        // Đảm bảo MainCell được cập nhật
+        if (Character.IsMainCharacter)
+        {
+            GpManager.SetMainCell(cell);
+        }
     }
 
     protected int GetSkillDamage(RollData rollData)
