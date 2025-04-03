@@ -37,9 +37,9 @@ public class PhamCuChich : PlayerCharacter
         
         if (_damageLostInCurrentRound > 0)
         {
-            _damage = _damageLostInCurrentRound;
+            _damage = Utils.RoundNumber(_damageLostInCurrentRound * 0.3f);
             Info.Attributes.atk += _damage;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: Áp dụng {_damage} damage từ máu đã mất ở round trước");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: Áp dụng {_damage} damage từ máu đã mất ở round trước (30%)");
             _damageLostInCurrentRound = 0;
         }
     }
