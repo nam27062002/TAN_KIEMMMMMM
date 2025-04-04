@@ -10,9 +10,27 @@ public class EffectData
     [NonSerialized] public Character Actor;
     public int characterId;
     
+    // Thêm phương thức này để xử lý trước khi lưu
+    public virtual void OnBeforeSave()
+    {
+        // Lưu characterId từ Actor
+        if (Actor != null)
+        {
+            characterId = Actor.CharacterId;
+        }
+    }
+    
     // Thêm phương thức này để xử lý khi load
     public virtual void OnAfterLoad(MapManager mapManager)
     {
-        // Xử lý chung cho tất cả hiệu ứng
+        // Khôi phục Actor từ characterId
+        if (characterId != 0)
+        {
+            Actor = mapManager.GetCharacterById(characterId);
+            if (Actor == null)
+            {
+                UnityEngine.Debug.LogWarning($"Không tìm thấy nhân vật với ID {characterId} cho hiệu ứng {effectType}");
+            }
+        }
     }
 }

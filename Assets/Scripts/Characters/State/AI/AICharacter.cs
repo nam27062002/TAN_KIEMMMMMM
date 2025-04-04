@@ -52,17 +52,24 @@ public abstract class AICharacter : Character
     protected virtual bool TryMoving()
     {
         if (Info.GetMoveRange() <= 0) return false;
+        
+        // Kiểm tra có bị hiệu ứng Taunt không
+        var tauntEffect = Info.EffectInfo.Effects.FirstOrDefault(e => e.effectType == EffectType.Taunt);
+        Character tauntSource = tauntEffect?.Actor;
+        
         List<Cell> cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, Info.GetMoveRange(), characterConfig.moveDirection);
         if (cells.Count == 0) return false;
-        List<Cell> enemyCells = GpManager.Players.Select(item => item.Info.Cell).ToList();
-
+        
         Cell targetCell = null;
         int minDistance = int.MaxValue;
-        foreach (var cell in cells)
+        
+        // Nếu dính hiệu ứng Taunt, ưu tiên di chuyển về phía nguồn gây Taunt
+        if (tauntSource != null)
         {
-            foreach (var enemyCell in enemyCells)
+            AlkawaDebug.Log(ELogCategory.AI, $"Đang bị hiệu ứng Taunt từ {tauntSource.characterConfig.characterName}");
+            foreach (var cell in cells)
             {
-                var p = MapManager.FindShortestPath(cell, enemyCell);
+                var p = MapManager.FindShortestPath(cell, tauntSource.Info.Cell);
                 if (p != null && p.Count < minDistance)
                 {
                     minDistance = p.Count;
@@ -70,6 +77,24 @@ public abstract class AICharacter : Character
                 }
             }
         }
+        else
+        {
+            // Xử lý di chuyển như bình thường nếu không bị Taunt
+            List<Cell> enemyCells = GpManager.Players.Select(item => item.Info.Cell).ToList();
+            foreach (var cell in cells)
+            {
+                foreach (var enemyCell in enemyCells)
+                {
+                    var p = MapManager.FindShortestPath(cell, enemyCell);
+                    if (p != null && p.Count < minDistance)
+                    {
+                        minDistance = p.Count;
+                        targetCell = cell;
+                    }
+                }
+            }
+        }
+        
         if (targetCell == null) return false;
         var path = GpManager.MapManager.FindPath(Info.Cell, targetCell);
         TryMoveToCell(path);
@@ -84,6 +109,10 @@ public abstract class AICharacter : Character
         var skillType = GpManager.GetSkillTurnType(this);
         List<SkillInfo> skills = GetSkillInfos(skillType);
         
+        // Kiểm tra có bị hiệu ứng Taunt không
+        var tauntEffect = Info.EffectInfo.Effects.FirstOrDefault(e => e.effectType == EffectType.Taunt);
+        Character tauntSource = tauntEffect?.Actor;
+        
         // Danh sách lưu trữ các cặp (skill, danh sách kẻ địch trong tầm)
         List<(SkillInfo skill, List<Character> enemies)> validSkills = new List<(SkillInfo, List<Character>)>();
         
@@ -93,7 +122,16 @@ public abstract class AICharacter : Character
             if (Info.CanCastSkill(skill) && skill.isDirectionalSkill && skill.damageType.HasFlag(DamageTargetType.Enemies))
             {
                 var enemiesInRange = GpManager.GetEnemiesInRange(this, skill.range, skill.directionType);
-                if (enemiesInRange.Count > 0)
+                
+                // Nếu bị Taunt, chỉ tấn công nguồn gây Taunt nếu có thể
+                if (tauntSource != null)
+                {
+                    if (enemiesInRange.Contains(tauntSource))
+                    {
+                        validSkills.Add((skill, new List<Character> { tauntSource }));
+                    }
+                }
+                else if (enemiesInRange.Count > 0)
                 {
                     validSkills.Add((skill, enemiesInRange));
                 }
@@ -107,13 +145,22 @@ public abstract class AICharacter : Character
             int randomIndex = UnityEngine.Random.Range(0, validSkills.Count);
             var selectedSkill = validSkills[randomIndex];
             
-            // Chọn kẻ địch ngẫu nhiên trong tầm (tùy chọn)
-            int randomEnemyIndex = UnityEngine.Random.Range(0, selectedSkill.enemies.Count);
-            Enemy = selectedSkill.enemies[randomEnemyIndex];
+            // Với hiệu ứng Taunt, Enemy luôn là nguồn gây Taunt
+            if (tauntSource != null && selectedSkill.enemies.Contains(tauntSource))
+            {
+                Enemy = tauntSource;
+                AlkawaDebug.Log(ELogCategory.AI,$"Tấn công nguồn gây Taunt: {tauntSource.characterConfig.characterName}");
+            }
+            else
+            {
+                // Chọn kẻ địch ngẫu nhiên trong tầm nếu không bị Taunt
+                int randomEnemyIndex = UnityEngine.Random.Range(0, selectedSkill.enemies.Count);
+                Enemy = selectedSkill.enemies[randomEnemyIndex];
+            }
             
             // Thực hiện skill
             HandleCastSkill(selectedSkill.skill, new List<Character> {Enemy});
-            AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill (Random): {selectedSkill.skill.name} targeting {Enemy.characterConfig.characterName}");
+            AlkawaDebug.Log(ELogCategory.AI,$"HandleAICastSkill: {selectedSkill.skill.name} targeting {Enemy.characterConfig.characterName}");
             return true;
         }
         

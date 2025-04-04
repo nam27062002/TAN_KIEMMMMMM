@@ -36,5 +36,6 @@ MonoBehaviour:
   winConversations:
   - {fileID: 11400000, guid: 2f8d4cbea8c8e574d87b605739dab8ec, type: 2}
   nextLevel: {fileID: 11400000, guid: 4da27f3501b6b0340b294d80e8bd28d0, type: 2}
+  delayIncrement: 0.01
   special1Conversation: {fileID: 0}
   special2Conversation: {fileID: 0}

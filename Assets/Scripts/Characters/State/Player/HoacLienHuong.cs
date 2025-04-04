@@ -74,7 +74,7 @@ public class HoacLienHuong : PlayerCharacter
         {
             // Gây 1d4 sát thương lên bản thân
             int selfDamage = Roll.RollDice(1, 4, 0);
-            Info.HandleDamageTaken(selfDamage, this);
+            Info.HandleDamageTaken(-selfDamage, this);
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yêu Cung đạt tối đa: Hồi {selfDamage} máu (1d4)");
             
             // Đánh dấu đã gọi

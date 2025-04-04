@@ -61,6 +61,18 @@ public class MapManager : MonoBehaviour
         return cells.TryGetValue(position, out var cell) ? cell : null;
     }
 
+    public Character GetCharacterById(int characterId)
+    {
+        foreach (var cell in cells.Values)
+        {
+            if (cell.CellType == CellType.Character && cell.Character != null && cell.Character.CharacterId == characterId)
+            {
+                return cell.Character;
+            }
+        }
+        return null;
+    }
+
     public HashSet<Cell> GetHexagonsInMoveRange(Cell cell, int range, DirectionType direction)
     {
         return _pathfinding.GetHexagonsInMoveRange(cell, range, direction);

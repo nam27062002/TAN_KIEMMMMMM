@@ -179,9 +179,9 @@ MonoBehaviour:
         add: 0
       overrideDamage: 0
       atkOverride: 100
-      overrideMaxMoveRange: 1
+      overrideMaxMoveRange: 0
       maxMoveRangeOverride: 100
-      overrideMaxHp: 1
+      overrideMaxHp: 0
       maxHpOverride: 100
     actionPoints:
       m_keys: 000000000100000002000000

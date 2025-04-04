@@ -94,6 +94,42 @@ public class CanSat : AICharacter
     {
         AlkawaDebug.Log(ELogCategory.AI, "HandleAIPlay");
         Info.GetMoveRange();
+        
+        // Kiểm tra có bị hiệu ứng Taunt không
+        var tauntEffect = Info.EffectInfo.Effects.FirstOrDefault(e => e.effectType == EffectType.Taunt);
+        
+        if (tauntEffect != null)
+        {
+            // Khi bị Taunt, ưu tiên tấn công hoặc di chuyển về phía Actor
+            Character tauntSource = tauntEffect.Actor;
+            
+            // Kiểm tra xem có thể tấn công nguồn gây Taunt không
+            var skillType = GpManager.GetSkillTurnType(this);
+            var skills = GetSkillInfos(skillType);
+            
+            foreach (var skill in skills)
+            {
+                if (Info.CanCastSkill(skill) && skill.damageType.HasFlag(DamageTargetType.Enemies))
+                {
+                    var enemiesInTauntRange = GpManager.GetEnemiesInRange(this, skill.range, skill.directionType);
+                    if (enemiesInTauntRange.Contains(tauntSource))
+                    {
+                        Enemy = tauntSource;
+                        HandleCastSkill(skill, new List<Character> { Enemy });
+                        AlkawaDebug.Log(ELogCategory.AI, $"Bị Taunt: tấn công {tauntSource.characterConfig.characterName} với {skill.name}");
+                        return;
+                    }
+                }
+            }
+            
+            // Nếu không thể tấn công, di chuyển về phía nguồn gây Taunt
+            if (TryMoving())
+            {
+                return;
+            }
+        }
+        
+        // Xử lý bình thường nếu không bị Taunt
         var enemiesInRange = GpManager.GetEnemiesInRange(this, 2, DirectionType.All);
         if (dancer == null && Info.ActionPointsList.Count(p => p == 3) >= 2)
         {
