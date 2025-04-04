@@ -107,10 +107,6 @@ public class PhamCuChich : PlayerCharacter
         // Kiểm tra có đủ MP và HP không
         bool enoughMp = Info.CurrentMp >= halfMp;
         bool enoughHp = Info.CurrentHp > halfHp;
-        
-        //AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Toggle ON: Kiểm tra skill {skillInfo.name}: cần {halfMp}MP + {halfHp}HP, hiện có {Info.CurrentMp}MP và {Info.CurrentHp}HP => {enoughMp && enoughHp}");
-        
-        // Chỉ kiểm tra MP và HP, phần ActionPoints đã được kiểm tra trong Info.CanCastSkill
         return enoughMp && enoughHp && Info.ActionPointsList.Any(point => point == 3);
     }
 }
