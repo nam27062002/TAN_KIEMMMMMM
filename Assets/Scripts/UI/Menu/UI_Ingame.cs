@@ -21,9 +21,10 @@ public class UI_Ingame : MenuBase
     [Title("Text Mesh Pro")] [SerializeField]
     private TextMeshProUGUI characterName;
 
-    [SerializeField] private TextMeshProUGUI levelName;
+    [SerializeField] private TextMeshProUGUI levelName; 
     [SerializeField] private TextMeshProUGUI characterFocusName;
     [SerializeField] private TextMeshProUGUI roundIndex;
+    [SerializeField] private TextMeshProUGUI notification;
     
     [Title("Skill"), Space] [SerializeField]
     private List<Skill_UI> skillUI = new();
@@ -184,12 +185,34 @@ public class UI_Ingame : MenuBase
         SetRound();
         toggle.gameObject.SetActiveIfNeeded(characterParams.Character.characterConfig.hasToggle);
         toggle.isOn = characterParams.Character.Info.IsToggleOn;
+        
+        // Xử lý hiển thị số lượng độc trùng cho Đoàn Gia Linh
+        if (characterParams.Character.characterType == CharacterType.DoanGiaLinh)
+        {
+            // Tìm TheAllPoisonScript trong passiveSkills
+            TheAllPoisonScript poisonScript = characterParams.Character.passiveSkills
+                .OfType<TheAllPoisonScript>()
+                .FirstOrDefault();
+                
+            if (poisonScript != null)
+            {
+                notification.gameObject.SetActive(true);
+                notification.text = $"Độc Trùng: {poisonScript.VenomousParasite}";
+            }
+        }
+        else
+        {
+            // Clear thông báo cho các nhân vật khác
+            notification.text = string.Empty;
+            notification.gameObject.SetActive(false);
+        }
     }
 
     private void FixedUpdate()
     {
         UpdateEffect();
         SetLevelName();
+        UpdateVenomousParasiteInfo();
         skipButton.gameObject.SetActiveIfNeeded(GameplayManager.LevelConfig.levelType == LevelType.Tutorial && GameplayManager.CanShowSkipTutorial
                                                 // && SaveLoadManager.Instance.IsFinishedTutorial
                                                 );
@@ -296,5 +319,23 @@ public class UI_Ingame : MenuBase
     private void SetLevelName()
     {
         levelName.text = GameplayManager.LevelConfig.levelName;
+    }
+
+    private void UpdateVenomousParasiteInfo()
+    {
+        if (_characterParams == null || _characterParams.Character == null) return;
+        
+        if (_characterParams.Character.characterType == CharacterType.DoanGiaLinh)
+        {
+            TheAllPoisonScript poisonScript = _characterParams.Character.passiveSkills
+                .OfType<TheAllPoisonScript>()
+                .FirstOrDefault();
+                
+            if (poisonScript != null)
+            {
+                notification.gameObject.SetActive(true);
+                notification.text = $"Độc Trùng: {poisonScript.VenomousParasite}";
+            }
+        }
     }
 }

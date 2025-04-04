@@ -34,6 +34,29 @@ public class ToggleUI : MonoBehaviour
             toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
         }
     }
+    
+    // Phương thức này sẽ được gọi mỗi khi có thay đổi trong Inspector
+    private void OnValidate()
+    {
+        // Tự động tìm Toggle component nếu chưa được gán
+        if (toggle == null)
+            toggle = GetComponent<Toggle>();
+            
+        // Tự động tìm Image component nếu chưa được gán
+        if (image == null && toggle != null)
+            image = toggle.targetGraphic as Image;
+            
+        // Cập nhật sprite ngay trong Editor
+        if (toggle != null && image != null)
+        {
+            image.sprite = toggle.isOn ? onSprite : offSprite;
+            
+            // Đảm bảo Unity cập nhật trong Inspector
+            #if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(image);
+            #endif
+        }
+    }
 
     public void OnToggleValueChanged(bool isOn)
     {

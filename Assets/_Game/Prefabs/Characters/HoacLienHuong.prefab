@@ -341,7 +341,7 @@ MonoBehaviour:
         H\u01B0\u01A1ng lui ra kh\u1ECFi ph\u1EA1m vi \u1EA3nh h\u01B0\u1EDFng c\u1EE7a
         v\xF5 k\u1EF9 \u0111\u1ED1i th\u1EE7 th\xEC v\xF5 k\u1EF9 \u0111\xF3 tr\u01B0\u1EE3t. "
     - icon: {fileID: -8359747887217438903, guid: 7d3603f082f7ba54a9c4a7fa5d1967f9, type: 3}
-      name: "Long X\xE0 \u0110\xF4i Tr\xE1"
+      name: "D\u1EA1 Phong X\xFAy Kh\u1EDFi"
       skillIndex: 2
       mpCost: 5
       range: 0
