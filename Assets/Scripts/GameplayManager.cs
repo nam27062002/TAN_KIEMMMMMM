@@ -90,8 +90,14 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
         // Tạo các nhân vật thường
         Dictionary<int, Character> idToCharacter = new Dictionary<int, Character>();
+        
+        // Lưu ID của nhân vật đầu tiên để chỉ giữ MoveAmount cho nhân vật này
+        int firstCharacterId = normalCharacters.Count > 0 ? normalCharacters[0].iD : -1;
+        
         foreach (var characterData in normalCharacters)
         {
+            bool isFirstCharacter = (characterData.iD == firstCharacterId);
+            
             // Nếu là CanSat, cần setup trước khi Initialize
             if (isCanSatType.ContainsKey(characterData.characterType) && isCanSatType[characterData.characterType])
             {
@@ -100,7 +106,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 canSat.loadedFromSave = true;
                 
                 canSat.Initialize(MapManager.GetCell(characterData.points), characterData.iD);
-                ApplySavedCharacterState(canSat, characterData);
+                ApplySavedCharacterState(canSat, characterData, isFirstCharacter);
                 
                 Characters.Add(canSat);
                 AddToAppropriateTeamList(canSat);
@@ -110,7 +116,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             {
                 // Các nhân vật khác xử lý bình thường
                 var character = CreateCharacter(characterData.characterType, characterData.points, characterData.iD);
-                ApplySavedCharacterState(character, characterData);
+                ApplySavedCharacterState(character, characterData, isFirstCharacter);
                 idToCharacter[character.CharacterId] = character;
             }
         }
@@ -157,7 +163,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 shadow.Info.CurrentHp = shadowData.currentHp;
                 shadow.Info.CurrentMp = shadowData.currentMp;
                 shadow.Info.MoveAmount = shadowData.moveAmount;
-                shadow.Info.IsFirstRoundAfterLoad = true;
+                
+                // Bóng không phải nhân vật chính nên luôn reset MoveAmount
+                shadow.Info.IsFirstRoundAfterLoad = false;
+                
                 shadow.Info.OnHpChangedInvoke(0);
                 shadow.Info.OnMpChangedInvoke(0);
                 
@@ -274,12 +283,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
     }
 
-    private void ApplySavedCharacterState(Character character, CharacterData data)
+    private void ApplySavedCharacterState(Character character, CharacterData data, bool isFirstCharacter = false)
     {
         character.Info.CurrentHp = data.currentHp;
         character.Info.CurrentMp = data.currentMp;
         character.Info.MoveAmount = data.moveAmount;
-        character.Info.IsFirstRoundAfterLoad = true;
+        
+        // Chỉ đặt IsFirstRoundAfterLoad = true cho nhân vật đầu tiên
+        character.Info.IsFirstRoundAfterLoad = isFirstCharacter;
+        
+        if (isFirstCharacter)
+            Debug.Log($"[{character.characterConfig.characterName}] Đây là nhân vật chính đầu tiên, sẽ giữ nguyên MoveAmount = {data.moveAmount}");
+        else
+            Debug.Log($"[{character.characterConfig.characterName}] Không phải nhân vật chính đầu tiên, sẽ reset MoveAmount thành 0 khi đến lượt");
+            
         character.Info.OnHpChangedInvoke(0);
         character.Info.OnMpChangedInvoke(0);
     }
