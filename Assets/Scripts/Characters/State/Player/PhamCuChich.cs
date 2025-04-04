@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 public class PhamCuChich : PlayerCharacter
 {
     public Cell CurrentShield;
@@ -87,5 +88,29 @@ public class PhamCuChich : PlayerCharacter
         }
         hp = Utils.RoundNumber(value / 2f);
         return Info.CurrentHp > -hp;
+    }
+    
+    // Thêm phương thức để kiểm tra khả năng sử dụng skill với mode toggle
+    public bool CheckCanCastSkillWithToggle(SkillInfo skillInfo)
+    {
+        if (!Info.IsToggleOn)
+        {
+            // Nếu toggle tắt, sử dụng logic mặc định
+            return Info.CanCastSkill(skillInfo);
+        }
+        
+        // Nếu toggle bật, kiểm tra cả HP và MP
+        int requiredMp = skillInfo.mpCost;
+        int halfMp = Utils.RoundNumber(requiredMp / 2f);
+        int halfHp = Utils.RoundNumber(requiredMp / 2f);
+        
+        // Kiểm tra có đủ MP và HP không
+        bool enoughMp = Info.CurrentMp >= halfMp;
+        bool enoughHp = Info.CurrentHp > halfHp;
+        
+        //AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Toggle ON: Kiểm tra skill {skillInfo.name}: cần {halfMp}MP + {halfHp}HP, hiện có {Info.CurrentMp}MP và {Info.CurrentHp}HP => {enoughMp && enoughHp}");
+        
+        // Chỉ kiểm tra MP và HP, phần ActionPoints đã được kiểm tra trong Info.CanCastSkill
+        return enoughMp && enoughHp && Info.ActionPointsList.Any(point => point == 3);
     }
 }

@@ -153,9 +153,21 @@ public class UI_Ingame : MenuBase
         var skills = characterParams.Skills[characterParams.skillTurnType];
         for (var i = 0; i < skills.Count; i++)
         {
+            bool canCastSkill;
+            
+            // Kiểm tra nếu là Phạm Cử Chích thì sử dụng phương thức đặc biệt
+            if (characterParams.Character is PhamCuChich phamCuChich)
+            {
+                canCastSkill = phamCuChich.CheckCanCastSkillWithToggle(skills[i]) && _characterParams.Character.CanUseSkill;
+            }
+            else
+            {
+                canCastSkill = characterParams.Character.Info.CanCastSkill(skills[i]) && _characterParams.Character.CanUseSkill;
+            }
+            
             skillUI[i].SetSkill(skills[i],
                 unlock: !characterParams.Character.Info.IsLockSkill,
-                enoughMana: characterParams.Character.Info.CanCastSkill(skills[i]) && _characterParams.Character.CanUseSkill,
+                enoughMana: canCastSkill,
                 type: characterParams.Character.Type);
         }
 
@@ -207,6 +219,13 @@ public class UI_Ingame : MenuBase
     private void OnToggleValueChanged(bool isOn)
     {
         GameplayManager.SelectedCharacter.Info.IsToggleOn = isOn;
+        
+        // Refresh skill UI khi toggle thay đổi, đặc biệt quan trọng cho Phạm Cử Chích
+        if (_characterParams?.Character is PhamCuChich)
+        {
+            // Cập nhật lại UI skill để phản ánh trạng thái mới của toggle
+            GameplayManagerOnOnUpdateCharacterInfo(null, _characterParams);
+        }
     }
 
 
