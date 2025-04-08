@@ -22,7 +22,7 @@ public class UIFeedback : MonoBehaviour
     private void Start()
     {
         bgImage.enabled = false;
-        feedbackText.gameObject.SetActiveIfNeeded(false);
+        feedbackText.gameObject.SetActive(false);
     }
 
     public void ShowMessage(string message, bool isCrit = false)
@@ -33,7 +33,7 @@ public class UIFeedback : MonoBehaviour
     private IEnumerator ShowDamageReceiveCoroutine(string message, bool isCrit)
     {
         bool isNumeric = int.TryParse(message, out _);
-        bgImage.enabled = isCrit || isNumeric; 
+        bgImage.enabled = isCrit || isNumeric;
         feedbackText.gameObject.SetActive(true);
         feedbackText.text = message;
         feedbackText.color = isCrit ? critDamageColor : normalDamageColor;
@@ -49,22 +49,24 @@ public class UIFeedback : MonoBehaviour
 
     private void UpdateEffect()
     {
-        if (character == null) return;
-        if (character.Info == null) return;
+        if (character == null || character.Info == null) return;
+        
         foreach (var item in _effectUIs)
         {
             item.DestroyEffect();
         }
-
+        
         _effectUIs.Clear();
+        
         if (character.Info.EffectInfo == null) return;
+        
         foreach (var item in character.Info.EffectInfo.Effects)
         {
             var go = Instantiate(effectUI.gameObject, effectsPanel);
             go.transform.SetAsFirstSibling();
             var cpn = go.GetComponent<EffectUI>();
             UIManager.Instance.effectIcons.TryGetValue(item.effectType, out var effectIcon);
-            if (effectIcon == null) effectIcon = UIManager.Instance.defaultIcon;
+            effectIcon = effectIcon ?? UIManager.Instance.defaultIcon;
             cpn.Initialize(effectIcon);
             _effectUIs.Add(cpn);
         }
