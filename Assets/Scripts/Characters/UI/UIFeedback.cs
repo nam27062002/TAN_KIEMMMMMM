@@ -32,7 +32,8 @@ public class UIFeedback : MonoBehaviour
 
     private IEnumerator ShowDamageReceiveCoroutine(string message, bool isCrit)
     {
-        bgImage.enabled = isCrit;
+        bool isNumeric = int.TryParse(message, out _);
+        bgImage.enabled = isCrit || isNumeric; 
         feedbackText.gameObject.SetActive(true);
         feedbackText.text = message;
         feedbackText.color = isCrit ? critDamageColor : normalDamageColor;

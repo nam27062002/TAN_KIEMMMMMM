@@ -188,7 +188,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                     shadow.Info.ApplyEffect(effect);
                 }
                 
-                shadow.Info.ActionPoints = shadowData.actionPoints;
+                // Khôi phục Action Points cho bóng
+                if (shadowData.actionPoints != null && shadowData.actionPoints.Count > 0)
+                {
+                    shadow.Info.ActionPoints = new List<int>(shadowData.actionPoints);
+                    Debug.Log($"[{shadow.characterConfig.characterName}] Khôi phục Action Points: {string.Join(", ", shadowData.actionPoints)}");
+                }
             }
             else
             {
@@ -217,7 +222,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 character.Info.UpdateShieldVisual();
             }
             
-            character.Info.ActionPoints = characterData.actionPoints;
+            // Khôi phục Action Points cho nhân vật thường
+            if (characterData.actionPoints != null && characterData.actionPoints.Count > 0)
+            {
+                character.Info.ActionPoints = new List<int>(characterData.actionPoints);
+                Debug.Log($"[{character.characterConfig.characterName}] Khôi phục Action Points: {string.Join(", ", characterData.actionPoints)}");
+            }
 
             // Khôi phục shield cho Hoắc Liên Hương
             if (character is HoacLienHuong hlh && characterData.shieldCellPosition.HasValue)
@@ -288,6 +298,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         character.Info.CurrentHp = data.currentHp;
         character.Info.CurrentMp = data.currentMp;
         character.Info.MoveAmount = data.moveAmount;
+        
+        // Thêm code để khôi phục Action Points
+        if (data.actionPoints != null && data.actionPoints.Count > 0)
+        {
+            character.Info.ActionPoints = new List<int>(data.actionPoints);
+        }
         
         // Chỉ đặt IsFirstRoundAfterLoad = true cho nhân vật đầu tiên
         character.Info.IsFirstRoundAfterLoad = isFirstCharacter;
