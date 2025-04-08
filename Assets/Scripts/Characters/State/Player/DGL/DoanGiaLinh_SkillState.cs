@@ -23,7 +23,7 @@ public class DoanGiaLinh_SkillState : SkillState
         return ((DoanGiaLinh)Character).GetVenomousParasite();
     }
 
-    public void SetVenomousParasite(int venomousParasite)
+    private void SetVenomousParasite(int venomousParasite)
     {
         ((DoanGiaLinh)Character).SetVenomousParasite(venomousParasite);
     }
@@ -83,7 +83,7 @@ public class DoanGiaLinh_SkillState : SkillState
             );
 
             int value = Mathf.Min(flower, venomousParasite);
-            SetVenomousParasite(flower - value);
+            SetVenomousParasite(venomousParasite - value);
             effects.Add(
                 new ChangeStatEffect()
                 {
