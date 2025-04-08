@@ -27,9 +27,6 @@
 
     public int GetVenomousParasite()
     {
-        #if UNITY_EDITOR
-        return 10;
-        #endif
         return theAllPoisonScript.VenomousParasite;
     }
 

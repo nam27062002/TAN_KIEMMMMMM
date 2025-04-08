@@ -27,10 +27,15 @@ public class ActionPointUI : MonoBehaviour
         
         points.Sort();
         points.Reverse();
-        for (int i = 0; i < points.Count; i++)
+        
+        int maxPoints = Mathf.Min(points.Count, actionPoints.Count);
+        for (int i = 0; i < maxPoints; i++)
         {
-            actionPoints[i].sprite = _actionPointSprites[points[i]];
-            actionPoints[i].gameObject.SetActiveIfNeeded(true);
+            if (_actionPointSprites.TryGetValue(points[i], out var sprite))
+            {
+                actionPoints[i].sprite = sprite;
+                actionPoints[i].gameObject.SetActiveIfNeeded(true);
+            }
         }
     }
 }
