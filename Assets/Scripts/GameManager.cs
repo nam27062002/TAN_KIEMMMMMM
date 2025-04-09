@@ -65,4 +65,12 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         SceneLoader.UnloadSceneAsync(ESceneType.Loading);
         AlkawaDebug.Log(ELogCategory.ENGINE, "Loaded scene " + _nextScene);
     }
+
+    public void LoadMainMenu()
+    {
+        // Hủy scene Game nếu đang tồn tại
+        SceneLoader.UnloadSceneAsync(ESceneType.Game);
+        // Load scene Loading trước, sau đó Loading sẽ load MainMenu
+        Loading(ESceneType.MainMenu);
+    }
 }

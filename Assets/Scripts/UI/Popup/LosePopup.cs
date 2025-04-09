@@ -30,6 +30,8 @@ public class LosePopup : PopupBase
     
     private void OnExitButtonClick()
     {
-        AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked");
+        AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked - Returning to Main Menu");
+        Close();
+        GameManager.Instance?.LoadMainMenu();
     }
 }

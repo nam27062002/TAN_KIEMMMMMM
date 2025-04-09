@@ -579,13 +579,20 @@ public abstract class Character : MonoBehaviour
 
     public virtual void DestroyCharacter()
     {
-        if (gameObject == null) return;
-        UnRegisterCell();
-        Destroy(gameObject);
-        var index = GpManager.Characters.IndexOf(this);
-        foreach (var item in passiveSkills)
+        if (gameObject == null)
         {
-            item.UnregisterEvents();
+            Debug.LogWarning($"[{characterConfig?.characterName ?? "Unknown Character"}] Attempted to destroy an already destroyed character or null gameObject.");
+            return;
+        }
+
+        if (gameObject != null && Info != null)
+        {
+            UnRegisterCell();
+        }
+
+        if (gameObject != null)
+        {
+            Destroy(gameObject);
         }
     }
 

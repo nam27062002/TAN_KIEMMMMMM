@@ -872,22 +872,42 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             // Hủy dancer trước
             if (canSat.dancer != null)
             {
-                canSat.dancer.DestroyCharacter();
+                // Kiểm tra xem dancer gameObject có tồn tại không trước khi hủy
+                if (canSat.dancer.gameObject != null)
+                {
+                    canSat.dancer.DestroyCharacter();
+                }
+                // Luôn đặt về null sau khi xử lý
                 canSat.dancer = null;
             }
 
             // Hủy assassin trước
             if (canSat.assassin != null)
             {
-                canSat.assassin.DestroyCharacter();
+                // Kiểm tra xem assassin gameObject có tồn tại không trước khi hủy
+                if (canSat.assassin.gameObject != null)
+                {
+                    canSat.assassin.DestroyCharacter();
+                }
+                // Luôn đặt về null sau khi xử lý
                 canSat.assassin = null;
             }
         }
 
         // Sau đó hủy các nhân vật còn lại
-        foreach (var character in Characters)
+        // Tạo bản sao danh sách để tránh lỗi khi sửa đổi danh sách đang lặp
+        var charactersToDestroy = new List<Character>(Characters);
+        foreach (var character in charactersToDestroy)
         {
-            character.DestroyCharacter();
+            // Thêm kiểm tra null trước khi gọi DestroyCharacter
+            if (character != null && character.gameObject != null)
+            {
+                character.DestroyCharacter();
+            }
+            else
+            {
+                Debug.LogWarning("Found a null or already destroyed character reference in the Characters list during destruction.");
+            }
         }
 
         // Xóa danh sách nhân vật sau khi đã hủy
