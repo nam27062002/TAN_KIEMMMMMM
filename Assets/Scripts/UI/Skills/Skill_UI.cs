@@ -81,7 +81,14 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         skillImage.color = color;
         skillNameText.text = skillInfo.name;
         skillDescriptionText.text = skillInfo.description;
-        mp.text = $"({skillInfo.mpCost}MP)";
+        if (skillInfo.damageDescription != "")
+        {
+            mp.text = $"{skillInfo.mpCost}MP | damage: {skillInfo.damageDescription}";
+        }
+        else
+        {
+            mp.text = $"{skillInfo.mpCost}MP";
+        }
     }
 
     private bool CanShowInfo => _skillIndex != 0;

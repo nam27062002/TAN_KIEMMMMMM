@@ -192,8 +192,8 @@ MonoBehaviour:
       atkOverride: 0
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
-      overrideMaxHp: 0
-      maxHpOverride: 0
+      overrideMaxHp: 1
+      maxHpOverride: 5
     actionPoints:
       m_keys: 000000000100000002000000
       m_values: 010000000100000002000000
@@ -205,6 +205,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 3
       directionType: 512
       isDirectionalSkill: 1
@@ -216,6 +217,7 @@ MonoBehaviour:
       name: "\u0110\u1ED3ng Quan Long"
       skillIndex: 1
       mpCost: 2
+      damageDescription: 
       range: 4
       directionType: 510
       isDirectionalSkill: 1
@@ -230,6 +232,7 @@ MonoBehaviour:
       name: "Hi\u1EC3u Nh\u1EADt Quang L\xE2m"
       skillIndex: 2
       mpCost: 5
+      damageDescription: 
       range: 3
       directionType: 512
       isDirectionalSkill: 0
@@ -244,6 +247,7 @@ MonoBehaviour:
       name: "Tr\u01B0\u1EDDng Giang"
       skillIndex: 3
       mpCost: 2
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -258,6 +262,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 3
       directionType: 512
       isDirectionalSkill: 1
@@ -269,6 +274,7 @@ MonoBehaviour:
       name: "Ch\u1EA9m Giang T\u1EEB"
       skillIndex: 1
       mpCost: 2
+      damageDescription: 
       range: 2
       directionType: 504
       isDirectionalSkill: 1
@@ -285,6 +291,7 @@ MonoBehaviour:
       name: "Long X\xE0 \u0110\xF4i Tr\xE1c"
       skillIndex: 2
       mpCost: 5
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -302,6 +309,7 @@ MonoBehaviour:
       name: "V\xE2n H\u01B0\u01A1ng"
       skillIndex: 3
       mpCost: 2
+      damageDescription: 
       range: 6
       directionType: 512
       isDirectionalSkill: 1
@@ -318,6 +326,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 3
       directionType: 512
       isDirectionalSkill: 1
@@ -329,6 +338,7 @@ MonoBehaviour:
       name: "Ng\u01B0ng B\xE1ch Ni\xEAn"
       skillIndex: 1
       mpCost: 2
+      damageDescription: 
       range: 2
       directionType: 504
       isDirectionalSkill: 1
@@ -344,6 +354,7 @@ MonoBehaviour:
       name: "D\u1EA1 Phong X\xFAy Kh\u1EDFi"
       skillIndex: 2
       mpCost: 5
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -357,6 +368,7 @@ MonoBehaviour:
       name: "Long H\u01B0ng"
       skillIndex: 3
       mpCost: 2
+      damageDescription: 
       range: 1
       directionType: 512
       isDirectionalSkill: 0
@@ -372,6 +384,7 @@ MonoBehaviour:
       name: "Y\xEAu Cung"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -391,6 +404,7 @@ MonoBehaviour:
       name: "H\u1ECFa V\u0169"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0

@@ -177,11 +177,11 @@ MonoBehaviour:
         rollTime: 1
         rollValue: 20
         add: 0
-      overrideDamage: 0
+      overrideDamage: 1
       atkOverride: 100
-      overrideMaxMoveRange: 0
+      overrideMaxMoveRange: 1
       maxMoveRangeOverride: 100
-      overrideMaxHp: 0
+      overrideMaxHp: 1
       maxHpOverride: 100
     actionPoints:
       m_keys: 000000000100000002000000
@@ -194,6 +194,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -205,6 +206,7 @@ MonoBehaviour:
       name: "V\u1EA5n Truy L\u01B0u"
       skillIndex: 1
       mpCost: 2
+      damageDescription: 8-20
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -218,6 +220,7 @@ MonoBehaviour:
       name: "Nh\u1EA5t Giang Y\xEAn Tr\xFAc"
       skillIndex: 2
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -231,6 +234,7 @@ MonoBehaviour:
       name: "Th\u1EA5t Ca Ng\xE2m"
       skillIndex: 3
       mpCost: 3
+      damageDescription: 8-21
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -243,6 +247,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -254,6 +259,7 @@ MonoBehaviour:
       name: "Hu\u1EC1 H\u1ED3 Vi\u1EC5n Du"
       skillIndex: 1
       mpCost: 2
+      damageDescription: 8-20
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -266,6 +272,7 @@ MonoBehaviour:
       name: "Li\xEAn V\u1EA5n"
       skillIndex: 2
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -281,6 +288,7 @@ MonoBehaviour:
       name: "B\u1EA5t Th\xE0nh Danh"
       skillIndex: 3
       mpCost: 3
+      damageDescription: 8-21
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -294,6 +302,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -305,6 +314,7 @@ MonoBehaviour:
       name: "S\u1EA1 B\u1EA5t Ki\u1EBFn"
       skillIndex: 1
       mpCost: 2
+      damageDescription: 8-20
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -318,6 +328,7 @@ MonoBehaviour:
       name: "M\xEDnh \u0110\xEDnh Quy Lai"
       skillIndex: 2
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -330,6 +341,7 @@ MonoBehaviour:
       name: "\u0110\u1EA1p Thi\xEAn Nhai"
       skillIndex: 3
       mpCost: 3
+      damageDescription: 8-21
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -342,6 +354,7 @@ MonoBehaviour:
       name: "Phi H\u1ED3ng"
       skillIndex: 100
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -361,6 +374,7 @@ MonoBehaviour:
       name: "To\xE0n Phong"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -396,6 +410,7 @@ MonoBehaviour:
     name: 
     skillIndex: 101
     mpCost: 0
+    damageDescription: 
     range: 1
     directionType: 512
     isDirectionalSkill: 0

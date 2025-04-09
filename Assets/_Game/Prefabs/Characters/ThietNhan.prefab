@@ -233,6 +233,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -244,6 +245,7 @@ MonoBehaviour:
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
+      damageDescription: 
       range: 8
       directionType: 512
       isDirectionalSkill: 1
@@ -257,6 +259,7 @@ MonoBehaviour:
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
       mpCost: 6
+      damageDescription: 
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -272,6 +275,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 1
@@ -283,6 +287,7 @@ MonoBehaviour:
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 1
@@ -294,6 +299,7 @@ MonoBehaviour:
       name: 
       skillIndex: 2
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 1
@@ -306,6 +312,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -317,6 +324,7 @@ MonoBehaviour:
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
+      damageDescription: 
       range: 3
       directionType: 512
       isDirectionalSkill: 0
@@ -329,6 +337,7 @@ MonoBehaviour:
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
       mpCost: 6
+      damageDescription: 
       range: 100
       directionType: 512
       isDirectionalSkill: 0
@@ -345,6 +354,7 @@ MonoBehaviour:
       name: "N\u1ED9i t\u1EA1i"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -370,6 +380,7 @@ MonoBehaviour:
       name: "T\u1ED1c \u0111\u1ED9/ Th\xE2n ph\xE1p"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0

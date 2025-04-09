@@ -347,7 +347,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HandleSpecialForLevel1(character);
         if (character.IsMainCharacter)
         {
-            HandleEndTurn(0.3f, "Chết trong lượt chính");
+            HandleEndTurn( "Chết trong lượt chính");
         }
         else if (SelectedCharacter == character)
         {
@@ -739,6 +739,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleEndTurn(string message)
     {
+        
         if (SelectedCharacter == null || IsPauseGameInternal) return;
         SetInteract(true);
         Debug.Log($"[{SelectedCharacter.characterConfig.characterName}]: End turn - {message}");

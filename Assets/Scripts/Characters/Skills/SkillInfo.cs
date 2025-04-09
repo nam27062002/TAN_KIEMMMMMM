@@ -25,6 +25,10 @@ public class SkillInfo
     public int mpCost;
 
     [VerticalGroup("Skill Info/Details")]
+    [LabelWidth(75)] 
+    public string damageDescription;
+
+    [VerticalGroup("Skill Info/Details")]
     [LabelWidth(75)]
     public int range;
 

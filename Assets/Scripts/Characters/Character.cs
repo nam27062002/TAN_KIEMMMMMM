@@ -557,9 +557,13 @@ public abstract class Character : MonoBehaviour
 
     public void UnRegisterCell()
     {
-        Info.Cell.CellType = CellType.Walkable;
-        Info.Cell.Character = null;
-        Info.Cell.HideFocus();
+        if (Info != null && Info.Cell != null && Info.Cell.CellType == CellType.Character)
+        {
+            Info.Cell.CellType = CellType.Walkable;
+            Info.Cell.Character = null;
+            Info.Cell.HideFocus();
+        }
+
     }
     #endregion
 
@@ -576,6 +580,7 @@ public abstract class Character : MonoBehaviour
     public virtual void DestroyCharacter()
     {
         if (gameObject == null) return;
+        UnRegisterCell();
         Destroy(gameObject);
         var index = GpManager.Characters.IndexOf(this);
         foreach (var item in passiveSkills)
@@ -591,6 +596,7 @@ public abstract class Character : MonoBehaviour
         OnDeath?.Invoke(this, this);
         GpManager.OnNewRound -= OnNewRound;
         callback?.Invoke();
+        UnRegisterCell();
         Destroy(gameObject);
     }
 
