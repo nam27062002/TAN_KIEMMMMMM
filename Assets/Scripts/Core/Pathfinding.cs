@@ -172,9 +172,8 @@ public class Pathfinding
                     continue;
                 foreach (var neighbor in GetNeighbors(current).Where(n => n.CellType == CellType.Walkable))
                 {
-                    if (!visited.Contains(neighbor))
+                    if (visited.Add(neighbor))
                     {
-                        visited.Add(neighbor);
                         queue.Enqueue((neighbor, moves + 1));
                     }
                 }

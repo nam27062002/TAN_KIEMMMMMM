@@ -205,7 +205,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 5-14
       range: 3
       directionType: 512
       isDirectionalSkill: 1
@@ -217,7 +217,7 @@ MonoBehaviour:
       name: "\u0110\u1ED3ng Quan Long"
       skillIndex: 1
       mpCost: 2
-      damageDescription: 
+      damageDescription: 6-18
       range: 4
       directionType: 510
       isDirectionalSkill: 1
@@ -247,7 +247,7 @@ MonoBehaviour:
       name: "Tr\u01B0\u1EDDng Giang"
       skillIndex: 3
       mpCost: 2
-      damageDescription: 
+      damageDescription: 9-24
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -262,7 +262,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 5-14
       range: 3
       directionType: 512
       isDirectionalSkill: 1
@@ -274,7 +274,7 @@ MonoBehaviour:
       name: "Ch\u1EA9m Giang T\u1EEB"
       skillIndex: 1
       mpCost: 2
-      damageDescription: 
+      damageDescription: 6-18
       range: 2
       directionType: 504
       isDirectionalSkill: 1
@@ -291,7 +291,7 @@ MonoBehaviour:
       name: "Long X\xE0 \u0110\xF4i Tr\xE1c"
       skillIndex: 2
       mpCost: 5
-      damageDescription: 
+      damageDescription: 2-8
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -309,7 +309,7 @@ MonoBehaviour:
       name: "V\xE2n H\u01B0\u01A1ng"
       skillIndex: 3
       mpCost: 2
-      damageDescription: 
+      damageDescription: 9-24
       range: 6
       directionType: 512
       isDirectionalSkill: 1
@@ -326,7 +326,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 5-14
       range: 3
       directionType: 512
       isDirectionalSkill: 1
@@ -338,7 +338,7 @@ MonoBehaviour:
       name: "Ng\u01B0ng B\xE1ch Ni\xEAn"
       skillIndex: 1
       mpCost: 2
-      damageDescription: 
+      damageDescription: 6-18
       range: 2
       directionType: 504
       isDirectionalSkill: 1
@@ -354,7 +354,7 @@ MonoBehaviour:
       name: "D\u1EA1 Phong X\xFAy Kh\u1EDFi"
       skillIndex: 2
       mpCost: 5
-      damageDescription: 
+      damageDescription: 5-14
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
       name: "Long H\u01B0ng"
       skillIndex: 3
       mpCost: 2
-      damageDescription: 
+      damageDescription: 9-24
       range: 1
       directionType: 512
       isDirectionalSkill: 0

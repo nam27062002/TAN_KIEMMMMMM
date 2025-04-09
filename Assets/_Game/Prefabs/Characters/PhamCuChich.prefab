@@ -234,7 +234,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: ' 3-6'
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -246,7 +246,7 @@ MonoBehaviour:
       name: "Phong V\u0169 T\u1ECBch Ch\u01B0\u1EDBng"
       skillIndex: 1
       mpCost: 4
-      damageDescription: 6-16
+      damageDescription: 3-8
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -278,7 +278,7 @@ MonoBehaviour:
       name: "H\u1EADn V\u1ECB Ti\xEAu"
       skillIndex: 3
       mpCost: 4
-      damageDescription: 
+      damageDescription: 12-36
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -298,7 +298,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: ' 3-6'
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -310,7 +310,7 @@ MonoBehaviour:
       name: "B\xEDch Th\u1EE7y Thanh S\u01A1n"
       skillIndex: 1
       mpCost: 4
-      damageDescription: 6-16
+      damageDescription: 3-8
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -341,7 +341,7 @@ MonoBehaviour:
       name: "S\u1EA7u Do T\u1EA1i"
       skillIndex: 3
       mpCost: 0
-      damageDescription: 
+      damageDescription: 12-36
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -359,7 +359,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: ' 3-6'
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -371,7 +371,7 @@ MonoBehaviour:
       name: "\u0110an T\xE2m B\u1EA1ch Ph\xE1t"
       skillIndex: 1
       mpCost: 4
-      damageDescription: 6-16
+      damageDescription: 3-8
       range: 2
       directionType: 512
       isDirectionalSkill: 0
@@ -402,7 +402,7 @@ MonoBehaviour:
       name: "Kim H\xE0 T\u1EA1i"
       skillIndex: 3
       mpCost: 4
-      damageDescription: 
+      damageDescription: 12-36
       range: 4
       directionType: 512
       isDirectionalSkill: 0

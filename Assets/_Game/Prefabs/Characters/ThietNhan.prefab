@@ -233,7 +233,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 3-8
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -245,7 +245,7 @@ MonoBehaviour:
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
-      damageDescription: 
+      damageDescription: 4-12
       range: 8
       directionType: 512
       isDirectionalSkill: 1
@@ -259,7 +259,7 @@ MonoBehaviour:
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
       mpCost: 6
-      damageDescription: 
+      damageDescription: 4-12
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -275,7 +275,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 3-8
       range: 0
       directionType: 512
       isDirectionalSkill: 1
@@ -287,7 +287,7 @@ MonoBehaviour:
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
-      damageDescription: 
+      damageDescription: 4-12
       range: 0
       directionType: 512
       isDirectionalSkill: 1
@@ -299,7 +299,7 @@ MonoBehaviour:
       name: 
       skillIndex: 2
       mpCost: 0
-      damageDescription: 
+      damageDescription: 4-12
       range: 0
       directionType: 512
       isDirectionalSkill: 1
@@ -312,7 +312,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 3-8
       range: 1
       directionType: 512
       isDirectionalSkill: 1
@@ -324,7 +324,7 @@ MonoBehaviour:
       name: "N\xE9m \u0110\xE1"
       skillIndex: 1
       mpCost: 0
-      damageDescription: 
+      damageDescription: 4-12
       range: 3
       directionType: 512
       isDirectionalSkill: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
       name: "L\xE2y Nhi\u1EC5m"
       skillIndex: 2
       mpCost: 6
-      damageDescription: 
+      damageDescription: 4-12
       range: 100
       directionType: 512
       isDirectionalSkill: 0

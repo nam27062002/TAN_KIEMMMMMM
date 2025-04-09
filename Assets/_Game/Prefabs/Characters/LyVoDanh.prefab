@@ -194,7 +194,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 4-11
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -247,7 +247,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 4-11
       range: 2
       directionType: 512
       isDirectionalSkill: 1
@@ -302,7 +302,7 @@ MonoBehaviour:
       name: "\u0110\xE1nh th\u01B0\u1EDDng"
       skillIndex: 0
       mpCost: 0
-      damageDescription: 
+      damageDescription: 4-11
       range: 2
       directionType: 512
       isDirectionalSkill: 1
