@@ -147,7 +147,7 @@ public class Pathfinding
             where nr >= 0 && nc >= 0 && nr < _map.MapSize.y && nc < _map.MapSize.x
             select _map.GetCell(new Vector2Int(nr, nc))
             into neighbor
-            where neighbor != null
+            where neighbor != null && neighbor.CellType != CellType.CannotWalk
             select neighbor).ToList();
     }
 
@@ -188,7 +188,7 @@ public class Pathfinding
                 while (steps < maxMoves)
                 {
                     var neighbor = GetNeighborInDirection(current, dir);
-                    if (neighbor == null || neighbor.CellType != CellType.Walkable)
+                    if (neighbor == null || neighbor.CellType != CellType.Walkable || neighbor.CellType == CellType.CannotWalk)
                         break;
                     reachable.Add(neighbor);
                     current = neighbor;
@@ -215,7 +215,9 @@ public class Pathfinding
             while (queue.Count > 0)
             {
                 var (currentHex, dist) = queue.Dequeue();
-                results.Add(currentHex);
+                
+                if (currentHex.CellType != CellType.CannotWalk)
+                    results.Add(currentHex);
 
                 if (dist >= radius) continue;
                 foreach (var neighbor in GetNeighbors(currentHex).Where(neighbor => !visited.Contains(neighbor)))
@@ -233,7 +235,7 @@ public class Pathfinding
                 for (int step = 0; step < radius; step++)
                 {
                     current = GetNeighborInDirection(current, dir);
-                    if (current == null)
+                    if (current == null || current.CellType == CellType.CannotWalk)
                         break;
                     results.Add(current);
                 }
@@ -261,7 +263,12 @@ public class Pathfinding
         bool isOdd = (currentPos.x % 2) != 0;
         Vector2Int offset = GetDirectionOffset(direction, isOdd);
         Vector2Int neighborPos = new Vector2Int(currentPos.x + offset.x, currentPos.y + offset.y);
-        return _map.GetCell(neighborPos);
+        var cell = _map.GetCell(neighborPos);
+        
+        if (cell == null || cell.CellType == CellType.CannotWalk)
+            return null;
+        
+        return cell;
     }
 
     private Vector2Int GetDirectionOffset(DirectionType direction, bool isOddRow)
