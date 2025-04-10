@@ -666,7 +666,7 @@ public class CharacterInfo
     {
         foreach (var item in EffectInfo.Effects.ToList())
         {
-            if (!EffectInfo.AppliedEffect.TryGetValue(item.effectType, out var value)) continue;
+            if (!EffectInfo.AppliedEffect.TryGetValue(item.effectType, out var value) || EffectInfo.DontRemoveEffect.Contains(item.effectType)) continue;
             var effectCleanse = _roll.GetEffectCleanse();
             var baseEffectCleanse = value.Item2;
             AlkawaDebug.Log(ELogCategory.EFFECT,

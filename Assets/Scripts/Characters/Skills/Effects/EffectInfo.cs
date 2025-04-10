@@ -60,6 +60,11 @@ public class EffectInfo
         { EffectType.Bleed, (15, 15)},
         { EffectType.Drunk, (15, 15)},
     };
+    
+    public static readonly HashSet<EffectType> DontRemoveEffect = new ()
+    {
+        EffectType.Drunk
+    };
 
     public void AddEffect(EffectData effect)
     {
