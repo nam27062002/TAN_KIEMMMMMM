@@ -30,10 +30,48 @@ public class PauseGamePopup : PopupBase
 
     private void OnReplayButtonClick()
     {
-        GameplayManager.Instance.IsReplay = true;
-        GameplayManager.Instance.DestroyGameplay();
-        Close();
-        AlkawaDebug.Log(ELogCategory.UI, "Replay button clicked");
+        // Dừng các tween đang chạy
+        DOTween.KillAll();
+
+        // Dọn dẹp các đối tượng đặc biệt như bóng của CanSat (tương tự OnExitButtonClick)
+        // để đảm bảo chúng được hủy đúng cách trước khi unload scene
+        var canSats = FindObjectsOfType<CanSat>();
+        foreach (var canSat in canSats)
+        {
+            // Kiểm tra null an toàn trước khi gọi DestroyCharacter
+            if (canSat.dancer != null)
+            {
+                // Có thể gọi Destroy trực tiếp gameObject để an toàn hơn nếu DestroyCharacter có vấn đề
+                // Destroy(canSat.dancer.gameObject); 
+                canSat.dancer.DestroyCharacter(); // Giả định DestroyCharacter đã xử lý null check bên trong
+                canSat.dancer = null;
+            }
+
+            if (canSat.assassin != null)
+            {
+                // Destroy(canSat.assassin.gameObject);
+                canSat.assassin.DestroyCharacter();
+                canSat.assassin = null;
+            }
+        }
+
+        // Gọi hủy tất cả các nhân vật còn lại thông qua GameplayManager nếu cần
+        // Hoặc bỏ qua nếu việc unload scene đã đủ
+        // GameplayManager.Instance.DestroyAllCharacters(); // Cân nhắc xem có cần thiết không
+
+        // --- Sửa code: Yêu cầu GameManager xử lý Replay ---
+        var currentLevelType = GameplayManager.Instance.LevelConfig.levelType; 
+        GameManager.Instance.RequestReplay(currentLevelType);
+        // Không cần tự chuyển scene ở đây nữa
+        // SceneLoader.LoadSceneAsync(ESceneType.MainMenu, LoadSceneMode.Additive);
+        // SceneLoader.UnloadSceneAsync(ESceneType.Game);
+        // -------------------------------------------------
+
+        // Đóng các UI liên quan
+        UIManager.Instance.CloseCurrentMenu(); // Đảm bảo menu hiện tại (nếu có) được đóng
+        Close(); // Đóng popup Pause
+
+        AlkawaDebug.Log(ELogCategory.UI, "Replay button clicked - Requesting replay via GameManager");
     }
 
     private void OnSaveButtonClick()

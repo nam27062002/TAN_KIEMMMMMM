@@ -4,7 +4,11 @@ public class TheAllPoisonScript : PassiveSkill
 {
     [SerializeField] private int hpPerParasite = 3;
 
-    public int VenomousParasite { get; set; } = 0;
+    public int VenomousParasite
+    {
+        get; 
+        set;
+    } = 0;
 
     private int _damageAccumulator = 0;
 

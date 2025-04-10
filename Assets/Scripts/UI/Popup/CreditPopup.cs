@@ -50,20 +50,26 @@ public class CreditPopup : PopupBase
 
     private void OnReplayButtonClick()
     {
-        GameplayManager.Instance.IsReplay = true;
-        GameplayManager.Instance.DestroyGameplay();
+        if (GameplayManager.Instance != null)
+        {
+            var lastLevelType = GameplayManager.Instance.LevelConfig.levelType;
+            GameManager.Instance.RequestReplay(lastLevelType);
+            AlkawaDebug.Log(ELogCategory.UI, $"Replay button clicked in Credits - Requesting replay for {lastLevelType}");
+        }
+        else
+        {
+            // AlkawaDebug.LogWarning(ELogCategory.UI, "GameplayManager not found in Credits. Loading Main Menu instead.");
+            GameManager.Instance.LoadMainMenu();
+        }
         Close();
-        AlkawaDebug.Log(ELogCategory.UI, "Replay button clicked");
     }
     
     private void OnExitButtonClick()
     {
         DOTween.KillAll();
-        SceneLoader.LoadSceneAsync(ESceneType.MainMenu, LoadSceneMode.Additive);
-        SceneLoader.UnloadSceneAsync(ESceneType.Game);
-        UIManager.Instance.CloseCurrentMenu();
+        GameManager.Instance.LoadMainMenu();
         Close();
-        AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked");
+        AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked in Credits");
     }
     
     private void OpenPanel()

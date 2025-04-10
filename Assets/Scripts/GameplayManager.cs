@@ -498,7 +498,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public bool CanInteract { get; set; }
     public LevelConfig LevelConfig => levelConfig;
     public bool IsPauseGameInternal = false;
-    public bool IsReplay;
 
     private bool _hasOverrideLevelConfig;
 
@@ -507,6 +506,21 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     {
         base.Awake();
         UIManager.Instance.OpenMenu(MenuType.InGame);
+
+        // --- Thêm code: Đọc trạng thái Replay từ GameManager ---
+        if (GameManager.Instance != null && GameManager.Instance.IsReplaying && GameManager.Instance.LevelToReplay.HasValue)
+        {
+            levelType = GameManager.Instance.LevelToReplay.Value;
+            AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"GameplayManager started in Replay mode for level: {levelType}");
+            // Đặt lại flag trong GameManager sau khi đã đọc
+            // GameManager.Instance.LevelToReplay = null; // Không reset ở đây, có thể cần dùng lại
+            // GameManager.Instance.IsReplaying = false;
+        }
+        else
+        {
+            AlkawaDebug.Log(ELogCategory.GAMEPLAY, "GameplayManager started normally.");
+        }
+        // ------------------------------------------------------
     }
 
     private void Start()
@@ -542,15 +556,18 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private void TryLoadFromSaveGame()
     {
         _hasOverrideLevelConfig = false;
+        // --- Sửa code: Dùng saveIndex từ GameManager ---
         if (GameManager.Instance.saveIndex == -1) return;
         _hasOverrideLevelConfig = true;
         var levelData = SaveLoadManager.Instance.levels[GameManager.Instance.saveIndex];
-        levelType = levelData.levelType;
-        IsReplay = true;
+        levelType = levelData.levelType; // Ghi đè levelType nếu load từ save
+        // IsReplay = true; // Không dùng biến này nữa
+        // -------------------------------------------
     }
 
     private void ShowStartConversation()
     {
+        // --- Sửa code: Kiểm tra GameManager.IsReplaying ---
         if (levelConfig.startConversations is { Count: > 0 } && !CanSkipStartConversation())
         {
             ShowNextStartConversation(0);
@@ -566,8 +583,13 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         // #if UNITY_EDITOR
         //         return levelConfig.canSkipStartConversation;
         // #endif
-        if (!IsReplay) return false;
-        IsReplay = false;
+        // --- Sửa code: Kiểm tra GameManager.IsReplaying ---
+        if (!GameManager.Instance.IsReplaying) return false;
+        // IsReplay = false; // Không dùng biến này nữa
+        // Reset lại flag Replay trong GameManager sau khi đã sử dụng
+        // GameManager.Instance.IsReplaying = false; // Không reset ở đây
+        // GameManager.Instance.LevelToReplay = null; // Không reset ở đây
+        // --------------------------------------------
         return true;
     }
 

@@ -1292,7 +1292,6 @@ MonoBehaviour:
   mapPrefab: {fileID: 0}
   charactersInConversation: []
   IsPauseGameInternal: 0
-  IsReplay: 0
 --- !u!114 &1787000953
 MonoBehaviour:
   m_ObjectHideFlags: 0

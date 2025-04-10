@@ -15,10 +15,19 @@ public class MainMenu : MonoBehaviour
      [SerializeField] private ConfirmPopupSO confirmPopup;
      private void Start()
      {
-          startGameButton.onClick.AddListener(OnStartGameClicked);
-          loadGameButton.onClick.AddListener(OnLoadGameClicked);
-          settingGameButton.onClick.AddListener(OnSettingGameClicked);
-          exitGameButton.onClick.AddListener(OnExitGameClicked);
+          if (GameManager.Instance != null && GameManager.Instance.IsReplaying)
+          {
+               AlkawaDebug.Log(ELogCategory.UI, "MainMenu detected Replay state. Starting requested game...");
+               GameManager.Instance.StartRequestedGame();
+          }
+          else
+          {
+               AlkawaDebug.Log(ELogCategory.UI, "MainMenu started normally.");
+               startGameButton.onClick.AddListener(OnStartGameClicked);
+               loadGameButton.onClick.AddListener(OnLoadGameClicked);
+               settingGameButton.onClick.AddListener(OnSettingGameClicked);
+               exitGameButton.onClick.AddListener(OnExitGameClicked);
+          }
           
 // #if UNITY_EDITOR
 //           startGameButton.onClick.Invoke();
@@ -27,15 +36,19 @@ public class MainMenu : MonoBehaviour
 
      private void OnDestroy()
      {
-          startGameButton.onClick.RemoveListener(OnStartGameClicked);
-          loadGameButton.onClick.RemoveListener(OnLoadGameClicked);
-          settingGameButton.onClick.RemoveListener(OnSettingGameClicked);
-          exitGameButton.onClick.RemoveListener(OnExitGameClicked);
+          if (startGameButton != null && startGameButton.onClick != null)
+               startGameButton.onClick.RemoveListener(OnStartGameClicked);
+          if (loadGameButton != null && loadGameButton.onClick != null)
+               loadGameButton.onClick.RemoveListener(OnLoadGameClicked);
+          if (settingGameButton != null && settingGameButton.onClick != null)
+               settingGameButton.onClick.RemoveListener(OnSettingGameClicked);
+          if (exitGameButton != null && exitGameButton.onClick != null)
+               exitGameButton.onClick.RemoveListener(OnExitGameClicked);
      }
 
      private void OnStartGameClicked()
      {
-          GameManager.Instance.StartNewGame();
+          GameManager.Instance.StartRequestedGame();
      }
 
      private void OnLoadGameClicked()
