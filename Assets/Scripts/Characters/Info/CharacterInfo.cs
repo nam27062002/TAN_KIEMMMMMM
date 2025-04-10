@@ -149,7 +149,7 @@ public class CharacterInfo
         {
             bool isCrit = damageTakenParams.IsHitCritical || (CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive());
             Character.ShowMessage($"{-damage}", isCrit);
-            OnHpChanged?.Invoke(this, damageTakenParams.Damage);
+            OnHpChanged?.Invoke(this, -damageTakenParams.Damage);
         }
     }
 

@@ -29,13 +29,18 @@ public class TheAllPoisonScript : PassiveSkill
 
     private void OnHpChanged(object sender, int value)
     {
-        _damageAccumulator += value;
-        int parasitesEarned = _damageAccumulator / hpPerParasite;
-        _damageAccumulator %= hpPerParasite;
-        if (parasitesEarned > 0)
+        // Chỉ tích lũy khi mất máu (value < 0)
+        if (value < 0)
         {
-            VenomousParasite += parasitesEarned;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Độc Điển: mất {value} máu => nhận {parasitesEarned} độc trùng");
+            _damageAccumulator += Mathf.Abs(value); // Lấy giá trị tuyệt đối để đảm bảo tích lũy đúng
+            int parasitesEarned = _damageAccumulator / hpPerParasite;
+            _damageAccumulator %= hpPerParasite;
+            
+            if (parasitesEarned > 0)
+            {
+                VenomousParasite += parasitesEarned;
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Độc Điển: mất {Mathf.Abs(value)} máu => nhận {parasitesEarned} độc trùng");
+            }
         }
     }
 }

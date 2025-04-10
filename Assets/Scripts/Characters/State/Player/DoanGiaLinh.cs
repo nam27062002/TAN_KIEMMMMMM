@@ -34,4 +34,10 @@
     {
         theAllPoisonScript.VenomousParasite = venomousParasite;
     }
+
+    public void SetToggleState(bool state)
+    {
+        Info.IsToggleOn = state;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Toggle độc trùng: {(state ? "BẬT" : "TẮT")}");
+    }
 }

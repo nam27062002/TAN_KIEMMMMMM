@@ -83,7 +83,9 @@ public class DoanGiaLinh_SkillState : SkillState
             );
 
             int value = Mathf.Min(flower, venomousParasite);
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng trước: {venomousParasite}, Hoa: {flower}, Sử dụng: {value}");
             SetVenomousParasite(venomousParasite - value);
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng sau: {GetVenomousParasite()}");
             effects.Add(
                 new ChangeStatEffect()
                 {
