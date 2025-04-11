@@ -66,41 +66,15 @@ public class DoanGiaLinh_SkillState : SkillState
         int venomousParasite = GetVenomousParasite();
         if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
         {
-            Info.ApplyEffects(
-                new List<EffectData>()
-                {
-                    new PoisonousBloodPoolEffect()
-                    {
-                        effectType = EffectType.PoisonousBloodPool,
-                        duration = 2,
-                        Actor = Character,
-                        impacts = GpManager
-                            .MapManager.GetAllHexagonInRange(target.Info.Cell, 1)
-                            .ToList(),
-                        effects = effects,
-                    }
-                }
-            );
-
+            // Tính toán sát thương phụ từ độc trùng ăn hoa, nhưng không áp dụng hiệu ứng 
+            // (sẽ áp dụng sau trong HandleAfterDamageTakenFinish)
             int value = Mathf.Min(flower, venomousParasite);
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng trước: {venomousParasite}, Hoa: {flower}, Sử dụng: {value}");
-            SetVenomousParasite(venomousParasite - value);
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng sau: {GetVenomousParasite()}");
-            effects.Add(
-                new VenomousParasiteEffect()
-                {
-                    effectType = EffectType.VenomousParasite,
-                    value = value,
-                    duration = -1,
-                    associatedFlowers = value
-                }
-            );
             bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
             int rollTimes = Roll.GetActualRollTimes(1, isCrit);
             int extraDamage = Roll.RollDice(1, 6, 0, isCrit) * value;
             AlkawaDebug.Log(
                 ELogCategory.SKILL,
-                $"[{CharName}] Độc trùng ăn hoa: damage = {value} * {rollTimes}d6 = {extraDamage}"
+                $"[{CharName}] Độc trùng ăn hoa (sát thương phụ): damage = {value} * {rollTimes}d6 = {extraDamage}"
             );
             return currentDamage + extraDamage;
         }
@@ -447,6 +421,235 @@ public class DoanGiaLinh_SkillState : SkillState
         foreach (var character in validCharacters)
         {
             AddTargetCharacters(character);
+        }
+    }
+
+    private void CheckAndApplyVenomousParasite(Character target)
+    {
+        // Chỉ áp dụng nếu toggle độc trùng bật và có đối tượng
+        if (!Character.Info.IsToggleOn || target == null)
+            return;
+
+        int flower = target.Info.CountFlower();
+        int venomousParasite = GetVenomousParasite();
+        
+        if (flower > 0 && venomousParasite > 0)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, 
+                $"[{CharName}] Check áp dụng độc trùng sau khi kỹ năng hoàn thành: Hoa={flower}, Độc trùng={venomousParasite}");
+            
+            int value = Mathf.Min(flower, venomousParasite);
+            SetVenomousParasite(venomousParasite - value);
+            
+            AlkawaDebug.Log(ELogCategory.SKILL, 
+                $"[{CharName}] Áp dụng {value} độc trùng lên {target.characterConfig.characterName}, Độc trùng còn lại: {GetVenomousParasite()}");
+            
+            // Chỉ áp dụng VenomousParasite, không tạo PoisonousBloodPool
+            // PoisonousBloodPool sẽ được tạo khi hoa bị xóa sau 3 round
+            target.Info.ApplyEffects(
+                new List<EffectData>()
+                {
+                    new VenomousParasiteEffect()
+                    {
+                        effectType = EffectType.VenomousParasite,
+                        value = value,
+                        duration = -1,
+                        associatedFlowers = value,
+                        Actor = Character
+                    }
+                }
+            );
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill1_MyTurn()
+    {
+        // Nhiên Huyết (Skill 2 MyTurn) không có đối tượng, không cần áp dụng độc trùng
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill2_MyTurn()
+    {
+        // Không có đối tượng, không cần áp dụng độc trùng
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill2_TeammateTurn()
+    {
+        // Băng Hoại - Áp dụng độc trùng vào đối tượng
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                CheckAndApplyVenomousParasite(target);
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill2_EnemyTurn()
+    {
+        // Mộng Yểm - Áp dụng độc trùng vào đối tượng
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                CheckAndApplyVenomousParasite(target);
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill3_MyTurn()
+    {
+        // Thược Dược Đỏ - Có thể áp dụng cả hoa và độc trùng cùng lúc
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                CheckAndApplyVenomousParasite(target);
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill3_TeammateTurn()
+    {
+        // Sen Trắng - Có thể áp dụng cả hoa và độc trùng cùng lúc
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                CheckAndApplyVenomousParasite(target);
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill3_EnemyTurn()
+    {
+        // Cúc Vạn Thọ - Có thể áp dụng cả hoa và độc trùng cùng lúc
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                CheckAndApplyVenomousParasite(target);
+            }
+        }
+    }
+
+    private void ActivateInstantBloom(Character target)
+    {
+        if (target == null)
+            return;
+            
+        // Đếm số lượng hoa trên mục tiêu
+        int flowerCount = target.Info.CountFlower();
+        
+        if (flowerCount <= 0)
+            return;
+            
+        AlkawaDebug.Log(ELogCategory.SKILL, 
+            $"[{CharName}] Skill 4: Kích hoạt nở hoa lập tức cho {target.characterConfig.characterName}, Số hoa: {flowerCount}");
+            
+        // Kiểm tra độc trùng
+        var venomousParasiteEffects = target.Info.EffectInfo.Effects
+            .Where(e => e.effectType == EffectType.VenomousParasite)
+            .Cast<VenomousParasiteEffect>()
+            .ToList();
+            
+        if (venomousParasiteEffects.Count > 0)
+        {
+            AlkawaDebug.Log(ELogCategory.SKILL, 
+                $"[{CharName}] Skill 4: {target.characterConfig.characterName} có độc trùng, kích hoạt PoisonousBloodPool");
+                
+            // Tạo PoisonousBloodPool
+            target.Info.ApplyEffects(
+                new List<EffectData>()
+                {
+                    new PoisonousBloodPoolEffect()
+                    {
+                        effectType = EffectType.PoisonousBloodPool,
+                        duration = 2,
+                        Actor = Character,
+                        impacts = GpManager
+                            .MapManager.GetAllHexagonInRange(target.Info.Cell, 1)
+                            .ToList(),
+                        effects = new List<EffectData>(),
+                    }
+                }
+            );
+            
+            // Giảm độc trùng
+            var parasiteEffect = venomousParasiteEffects.First();
+            int reduceAmount = Mathf.Min(parasiteEffect.value, flowerCount);
+            parasiteEffect.value -= reduceAmount;
+            
+            AlkawaDebug.Log(ELogCategory.SKILL, 
+                $"[{CharName}] Skill 4: Giảm {reduceAmount} độc trùng trên {target.characterConfig.characterName}");
+                
+            // Nếu độc trùng giảm về 0, xóa hiệu ứng
+            if (parasiteEffect.value <= 0)
+            {
+                target.Info.EffectInfo.Effects.Remove(parasiteEffect);
+                AlkawaDebug.Log(ELogCategory.SKILL, 
+                    $"[{CharName}] Skill 4: Độc trùng trên {target.characterConfig.characterName} đã hết");
+            }
+        }
+        
+        // Xóa tất cả hiệu ứng hoa
+        for (int i = target.Info.EffectInfo.Effects.Count - 1; i >= 0; i--)
+        {
+            var effect = target.Info.EffectInfo.Effects[i];
+            if (effect.effectType is EffectType.RedDahlia or EffectType.WhiteLotus 
+                or EffectType.Marigold or EffectType.NightCactus)
+            {
+                target.Info.EffectInfo.Effects.RemoveAt(i);
+                AlkawaDebug.Log(ELogCategory.SKILL, 
+                    $"[{CharName}] Skill 4: Xóa hiệu ứng hoa {effect.effectType} trên {target.characterConfig.characterName}");
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill4_MyTurn()
+    {
+        // Tuyết Điểm Hồng Phấn - Kích hoạt nở hoa lập tức và áp dụng độc trùng
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                // Kích hoạt nở hoa lập tức
+                ActivateInstantBloom(target);
+                
+                // Áp dụng độc trùng
+                CheckAndApplyVenomousParasite(target);
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill4_TeammateTurn()
+    {
+        // Hồng Ti - Kích hoạt nở hoa lập tức và áp dụng độc trùng
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                // Kích hoạt nở hoa lập tức
+                ActivateInstantBloom(target);
+                
+                // Áp dụng độc trùng
+                CheckAndApplyVenomousParasite(target);
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill4_EnemyTurn()
+    {
+        // Kim Tước Mai - Kích hoạt nở hoa lập tức và áp dụng độc trùng
+        if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
+        {
+            foreach (var target in _skillStateParams.Targets)
+            {
+                // Kích hoạt nở hoa lập tức
+                ActivateInstantBloom(target);
+                
+                // Áp dụng độc trùng
+                CheckAndApplyVenomousParasite(target);
+            }
         }
     }
 }

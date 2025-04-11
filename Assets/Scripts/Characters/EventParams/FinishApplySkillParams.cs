@@ -2,4 +2,5 @@
 {
     public Character Character;
     public bool WaitForCounter;
+    public bool WasDodged;
 }
