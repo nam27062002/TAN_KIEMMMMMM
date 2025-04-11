@@ -1075,4 +1075,9 @@ public class CharacterInfo
             OnShieldChanged?.Invoke(this, ShieldAmount * 1f / Character.GetMaxHp());
         }
     }
+
+    public void RemoveAllFlowerEffects()
+    {
+        EffectInfo.Effects.RemoveAll(effect => IsVenomousEffect(effect.effectType));
+    }
 }

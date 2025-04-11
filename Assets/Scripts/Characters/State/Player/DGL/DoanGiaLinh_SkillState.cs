@@ -336,8 +336,6 @@ public class DoanGiaLinh_SkillState : SkillState
             new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Character }
         };
 
-        realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
-
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -384,9 +382,6 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Character },
         };
-
-        // Áp dụng sát thương từ độc trùng ăn hoa
-        damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
 
         return new DamageTakenParams
         {
@@ -532,123 +527,102 @@ public class DoanGiaLinh_SkillState : SkillState
         }
     }
 
-    private void ActivateInstantBloom(Character target)
-    {
-        if (target == null)
-            return;
-            
-        // Đếm số lượng hoa trên mục tiêu
-        int flowerCount = target.Info.CountFlower();
-        
-        if (flowerCount <= 0)
-            return;
-            
-        AlkawaDebug.Log(ELogCategory.SKILL, 
-            $"[{CharName}] Skill 4: Kích hoạt nở hoa lập tức cho {target.characterConfig.characterName}, Số hoa: {flowerCount}");
-            
-        // Kiểm tra độc trùng
-        var venomousParasiteEffects = target.Info.EffectInfo.Effects
-            .Where(e => e.effectType == EffectType.VenomousParasite)
-            .Cast<VenomousParasiteEffect>()
-            .ToList();
-            
-        if (venomousParasiteEffects.Count > 0)
-        {
-            AlkawaDebug.Log(ELogCategory.SKILL, 
-                $"[{CharName}] Skill 4: {target.characterConfig.characterName} có độc trùng, kích hoạt PoisonousBloodPool");
-                
-            // Tạo PoisonousBloodPool
-            target.Info.ApplyEffects(
-                new List<EffectData>()
-                {
-                    new PoisonousBloodPoolEffect()
-                    {
-                        effectType = EffectType.PoisonousBloodPool,
-                        duration = 2,
-                        Actor = Character,
-                        impacts = GpManager
-                            .MapManager.GetAllHexagonInRange(target.Info.Cell, 1)
-                            .ToList(),
-                        effects = new List<EffectData>(),
-                    }
-                }
-            );
-            
-            // Giảm độc trùng
-            var parasiteEffect = venomousParasiteEffects.First();
-            int reduceAmount = Mathf.Min(parasiteEffect.value, flowerCount);
-            parasiteEffect.value -= reduceAmount;
-            
-            AlkawaDebug.Log(ELogCategory.SKILL, 
-                $"[{CharName}] Skill 4: Giảm {reduceAmount} độc trùng trên {target.characterConfig.characterName}");
-                
-            // Nếu độc trùng giảm về 0, xóa hiệu ứng
-            if (parasiteEffect.value <= 0)
-            {
-                target.Info.EffectInfo.Effects.Remove(parasiteEffect);
-                AlkawaDebug.Log(ELogCategory.SKILL, 
-                    $"[{CharName}] Skill 4: Độc trùng trên {target.characterConfig.characterName} đã hết");
-            }
-        }
-        
-        // Xóa tất cả hiệu ứng hoa
-        for (int i = target.Info.EffectInfo.Effects.Count - 1; i >= 0; i--)
-        {
-            var effect = target.Info.EffectInfo.Effects[i];
-            if (effect.effectType is EffectType.RedDahlia or EffectType.WhiteLotus 
-                or EffectType.Marigold or EffectType.NightCactus)
-            {
-                target.Info.EffectInfo.Effects.RemoveAt(i);
-                AlkawaDebug.Log(ELogCategory.SKILL, 
-                    $"[{CharName}] Skill 4: Xóa hiệu ứng hoa {effect.effectType} trên {target.characterConfig.characterName}");
-            }
-        }
-    }
-
     protected override void HandleAfterDamageTakenFinish_Skill4_MyTurn()
     {
-        // Tuyết Điểm Hồng Phấn - Kích hoạt nở hoa lập tức và áp dụng độc trùng
+        // Tuyết Điểm Hồng Phấn - Kích hoạt nở hoa ngay lập tức
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
             {
-                // Kích hoạt nở hoa lập tức
-                ActivateInstantBloom(target);
-                
-                // Áp dụng độc trùng
-                CheckAndApplyVenomousParasite(target);
+                ActivateFlowerAndParasite(target);
+                // CheckAndApplyVenomousParasite(target); // Thay thế bằng ActivateFlowerAndParasite
             }
         }
     }
 
     protected override void HandleAfterDamageTakenFinish_Skill4_TeammateTurn()
     {
-        // Hồng Ti - Kích hoạt nở hoa lập tức và áp dụng độc trùng
+        // Hồng Ti - Kích hoạt nở hoa ngay lập tức
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
             {
-                // Kích hoạt nở hoa lập tức
-                ActivateInstantBloom(target);
-                
-                // Áp dụng độc trùng
-                CheckAndApplyVenomousParasite(target);
+                ActivateFlowerAndParasite(target);
+                // CheckAndApplyVenomousParasite(target); // Thay thế bằng ActivateFlowerAndParasite
             }
         }
     }
 
     protected override void HandleAfterDamageTakenFinish_Skill4_EnemyTurn()
     {
-        // Kim Tước Mai - Kích hoạt nở hoa lập tức và áp dụng độc trùng
+        // Kim Tước Mai - Kích hoạt nở hoa ngay lập tức
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
             {
-                // Kích hoạt nở hoa lập tức
-                ActivateInstantBloom(target);
+                ActivateFlowerAndParasite(target);
+                // CheckAndApplyVenomousParasite(target); // Thay thế bằng ActivateFlowerAndParasite
+            }
+        }
+    }
+
+    private void ActivateFlowerAndParasite(Character target)
+    {
+        if (target == null) return;
+
+        int flowerCount = target.Info.CountFlower();
+        if (flowerCount <= 0) return;
+
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Skill 4: Kích hoạt {flowerCount} hoa trên người {target.characterConfig.characterName}");
+
+        // Xóa tất cả hiệu ứng hoa
+        target.Info.RemoveAllFlowerEffects();
+
+        // Kiểm tra và kích hoạt độc trùng
+        var venomousParasiteEffect = target.Info.EffectInfo.Effects
+            .OfType<VenomousParasiteEffect>()
+            .FirstOrDefault();
+
+        if (venomousParasiteEffect != null)
+        {
+            // Tính toán số lượng độc trùng cần kích hoạt
+            int parasitesToActivate = Mathf.Min(flowerCount, venomousParasiteEffect.value);
+            
+            if (parasitesToActivate > 0)
+            {
+                AlkawaDebug.Log(ELogCategory.SKILL,
+                    $"[{CharName}] Skill 4: Hoa nở, kích hoạt {parasitesToActivate} độc trùng trên {target.characterConfig.characterName}");
+
+                // Kích hoạt PoisonousBloodPool
+                target.Info.ApplyEffects(
+                    new List<EffectData>()
+                    {
+                        new PoisonousBloodPoolEffect()
+                        {
+                            effectType = EffectType.PoisonousBloodPool,
+                            duration = 2,
+                            Actor = Character, // Actor là Doan Gia Linh
+                            impacts = GpManager.MapManager
+                                .GetAllHexagonInRange(target.Info.Cell, 1)
+                                .ToList(),
+                            effects = new List<EffectData>(),
+                        }
+                    }
+                );
+
+                // Giảm số lượng độc trùng
+                venomousParasiteEffect.value -= parasitesToActivate;
+                AlkawaDebug.Log(ELogCategory.SKILL,
+                    $"[{CharName}] Skill 4: Số độc trùng còn lại trên {target.characterConfig.characterName}: {venomousParasiteEffect.value}");
                 
-                // Áp dụng độc trùng
-                CheckAndApplyVenomousParasite(target);
+                // Nếu độc trùng về 0, xóa hiệu ứng
+                if (venomousParasiteEffect.value <= 0)
+                {
+                    target.Info.EffectInfo.Effects.Remove(venomousParasiteEffect);
+                    AlkawaDebug.Log(ELogCategory.SKILL,
+                        $"[{CharName}] Skill 4: Đã xóa hết độc trùng trên {target.characterConfig.characterName}");
+                }
             }
         }
     }
