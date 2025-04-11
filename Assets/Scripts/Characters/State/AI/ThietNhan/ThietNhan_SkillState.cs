@@ -165,7 +165,9 @@ public class ThietNhan_SkillState : AISkillState
                 character.Info.EffectInfo.Effects.Contains(infectedEffect) && 
                 !character.Info.IsDie)
             {
+#if !UNITY_EDITOR
                 infectedEffect.CheckInfection(character, Character);
+#endif
             }
         };
         
