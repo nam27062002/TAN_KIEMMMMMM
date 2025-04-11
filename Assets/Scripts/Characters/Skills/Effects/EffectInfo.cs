@@ -41,6 +41,10 @@ public class EffectInfo
         EffectType.LifeSteal,
         EffectType.Drunk,
         EffectType.PoisonousBloodPool,
+        EffectType.RedDahlia,
+        EffectType.WhiteLotus,
+        EffectType.Marigold,
+        EffectType.NightCactus,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()

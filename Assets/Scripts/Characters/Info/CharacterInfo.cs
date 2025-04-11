@@ -439,8 +439,58 @@ public class CharacterInfo
                 case EffectType.PoisonousBloodPool:
                     RemovePoisonousBloodPool(effect);
                     break;
+                case EffectType.RedDahlia:
+                case EffectType.WhiteLotus:
+                case EffectType.Marigold:
+                case EffectType.NightCactus:
+                    CheckFlowerEffectRemoved(effect);
+                    break;
             }
             EffectInfo.Effects.Remove(effect);
+        }
+    }
+
+    private void CheckFlowerEffectRemoved(EffectData flowerEffect)
+    {
+        // Kiểm tra xem nhân vật có hiệu ứng độc trùng không
+        var venomousParasiteEffects = EffectInfo.Effects
+            .Where(e => e.effectType == EffectType.VenomousParasite)
+            .Cast<VenomousParasiteEffect>()
+            .ToList();
+
+        if (venomousParasiteEffects.Count > 0)
+        {
+            // Nếu có độc trùng, kích hoạt PoisonousBloodPool
+            AlkawaDebug.Log(ELogCategory.EFFECT, 
+                $"[{Character.characterConfig.characterName}] Hoa biến mất, kích hoạt độc trùng");
+
+            flowerEffect.Actor.Info.ApplyEffects(
+                new List<EffectData>()
+                {
+                    new PoisonousBloodPoolEffect()
+                    {
+                        effectType = EffectType.PoisonousBloodPool,
+                        duration = 2,
+                        Actor = flowerEffect.Actor,
+                        impacts = GameplayManager.Instance.MapManager
+                            .GetAllHexagonInRange(Character.Info.Cell, 1)
+                            .ToList(),
+                        effects = new List<EffectData>(),
+                    }
+                }
+            );
+
+            // Giảm số lượng độc trùng
+            var parasiteEffect = venomousParasiteEffects.First();
+            parasiteEffect.value--;
+            
+            // Nếu độc trùng giảm về 0, xóa hiệu ứng
+            if (parasiteEffect.value <= 0)
+            {
+                EffectInfo.Effects.Remove(parasiteEffect);
+                AlkawaDebug.Log(ELogCategory.EFFECT, 
+                    $"[{Character.characterConfig.characterName}] Độc trùng đã hết");
+            }
         }
     }
 
@@ -861,18 +911,29 @@ public class CharacterInfo
 
     private void ApplyVenomousParasite(EffectData effectData)
     {
-        if (effectData is ChangeStatEffect changeStatEffect)
+        if (effectData is VenomousParasiteEffect venomousParasiteEffect)
         {
-            var removedCount = 0;
-            foreach (var effect in EffectInfo.Effects.ToList().Where(e => IsVenomousEffect(e.effectType)))
+            // Không còn cần xóa các hiệu ứng hoa ngay lập tức
+            // Thay vào đó, lưu số lượng độc trùng vào VenomousParasiteEffect
+            // Các hiệu ứng hoa sẽ tự động bị xóa sau DebuffRound và kích hoạt PoisonousBloodPool
+            ApplySimpleEffect(effectData);
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Đã nhiễm {venomousParasiteEffect.value} độc trùng");
+        }
+        else if (effectData is ChangeStatEffect oldVersionEffect)
+        {
+            // Để tương thích với code cũ nếu vẫn còn sử dụng ChangeStatEffect
+            var venomousParasite = new VenomousParasiteEffect
             {
-                EffectInfo.Effects.Remove(effect);
-                AlkawaDebug.Log(ELogCategory.EFFECT,
-                    $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
-                removedCount++;
-                if (removedCount >= changeStatEffect.value)
-                    break;
-            }
+                effectType = EffectType.VenomousParasite,
+                value = oldVersionEffect.value,
+                duration = -1,
+                associatedFlowers = oldVersionEffect.value,
+                Actor = oldVersionEffect.Actor
+            };
+            ApplySimpleEffect(venomousParasite);
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] Đã nhiễm {oldVersionEffect.value} độc trùng (từ phiên bản cũ)");
         }
     }
 
@@ -924,6 +985,15 @@ public class CharacterInfo
     public int GetPoisonPowder()
     {
         return EffectInfo.Effects.Count(p => p.effectType == EffectType.PoisonPowder);
+    }
+
+    public int GetVenomousParasite()
+    {
+        var parasiteEffect = EffectInfo.Effects
+            .OfType<VenomousParasiteEffect>()
+            .FirstOrDefault();
+        
+        return parasiteEffect?.value ?? 0;
     }
 
     public int CountFlower()
