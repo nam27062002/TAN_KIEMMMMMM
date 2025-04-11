@@ -242,7 +242,6 @@ public class DoanGiaLinh_SkillState : SkillState
                 Actor = Character
             }
         };
-        realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -277,7 +276,6 @@ public class DoanGiaLinh_SkillState : SkillState
                 Actor = Character
             }
         };
-        realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -318,7 +316,6 @@ public class DoanGiaLinh_SkillState : SkillState
                 duration = EffectConfig.DebuffRound,
             }
         };
-        realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -446,6 +443,189 @@ public class DoanGiaLinh_SkillState : SkillState
         foreach (var character in validCharacters)
         {
             AddTargetCharacters(character);
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill3_MyTurn()
+    {
+        base.HandleAfterDamageTakenFinish_Skill3_MyTurn();
+        
+        // Áp dụng PoisonousBloodPool sau khi đã áp dụng hiệu ứng hoa
+        foreach (var target in _skillStateParams.Targets)
+        {
+            int flower = target.Info.CountFlower();
+            int venomousParasite = GetVenomousParasite();
+            
+            if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
+            {
+                var effects = new List<EffectData>();
+                Info.ApplyEffects(
+                    new List<EffectData>()
+                    {
+                        new PoisonousBloodPoolEffect()
+                        {
+                            effectType = EffectType.PoisonousBloodPool,
+                            duration = 2,
+                            Actor = Character,
+                            impacts = GpManager
+                                .MapManager.GetAllHexagonInRange(target.Info.Cell, 1)
+                                .ToList(),
+                            effects = effects,
+                        }
+                    }
+                );
+
+                int value = Mathf.Min(flower, venomousParasite);
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng trước: {venomousParasite}, Hoa: {flower}, Sử dụng: {value}");
+                SetVenomousParasite(venomousParasite - value);
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng sau: {GetVenomousParasite()}");
+                
+                // Áp dụng hiệu ứng lên mục tiêu
+                target.Info.ApplyEffect(
+                    new ChangeStatEffect()
+                    {
+                        effectType = EffectType.VenomousParasite,
+                        value = value,
+                        duration = -1
+                    }
+                );
+                
+                // Tính toán và áp dụng sát thương bổ sung
+                bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+                int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+                int extraDamage = Roll.RollDice(1, 6, 0, isCrit) * value;
+                AlkawaDebug.Log(
+                    ELogCategory.SKILL,
+                    $"[{CharName}] Độc trùng ăn hoa: damage = {value} * {rollTimes}d6 = {extraDamage}"
+                );
+                
+                if (extraDamage > 0)
+                {
+                    target.Info.HandleDamageTaken(extraDamage, Character);
+                }
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill3_TeammateTurn()
+    {
+        base.HandleAfterDamageTakenFinish_Skill3_TeammateTurn();
+        
+        // Áp dụng PoisonousBloodPool sau khi đã áp dụng hiệu ứng hoa
+        foreach (var target in _skillStateParams.Targets)
+        {
+            int flower = target.Info.CountFlower();
+            int venomousParasite = GetVenomousParasite();
+            
+            if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
+            {
+                var effects = new List<EffectData>();
+                Info.ApplyEffects(
+                    new List<EffectData>()
+                    {
+                        new PoisonousBloodPoolEffect()
+                        {
+                            effectType = EffectType.PoisonousBloodPool,
+                            duration = 2,
+                            Actor = Character,
+                            impacts = GpManager
+                                .MapManager.GetAllHexagonInRange(target.Info.Cell, 1)
+                                .ToList(),
+                            effects = effects,
+                        }
+                    }
+                );
+
+                int value = Mathf.Min(flower, venomousParasite);
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng trước: {venomousParasite}, Hoa: {flower}, Sử dụng: {value}");
+                SetVenomousParasite(venomousParasite - value);
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng sau: {GetVenomousParasite()}");
+                
+                // Áp dụng hiệu ứng lên mục tiêu
+                target.Info.ApplyEffect(
+                    new ChangeStatEffect()
+                    {
+                        effectType = EffectType.VenomousParasite,
+                        value = value,
+                        duration = -1
+                    }
+                );
+                
+                // Tính toán và áp dụng sát thương bổ sung
+                bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+                int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+                int extraDamage = Roll.RollDice(1, 6, 0, isCrit) * value;
+                AlkawaDebug.Log(
+                    ELogCategory.SKILL,
+                    $"[{CharName}] Độc trùng ăn hoa: damage = {value} * {rollTimes}d6 = {extraDamage}"
+                );
+                
+                if (extraDamage > 0)
+                {
+                    target.Info.HandleDamageTaken(extraDamage, Character);
+                }
+            }
+        }
+    }
+
+    protected override void HandleAfterDamageTakenFinish_Skill3_EnemyTurn()
+    {
+        base.HandleAfterDamageTakenFinish_Skill3_EnemyTurn();
+        
+        // Áp dụng PoisonousBloodPool sau khi đã áp dụng hiệu ứng hoa
+        foreach (var target in _skillStateParams.Targets)
+        {
+            int flower = target.Info.CountFlower();
+            int venomousParasite = GetVenomousParasite();
+            
+            if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
+            {
+                var effects = new List<EffectData>();
+                Info.ApplyEffects(
+                    new List<EffectData>()
+                    {
+                        new PoisonousBloodPoolEffect()
+                        {
+                            effectType = EffectType.PoisonousBloodPool,
+                            duration = 2,
+                            Actor = Character,
+                            impacts = GpManager
+                                .MapManager.GetAllHexagonInRange(target.Info.Cell, 1)
+                                .ToList(),
+                            effects = effects,
+                        }
+                    }
+                );
+
+                int value = Mathf.Min(flower, venomousParasite);
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng trước: {venomousParasite}, Hoa: {flower}, Sử dụng: {value}");
+                SetVenomousParasite(venomousParasite - value);
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Độc trùng sau: {GetVenomousParasite()}");
+                
+                // Áp dụng hiệu ứng lên mục tiêu
+                target.Info.ApplyEffect(
+                    new ChangeStatEffect()
+                    {
+                        effectType = EffectType.VenomousParasite,
+                        value = value,
+                        duration = -1
+                    }
+                );
+                
+                // Tính toán và áp dụng sát thương bổ sung
+                bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
+                int rollTimes = Roll.GetActualRollTimes(1, isCrit);
+                int extraDamage = Roll.RollDice(1, 6, 0, isCrit) * value;
+                AlkawaDebug.Log(
+                    ELogCategory.SKILL,
+                    $"[{CharName}] Độc trùng ăn hoa: damage = {value} * {rollTimes}d6 = {extraDamage}"
+                );
+                
+                if (extraDamage > 0)
+                {
+                    target.Info.HandleDamageTaken(extraDamage, Character);
+                }
+            }
         }
     }
 }
