@@ -192,10 +192,6 @@ public class SkillState : CharacterState
 
     private HitChangeParams GetHitChangeParams(Character character)
     {
-#if UNITY_EDITOR
-        if (character is DoanGiaLinh) return new HitChangeParams() { HitChangeValue = 20, IsCritical = false };
-#endif
-
         if (character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Prone))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");

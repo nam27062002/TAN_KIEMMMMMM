@@ -124,4 +124,5 @@ public enum EffectType
     Fear = 44,
     Drunk = 45,
     PoisonousBloodPool = 46,
+    SetDefToZero = 47,
 }

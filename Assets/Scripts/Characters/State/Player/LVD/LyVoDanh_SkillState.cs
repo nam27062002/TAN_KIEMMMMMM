@@ -87,17 +87,39 @@ public class LyVoDanh_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
+        var damageResult = CalculateSkill2Damage();
+        var effects = CreateBaseEffects();
+        ApplyReduceHitChangeEffect();
+        return new DamageTakenParams
+        {
+            Damage = damageResult.totalDamage,
+            Effects = effects,
+            ReceiveFromCharacter = Character,
+        };
+    }
+
+    private (int totalDamage, int reducedMana) CalculateSkill2Damage()
+    {
         var baseDamage = GetBaseDamage();
         bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
         int rollTimes = Roll.GetActualRollTimes(1, isCrit);
         var skillDamage = (int)(Roll.RollDice(1, 6, 3, isCrit) * 1.5f);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Skill Damage = 1.5 * ({rollTimes}d6 + 3) = {skillDamage}");
-        var realDamage = baseDamage + skillDamage;
-        var reducedMana = (int)(0.5f * realDamage);
-        AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         
-        var effects = new List<EffectData>()
+        AlkawaDebug.Log(ELogCategory.SKILL, 
+            $"Skill Damage = 1.5 * ({rollTimes}d6 + 3) = {skillDamage}");
+        
+        var totalDamage = baseDamage + skillDamage;
+        var reducedMana = (int)(0.5f * totalDamage);
+        
+        AlkawaDebug.Log(ELogCategory.SKILL,
+            $"[{CharName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {totalDamage} | reduced Mana = {reducedMana}");
+            
+        return (totalDamage, reducedMana);
+    }
+
+    private List<EffectData> CreateBaseEffects()
+    {
+        return new List<EffectData>()
         {
             new()
             {
@@ -111,34 +133,32 @@ public class LyVoDanh_SkillState : SkillState
                 duration = EffectConfig.DebuffRound,
             }
         };
-        
-        var mainCharacter = GpManager.MainCharacter;
-        if (mainCharacter != null && mainCharacter != Character)
-        {
-            mainCharacter.Info.ApplyEffect(new ChangeStatEffect()
-            {
-                effectType = EffectType.ReduceHitChange,
-                Actor = Character,
-                duration = EffectConfig.BuffRound,
-                value = 1, 
-            });
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho {mainCharacter.characterConfig.characterName}");
-        }
-        character.Info.ApplyEffect(new ChangeStatEffect()
+    }
+
+    private void ApplyReduceHitChangeEffect()
+    {
+        // Tạo hiệu ứng tăng tỉ lệ chí mạng
+        var reduceHitChangeEffect = new ChangeStatEffect()
         {
             effectType = EffectType.ReduceHitChange,
             Actor = Character,
             duration = EffectConfig.BuffRound,
-            value = 1, 
-        });
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho bản thân");
-        
-        return new DamageTakenParams
-        {
-            Damage = realDamage,
-            Effects = effects,
-            ReceiveFromCharacter = Character,
+            value = 1,
         };
+
+        // Áp dụng cho chủ lượt nếu khác với nhân vật hiện tại
+        var mainCharacter = GpManager.MainCharacter;
+        if (mainCharacter != null && mainCharacter != Character)
+        {
+            mainCharacter.Info.ApplyEffect(reduceHitChangeEffect);
+            AlkawaDebug.Log(ELogCategory.EFFECT, 
+                $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho {mainCharacter.characterConfig.characterName}");
+        }
+
+        // Áp dụng cho bản thân
+        Character.Info.ApplyEffect(reduceHitChangeEffect);
+        AlkawaDebug.Log(ELogCategory.EFFECT, 
+            $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho bản thân");
     }
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
@@ -287,7 +307,7 @@ public class LyVoDanh_SkillState : SkillState
         int rollTimes = Roll.GetActualRollTimes(2, isCrit);
         var rollDamage = Roll.RollDice(2, 4, 2, isCrit);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Bất Thành Danh: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -297,6 +317,12 @@ public class LyVoDanh_SkillState : SkillState
                 {
                     effectType = EffectType.BreakBloodSealDamage,
                     Actor = Character,
+                },
+                new()
+                {
+                    effectType = EffectType.SetDefToZero,
+                    Actor = Character,
+                    duration = EffectConfig.DebuffRound, 
                 }
             },
             ReceiveFromCharacter = Character
@@ -321,6 +347,12 @@ public class LyVoDanh_SkillState : SkillState
                 {
                     effectType = EffectType.BreakBloodSealDamage,
                     Actor = Character,
+                },
+                new()
+                {
+                    effectType = EffectType.Prone,
+                    duration = EffectConfig.DebuffRound,
+                    Actor = Character
                 }
             },
             ReceiveFromCharacter = Character

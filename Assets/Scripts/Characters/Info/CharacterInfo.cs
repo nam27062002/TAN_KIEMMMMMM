@@ -44,6 +44,7 @@ public class CharacterInfo
             { EffectType.Prone, ApplySimpleEffect },
             { EffectType.Fear, ApplySimpleEffect },
             { EffectType.Drunk, ApplySimpleEffect },
+            { EffectType.SetDefToZero, ApplySimpleEffect },
 
             { EffectType.Sleep, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Stun, TryCheckEffectResistanceAndApplyEffect },
@@ -317,6 +318,15 @@ public class CharacterInfo
 
     public int GetDef()
     {
+        // Kiểm tra hiệu ứng SetDefToZero trước
+        if (EffectInfo.Effects.Any(p => p.effectType == EffectType.SetDefToZero))
+        {
+            AlkawaDebug.Log(ELogCategory.EFFECT, 
+                $"[{Character.characterConfig.characterName}] có hiệu ứng SetDefToZero => DEF = 0");
+            return 0;
+        }
+        
+        // Kiểm tra hiệu ứng ReduceStat_PhamCuChich_Skill3
         if (EffectInfo.Effects.Any(p => p.effectType == EffectType.ReduceStat_PhamCuChich_Skill3))
         {
             return 0;
