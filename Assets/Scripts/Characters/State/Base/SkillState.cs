@@ -18,6 +18,7 @@ public class SkillState : CharacterState
     private bool _waitForFeedback = false;
     protected bool WaitForReact = false;
     protected string SkillName => _skillStateParams.SkillInfo.name;
+    private bool _processedDamageLogic = false;
 
     public SkillState(Character character) : base(character)
     {
@@ -76,6 +77,7 @@ public class SkillState : CharacterState
     {
         GpManager.SetInteract(false);
         TargetCharacters.Clear();
+        _processedDamageLogic = false;
 
         if (stateParams is not SkillStateParams skillStateParams)
         {
@@ -214,7 +216,14 @@ public class SkillState : CharacterState
         return Info.HitChangeParams;
     }
 
-    private void HandleDamageLogic() => HandleDodgeDamage();
+    private void HandleDamageLogic()
+    {
+        if (_skillStateParams.Targets.Count > 0)
+        {
+            _processedDamageLogic = true;
+        }
+        HandleDodgeDamage();
+    }
 
     private void HandleDodgeDamage()
     {
@@ -388,7 +397,10 @@ public class SkillState : CharacterState
 
     protected virtual void HandleAllTargetFinish()
     {
-        HandleAfterDamageTakenFinish();
+        if (_processedDamageLogic)
+        {
+            HandleAfterDamageTakenFinish();
+        }
         GpManager.SetInteract(true);
         Character.ChangeState(ECharacterState.Idle);
         Character.HideSkillTarget();
