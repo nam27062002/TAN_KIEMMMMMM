@@ -9,6 +9,19 @@ public class PoisonousBloodPoolEffect : EffectData
     
     // Thêm trường để lưu vị trí cell thay vì reference trực tiếp
     public List<Vector2Int> impactPositions = new();
+    
+    // Thêm trường để lưu loại hoa gốc
+    public EffectType sourceFlowerType;
+
+    public override void OnBeforeSave()
+    {
+        base.OnBeforeSave();
+        impactPositions.Clear();
+        foreach (var cell in impacts)
+        {
+            impactPositions.Add(cell.CellPosition);
+        }
+    }
 
     public override void OnAfterLoad(MapManager mapManager)
     {

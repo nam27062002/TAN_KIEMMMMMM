@@ -464,24 +464,30 @@ public class CharacterInfo
             AlkawaDebug.Log(ELogCategory.EFFECT, 
                 $"[{Character.characterConfig.characterName}] Hoa biến mất, kích hoạt độc trùng");
 
+            // Tìm hiệu ứng độc trùng
+            var parasiteEffect = venomousParasiteEffects.First();
+            
+            // Lấy loại hoa gốc
+            var sourceFlower = flowerEffect.effectType;
+
             flowerEffect.Actor.Info.ApplyEffects(
                 new List<EffectData>()
                 {
                     new PoisonousBloodPoolEffect()
                     {
                         effectType = EffectType.PoisonousBloodPool,
-                        duration = 2,
-                        Actor = flowerEffect.Actor,
+                        duration = 2, 
+                        Actor = flowerEffect.Actor, // Actor là người tạo ra hoa
                         impacts = GameplayManager.Instance.MapManager
                             .GetAllHexagonInRange(Character.Info.Cell, 1)
                             .ToList(),
-                        effects = new List<EffectData>(),
+                        effects = new List<EffectData>(), // Hiệu ứng nhiễm độc sẽ được xác định trong DamageTaken
+                        sourceFlowerType = sourceFlower // Lưu loại hoa gốc
                     }
                 }
             );
 
             // Giảm số lượng độc trùng
-            var parasiteEffect = venomousParasiteEffects.First();
             parasiteEffect.value--;
             
             // Nếu độc trùng giảm về 0, xóa hiệu ứng

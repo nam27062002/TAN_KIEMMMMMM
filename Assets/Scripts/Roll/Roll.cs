@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Linq;
 
 public class Roll
 {
@@ -37,9 +38,35 @@ public class Roll
     public HitChangeParams GetHitChange()
     {
         var rollData = _attributes.hitChangeRollData;
-        var hitChange = RollDice(rollData.rollValue, _characterInfo.GetCurrentDamage() / 2);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Hit Change = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetCurrentDamage() / 2} = {hitChange}");
-        return new HitChangeParams() { HitChangeValue = hitChange, IsCritical = rollData.rollValue == hitChange };
+        
+        // Kiểm tra tất cả hiệu ứng ReduceHitChange và tính tổng giá trị
+        int totalReduceValue = 0;
+        var reduceHitChangeEffects = _characterInfo.EffectInfo.Effects
+            .Where(e => e.effectType == EffectType.ReduceHitChange)
+            .Cast<ChangeStatEffect>();
+        
+        if (reduceHitChangeEffects.Any())
+        {
+            foreach (var effect in reduceHitChangeEffects)
+            {
+                totalReduceValue += effect.value;
+            }
+            AlkawaDebug.Log(ELogCategory.EFFECT, 
+                $"[{_characterName}] có {reduceHitChangeEffects.Count()} hiệu ứng tăng tỉ lệ chí mạng: tổng -" + totalReduceValue);
+        }
+        
+        // Tính toán hitChange với rollValue đã được điều chỉnh
+        int adjustedRollValue = Mathf.Max(2, rollData.rollValue - totalReduceValue); // Đảm bảo rollValue không nhỏ hơn 2
+        var hitChange = RollDice(adjustedRollValue, _characterInfo.GetCurrentDamage() / 2);
+        
+        AlkawaDebug.Log(ELogCategory.SKILL, 
+            $"[{_characterName}] | Hit Change = {rollData.rollTime}d{adjustedRollValue} + {_characterInfo.GetCurrentDamage() / 2} = {hitChange}");
+        
+        // Chí mạng xảy ra khi giá trị xúc xắc bằng với giá trị mặt xúc xắc tối đa sau khi điều chỉnh
+        return new HitChangeParams() { 
+            HitChangeValue = hitChange, 
+            IsCritical = adjustedRollValue == hitChange 
+        };
     }
 
     public int GetEffectResistance()

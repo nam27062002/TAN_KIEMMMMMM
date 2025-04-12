@@ -96,23 +96,52 @@ public class LyVoDanh_SkillState : SkillState
         var reducedMana = (int)(0.5f * realDamage);
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+        
+        // Danh sách hiệu ứng
+        var effects = new List<EffectData>()
+        {
+            new()
+            {
+                effectType = EffectType.BloodSealEffect,
+                Actor = Character
+            },
+            new()
+            {
+                effectType = EffectType.Stun,
+                Actor = Character,
+                duration = EffectConfig.DebuffRound,
+            }
+        };
+        
+        // Thêm hiệu ứng tăng tỉ lệ chí mạng cho bản thân
+        effects.Add(new ChangeStatEffect()
+        {
+            effectType = EffectType.ReduceHitChange,
+            Actor = Character,
+            duration = EffectConfig.DebuffRound,
+            value = 2, // Giảm giá trị rollValue đi 2 để tăng khả năng chí mạng
+        });
+        
+        // Thêm hiệu ứng tăng tỉ lệ chí mạng cho chủ lượt nếu khác với nhân vật hiện tại
+        var mainCharacter = GpManager.MainCharacter;
+        if (mainCharacter != null && mainCharacter != Character)
+        {
+            mainCharacter.Info.ApplyEffect(new ChangeStatEffect()
+            {
+                effectType = EffectType.ReduceHitChange,
+                Actor = Character,
+                duration = EffectConfig.DebuffRound,
+                value = 2, // Giảm giá trị rollValue đi 2 để tăng khả năng chí mạng
+            });
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho {mainCharacter.characterConfig.characterName}");
+        }
+        
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho bản thân");
+        
         return new DamageTakenParams
         {
             Damage = realDamage,
-            Effects = new List<EffectData>()
-            {
-                new()
-                {
-                    effectType = EffectType.BloodSealEffect,
-                    Actor = Character
-                },
-                new()
-                {
-                    effectType = EffectType.Stun,
-                    Actor = Character,
-                    duration = EffectConfig.DebuffRound,
-                }
-            },
+            Effects = effects,
             ReceiveFromCharacter = Character,
         };
     }

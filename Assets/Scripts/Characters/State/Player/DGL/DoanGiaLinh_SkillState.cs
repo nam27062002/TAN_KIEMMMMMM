@@ -570,13 +570,17 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         if (target == null) return;
 
-        int flowerCount = target.Info.CountFlower();
-        if (flowerCount <= 0) return;
+        // Lấy loại hoa TRƯỚC KHI xóa
+        EffectType sourceFlowerType = GetSourceFlowerTypeFromTarget(target);
+        if (sourceFlowerType == EffectType.None) return; // Không có hoa nào để kích hoạt
+        
+        int flowerCount = target.Info.CountFlower(); // Đếm số lượng hoa trước khi xóa
+        if (flowerCount <= 0) return; // Thực ra không cần thiết vì đã check sourceFlowerType
 
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Skill 4: Kích hoạt {flowerCount} hoa trên người {target.characterConfig.characterName}");
+            $"[{CharName}] Skill 4: Kích hoạt {flowerCount} hoa ({sourceFlowerType}) trên người {target.characterConfig.characterName}");
 
-        // Xóa tất cả hiệu ứng hoa
+        // Xóa tất cả hiệu ứng hoa SAU KHI đã xác định loại
         target.Info.RemoveAllFlowerEffects();
 
         // Kiểm tra và kích hoạt độc trùng
@@ -594,7 +598,7 @@ public class DoanGiaLinh_SkillState : SkillState
                 AlkawaDebug.Log(ELogCategory.SKILL,
                     $"[{CharName}] Skill 4: Hoa nở, kích hoạt {parasitesToActivate} độc trùng trên {target.characterConfig.characterName}");
 
-                // Kích hoạt PoisonousBloodPool
+                // Kích hoạt PoisonousBloodPool với loại hoa đã xác định
                 target.Info.ApplyEffects(
                     new List<EffectData>()
                     {
@@ -606,7 +610,8 @@ public class DoanGiaLinh_SkillState : SkillState
                             impacts = GpManager.MapManager
                                 .GetAllHexagonInRange(target.Info.Cell, 1)
                                 .ToList(),
-                            effects = new List<EffectData>(),
+                            effects = new List<EffectData>(), // Hiệu ứng nhiễm độc sẽ được xác định trong DamageTaken
+                            sourceFlowerType = sourceFlowerType // Sử dụng loại hoa đã lấy trước đó
                         }
                     }
                 );
@@ -625,5 +630,17 @@ public class DoanGiaLinh_SkillState : SkillState
                 }
             }
         }
+    }
+
+    // Hàm trợ giúp để lấy loại hoa đầu tiên tìm thấy trên mục tiêu
+    private EffectType GetSourceFlowerTypeFromTarget(Character target)
+    {
+        var flowerEffect = target.Info.EffectInfo.Effects.FirstOrDefault(e => 
+            e.effectType == EffectType.RedDahlia || 
+            e.effectType == EffectType.WhiteLotus || 
+            e.effectType == EffectType.Marigold || 
+            e.effectType == EffectType.NightCactus);
+            
+        return flowerEffect?.effectType ?? EffectType.None;
     }
 }
