@@ -218,10 +218,6 @@ public class SkillState : CharacterState
 
     private void HandleDamageLogic()
     {
-        if (_skillStateParams.Targets.Count > 0)
-        {
-            _processedDamageLogic = true;
-        }
         HandleDodgeDamage();
     }
 
@@ -235,6 +231,7 @@ public class SkillState : CharacterState
 
         foreach (var target in _skillStateParams.Targets)
         {
+            _processedDamageLogic = false;
             if (Character.Type != target.Type)
             {
                 ProcessEnemyTarget(target);
@@ -307,6 +304,7 @@ public class SkillState : CharacterState
                 // Đặt trạng thái crit 
                 bool isCrit = hitChangeParams.IsCritical;
                 Roll.SetCriticalHit(isCrit);
+                _processedDamageLogic = true;
 
                 var damageParams = GetDamageParams(target);
                 damageParams.IsHitCritical = isCrit; // Thêm thông tin crit
