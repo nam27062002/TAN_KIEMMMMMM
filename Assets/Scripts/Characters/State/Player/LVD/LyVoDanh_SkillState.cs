@@ -97,7 +97,6 @@ public class LyVoDanh_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Sạ Bất Kiến: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         
-        // Danh sách hiệu ứng
         var effects = new List<EffectData>()
         {
             new()
@@ -113,16 +112,6 @@ public class LyVoDanh_SkillState : SkillState
             }
         };
         
-        // Thêm hiệu ứng tăng tỉ lệ chí mạng cho bản thân
-        effects.Add(new ChangeStatEffect()
-        {
-            effectType = EffectType.ReduceHitChange,
-            Actor = Character,
-            duration = EffectConfig.DebuffRound,
-            value = 2, // Giảm giá trị rollValue đi 2 để tăng khả năng chí mạng
-        });
-        
-        // Thêm hiệu ứng tăng tỉ lệ chí mạng cho chủ lượt nếu khác với nhân vật hiện tại
         var mainCharacter = GpManager.MainCharacter;
         if (mainCharacter != null && mainCharacter != Character)
         {
@@ -130,12 +119,18 @@ public class LyVoDanh_SkillState : SkillState
             {
                 effectType = EffectType.ReduceHitChange,
                 Actor = Character,
-                duration = EffectConfig.DebuffRound,
-                value = 2, // Giảm giá trị rollValue đi 2 để tăng khả năng chí mạng
+                duration = EffectConfig.BuffRound,
+                value = 1, 
             });
             AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho {mainCharacter.characterConfig.characterName}");
         }
-        
+        character.Info.ApplyEffect(new ChangeStatEffect()
+        {
+            effectType = EffectType.ReduceHitChange,
+            Actor = Character,
+            duration = EffectConfig.BuffRound,
+            value = 1, 
+        });
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho bản thân");
         
         return new DamageTakenParams
