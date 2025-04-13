@@ -115,7 +115,14 @@ public class UI_Ingame : MenuBase
     
     private void OnEndTurnButtonClicked()
     {
-        if (!GameplayManager.IsTutorialLevel) GameplayManager.HandleEndTurn("Click vào end turn");
+        if (!GameplayManager.IsTutorialLevel)
+        {
+            // Vô hiệu hóa UI Skill trong 1 giây
+            Skill_UI.TemporarilyDisableSkills(1f);
+            
+            // Sau đó gọi hàm EndTurn
+            GameplayManager.HandleEndTurn("Click vào end turn");
+        }
     }
 
     private void GameplayManagerOnOnNewRound(object sender, EventArgs e)

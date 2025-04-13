@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -19,6 +20,10 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private int _skillIndex;
     private Type _type;
     public static Skill_UI Selected;
+    
+    // Thêm biến static để quản lý việc vô hiệu hóa tạm thời
+    private static bool _isTemporarilyDisabled = false;
+    private static Coroutine _disableCoroutine;
 
     [Title("Show Skill UI")] 
     public GameObject showSkillPanel;
@@ -30,6 +35,24 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private Tween _showTween;
     private Tween _hideTween;
     private SkillInfo _skillInfo;
+
+    // Phương thức tĩnh để vô hiệu hóa UI Skill trong một khoảng thời gian
+    public static void TemporarilyDisableSkills(float duration = 1f)
+    {
+        _isTemporarilyDisabled = true;
+        
+        // Sử dụng DOTween để reset sau một khoảng thời gian
+        DOTween.Sequence()
+            .AppendInterval(duration)
+            .AppendCallback(() => _isTemporarilyDisabled = false);
+    }
+    
+    private static IEnumerator EnableAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _isTemporarilyDisabled = false;
+        _disableCoroutine = null;
+    }
 
     private void Awake()
     {
@@ -61,7 +84,8 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                _isEnoughMana &&
                !_isLocked &&
                _type == Type.Player &&
-               GameplayManager.Instance.CanInteract;
+               GameplayManager.Instance.CanInteract &&
+               !_isTemporarilyDisabled;
     }
     
     public void SetSkill(SkillInfo skillInfo, bool unlock, bool enoughMana, Type type)
@@ -95,6 +119,9 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // Kiểm tra trạng thái vô hiệu hóa tạm thời
+        if (_isTemporarilyDisabled) return;
+        
         if (!CanShowInfo) return;
         _isHovering = true;
         if (!_skillInfo.isDirectionalSkill)
@@ -114,6 +141,9 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        // Kiểm tra trạng thái vô hiệu hóa tạm thời
+        if (_isTemporarilyDisabled) return;
+        
         if (!CanShowInfo) return;
         _isHovering = false;
         HideSkillPanel();
