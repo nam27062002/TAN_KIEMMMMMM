@@ -51,5 +51,6 @@ public class SkillInfo
     public DamageTargetType damageType;
     [TextArea(1, 5)]
     public string description;
+    public bool canBeDodged = true;
 }
 

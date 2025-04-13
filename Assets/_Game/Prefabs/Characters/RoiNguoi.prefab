@@ -214,6 +214,7 @@ MonoBehaviour:
       name: "N\u1ED9i t\u1EA1i"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -227,6 +228,7 @@ MonoBehaviour:
       name: "T\u1ED1c \u0111\u1ED9/ Th\xE2n ph\xE1p"
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0

@@ -261,58 +261,80 @@ public class SkillState : CharacterState
         }
         else
         {
-            var hitChangeParams = GetHitChangeParams(target);
-            var dodge = target.Info.Dodge;
+            // Kiểm tra xem skill có thể bị né không
+            bool canBeDodged = _skillStateParams.SkillInfo.canBeDodged;
 
-            AlkawaDebug.Log(ELogCategory.SKILL,
-                $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
-                $"[{target.characterConfig.characterName}] Dodge = {dodge}");
-
-            if (hitChangeParams.HitChangeValue < dodge)
+            if (canBeDodged)
             {
-                if (target.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
+                var hitChangeParams = GetHitChangeParams(target);
+                var dodge = target.Info.Dodge;
+
+                AlkawaDebug.Log(ELogCategory.SKILL,
+                    $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
+                    $"[{target.characterConfig.characterName}] Dodge = {dodge}");
+
+                if (hitChangeParams.HitChangeValue < dodge)
                 {
-                    Debug.Log($"{target.characterConfig.characterName} có hiệu ứng say, {CharName} đánh hụt => sleep");
-                    Character.Info.ApplyEffect(
-                        new EffectData
-                        {
-                            effectType = EffectType.Sleep,
-                            duration = EffectConfig.DebuffRound,
-                            Actor = Character
-                        });
+                    if (target.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
+                    {
+                        Debug.Log($"{target.characterConfig.characterName} có hiệu ứng say, {CharName} đánh hụt => sleep");
+                        Character.Info.ApplyEffect(
+                            new EffectData
+                            {
+                                effectType = EffectType.Sleep,
+                                duration = EffectConfig.DebuffRound,
+                                Actor = Character
+                            });
+                        var damageParams = GetDamageParams(target);
+                        Character.Info.HandleDamageTaken(-damageParams.Damage, target);
+                        Debug.Log($"{CharName} bị phản sát thương: damage = {damageParams.Damage}");
+                    }
+                    var dodgeDamageParams = new DamageTakenParams
+                    {
+                        CanDodge = true,
+                        ReceiveFromCharacter = Character,
+                        CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != target.Type,
+                        OnSetDamageTakenFinished = HandleTargetFinish,
+                        SkillStateParams = _skillStateParams
+                    };
+                    Character.HandleMpChanged(_skillStateParams.SkillInfo.mpCost);
+                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
+                    _waitForFeedback = true; // Đặt cờ chờ feedback
+                    return; // Kết thúc xử lý cho target này nếu bị né
+                }
+                else
+                {
+                    // Đặt trạng thái crit nếu không bị né
+                    bool isCrit = hitChangeParams.IsCritical;
+                    Roll.SetCriticalHit(isCrit);
+                    _processedDamageLogic = true;
+
                     var damageParams = GetDamageParams(target);
-                    Character.Info.HandleDamageTaken(-damageParams.Damage, target);
-                    Debug.Log($"{CharName} bị phản sát thương: damage = {damageParams.Damage}");
+                    damageParams.IsHitCritical = isCrit; // Thêm thông tin crit
+
+                    if (isCrit)
+                    {
+                        AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Character.characterConfig.characterName} gây crit vào {target.characterConfig.characterName}");
+                    }
+
+                    CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
+                    // Reset lại trạng thái crit sau khi đã áp dụng
+                    Roll.SetCriticalHit(false);
                 }
-                var dodgeDamageParams = new DamageTakenParams
-                {
-                    CanDodge = true,
-                    ReceiveFromCharacter = Character,
-                    CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != target.Type,
-                    OnSetDamageTakenFinished = HandleTargetFinish,
-                    SkillStateParams = _skillStateParams
-                };
-                Character.HandleMpChanged(_skillStateParams.SkillInfo.mpCost);
-                CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
             }
-            else
+            else // Skill không thể bị né
             {
-                // Đặt trạng thái crit 
-                bool isCrit = hitChangeParams.IsCritical;
-                Roll.SetCriticalHit(isCrit);
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] dùng skill không thể né [{_skillStateParams.SkillInfo.name}] vào [{target.characterConfig.characterName}]");
                 _processedDamageLogic = true;
-
                 var damageParams = GetDamageParams(target);
-                damageParams.IsHitCritical = isCrit; // Thêm thông tin crit
-
-                if (isCrit)
-                {
-                    AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Character.characterConfig.characterName} gây crit vào {target.characterConfig.characterName}");
-                }
+                // Skill không né được cũng có thể crit, nhưng không cần check HitChange nữa
+                // Nếu muốn skill không né được cũng không crit, có thể bỏ qua set crit ở đây
+                // Hoặc bạn có thể check crit độc lập
+                bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); // Ví dụ: check cheat crit
+                Roll.SetCriticalHit(isCrit);
+                damageParams.IsHitCritical = isCrit;
 
                 CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
-
-                // Reset lại trạng thái crit
                 Roll.SetCriticalHit(false);
             }
 
