@@ -343,6 +343,15 @@ public class ThietNhan_SkillState : AISkillState
             int roll = Roll.RollDice(1, 20, 0);
             AlkawaDebug.Log(ELogCategory.SKILL, "----------------------------------------------------------");
 
+            // Kiểm tra xem friend có bị Stun hoặc Sleep không
+            if (friend.Info.MustEndTurn) // MustEndTurn trả về true nếu có Stun hoặc Sleep
+            {
+                string effectName = friend.Info.EffectInfo.Effects.Any(e => e.effectType == EffectType.Stun) ? "Stun" : "Sleep";
+                AlkawaDebug.Log(ELogCategory.SKILL,
+                    $"[{friend.characterConfig.characterName}] Tấn công hỗ trợ: Bị {effectName} => Không thể cùng tấn công");
+                continue; // Bỏ qua friend này
+            }
+
             if (roll >= 10)
             {
                 var animName = GetAnimByIndex(_skillStateParams.SkillInfo.skillIndex);
