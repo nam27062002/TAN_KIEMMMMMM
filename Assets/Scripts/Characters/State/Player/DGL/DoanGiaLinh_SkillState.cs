@@ -172,7 +172,7 @@ public class DoanGiaLinh_SkillState : SkillState
             new()
             {
                 effectType = EffectType.ReduceMoveRange,
-                duration = 1,
+                duration = Roll.RollDice(1,4,0),
                 Actor = Character
             },
             new()

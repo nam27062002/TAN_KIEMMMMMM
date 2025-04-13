@@ -350,6 +350,12 @@ public class LyVoDanh_SkillState : SkillState
                 },
                 new()
                 {
+                    effectType = EffectType.ReduceMoveRange,
+                    duration = Roll.RollDice(1,4,0),
+                    Actor = Character
+                },
+                new()
+                {
                     effectType = EffectType.Prone,
                     duration = EffectConfig.DebuffRound,
                     Actor = Character
