@@ -28,8 +28,8 @@ public class EmpressesBowstrings : PassiveSkill
     private void Start()
     {
         _currentMoveRange = initialMoveRange;
-        if (character.Info != null) 
-            character.Info.MoveAmount = _currentMoveRange;
+        // if (character.Info != null) 
+        //     character.Info.MoveAmount = _currentMoveRange;
         _currentDodgeBonus = initialDodgeBonus;
         IncreaseDodge(_currentDodgeBonus);
     }

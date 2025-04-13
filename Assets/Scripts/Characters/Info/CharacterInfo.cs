@@ -90,7 +90,12 @@ public class CharacterInfo
     public CharacterAttributes Attributes { get; set; }
     public int CurrentHp { get; set; }
     public int CurrentMp { get; set; }
-    public int MoveAmount { get; set; }
+
+    public int MoveAmount
+    {
+        get; 
+        set;
+    }
     public int DamageDealtInCurrentRound { get; set; } = 0;
 
     private int ShieldAmount => ShieldEffectData?.value ?? 0;
