@@ -45,6 +45,7 @@ public class EffectInfo
         EffectType.WhiteLotus,
         EffectType.Marigold,
         EffectType.NightCactus,
+        EffectType.Blind,
     };
     
     public static readonly Dictionary<EffectType, (int, int)> AppliedEffect = new ()
@@ -63,6 +64,7 @@ public class EffectInfo
         { EffectType.ReduceAP, (15, 15)},
         { EffectType.Bleed, (15, 15)},
         { EffectType.Drunk, (15, 15)},
+        { EffectType.Blind, (15, 15)},
     };
     
     public static readonly HashSet<EffectType> DontRemoveEffect = new ()
@@ -125,4 +127,5 @@ public enum EffectType
     Drunk = 45,
     PoisonousBloodPool = 46,
     SetDefToZero = 47,
+    Blind = 48,
 }

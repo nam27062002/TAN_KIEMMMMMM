@@ -192,6 +192,15 @@ public class SkillState : CharacterState
 
     private HitChangeParams GetHitChangeParams(Character character)
     {
+        // Kiểm tra hiệu ứng Blind trước
+        if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Blind))
+        {
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Không thể Crit");
+            var paramsNoCrit = Info.HitChangeParams;
+            paramsNoCrit.IsCritical = false; // Đảm bảo không crit
+            return paramsNoCrit;
+        }
+        
         if (character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Prone))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");

@@ -106,9 +106,19 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ngưng Bách Niên");
         return new DamageTakenParams()
         {
-            ReceiveFromCharacter = character
+            Effects = new List<EffectData>
+            {
+                new()
+                {
+                    effectType = EffectType.Blind,
+                    duration = EffectConfig.DebuffRound, // Sử dụng thời gian debuff chuẩn
+                    Actor = Character // Người gây hiệu ứng là Hoắc Liên Hương
+                }
+            },
+            ReceiveFromCharacter = Character // Người nhận hiệu ứng là 'character' (người tấn công HLH)
         };
     }
 
@@ -237,6 +247,11 @@ public class HoacLienHuong_SkillState : SkillState
     protected override void SetTargetCharacters_Skill2_TeammateTurn()
     {
         AddTargetCharacters(Character);
+    }
+    
+    protected override void SetTargetCharacters_Skill2_EnemyTurn()
+    {
+        AddTargetCharacters(GpManager.MainCharacter);
     }
 
     //===================== SKILL 3 =====================

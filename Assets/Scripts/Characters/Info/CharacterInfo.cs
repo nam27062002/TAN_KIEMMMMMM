@@ -59,6 +59,7 @@ public class CharacterInfo
             { EffectType.Silence, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.ReduceAP, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Bleed, TryCheckEffectResistanceAndApplyEffect },
+            { EffectType.Blind, TryCheckEffectResistanceAndApplyEffect },
 
             { EffectType.IncreaseDamage, ApplyIncreaseDamage },
             { EffectType.BlockSkill, _ => ApplyBlockSkill() },
@@ -312,6 +313,13 @@ public class CharacterInfo
 
         var baseMovement = CalculateBaseMovement();
         var totalReduction = CalculateMoveReduction();
+        
+        // Thêm kiểm tra Blind
+        if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Blind))
+        {
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Tầm đánh/di chuyển -1");
+            baseMovement = Mathf.Max(1, baseMovement - 1); // Giảm đi 1, tối thiểu là 1
+        }
 
         return Mathf.Max(0, baseMovement - totalReduction);
     }
@@ -543,7 +551,33 @@ public class CharacterInfo
 
     public SkillInfo GetSkillInfo(int index, SkillTurnType skillTurnType)
     {
-        return SkillConfig.SkillConfigs[skillTurnType][index];
+        var originalSkillInfo = SkillConfig.SkillConfigs[skillTurnType][index];
+        
+        // Thêm kiểm tra Blind
+        if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Blind))
+        {
+            // Tạo bản sao thủ công
+            var modifiedSkillInfo = new SkillInfo
+            {
+                icon = originalSkillInfo.icon,
+                name = originalSkillInfo.name,
+                skillIndex = originalSkillInfo.skillIndex,
+                mpCost = originalSkillInfo.mpCost,
+                damageDescription = originalSkillInfo.damageDescription,
+                range = Mathf.Max(1, originalSkillInfo.range - 1), // Giảm tầm skill đi 1, tối thiểu là 1
+                directionType = originalSkillInfo.directionType,
+                isDirectionalSkill = originalSkillInfo.isDirectionalSkill,
+                canOverrideSetTargetCharacters = originalSkillInfo.canOverrideSetTargetCharacters,
+                canBlockDamage = originalSkillInfo.canBlockDamage,
+                damageType = originalSkillInfo.damageType,
+                description = originalSkillInfo.description,
+                canBeDodged = originalSkillInfo.canBeDodged
+            };
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Tầm skill [{originalSkillInfo.name}] giảm còn {modifiedSkillInfo.range}");
+            return modifiedSkillInfo;
+        }
+        
+        return originalSkillInfo;
     }
 
     public bool CanCastSkill(SkillInfo skillInfo)
