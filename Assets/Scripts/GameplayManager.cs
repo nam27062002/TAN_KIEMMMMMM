@@ -580,16 +580,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool CanSkipStartConversation()
     {
-        // #if UNITY_EDITOR
-        //         return levelConfig.canSkipStartConversation;
-        // #endif
-        // --- Sửa code: Kiểm tra GameManager.IsReplaying ---
-        if (!GameManager.Instance.IsReplaying) return false;
-        // IsReplay = false; // Không dùng biến này nữa
-        // Reset lại flag Replay trong GameManager sau khi đã sử dụng
-        // GameManager.Instance.IsReplaying = false; // Không reset ở đây
-        // GameManager.Instance.LevelToReplay = null; // Không reset ở đây
-        // --------------------------------------------
+        if (!GameManager.Instance.IsReplaying) 
+        {
+            return _hasOverrideLevelConfig; 
+        }
         return true;
     }
 

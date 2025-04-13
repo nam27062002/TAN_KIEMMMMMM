@@ -377,14 +377,23 @@ public class CharacterInfo
 
     private int CalculateBaseMovement()
     {
-#if UNITY_EDITOR
-        var baseValue = Attributes.overrideMaxMoveRange ? Attributes.maxMoveRangeOverride - MoveAmount : Attributes.maxMoveRange - MoveAmount;
-#else
-        var baseValue = Attributes.maxMoveRange - MoveAmount;
-#endif
+// #if UNITY_EDITOR
+//         int maxMove = Attributes.overrideMaxMoveRange ? Attributes.maxMoveRangeOverride : Attributes.maxMoveRange;
+// #else
+//         
+// #endif
+        int maxMove = Attributes.maxMoveRange;
+        // Đảm bảo MoveAmount không vượt quá maxMove
+        int effectiveMoveAmount = Mathf.Min(MoveAmount, maxMove);
+        
+        var baseValue = maxMove - effectiveMoveAmount;
         var moveBuff = EffectInfo.Effects
             .Where(e => e.effectType == EffectType.IncreaseMoveRange)
             .Sum(e => ((ChangeStatEffect)e).value);
+            
+        AlkawaDebug.Log(ELogCategory.EDITOR, 
+            $"[{Character.characterConfig.characterName}] Tính lại tầm di chuyển: maxMove = {maxMove}, MoveAmount = {MoveAmount}, tầm còn lại = {baseValue + moveBuff}");
+            
         return baseValue + moveBuff;
     }
 
