@@ -496,7 +496,21 @@ public abstract class Character : MonoBehaviour
     public void ShowMoveRange()
     {
         if (!IsMainCharacter) return;
-        Info.MoveRange = MapManager.GetHexagonsInMoveRange(Info.Cell, Info.GetMoveRange(), characterConfig.moveDirection);
+        
+        int moveRange = Info.GetMoveRange();
+        AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] Hiển thị tầm di chuyển: {moveRange} ô, MoveAmount = {Info.MoveAmount}");
+        
+        Info.MoveRange = MapManager.GetHexagonsInMoveRange(Info.Cell, moveRange, characterConfig.moveDirection);
+        
+        if (Info.MoveRange.Count == 0)
+        {
+            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] CẢNH BÁO: MoveRange có độ dài bằng 0! moveRange = {moveRange}");
+        }
+        else
+        {
+            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] MoveRange có {Info.MoveRange.Count} ô");
+        }
+        
         foreach (var item in Info.MoveRange)
         {
             item.ShowMoveRange();

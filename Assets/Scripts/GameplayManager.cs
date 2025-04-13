@@ -697,6 +697,15 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 if (MainCharacter != null)
                     OnSetMainCharacter?.Invoke(this, MainCharacter.Info.Cell);
                 SetSelectedCharacter(MainCharacter);
+                
+                // Hiển thị tầm di chuyển sau khi load từ save
+                if (_hasOverrideLevelConfig && MainCharacter.Type == Type.Player)
+                {
+                    AlkawaDebug.Log(ELogCategory.EDITOR, $"Load từ save - Hiển thị tầm di chuyển cho {MainCharacter.characterConfig.characterName}");
+                    // Đảm bảo hiển thị tầm di chuyển ngay khi load từ save
+                    MainCharacter.ShowMoveRange();
+                }
+                
                 GameManager.Instance.OnMainCharacterChanged?.Invoke();
             }
         }
