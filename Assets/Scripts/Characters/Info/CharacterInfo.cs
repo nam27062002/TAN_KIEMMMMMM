@@ -314,13 +314,6 @@ public class CharacterInfo
         var baseMovement = CalculateBaseMovement();
         var totalReduction = CalculateMoveReduction();
         
-        // Thêm kiểm tra Blind
-        if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Blind))
-        {
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Tầm đánh/di chuyển -1");
-            baseMovement = Mathf.Max(1, baseMovement - 1); // Giảm đi 1, tối thiểu là 1
-        }
-
         return Mathf.Max(0, baseMovement - totalReduction);
     }
 
@@ -573,7 +566,7 @@ public class CharacterInfo
                 description = originalSkillInfo.description,
                 canBeDodged = originalSkillInfo.canBeDodged
             };
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Tầm skill [{originalSkillInfo.name}] giảm còn {modifiedSkillInfo.range}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Tầm sử dụng kỹ năng [{originalSkillInfo.name}] giảm từ {originalSkillInfo.range} xuống {modifiedSkillInfo.range}");
             return modifiedSkillInfo;
         }
         
