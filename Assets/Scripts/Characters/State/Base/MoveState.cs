@@ -3,7 +3,7 @@ using DG.Tweening;
 
 public class MoveState : CharacterState
 {
-    public MoveState(Character character) : base(character)
+    public MoveState(Character self) : base(self)
     {
     }
 
@@ -18,14 +18,14 @@ public class MoveState : CharacterState
 
     private void HandleMovement(MoveStateParams stateParams)
     {
-        Character.UnRegisterCell();
-        Character.HideMoveRange();
+        Self.UnRegisterCell();
+        Self.HideMoveRange();
         ReleaseFacing();
-        Character.Info.Cell.HideFocus();
+        Self.Info.Cell.HideFocus();
         var moveAmount = stateParams.MoveCells.Count - 1;
-        Character.Info.MoveAmount += moveAmount;
-        Character.Info.HandleMoveAmountChanged(moveAmount);
-        if (Character.IsMainCharacter)
+        Self.Info.MoveAmount += moveAmount;
+        Self.Info.HandleMoveAmountChanged(moveAmount);
+        if (Self.IsMainCharacter)
         {
             GpManager.SetMainCell(null);
         }
@@ -34,7 +34,7 @@ public class MoveState : CharacterState
         foreach (var cell in stateParams.MoveCells)
         {
             var targetPos = cell.transform.position;
-            targetPos.y += Character.characterConfig.characterHeight / 2f;
+            targetPos.y += Self.characterConfig.characterHeight / 2f;
             targetPos.z = targetPos.y;
             PlayAnim(AnimationParameterNameType.MoveLeft);
             PlayAnim(cell.transform.position.x > currentX ? AnimationParameterNameType.MoveRight :
@@ -45,10 +45,10 @@ public class MoveState : CharacterState
         
         moveSequence.OnComplete(() =>
         {
-            OnReachToTarget(Character.Info.Cell, stateParams.MoveCells[^1]);
-            if (Character.IsMainCharacter)
+            OnReachToTarget(Self.Info.Cell, stateParams.MoveCells[^1]);
+            if (Self.IsMainCharacter)
             {
-                GpManager.SetMainCell(Character.Info.Cell);
+                GpManager.SetMainCell(Self.Info.Cell);
             }
         });
         
@@ -62,9 +62,9 @@ public class MoveState : CharacterState
     protected virtual void OnReachToTarget(Cell from, Cell to)
     {
         SetCell(to);
-        Character.Info.Cell.ShowFocus();
+        Self.Info.Cell.ShowFocus();
         GpManager.SetInteract(true);
         GpManager.UpdateAllFacing();
-        Character.ChangeState(ECharacterState.Idle);
+        Self.ChangeState(ECharacterState.Idle);
     }
 }

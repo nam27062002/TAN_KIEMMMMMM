@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HoacLienHuong : PlayerCharacter
@@ -13,6 +14,9 @@ public class HoacLienHuong : PlayerCharacter
     
     private bool _hasAppliedSelfDamageThisSkill = false; // Cờ đánh dấu đã gọi ApplySelfDamageIfMaxDamage
     
+    // Thêm biến để theo dõi đồng minh được gắn shield
+    private Character _linkedTeammate;
+    
     protected override void SetStateMachine()
     {
         StateMachine = new CharacterStateMachine(this,
@@ -20,6 +24,71 @@ public class HoacLienHuong : PlayerCharacter
             new MoveState(this),
             new PlayerDamageTakenState(this),
             new HoacLienHuong_SkillState(this));
+    }
+    
+    // Thêm phương thức đăng ký lắng nghe khi shield bị phá
+    public void RegisterShieldBreakListener(Character linkedCharacter)
+    {
+        // Lưu đồng đội được liên kết
+        _linkedTeammate = linkedCharacter;
+        
+        // Đăng ký sự kiện OnShieldChanged của nhân vật và đồng đội
+        Info.OnShieldChanged += OnShieldStatusChanged;
+        linkedCharacter.Info.OnShieldChanged += OnTeammateShieldStatusChanged;
+        
+        AlkawaDebug.Log(ELogCategory.SKILL, 
+            $"[{characterConfig.characterName}] Đã kết nối shield với {linkedCharacter.characterConfig.characterName}");
+    }
+    
+    // Xử lý khi shield của Hoắc Liên Hương thay đổi
+    private void OnShieldStatusChanged(object sender, float value)
+    {
+        // Nếu shield về 0 và có đồng đội được liên kết
+        if (value <= 0 && _linkedTeammate != null)
+        {
+            BreakLinkedShields();
+        }
+    }
+    
+    // Xử lý khi shield của đồng đội thay đổi
+    private void OnTeammateShieldStatusChanged(object sender, float value)
+    {
+        // Nếu shield về 0 và có đồng đội được liên kết
+        if (value <= 0 && _linkedTeammate != null)
+        {
+            BreakLinkedShields();
+        }
+    }
+    
+    // Xử lý việc phá hủy cả hai shield và hiệu ứng Long Giáp/Xà Giáp
+    private void BreakLinkedShields()
+    {
+        if (_linkedTeammate == null) return;
+        
+        AlkawaDebug.Log(ELogCategory.SKILL, 
+            $"[{characterConfig.characterName}] Shield bị vỡ - Xóa shield và hiệu ứng Long Giáp/Xà Giáp");
+        
+        // Xóa hiệu ứng shield của đồng đội
+        _linkedTeammate.Info.RemoveAllEffect(EffectType.Shield);
+        
+        // Xóa hiệu ứng shield của bản thân
+        Info.RemoveAllEffect(EffectType.Shield);
+        
+        // Xóa hiệu ứng Long Giáp của đồng đội
+        _linkedTeammate.Info.RemoveAllEffect(EffectType.DragonArmor);
+        
+        // Xóa hiệu ứng Xà Giáp của bản thân
+        Info.RemoveAllEffect(EffectType.SnakeArmor);
+        
+        // Thông báo
+        UIManager.Instance.ShowNotification("Liên kết giáp bị phá vỡ!", 2f);
+        
+        // Hủy đăng ký sự kiện
+        Info.OnShieldChanged -= OnShieldStatusChanged;
+        _linkedTeammate.Info.OnShieldChanged -= OnTeammateShieldStatusChanged;
+        
+        // Xóa tham chiếu
+        _linkedTeammate = null;
     }
     
     protected override void SetSpeed()

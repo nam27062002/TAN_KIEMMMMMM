@@ -5,7 +5,7 @@
         return false;
     }
     
-    public RoiNguoiDamageTakenState(Character character) : base(character)
+    public RoiNguoiDamageTakenState(Character self) : base(self)
     {
     }
 }

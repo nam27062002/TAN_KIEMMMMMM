@@ -1,6 +1,6 @@
 ﻿public class LyVoDanh_MoveState : PlayerMoveState
 {
-    public LyVoDanh_MoveState(Character character) : base(character)
+    public LyVoDanh_MoveState(Character self) : base(self)
     {
     }
     
@@ -12,6 +12,6 @@
 
     private void TryTriggerFlyingTempest()
     {
-        ((LyVoDanh)Character).TryTriggerFlyingTempest();
+        ((LyVoDanh)Self).TryTriggerFlyingTempest();
     }
 }

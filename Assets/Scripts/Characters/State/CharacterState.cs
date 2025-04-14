@@ -5,19 +5,19 @@ public abstract class CharacterState : IState
 {
     public abstract string NameState { get; set; }
     
-    protected Character Character { get; set; }
-    protected GameObject Owner => Character.gameObject;
-    protected GameObject Model => Character.model;
+    protected Character Self { get; set; }
+    protected GameObject Owner => Self.gameObject;
+    protected GameObject Model => Self.model;
     protected Transform Transform => Owner.transform;
     protected Vector3 Position => Owner.transform.position;
     protected GameplayManager GpManager => GameplayManager.Instance;
-    protected CharacterInfo Info => Character.Info;
+    protected CharacterInfo Info => Self.Info;
     
-    protected string CharName => Character.characterConfig.characterName;
+    protected string CharName => Self.characterConfig.characterName;
 
-    protected CharacterState(Character character)
+    protected CharacterState(Character self)
     {
-        Character = character;
+        Self = self;
     }
 
     public virtual void OnEnter(StateParams stateParams = null){}
@@ -31,48 +31,48 @@ public abstract class CharacterState : IState
     
     public void SetFacing()
     {
-        var facing = GpManager.GetFacingType(Character);
+        var facing = GpManager.GetFacingType(Self);
         SetFacing(facing);
     }
     
     public void SetFacing(Character target)
     {
-        var facing = GpManager.GetFacingType(Character, target);
+        var facing = GpManager.GetFacingType(Self, target);
         SetFacing(facing);
     }
     
     public void SetFacing(FacingType facing)
     {
         Model.transform.localScale = facing == FacingType.Right ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
-        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Character.characterConfig.characterName} set facing to {facing}");
+        AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"{Self.characterConfig.characterName} set facing to {facing}");
     }
     
     protected void SetCell(Cell cell)
     {
-        Character.SetCell(cell);
+        Self.SetCell(cell);
     }
     
     public void PlayAnim(AnimationParameterNameType animationParameterNameType, Action onEndAnim = null)
     {
         onEndAnim ??= SetIdle;
-        Character.AnimationData?.PlayAnimation(animationParameterNameType, onEndAnim);
+        Self.AnimationData?.PlayAnimation(animationParameterNameType, onEndAnim);
     }
 
     #region Sub
 
     public void SetCharacterPosition()
     {
-        if (Character == null || Info.IsDie) return;
+        if (Self == null || Info.IsDie) return;
         var pos = Info.Cell.transform.position;
         pos.z = pos.y;
-        pos.y += Character.characterConfig.characterHeight / 2f;
+        pos.y += Self.characterConfig.characterHeight / 2f;
         pos.z = pos.y;
         Transform.position = pos;
     }
 
     public void SetIdle()
     {
-        if (Character == null || Info.IsDie) return;
+        if (Self == null || Info.IsDie) return;
         PlayAnim(AnimationParameterNameType.Idle);
         SetCharacterPosition();
         SetFacing();

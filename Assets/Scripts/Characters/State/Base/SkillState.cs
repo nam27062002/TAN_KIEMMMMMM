@@ -20,7 +20,7 @@ public class SkillState : CharacterState
     protected string SkillName => _skillStateParams.SkillInfo.name;
     private bool _processedDamageLogic = false;
 
-    public SkillState(Character character) : base(character)
+    public SkillState(Character self) : base(self)
     {
         _damageParamsHandlers = new Dictionary<(SkillTurnType, SkillIndex), Func<Character, DamageTakenParams>>
         {
@@ -88,7 +88,7 @@ public class SkillState : CharacterState
         mainTargetCharacter = new HashSet<Character>(_skillStateParams.Targets);
         if (_skillStateParams.IdleStateParams != null)
         {
-            Character.HandleCounterLogic(_skillStateParams);
+            Self.HandleCounterLogic(_skillStateParams);
         }
         else
         {
@@ -149,7 +149,7 @@ public class SkillState : CharacterState
         var animName = GetAnimByIndex(_skillStateParams.SkillInfo.skillIndex);
         PlayAnim(animName, OnCastSkillFinished);
         AlkawaDebug.Log(ELogCategory.CHARACTER,
-            $"{Character.characterConfig.characterName} cast skill: {_skillStateParams.SkillInfo.name}");
+            $"{Self.characterConfig.characterName} cast skill: {_skillStateParams.SkillInfo.name}");
     }
 
     protected virtual void OnCastSkillFinished()
@@ -171,9 +171,9 @@ public class SkillState : CharacterState
         
         // Kiểm tra null cho Character và MainCharacter
         bool canCounter = false;
-        if (Character != null && GpManager.MainCharacter != null && character != null)
+        if (Self != null && GpManager.MainCharacter != null && character != null)
         {
-            canCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != character.Type;
+            canCounter = Self.Type == GpManager.MainCharacter.Type && Self.Type != character.Type;
         }
         
         return new DamageTakenParams
@@ -182,7 +182,7 @@ public class SkillState : CharacterState
             ReducedMana = damageParams.ReducedMana,
             Effects = damageParams.Effects,
             OnSetDamageTakenFinished = HandleTargetFinish,
-            ReceiveFromCharacter = Character,
+            ReceiveFromCharacter = Self,
             CanCounter = canCounter,
             SkillStateParams = _skillStateParams
         };
@@ -195,7 +195,7 @@ public class SkillState : CharacterState
         // Kiểm tra hiệu ứng Blind trước
         if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Blind))
         {
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Không thể Crit");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Self.characterConfig.characterName}] bị Mù => Không thể Crit");
             var paramsNoCrit = Info.HitChangeParams;
             paramsNoCrit.IsCritical = false; // Đảm bảo không crit
             return paramsNoCrit;
@@ -212,7 +212,7 @@ public class SkillState : CharacterState
 
         if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Fear && p.Actor == character))
         {
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"{Character.characterConfig.characterName} có hiệu ứng BẤT LỢI");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{Self.characterConfig.characterName} có hiệu ứng BẤT LỢI");
             var roll1 = Info.HitChangeParams;
             var roll2 = Info.HitChangeParams;
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
@@ -237,7 +237,7 @@ public class SkillState : CharacterState
         foreach (var target in _skillStateParams.Targets)
         {
             _processedDamageLogic = false;
-            if (Character.Type != target.Type)
+            if (Self.Type != target.Type)
             {
                 ProcessEnemyTarget(target);
             }
@@ -252,7 +252,7 @@ public class SkillState : CharacterState
     {
         if (HasValidShield(target))
         {
-            target.Info.Cell.mainShieldCell.ReceiveDamage(target, Character);
+            target.Info.Cell.mainShieldCell.ReceiveDamage(target, Self);
             HandleTargetFinish(new FinishApplySkillParams()
             {
                 Character = target,
@@ -266,7 +266,7 @@ public class SkillState : CharacterState
                 Character = target,
                 WaitForCounter = false,
             });
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"Kim Hà Tại: chặn sát thương cho {target.characterConfig.characterName} từ đòn đánh của {Character.characterConfig.characterName}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"Kim Hà Tại: chặn sát thương cho {target.characterConfig.characterName} từ đòn đánh của {Self.characterConfig.characterName}");
         }
         else
         {
@@ -279,7 +279,7 @@ public class SkillState : CharacterState
                 var dodge = target.Info.Dodge;
 
                 AlkawaDebug.Log(ELogCategory.SKILL,
-                    $"[{Character.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
+                    $"[{Self.characterConfig.characterName}] - HitChange = {hitChangeParams.HitChangeValue} | " +
                     $"[{target.characterConfig.characterName}] Dodge = {dodge}");
 
                 if (hitChangeParams.HitChangeValue < dodge)
@@ -287,26 +287,26 @@ public class SkillState : CharacterState
                     if (target.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
                     {
                         Debug.Log($"{target.characterConfig.characterName} có hiệu ứng say, {CharName} đánh hụt => sleep");
-                        Character.Info.ApplyEffect(
+                        Self.Info.ApplyEffect(
                             new EffectData
                             {
                                 effectType = EffectType.Sleep,
                                 duration = EffectConfig.DebuffRound,
-                                Actor = Character
+                                Actor = Self
                             });
                         var damageParams = GetDamageParams(target);
-                        Character.Info.HandleDamageTaken(-damageParams.Damage, target);
+                        Self.Info.HandleDamageTaken(-damageParams.Damage, target);
                         Debug.Log($"{CharName} bị phản sát thương: damage = {damageParams.Damage}");
                     }
                     var dodgeDamageParams = new DamageTakenParams
                     {
                         CanDodge = true,
-                        ReceiveFromCharacter = Character,
-                        CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != target.Type,
+                        ReceiveFromCharacter = Self,
+                        CanCounter = Self.Type == GpManager.MainCharacter.Type && Self.Type != target.Type,
                         OnSetDamageTakenFinished = HandleTargetFinish,
                         SkillStateParams = _skillStateParams
                     };
-                    Character.HandleMpChanged(_skillStateParams.SkillInfo.mpCost);
+                    Self.HandleMpChanged(_skillStateParams.SkillInfo.mpCost);
                     CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, dodgeDamageParams));
                     _waitForFeedback = true; // Đặt cờ chờ feedback
                     return; // Kết thúc xử lý cho target này nếu bị né
@@ -323,7 +323,7 @@ public class SkillState : CharacterState
 
                     if (isCrit)
                     {
-                        AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Character.characterConfig.characterName} gây crit vào {target.characterConfig.characterName}");
+                        AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Self.characterConfig.characterName} gây crit vào {target.characterConfig.characterName}");
                     }
 
                     CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
@@ -333,7 +333,7 @@ public class SkillState : CharacterState
             }
             else // Skill không thể bị né
             {
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] dùng skill không thể né [{_skillStateParams.SkillInfo.name}] vào [{target.characterConfig.characterName}]");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{Self.characterConfig.characterName}] dùng skill không thể né [{_skillStateParams.SkillInfo.name}] vào [{target.characterConfig.characterName}]");
                 _processedDamageLogic = true;
                 var damageParams = GetDamageParams(target);
                 // Skill không né được cũng có thể crit, nhưng không cần check HitChange nữa
@@ -361,13 +361,13 @@ public class SkillState : CharacterState
     private bool HasValidShield(Character target)
     {
         var shieldCell = target.Info.Cell.mainShieldCell;
-        return shieldCell != null && shieldCell != Character.Info.Cell.mainShieldCell;
+        return shieldCell != null && shieldCell != Self.Info.Cell.mainShieldCell;
     }
 
     private bool HasBlockProjectile(Character target)
     {
         var shieldCell = target.Info.Cell.mainBlockProjectile;
-        return shieldCell != null && shieldCell != Character.Info.Cell.mainBlockProjectile;
+        return shieldCell != null && shieldCell != Self.Info.Cell.mainBlockProjectile;
     }
 
     protected virtual void HandleApplyDamageOnEnemy(Character character)
@@ -376,11 +376,11 @@ public class SkillState : CharacterState
 
     private IEnumerator HandleApplyDamage(Character target, DamageTakenParams damageTakenParams)
     {
-        if (target != Character)
+        if (target != Self)
         {
             yield return new WaitUntil(() => !_waitForFeedback);
             yield return new WaitForSecondsRealtime(0.1f);
-            if (target.Type != Character.Type)
+            if (target.Type != Self.Type)
             {
                 HandleApplyDamageOnEnemy(target);
             }
@@ -427,15 +427,15 @@ public class SkillState : CharacterState
             HandleAfterDamageTakenFinish();
         }
         GpManager.SetInteract(true);
-        Character.ChangeState(ECharacterState.Idle);
-        Character.HideSkillTarget();
+        Self.ChangeState(ECharacterState.Idle);
+        Self.HideSkillTarget();
         if (_skillStateParams.EndTurnAfterFinish)
         {
             GpManager.SetInteract(false);
         }
 
         AlkawaDebug.Log(ELogCategory.CHARACTER,
-            $"{Character.characterConfig.characterName} HandleAllTargetFinish");
+            $"{Self.characterConfig.characterName} HandleAllTargetFinish");
     }
 
     #region Skill Damage Params
@@ -483,8 +483,8 @@ public class SkillState : CharacterState
             ReducedMana = 0,
             Effects = new List<EffectData>(),
             OnSetDamageTakenFinished = HandleTargetFinish,
-            ReceiveFromCharacter = Character,
-            CanCounter = Character.Type == GpManager.MainCharacter.Type && Character.Type != character.Type,
+            ReceiveFromCharacter = Self,
+            CanCounter = Self.Type == GpManager.MainCharacter.Type && Self.Type != character.Type,
             SkillStateParams = _skillStateParams
         };
     }
@@ -630,23 +630,23 @@ public class SkillState : CharacterState
 
     protected void MoveToCell(Cell cell, float time)
     {
-        if (Character.IsMainCharacter)
+        if (Self.IsMainCharacter)
         {
             GpManager.SetMainCell(null);
         }
         ReleaseFacing();
         SetFacing(Info.Cell.transform.position.x > cell.transform.position.x ? FacingType.Left : FacingType.Right);
         var targetPos = cell.transform.position;
-        targetPos.y += Character.characterConfig.characterHeight / 2f;
+        targetPos.y += Self.characterConfig.characterHeight / 2f;
         targetPos.z = targetPos.y;
-        Character.UnRegisterCell();
+        Self.UnRegisterCell();
         var moveSequence = DOTween.Sequence();
         moveSequence.Append(Transform.DOMove(targetPos, time).SetEase(Ease.Linear));
         moveSequence.OnComplete(() =>
         {
-            Character.SetCell(cell);
+            Self.SetCell(cell);
             Info.Cell.ShowFocus();
-            if (Character.IsMainCharacter)
+            if (Self.IsMainCharacter)
             {
                 GpManager.SetMainCell(cell);
             }
@@ -657,24 +657,24 @@ public class SkillState : CharacterState
     {
         if (cell == null)
         {
-            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Cell đích là null!");
+            Debug.LogWarning($"[{Self?.characterConfig.characterName}] TeleportToCell: Cell đích là null!");
             return;
         }
 
         if (Info == null || Info.Cell == null)
         {
-            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Info hoặc Info.Cell là null!");
+            Debug.LogWarning($"[{Self?.characterConfig.characterName}] TeleportToCell: Info hoặc Info.Cell là null!");
             
             // Thử teleport theo cách khác
-            if (Character != null && Character.Info != null)
+            if (Self != null && Self.Info != null)
             {
-                cell.Character = Character;
+                cell.Character = Self;
                 cell.CellType = CellType.Character;
-                Character.Info.Cell = cell;
+                Self.Info.Cell = cell;
                 SetCharacterPosition();
                 SetFacing();
                 
-                if (Character.IsMainCharacter)
+                if (Self.IsMainCharacter)
                 {
                     GpManager.SetMainCell(cell);
                 }
@@ -686,14 +686,14 @@ public class SkillState : CharacterState
         Info.Cell.Character = null;
         Info.Cell.CellType = CellType.Walkable;
 
-        cell.Character = Character;
+        cell.Character = Self;
         cell.CellType = CellType.Character;
-        Character.Info.Cell = cell;
+        Self.Info.Cell = cell;
         SetCharacterPosition();
         SetFacing();
         
         // Đảm bảo MainCell được cập nhật
-        if (Character.IsMainCharacter)
+        if (Self.IsMainCharacter)
         {
             GpManager.SetMainCell(cell);
         }

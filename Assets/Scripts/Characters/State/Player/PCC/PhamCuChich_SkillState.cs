@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PhamCuChich_SkillState : SkillState
 {
-    public PhamCuChich_SkillState(Character character) : base(character)
+    public PhamCuChich_SkillState(Character self) : base(self)
     {
     }
 
@@ -20,7 +20,7 @@ public class PhamCuChich_SkillState : SkillState
                 duration = EffectConfig.BuffRound,
                 value = realShield,
                 damage = realShield,
-                Actor = Character
+                Actor = Self
             }
         };
         Info.ApplyEffects(effect);
@@ -44,7 +44,7 @@ public class PhamCuChich_SkillState : SkillState
                 duration = EffectConfig.BuffRound,
                 value = shield,
                 damage = 0,
-                Actor = Character
+                Actor = Self
             }
         };
         Info.ApplyEffects(effect);
@@ -67,7 +67,7 @@ public class PhamCuChich_SkillState : SkillState
                     duration = EffectConfig.BuffRound,
                     value = _skillStateParams.DamageTakenParams.Damage,
                     damage = _skillStateParams.DamageTakenParams.Damage,
-                    Actor = Character
+                    Actor = Self
                 }
             }
         };
@@ -81,7 +81,7 @@ public class PhamCuChich_SkillState : SkillState
             {
                 effectType = EffectType.Taunt,
                 duration = EffectConfig.DebuffRound,
-                Actor = Character
+                Actor = Self
             }
         };
 
@@ -91,7 +91,7 @@ public class PhamCuChich_SkillState : SkillState
             {
                 effectType = EffectType.ReduceAP,
                 duration = EffectConfig.DebuffRound,
-                Actor = Character,
+                Actor = Self,
                 value = 1
             });
         }
@@ -111,7 +111,7 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.Shield,
                     duration = EffectConfig.BuffRound,
-                    Actor = Character,
+                    Actor = Self,
                     damage = 5,
                     value = 5
                 }
@@ -134,12 +134,12 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.Taunt,
                     duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    Actor = Self
                 },
                 new()
                 {
                     effectType = EffectType.Silence,
-                    Actor = Character
+                    Actor = Self
                 }
             }
         };
@@ -171,7 +171,7 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.Fear,
                     duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    Actor = Self
                 }
             }
         };
@@ -197,7 +197,7 @@ public class PhamCuChich_SkillState : SkillState
                     effectType = EffectType.Cover_PhamCuChich_Skill3,
                     duration = 2,
                     value = 1,
-                    Actor = Character,
+                    Actor = Self,
                 }
             }
         };
@@ -205,12 +205,12 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character character)
     {
-        if (((PhamCuChich)Character).CurrentShield != null)
+        if (((PhamCuChich)Self).CurrentShield != null)
         {
-            ((PhamCuChich)Character).CurrentShield.UnSetMainProjectile();
+            ((PhamCuChich)Self).CurrentShield.UnSetMainProjectile();
         }
         Info.Cell.SetMainProjectile();
-        ((PhamCuChich)Character).CurrentShield = Info.Cell;
+        ((PhamCuChich)Self).CurrentShield = Info.Cell;
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>()
@@ -219,7 +219,7 @@ public class PhamCuChich_SkillState : SkillState
                 {
                     effectType = EffectType.BlockProjectile,
                     duration = 3,
-                    Actor = Character,
+                    Actor = Self,
                     targetCell = Info.Cell
                 }
             }
@@ -228,7 +228,7 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill2_EnemyTurn()
     {
-        AddTargetCharacters(Character);
+        AddTargetCharacters(Self);
     }
 
     private int GetShieldValue()
@@ -242,7 +242,7 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill2_MyTurn()
     {
-        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell, _skillStateParams.SkillInfo);
+        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Self.Info.Cell, _skillStateParams.SkillInfo);
         foreach (var character in validCharacters)
         {
             AddTargetCharacters(character);
@@ -252,7 +252,7 @@ public class PhamCuChich_SkillState : SkillState
     protected override void SetTargetCharacters_Skill3_MyTurn()
     {
         RemoveAllTargetCharacters();
-        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell, _skillStateParams.SkillInfo);
+        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Self.Info.Cell, _skillStateParams.SkillInfo);
         foreach (var character in validCharacters)
         {
             AddTargetCharacters(character);
@@ -261,7 +261,7 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill3_TeammateTurn()
     {
-        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell, _skillStateParams.SkillInfo);
+        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Self.Info.Cell, _skillStateParams.SkillInfo);
         foreach (var character in validCharacters)
         {
             AddTargetCharacters(character);
@@ -280,7 +280,7 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill4_EnemyTurn()
     {
-        AddTargetCharacters(Character);
+        AddTargetCharacters(Self);
     }
 
     protected override void HandleAfterDamageTakenFinish_Skill4_MyTurn()
@@ -300,11 +300,11 @@ public class PhamCuChich_SkillState : SkillState
 
     private void BreakShield(int range)
     {
-        if (Character.Info.ShieldEffectData == null)
+        if (Self.Info.ShieldEffectData == null)
         {
             Debug.Log("Không có shield => không gây damage");
             return;
         }
-        Character.Info.HandleBreakShield(range, Character.Info.ShieldEffectData.damage);
+        Self.Info.HandleBreakShield(range, Self.Info.ShieldEffectData.damage);
     }
 }

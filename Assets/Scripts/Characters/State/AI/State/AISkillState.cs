@@ -1,6 +1,6 @@
 ﻿public class AISkillState : SkillState
 {
-    public AISkillState(Character character) : base(character)
+    public AISkillState(Character self) : base(self)
     {
     }
     
@@ -14,7 +14,7 @@
     {
         if (!WaitForReact && GpManager.SelectedCharacter != null)
         {
-            if (Character == GpManager.MainCharacter)
+            if (Self == GpManager.MainCharacter)
             {
                 GameplayManager.Instance.HandleEndTurn(1f, "Đã dùng xong skill");   
             }

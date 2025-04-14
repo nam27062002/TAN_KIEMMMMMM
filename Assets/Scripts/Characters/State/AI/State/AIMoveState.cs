@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AIMoveState : MoveState
 {
-    public AIMoveState(Character character) : base(character)
+    public AIMoveState(Character self) : base(self)
     {
     }
     
@@ -11,7 +11,7 @@ public class AIMoveState : MoveState
     {
         if (from.mainBlockProjectile == null && to.mainBlockProjectile != null)
         {
-            Debug.Log($"[{Character.characterConfig.characterName}] đi vào chiến trường => nhận hiệu ứng chảy máu");
+            Debug.Log($"[{Self.characterConfig.characterName}] đi vào chiến trường => nhận hiệu ứng chảy máu");
             Info.ApplyEffects(new List<EffectData>()
             {
                 new()
@@ -27,6 +27,6 @@ public class AIMoveState : MoveState
 
     private void HandlePlay()
     {
-        ((AICharacter)Character).HandleAIPlay();
+        ((AICharacter)Self).HandleAIPlay();
     }
 }

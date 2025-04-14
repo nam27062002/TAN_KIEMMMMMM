@@ -6,9 +6,9 @@ public class HoacLienHuong_SkillState : SkillState
 {
     private HoacLienHuong _hlhCharacter;
     
-    public HoacLienHuong_SkillState(Character character) : base(character)
+    public HoacLienHuong_SkillState(Character self) : base(self)
     {
-        _hlhCharacter = character as HoacLienHuong;
+        _hlhCharacter = self as HoacLienHuong;
     }
 
     protected override void HandleCastSkill()
@@ -36,7 +36,7 @@ public class HoacLienHuong_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        var deathCount = GpManager.GetCharacterDeathInRange(Character, 10);
+        var deathCount = GpManager.GetCharacterDeathInRange(Self, 10);
         bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
         int rollTimes = Roll.GetActualRollTimes(1, isCrit);
         var skillDamage = Roll.RollDice(1, 4, 0, isCrit) + deathCount;
@@ -47,7 +47,7 @@ public class HoacLienHuong_SkillState : SkillState
         return new DamageTakenParams
         {
             Damage = totalDamage,
-            ReceiveFromCharacter = Character
+            ReceiveFromCharacter = Self
         };
     }
 
@@ -85,7 +85,7 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
-        var coveredBy = GpManager.GetNearestAlly(Character);
+        var coveredBy = GpManager.GetNearestAlly(Self);
         var effects = new List<EffectData>();
         if (coveredBy != null)
         {
@@ -115,10 +115,10 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     effectType = EffectType.Blind,
                     duration = EffectConfig.DebuffRound, // Sử dụng thời gian debuff chuẩn
-                    Actor = Character // Người gây hiệu ứng là Hoắc Liên Hương
+                    Actor = Self // Người gây hiệu ứng là Hoắc Liên Hương
                 }
             },
-            ReceiveFromCharacter = Character // Người nhận hiệu ứng là 'character' (người tấn công HLH)
+            ReceiveFromCharacter = Self // Người nhận hiệu ứng là 'character' (người tấn công HLH)
         };
     }
 
@@ -131,7 +131,7 @@ public class HoacLienHuong_SkillState : SkillState
         {
             currentShield.UnsetShieldImpact(3);
         }
-        Info.Cell.SetShield(Character.Type, 3);
+        Info.Cell.SetShield(Self.Type, 3);
         ((HoacLienHuong)character).CurrentShield = Info.Cell;
         
         // Gây sát thương lên bản thân nếu đạt tối đa
@@ -147,12 +147,15 @@ public class HoacLienHuong_SkillState : SkillState
         int shieldValueDragon = Roll.RollDice(2, 4, 0, isCritDragon);
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - Long Giáp: Thêm {shieldValueDragon} shield (2d4) cho {character.characterConfig.characterName}");
         
-        Character.Info.ApplyEffects(new List<EffectData>()
+        // Đăng ký sự kiện lắng nghe khi shield bị phá
+        _hlhCharacter?.RegisterShieldBreakListener(character);
+        
+        Self.Info.ApplyEffects(new List<EffectData>()
         {
             new()
             {
                 effectType = EffectType.DragonArmor,
-                Actor = Character, // Actor của DragonArmor vẫn là HLH để biết ai tạo
+                Actor = Self, // Actor của DragonArmor vẫn là HLH để biết ai tạo
                 duration = EffectConfig.BuffRound // Hoặc thời gian buff mong muốn
             },
             new ShieldEffect()
@@ -184,10 +187,10 @@ public class HoacLienHuong_SkillState : SkillState
                     effectType = EffectType.Shield,
                     value = shieldValueSnake,
                     duration = EffectConfig.BuffRound,
-                    Actor = Character // Actor của Shield là HLH
+                    Actor = Self // Actor của Shield là HLH
                 }
             },
-            ReceiveFromCharacter = Character
+            ReceiveFromCharacter = Self
         };
     }
 
@@ -217,10 +220,10 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     effectType = EffectType.Disarm,
                     duration = EffectConfig.DebuffRound,
-                    Actor = Character
+                    Actor = Self
                 }
             },
-            ReceiveFromCharacter = Character
+            ReceiveFromCharacter = Self
         };
     }
 
@@ -240,10 +243,10 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     effectType = EffectType.Cover_100_Percent,
                     duration = 1,
-                    Actor = Character,
+                    Actor = Self,
                 }
             },
-            ReceiveFromCharacter = Character
+            ReceiveFromCharacter = Self
         };
     }
 
@@ -271,7 +274,7 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill2_TeammateTurn()
     {
-        AddTargetCharacters(Character);
+        AddTargetCharacters(Self);
     }
     
     protected override void SetTargetCharacters_Skill2_EnemyTurn()
@@ -287,7 +290,7 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill3_MyTurn()
     {
-        AddTargetCharacters(Character);
+        AddTargetCharacters(Self);
     }
 
     protected override void SetTargetCharacters_Skill3_EnemyTurn()
@@ -299,14 +302,14 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override void SetTargetCharacters_Skill4_MyTurn()
     {
-        var nearestEnemy = GpManager.GetNearestEnemy(Character);
+        var nearestEnemy = GpManager.GetNearestEnemy(Self);
         if (nearestEnemy != null) AddTargetCharacters(nearestEnemy);
     }
 
     protected override void SetTargetCharacters_Skill4_EnemyTurn()
     {
         var focusEnemy = GpManager.MainCharacter;
-        GpManager.SwapPlayers(Character, focusEnemy);
+        GpManager.SwapPlayers(Self, focusEnemy);
         var character =
             new List<Character>(GpManager.MapManager.GetCharactersInRange(Info.Cell, _skillStateParams.SkillInfo));
 
@@ -346,7 +349,7 @@ public class HoacLienHuong_SkillState : SkillState
         }
         
         // Cập nhật MainCell nếu là nhân vật chính
-        if (Character.IsMainCharacter)
+        if (Self.IsMainCharacter)
         {
             GpManager.SetMainCell(cell);
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Cập nhật MainCell = {cell.CellPosition}");

@@ -1,6 +1,6 @@
 ﻿public abstract class DamageTakenState : CharacterState
 {
-    public DamageTakenState(Character character) : base(character)
+    public DamageTakenState(Character self) : base(self)
     {
     }
 
@@ -21,7 +21,7 @@
     {
         if (DamageTakenParams.CanDodge)
         {
-            Character.ShowMessage("Né");
+            Self.ShowMessage("Né");
         }
         if (CanCounter())
         {
@@ -38,9 +38,9 @@
     
     protected void OnDamageTaken()
     {
-        Character.Info.OnDamageTaken(DamageTakenParams);
+        Self.Info.OnDamageTaken(DamageTakenParams);
         if (DamageTakenParams.ReceiveFromCharacter != null &&
-            DamageTakenParams.ReceiveFromCharacter.Type == Character.Type)
+            DamageTakenParams.ReceiveFromCharacter.Type == Self.Type)
         {
             HandleBuff();
         }
@@ -64,12 +64,12 @@
     {
         DamageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
         {
-            Character = Character,
+            Character = Self,
             WaitForCounter = DamageTakenParams.WaitCounter,
         });
-        Character.ChangeState(ECharacterState.Idle);
-        Character.Info.CheckEffectAfterReceiveDamage(DamageTakenParams);
-        AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Character.characterConfig.characterName} set DamageTakenFinished");
+        Self.ChangeState(ECharacterState.Idle);
+        Self.Info.CheckEffectAfterReceiveDamage(DamageTakenParams);
+        AlkawaDebug.Log(ELogCategory.CHARACTER, $"{Self.characterConfig.characterName} set DamageTakenFinished");
     }
     
     public override void OnExit()
