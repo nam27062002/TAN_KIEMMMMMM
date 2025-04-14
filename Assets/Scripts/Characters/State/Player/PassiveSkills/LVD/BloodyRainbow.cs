@@ -92,8 +92,21 @@ public class BloodyRainbow : PassiveSkill
 
     private void ReduceCritRequirement()
     {
-        character.ShowMessage("Giảm số lần crit");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} giảm yêu cầu crit");
+        // Tạo hiệu ứng ReduceHitChange để giảm số lần crit đi 1 (vĩnh viễn)
+        var reduceHitChangeEffect = new ChangeStatEffect
+        {
+            effectType = EffectType.ReduceHitChange,
+            Actor = character,
+            duration = EffectConfig.MAX_ROUND, // Vĩnh viễn (tồn tại trong cả trận đấu)
+            value = critThresholdReduction // Giảm số lần crit đi 1
+        };
+
+        // Áp dụng hiệu ứng vào nhân vật
+        character.Info.ApplyEffect(reduceHitChangeEffect);
+        
+        // Hiển thị thông báo
+        character.ShowMessage($"Giảm yêu cầu crit đi {critThresholdReduction}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] giảm yêu cầu crit đi {critThresholdReduction}, tăng tỉ lệ chí mạng");
     }
 
     private void IncreaseDamageTakenAndMovement()
