@@ -83,8 +83,22 @@ public class GitUtility : EditorWindow
         string error = process.StandardError.ReadToEnd();
         process.WaitForExit();
 
+        // Log standard output
         if (!string.IsNullOrEmpty(output)) UnityEngine.Debug.Log($"Git output ({args}):\n{output}");
-        if (!string.IsNullOrEmpty(error)) UnityEngine.Debug.LogError($"Git error ({args}):\n{error}");
+
+        // Check exit code before logging error stream
+        if (process.ExitCode == 0)
+        {
+            // Success, log stderr as warning (might contain warnings or info)
+            if (!string.IsNullOrEmpty(error)) UnityEngine.Debug.LogWarning($"Git warning/info ({args}):\n{error}");
+        }
+        else
+        {
+            // Failure, log stderr as error
+            if (!string.IsNullOrEmpty(error)) UnityEngine.Debug.LogError($"Git error ({args}):\n{error}");
+            // Optionally log stdout as error too on failure
+            // if (!string.IsNullOrEmpty(output)) UnityEngine.Debug.LogError($"Git output on error ({args}):\n{output}");
+        }
 
         return process.ExitCode == 0;
     }
