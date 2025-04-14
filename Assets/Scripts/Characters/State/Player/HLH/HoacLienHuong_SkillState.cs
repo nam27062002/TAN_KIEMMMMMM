@@ -142,33 +142,42 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
     {
-        // Áp dụng hiệu ứng cho đồng đội (character)
-        bool isCritDragon = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); // Có thể dùng isCrit chung hoặc riêng
+        bool isCritDragon = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); 
         int shieldValueDragon = Roll.RollDice(2, 4, 0, isCritDragon);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - Long Giáp: Thêm {shieldValueDragon} shield (2d4) cho {character.characterConfig.characterName}");
+        
+        bool isCritSnake = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); 
+        int shieldValueSnake = Roll.RollDice(2, 4, 0, isCritSnake);
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - Xà Giáp: Thêm {shieldValueSnake} shield (2d4) cho bản thân");
+        
+        var shieldSnake = new ShieldEffect()
+        {
+            effectType = EffectType.Shield,
+            value = shieldValueSnake,
+            duration = EffectConfig.BuffRound,
+            Actor = Character,
+            OtherCharacter = Character,
+        };
+        
+        var shieldDragon = new ShieldEffect()
+        {
+            effectType = EffectType.Shield,
+            value = shieldValueDragon,
+            duration = EffectConfig.BuffRound,
+            Actor = character,
+            OtherCharacter = character
+        };
         
         Character.Info.ApplyEffects(new List<EffectData>()
         {
             new()
             {
                 effectType = EffectType.DragonArmor,
-                Actor = Character, // Actor của DragonArmor vẫn là HLH để biết ai tạo
-                duration = EffectConfig.BuffRound // Hoặc thời gian buff mong muốn
+                Actor = Character, 
+                duration = EffectConfig.BuffRound 
             },
-            new ShieldEffect()
-            {
-                effectType = EffectType.Shield,
-                value = shieldValueDragon,
-                duration = EffectConfig.BuffRound,
-                Actor = character // Actor của Shield là đồng đội nhận shield
-            }
+            shieldDragon
         });
-
-        // Chuẩn bị hiệu ứng trả về cho Hoắc Liên Hương (Character)
-        bool isCritSnake = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); // Có thể dùng isCrit chung hoặc riêng
-        int shieldValueSnake = Roll.RollDice(2, 4, 0, isCritSnake);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - Xà Giáp: Thêm {shieldValueSnake} shield (2d4) cho bản thân");
-
+        
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>()
@@ -176,16 +185,10 @@ public class HoacLienHuong_SkillState : SkillState
                 new()
                 {
                     effectType = EffectType.SnakeArmor,
-                    Actor = character, // Actor của SnakeArmor là đồng đội được liên kết
-                    duration = EffectConfig.BuffRound // Hoặc thời gian buff mong muốn
+                    Actor = character, 
+                    duration = EffectConfig.BuffRound 
                 },
-                new ShieldEffect()
-                {
-                    effectType = EffectType.Shield,
-                    value = shieldValueSnake,
-                    duration = EffectConfig.BuffRound,
-                    Actor = Character // Actor của Shield là HLH
-                }
+                shieldSnake
             },
             ReceiveFromCharacter = Character
         };

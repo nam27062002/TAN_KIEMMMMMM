@@ -140,7 +140,7 @@ public class CharacterInfo
         var damage = -damageTakenParams.Damage;
         if (damage == 0) return;
         TryCover_PhamCuChich_Skill3(ref damage);
-        TryBreakDragonArmor(damage, damageTakenParams.ReceiveFromCharacter);
+        TryHandleDragonArmorEffect(damage, damageTakenParams.ReceiveFromCharacter);
         TryHandleCoverEffect(ref damage);
         HandleHpChanged(ref damage, damageTakenParams.ReceiveFromCharacter);
         if (IsDie)
@@ -169,24 +169,14 @@ public class CharacterInfo
         }
     }
 
-    private void TryBreakDragonArmor(int damage, Character character)
+    private void TryHandleDragonArmorEffect(int damage, Character character)
     {
         if (damage == 0) return;
         var dragonArmor = DragonArmorEffectData;
         if (dragonArmor == null) return;
         damage = -damage;
-        var rollData = Roll.RollDice(2, 4, 0);
-        if (damage > rollData)
-        {
-            dragonArmor.Actor.Info.RemoveAllEffect(EffectType.SnakeArmor);
-            RemoveAllEffect(EffectType.DragonArmor);
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => vỡ khiên");
-        }
-        else
-        {
-            GameplayManager.Instance.MainCharacter.Info.HandleDamageTaken(damage, character);
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: 2d4 = {rollData} < {damage} => phản sát thương");
-        }
+        GameplayManager.Instance.MainCharacter.Info.HandleDamageTaken(damage, character);
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: phản sát thương");
     }
 
     private void TryHandleCoverEffect(ref int damage)
@@ -948,38 +938,49 @@ public class CharacterInfo
 
     public void HandleBreakShield(int range, int damage)
     {
-        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell,
-            new SkillInfo()
-            {
-                range = range,
-                damageType = DamageTargetType.Enemies,
-            });
+        if (ShieldEffectData == null) return;
+        var validCharacters = GameplayManager.Instance.MapManager.GetCharactersInRange(Character.Info.Cell, 
+            new SkillInfo() { range = range, damageType = DamageTargetType.Enemies });
+        
         foreach (var character in validCharacters)
         {
             character.Info.OnDamageTaken(new DamageTakenParams()
             {
                 Damage = damage,
+                ReceiveFromCharacter = Character
             });
         }
-        Debug.Log($"Vỡ shield gây {damage} damage trong phạm vi {range} ô");
+
+        
+        var otherCharacter = ShieldEffectData.OtherCharacter;
         RemoveAllEffect(EffectType.Shield);
-        HandleShieldChange(Character);
+        RemoveAllEffect(EffectType.DragonArmor);
+        RemoveAllEffect(EffectType.SnakeArmor);
+        if (otherCharacter != null && !otherCharacter.Info.IsDie)
+        {
+            otherCharacter.Info.RemoveAllEffect(EffectType.Shield);
+            otherCharacter.Info.RemoveAllEffect(EffectType.DragonArmor);
+            otherCharacter.Info.RemoveAllEffect(EffectType.SnakeArmor);
+            otherCharacter.Info.OnShieldChangeInvoke();
+        }
+        OnShieldChanged?.Invoke(this, 0);
+    }
+
+    private void OnShieldChangeInvoke()
+    {
+        OnShieldChanged?.Invoke(this, 0);
     }
 
     private void ApplyVenomousParasite(EffectData effectData)
     {
         if (effectData is VenomousParasiteEffect venomousParasiteEffect)
         {
-            // Không còn cần xóa các hiệu ứng hoa ngay lập tức
-            // Thay vào đó, lưu số lượng độc trùng vào VenomousParasiteEffect
-            // Các hiệu ứng hoa sẽ tự động bị xóa sau DebuffRound và kích hoạt PoisonousBloodPool
             ApplySimpleEffect(effectData);
             AlkawaDebug.Log(ELogCategory.EFFECT,
                 $"[{Character.characterConfig.characterName}] Đã nhiễm {venomousParasiteEffect.value} độc trùng");
         }
         else if (effectData is ChangeStatEffect oldVersionEffect)
         {
-            // Để tương thích với code cũ nếu vẫn còn sử dụng ChangeStatEffect
             var venomousParasite = new VenomousParasiteEffect
             {
                 effectType = EffectType.VenomousParasite,
@@ -1095,8 +1096,7 @@ public class CharacterInfo
     }
 
     #endregion
-
-    // Thêm phương thức để khởi tạo lại các hiệu ứng visual sau khi load
+    
     public void InitializeEffectVisuals()
     {
         foreach (var effect in EffectInfo.Effects)
