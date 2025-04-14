@@ -404,7 +404,7 @@ MonoBehaviour:
       description: "Thu h\u1ED3i \u0111\u1ED9c ph\u1EA5n t\u1EEB k\u1EBB \u0111ang
         t\u1EA5n c\xF4ng m\xECnh, gi\u1EA3m to\xE0n b\u1ED9 s\xE1t th\u01B0\u01A1ng
         v\u1EADt l\xFD m\xE0 b\u1EA3n th\xE2n \u0111\xE1ng l\u1EBD ph\u1EA3i nh\u1EADn. "
-      canBeDodged: 0
+      canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
       name: "\u0110\u1ED9c \u0110i\u1EC3n"

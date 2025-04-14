@@ -152,13 +152,13 @@ public class LyVoDanh_SkillState : SkillState
         {
             mainCharacter.Info.ApplyEffect(reduceHitChangeEffect);
             AlkawaDebug.Log(ELogCategory.EFFECT, 
-                $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho {mainCharacter.characterConfig.characterName}");
+                $"[{CharName}] Huề Hồ Viễn Du: Áp dụng tăng tỉ lệ chí mạng cho {mainCharacter.characterConfig.characterName}");
         }
 
         // Áp dụng cho bản thân
         Character.Info.ApplyEffect(reduceHitChangeEffect);
         AlkawaDebug.Log(ELogCategory.EFFECT, 
-            $"[{CharName}] Sạ Bất Kiến: Áp dụng tăng tỉ lệ chí mạng cho bản thân");
+            $"[{CharName}] Huề Hồ Viễn Du: Áp dụng tăng tỉ lệ chí mạng cho bản thân");
     }
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
