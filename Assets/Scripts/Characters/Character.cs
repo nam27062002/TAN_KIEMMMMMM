@@ -277,7 +277,7 @@ public abstract class Character : MonoBehaviour
 
     private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
-        if (IsCounter && GpManager.SelectedCharacter == this && (Info.SkillInfo == null || !Info.SkillInfo.damageType.HasFlag(DamageTargetType.Self)))
+        if (IsCounter && GpManager.SelectedCharacter == this && (Info.SkillInfo == null || (!Info.SkillInfo.damageType.HasFlag(DamageTargetType.Self) && !Info.SkillInfo.damageType.HasFlag(DamageTargetType.Move))))
         {
             Character primaryTarget = null;
 

@@ -313,7 +313,6 @@ public class SkillState : CharacterState
                 }
                 else
                 {
-                    // Đặt trạng thái crit nếu không bị né
                     bool isCrit = hitChangeParams.IsCritical;
                     Roll.SetCriticalHit(isCrit);
                     _processedDamageLogic = true;

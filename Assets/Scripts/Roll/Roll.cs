@@ -65,7 +65,7 @@ public class Roll
         // Chí mạng xảy ra khi giá trị xúc xắc bằng với giá trị mặt xúc xắc tối đa sau khi điều chỉnh
         return new HitChangeParams() { 
             HitChangeValue = hitChange, 
-            IsCritical = adjustedRollValue == hitChange 
+            IsCritical = adjustedRollValue == hitChange - _characterInfo.GetCurrentDamage() / 2
         };
     }
 
