@@ -138,7 +138,7 @@ public abstract class AICharacter : Character
             }
         }
         
-        // Nếu có skill thỏa mãn, chọn ngẫu nhiên một skill
+        // Nếu có skill thỏa mãn, chọn một skill
         if (validSkills.Count > 0)
         {
             // Chọn ngẫu nhiên một index trong danh sách skill thỏa mãn
@@ -151,9 +151,15 @@ public abstract class AICharacter : Character
                 Enemy = tauntSource;
                 AlkawaDebug.Log(ELogCategory.AI,$"Tấn công nguồn gây Taunt: {tauntSource.characterConfig.characterName}");
             }
+            else if (GameplayManager.Instance.IsTutorialLevel)
+            {
+                // Trong tutorial level, tấn công nhân vật gần nhất thay vì ngẫu nhiên
+                Enemy = FindNearestEnemy(selectedSkill.enemies);
+                AlkawaDebug.Log(ELogCategory.AI, $"Tutorial - Tấn công nhân vật gần nhất: {Enemy.characterConfig.characterName}");
+            }
             else
             {
-                // Chọn kẻ địch ngẫu nhiên trong tầm nếu không bị Taunt
+                // Chọn kẻ địch ngẫu nhiên trong tầm nếu không trong tutorial
                 int randomEnemyIndex = UnityEngine.Random.Range(0, selectedSkill.enemies.Count);
                 Enemy = selectedSkill.enemies[randomEnemyIndex];
             }
@@ -165,6 +171,37 @@ public abstract class AICharacter : Character
         }
         
         return false;
+    }
+    
+    // Phương thức mới để tìm nhân vật gần nhất
+    private Character FindNearestEnemy(List<Character> enemies)
+    {
+        if (enemies.Count == 0) return null;
+        if (enemies.Count == 1) return enemies[0];
+        
+        Character nearest = null;
+        float minDistance = float.MaxValue;
+        
+        foreach (var enemy in enemies)
+        {
+            // Tính khoảng cách thực tế giữa hai nhân vật
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            
+            // Hoặc sử dụng khoảng cách trên grid thông qua pathfinding
+            var path = MapManager.FindShortestPath(Info.Cell, enemy.Info.Cell);
+            int pathLength = path?.Count ?? int.MaxValue;
+            
+            // Ưu tiên khoảng cách trên grid nếu có
+            float effectiveDistance = pathLength != int.MaxValue ? pathLength : distance;
+            
+            if (effectiveDistance < minDistance)
+            {
+                minDistance = effectiveDistance;
+                nearest = enemy;
+            }
+        }
+        
+        return nearest;
     }
 }
 
