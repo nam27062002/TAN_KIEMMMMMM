@@ -277,6 +277,28 @@ public abstract class Character : MonoBehaviour
 
     private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
+        if (IsCounter && GpManager.SelectedCharacter == this && targets != null && targets.Count > 0)
+        {
+            var currentSkillRange = MapManager.GetHexagonsInAttack(Info.Cell, Info.SkillInfo);
+            var primaryTarget = targets[0]; 
+            
+            if (primaryTarget != null && !currentSkillRange.Contains(primaryTarget.Info.Cell))
+            {
+                AlkawaDebug.Log(ELogCategory.EDITOR, 
+                    $"[{characterConfig.characterName}] Phản công bị hủy: Mục tiêu {primaryTarget.characterConfig.characterName} ở ô {primaryTarget.Info.Cell.CellPosition} nằm ngoài tầm đánh ({Info.SkillInfo.range}) được tính toán lại.");
+                
+                UIManager.Instance.ShowNotification($"Phản công thất bại: {primaryTarget.characterConfig.characterName} ngoài tầm!", 2.5f);
+
+                UnSelectSkill();
+                ChangeState(ECharacterState.Idle);
+                return;
+            }
+            else if (primaryTarget != null)
+            {
+                 AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công hợp lệ: Mục tiêu {primaryTarget.characterConfig.characterName} trong tầm.");
+            }
+        }
+        
         HandleMpChanged(-Info.SkillInfo.mpCost);
 
         var skillParams = new SkillStateParams
