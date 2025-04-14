@@ -277,25 +277,61 @@ public abstract class Character : MonoBehaviour
 
     private void HandleCastSkill(List<Character> targets = null, Cell targetCell = null, SkillTurnType skillTurnType = SkillTurnType.None, bool dontNeedActionPoints = false)
     {
-        if (IsCounter && GpManager.SelectedCharacter == this && targets != null && targets.Count > 0)
+        if (IsCounter && GpManager.SelectedCharacter == this && (Info.SkillInfo == null || !Info.SkillInfo.damageType.HasFlag(DamageTargetType.Self)))
         {
-            var currentSkillRange = MapManager.GetHexagonsInAttack(Info.Cell, Info.SkillInfo);
-            var primaryTarget = targets[0]; 
-            
-            if (primaryTarget != null && !currentSkillRange.Contains(primaryTarget.Info.Cell))
-            {
-                AlkawaDebug.Log(ELogCategory.EDITOR, 
-                    $"[{characterConfig.characterName}] Phản công bị hủy: Mục tiêu {primaryTarget.characterConfig.characterName} ở ô {primaryTarget.Info.Cell.CellPosition} nằm ngoài tầm đánh ({Info.SkillInfo.range}) được tính toán lại.");
-                
-                UIManager.Instance.ShowNotification($"Phản công thất bại: {primaryTarget.characterConfig.characterName} ngoài tầm!", 2.5f);
+            Character primaryTarget = null;
 
+            if (targets != null && targets.Count > 0) 
+            {
+                primaryTarget = targets[0]; 
+            }
+            else if(SkillStateParams?.DamageTakenParams?.ReceiveFromCharacter != null)
+            {
+                primaryTarget = SkillStateParams.DamageTakenParams.ReceiveFromCharacter;
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công bằng skill không định hướng ({Info.SkillInfo?.name}), kiểm tra range tới {primaryTarget.characterConfig.characterName}");
+            }
+            else
+            {
+                primaryTarget = GpManager.MainCharacter;
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công: ({Info.SkillInfo?.name}), kiểm tra range tới {primaryTarget.characterConfig.characterName}");
+            }
+
+            if (primaryTarget != null)
+            {
+                if (Info.SkillInfo == null)
+                {
+                    AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] SkillInfo là null khi kiểm tra range phản công!");
+                    UnSelectSkill();
+                    ChangeState(ECharacterState.Idle);
+                    return;
+                }
+                var currentSkillRange = MapManager.GetHexagonsInAttack(Info.Cell, Info.SkillInfo);
+
+                if (!currentSkillRange.Contains(primaryTarget.Info.Cell))
+                {
+                    AlkawaDebug.Log(ELogCategory.EDITOR, 
+                        $"[{characterConfig.characterName}] Phản công bị hủy: Mục tiêu {primaryTarget.characterConfig.characterName} ở ô {primaryTarget.Info.Cell.CellPosition} nằm ngoài tầm đánh ({Info.SkillInfo.range}) của skill '{Info.SkillInfo.name}'.");
+                    
+                    UIManager.Instance.ShowNotification($"Phản công thất bại: {primaryTarget.characterConfig.characterName} ngoài tầm!", 2.5f);
+
+                    UnSelectSkill();
+                    ChangeState(ECharacterState.Idle);
+                    return;
+                }
+                else
+                {
+                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công hợp lệ: Mục tiêu {primaryTarget.characterConfig.characterName} trong tầm của skill '{Info.SkillInfo.name}'.");
+                }
+            }
+            else
+            {
+                AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] Không thể xác định mục tiêu chính để kiểm tra range khi phản công.");
+                
+                UIManager.Instance.ShowNotification("Phản công thất bại: Không thể xác định mục tiêu!", 2.5f);
+                
                 UnSelectSkill();
                 ChangeState(ECharacterState.Idle);
                 return;
-            }
-            else if (primaryTarget != null)
-            {
-                 AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công hợp lệ: Mục tiêu {primaryTarget.characterConfig.characterName} trong tầm.");
             }
         }
         
@@ -360,7 +396,6 @@ public abstract class Character : MonoBehaviour
         HideMoveRange();
         UnSelectSkill();
         
-        // Kiểm tra tính hợp lệ của skillIndex trước khi gọi GetSkillInfo
         SkillInfo selectedSkill = GetSkillInfo(skillIndex);
         if (selectedSkill == null)
         {

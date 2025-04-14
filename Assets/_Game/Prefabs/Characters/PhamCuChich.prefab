@@ -396,7 +396,7 @@ MonoBehaviour:
       name: "T\xE1 Kh\xE1ch V\xE2n Th\xEA "
       skillIndex: 2
       mpCost: 4
-      damageDescription: 
+      damageDescription: 10
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
       skillIndex: 3
       mpCost: 4
       damageDescription: 12-36
-      range: 4
+      range: 9999
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
