@@ -14,7 +14,7 @@
     {
         if (!WaitForReact && GpManager.SelectedCharacter != null)
         {
-            if (Self == GpManager.MainCharacter)
+            if (Character == GpManager.MainCharacter)
             {
                 GameplayManager.Instance.HandleEndTurn(1f, "Đã dùng xong skill");   
             }

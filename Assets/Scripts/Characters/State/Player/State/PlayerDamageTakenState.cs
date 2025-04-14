@@ -5,7 +5,7 @@
         return DamageTakenParams.CanCounter;
     }
 
-    public PlayerDamageTakenState(Character self) : base(self)
+    public PlayerDamageTakenState(Character character) : base(character)
     {
     }
     
@@ -20,7 +20,7 @@
     
     private void OnConFirmReact()
     {
-        GpManager.SetCharacterReact(Self, DamageTakenParams);
+        GpManager.SetCharacterReact(Character, DamageTakenParams);
     }
 
     private void OnCancelReact()

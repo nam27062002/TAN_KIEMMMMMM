@@ -1,6 +1,6 @@
 ﻿public class IdleState : CharacterState
 {
-    public IdleState(Character self) : base(self)
+    public IdleState(Character character) : base(character)
     {
     }
 

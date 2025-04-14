@@ -2,14 +2,14 @@
 using System.Linq;
 public class DoanGiaLinh_DamageTaken : PlayerDamageTakenState
 {
-    public DoanGiaLinh_DamageTaken(Character self) : base(self)
+    public DoanGiaLinh_DamageTaken(Character character) : base(character)
     {
     }
     
     protected override void SetDamageTakenFinished()
     {
         // Kiểm tra xem có bị tấn công bởi kẻ địch không
-        if (DamageTakenParams.ReceiveFromCharacter.Type != Self.Type)
+        if (DamageTakenParams.ReceiveFromCharacter.Type != Character.Type)
         {
             // Kiểm tra xem cell hiện tại có phải là vũng máu độc không
             if (Info.Cell.poisonousBloodPool.enabled)
@@ -40,7 +40,7 @@ public class DoanGiaLinh_DamageTaken : PlayerDamageTakenState
         {
             var effect = character.Info.EffectInfo.Effects
                 .OfType<PoisonousBloodPoolEffect>()
-                .FirstOrDefault(e => e.Actor == Self && e.impacts.Contains(Info.Cell)); // Tìm hiệu ứng do chính mình tạo và ảnh hưởng đến cell này
+                .FirstOrDefault(e => e.Actor == Character && e.impacts.Contains(Info.Cell)); // Tìm hiệu ứng do chính mình tạo và ảnh hưởng đến cell này
                 
             if (effect != null)
             {
@@ -57,28 +57,28 @@ public class DoanGiaLinh_DamageTaken : PlayerDamageTakenState
         switch (flowerType)
         {
             case EffectType.RedDahlia: // Thược Dược Đỏ => Fear + Gắn hoa đỏ
-                effects.Add(new EffectData { effectType = EffectType.Fear, duration = EffectConfig.DebuffRound, Actor = Self });
-                effects.Add(new EffectData { effectType = EffectType.RedDahlia, duration = EffectConfig.DebuffRound, Actor = Self }); // Gắn lại hoa
+                effects.Add(new EffectData { effectType = EffectType.Fear, duration = EffectConfig.DebuffRound, Actor = Character });
+                effects.Add(new EffectData { effectType = EffectType.RedDahlia, duration = EffectConfig.DebuffRound, Actor = Character }); // Gắn lại hoa
                 break;
             case EffectType.WhiteLotus: // Sen Trắng => Sleep + Gắn hoa trắng
-                effects.Add(new EffectData { effectType = EffectType.Sleep, duration = EffectConfig.DebuffRound, Actor = Self });
-                effects.Add(new EffectData { effectType = EffectType.WhiteLotus, duration = EffectConfig.DebuffRound, Actor = Self }); // Gắn lại hoa
+                effects.Add(new EffectData { effectType = EffectType.Sleep, duration = EffectConfig.DebuffRound, Actor = Character });
+                effects.Add(new EffectData { effectType = EffectType.WhiteLotus, duration = EffectConfig.DebuffRound, Actor = Character }); // Gắn lại hoa
                 break;
             case EffectType.Marigold: // Cúc Vạn Thọ => Sleep + Stun + Gắn hoa vàng
-                effects.Add(new EffectData { effectType = EffectType.Sleep, duration = EffectConfig.DebuffRound, Actor = Self });
-                effects.Add(new EffectData { effectType = EffectType.Stun, duration = EffectConfig.DebuffRound, Actor = Self });
-                effects.Add(new EffectData { effectType = EffectType.Marigold, duration = EffectConfig.DebuffRound, Actor = Self }); // Gắn lại hoa
+                effects.Add(new EffectData { effectType = EffectType.Sleep, duration = EffectConfig.DebuffRound, Actor = Character });
+                effects.Add(new EffectData { effectType = EffectType.Stun, duration = EffectConfig.DebuffRound, Actor = Character });
+                effects.Add(new EffectData { effectType = EffectType.Marigold, duration = EffectConfig.DebuffRound, Actor = Character }); // Gắn lại hoa
                 break;
             case EffectType.NightCactus: // Xương Rồng Đêm => Immobilize + Poison + Gắn hoa xương rồng
-                effects.Add(new EffectData { effectType = EffectType.Immobilize, duration = EffectConfig.DebuffRound, Actor = Self });
+                effects.Add(new EffectData { effectType = EffectType.Immobilize, duration = EffectConfig.DebuffRound, Actor = Character });
                 effects.Add(new RollEffectData
                 {
                     effectType = EffectType.Poison,
                     duration = EffectConfig.DebuffRound,
                     rollData = new RollData(1, 4, 0), 
-                    Actor = Self
+                    Actor = Character
                 });
-                effects.Add(new EffectData { effectType = EffectType.NightCactus, duration = EffectConfig.DebuffRound, Actor = Self }); // Gắn lại hoa
+                effects.Add(new EffectData { effectType = EffectType.NightCactus, duration = EffectConfig.DebuffRound, Actor = Character }); // Gắn lại hoa
                 break;
         }
         return effects;

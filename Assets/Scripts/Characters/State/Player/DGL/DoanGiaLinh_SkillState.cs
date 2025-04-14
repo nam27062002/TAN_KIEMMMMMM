@@ -20,12 +20,12 @@ public class DoanGiaLinh_SkillState : SkillState
 
     public int GetVenomousParasite()
     {
-        return ((DoanGiaLinh)Self).GetVenomousParasite();
+        return ((DoanGiaLinh)Character).GetVenomousParasite();
     }
 
     private void SetVenomousParasite(int venomousParasite)
     {
-        ((DoanGiaLinh)Self).SetVenomousParasite(venomousParasite);
+        ((DoanGiaLinh)Character).SetVenomousParasite(venomousParasite);
     }
 
     private void ApplyPoisonPowder(Character target)
@@ -39,7 +39,7 @@ public class DoanGiaLinh_SkillState : SkillState
         
         // Logic hiện tại
         var allCharacters = new List<Character>(GpManager.Characters);
-        allCharacters.Remove(Self);
+        allCharacters.Remove(Character);
         foreach (var other in allCharacters)
         {
             other.Info.OnDamageTaken(
@@ -64,7 +64,7 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         int flower = target.Info.CountFlower();
         int venomousParasite = GetVenomousParasite();
-        if (flower > 0 && venomousParasite > 0 && Self.Info.IsToggleOn)
+        if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
         {
             // Tính toán sát thương phụ từ độc trùng ăn hoa, nhưng không áp dụng hiệu ứng 
             // (sẽ áp dụng sau trong HandleAfterDamageTakenFinish)
@@ -90,9 +90,9 @@ public class DoanGiaLinh_SkillState : SkillState
             return stack;
 
         int healAmount = Mathf.Max(1, stack); // Tối thiểu là 1
-        Self.Info.CurrentHp += healAmount;
-        Self.Info.CurrentHp = Mathf.Min(Self.Info.CurrentHp, Self.GetMaxHp());
-        Self.Info.OnHpChangedInvoke(healAmount);
+        Character.Info.CurrentHp += healAmount;
+        Character.Info.CurrentHp = Mathf.Min(Character.Info.CurrentHp, Character.GetMaxHp());
+        Character.Info.OnHpChangedInvoke(healAmount);
         AlkawaDebug.Log(
             ELogCategory.SKILL,
             $"[{CharName}] {skillName}: Hút {stack} độc phấn => Hồi {healAmount} máu"
@@ -137,9 +137,9 @@ public class DoanGiaLinh_SkillState : SkillState
             {
                 effectType = EffectType.Immobilize,
                 duration = EffectConfig.DebuffRound,
-                Actor = Self,
+                Actor = Character,
             },
-            new() { effectType = EffectType.NightCactus, Actor = Self, duration = EffectConfig.DebuffRound },
+            new() { effectType = EffectType.NightCactus, Actor = Character, duration = EffectConfig.DebuffRound },
             new RollEffectData()
             {
                 effectType = EffectType.Poison,
@@ -150,7 +150,7 @@ public class DoanGiaLinh_SkillState : SkillState
                     rollValue = 4,
                     add = 0,
                 },
-                Actor = Self
+                Actor = Character
             }
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
@@ -158,7 +158,7 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             Damage = damage,
             Effects = effects,
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -173,13 +173,13 @@ public class DoanGiaLinh_SkillState : SkillState
             {
                 effectType = EffectType.ReduceMoveRange,
                 duration = Roll.RollDice(1,4,0),
-                Actor = Self
+                Actor = Character
             },
             new()
             {
                 effectType = EffectType.Prone,
                 duration = EffectConfig.DebuffRound,
-                Actor = Self
+                Actor = Character
             }
         };
         damage = ApplyVenomousParasiteExtraDamage(target, damage, effects);
@@ -187,7 +187,7 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             Damage = damage,
             Effects = effects,
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -209,12 +209,12 @@ public class DoanGiaLinh_SkillState : SkillState
         );
         var effects = new List<EffectData>()
         {
-            new() { effectType = EffectType.RedDahlia, Actor = Self, duration = EffectConfig.DebuffRound },
+            new() { effectType = EffectType.RedDahlia, Actor = Character, duration = EffectConfig.DebuffRound },
             new()
             {
                 effectType = EffectType.Fear,
                 duration = EffectConfig.DebuffRound,
-                Actor = Self
+                Actor = Character
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -222,7 +222,7 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             Damage = realDamage,
             Effects = effects,
-            ReceiveFromCharacter = Self,
+            ReceiveFromCharacter = Character,
         };
     }
 
@@ -244,12 +244,12 @@ public class DoanGiaLinh_SkillState : SkillState
         );
         var effects = new List<EffectData>()
         {
-            new() { effectType = EffectType.WhiteLotus, Actor = Self, duration = EffectConfig.DebuffRound },
+            new() { effectType = EffectType.WhiteLotus, Actor = Character, duration = EffectConfig.DebuffRound },
             new()
             {
                 effectType = EffectType.Sleep,
                 duration = EffectConfig.DebuffRound,
-                Actor = Self
+                Actor = Character
             }
         };
         realDamage = ApplyVenomousParasiteExtraDamage(target, realDamage, effects);
@@ -257,7 +257,7 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             Damage = realDamage,
             Effects = effects,
-            ReceiveFromCharacter = Self,
+            ReceiveFromCharacter = Character,
         };
     }
 
@@ -279,17 +279,17 @@ public class DoanGiaLinh_SkillState : SkillState
         );
         var effects = new List<EffectData>()
         {
-            new() { effectType = EffectType.Marigold, Actor = Self, duration = EffectConfig.DebuffRound },
+            new() { effectType = EffectType.Marigold, Actor = Character, duration = EffectConfig.DebuffRound },
             new()
             {
                 effectType = EffectType.Sleep,
                 duration = EffectConfig.DebuffRound,
-                Actor = Self
+                Actor = Character
             },
             new()
             {
                 effectType = EffectType.Stun,
-                Actor = Self,
+                Actor = Character,
                 duration = EffectConfig.DebuffRound,
             }
         };
@@ -298,7 +298,7 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             Damage = realDamage,
             Effects = effects,
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -331,16 +331,16 @@ public class DoanGiaLinh_SkillState : SkillState
                 effectType = EffectType.ReduceChiDef,
                 value = stack,
                 duration = EffectConfig.DebuffRound,
-                Actor = Self
+                Actor = Character
             },
-            new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Self }
+            new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Character }
         };
 
         return new DamageTakenParams
         {
             Damage = realDamage,
             Effects = effects,
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -356,16 +356,16 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             Effects = new List<EffectData>()
             {
-                new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Self },
+                new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Character },
                 new RollEffectData()
                 {
                     effectType = EffectType.LifeSteal,
-                    Actor = Self,
+                    Actor = Character,
                     duration = EffectConfig.BuffRound,
                     rollData = new RollData(1, 6, 0),
                 }
             },
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -380,14 +380,14 @@ public class DoanGiaLinh_SkillState : SkillState
         int damage = 0;
         var effects = new List<EffectData>()
         {
-            new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Self },
+            new() { effectType = EffectType.RemoveAllPoisonPowder, Actor = Character },
         };
 
         return new DamageTakenParams
         {
             Damage = damage,
             Effects = effects,
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -410,7 +410,7 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         var validCharacters = GameplayManager
             .Instance.MapManager.GetCharactersInRange(
-                Self.Info.Cell,
+                Character.Info.Cell,
                 _skillStateParams.SkillInfo
             );
         foreach (var character in validCharacters)
@@ -422,7 +422,7 @@ public class DoanGiaLinh_SkillState : SkillState
     private void CheckAndApplyVenomousParasite(Character target)
     {
         // Chỉ áp dụng nếu toggle độc trùng bật và có đối tượng
-        if (!Self.Info.IsToggleOn || target == null)
+        if (!Character.Info.IsToggleOn || target == null)
             return;
 
         int flower = target.Info.CountFlower();
@@ -450,7 +450,7 @@ public class DoanGiaLinh_SkillState : SkillState
                         value = value,
                         duration = -1,
                         associatedFlowers = value,
-                        Actor = Self
+                        Actor = Character
                     }
                 }
             );
@@ -606,7 +606,7 @@ public class DoanGiaLinh_SkillState : SkillState
                         {
                             effectType = EffectType.PoisonousBloodPool,
                             duration = 2,
-                            Actor = Self, // Actor là Doan Gia Linh
+                            Actor = Character, // Actor là Doan Gia Linh
                             impacts = GpManager.MapManager
                                 .GetAllHexagonInRange(target.Info.Cell, 1)
                                 .ToList(),

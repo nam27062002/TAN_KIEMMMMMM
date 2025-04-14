@@ -1,12 +1,12 @@
 ﻿public class PlayerMoveState : MoveState
 {
-    public PlayerMoveState(Character self) : base(self)
+    public PlayerMoveState(Character character) : base(character)
     {
     }
     
     protected override void OnReachToTarget(Cell from, Cell to)
     {
         base.OnReachToTarget(from, to);
-        Self.ShowMoveRange();
+        Character.ShowMoveRange();
     }
 }

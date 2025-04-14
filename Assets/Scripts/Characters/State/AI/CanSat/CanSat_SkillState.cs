@@ -9,7 +9,7 @@ public class CanSat_SkillState : AISkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
-        Debug.Log($"[CanSat] Skill 2 (My Turn) - Applying buffs to {Self.characterConfig.characterName}:");
+        Debug.Log($"[CanSat] Skill 2 (My Turn) - Applying buffs to {Character.characterConfig.characterName}:");
         Debug.Log($"  - Buff: IncreaseDef +4 (Duration: {EffectConfig.MAX_ROUND} rounds)");
         Debug.Log($"  - Buff: IncreaseSpd +6 (Duration: {EffectConfig.MAX_ROUND} rounds)");
         
@@ -20,14 +20,14 @@ public class CanSat_SkillState : AISkillState
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.IncreaseDef,
-                    Actor = Self,
+                    Actor = Character,
                     value = 4,
                     duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.IncreaseSpd,
-                    Actor = Self,
+                    Actor = Character,
                     value = 6,
                     duration = EffectConfig.MAX_ROUND
                 }
@@ -37,7 +37,7 @@ public class CanSat_SkillState : AISkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
-        Debug.Log($"[CanSat] Skill 2 (Enemy Turn) - Applying buffs to {Self.characterConfig.characterName}:");
+        Debug.Log($"[CanSat] Skill 2 (Enemy Turn) - Applying buffs to {Character.characterConfig.characterName}:");
         Debug.Log($"  - Buff: IncreaseDamage +2 (Duration: {EffectConfig.MAX_ROUND} rounds)");
         Debug.Log($"  - Buff: ReduceHitChange +6 (Duration: {EffectConfig.MAX_ROUND} rounds)");
         
@@ -48,14 +48,14 @@ public class CanSat_SkillState : AISkillState
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.IncreaseDamage,
-                    Actor = Self,
+                    Actor = Character,
                     value = 2,
                     duration = EffectConfig.MAX_ROUND
                 },
                 new ChangeStatEffect()
                 {
                     effectType = EffectType.ReduceHitChange,
-                    Actor = Self,
+                    Actor = Character,
                     value = 6,
                     duration = EffectConfig.MAX_ROUND
                 }
@@ -71,7 +71,7 @@ public class CanSat_SkillState : AISkillState
         var skillDamage = Roll.RollDice(2, 12, 4, isCrit);
         Debug.Log($"Skill damage = {rollTimes}d12 + 4 = {skillDamage}");
         var realDamage = GetTotalDamage(baseDamage, skillDamage);
-        var path = GpManager.MapManager.FindShortestPath(Self.Info.Cell, character.Info.Cell);
+        var path = GpManager.MapManager.FindShortestPath(Character.Info.Cell, character.Info.Cell);
         if (path.Count > 2)
         {
             var cells = GpManager.MapManager.GetCellsWalkableInRange(Info.Cell, 1, DirectionType.All);
@@ -87,7 +87,7 @@ public class CanSat_SkillState : AISkillState
                 new RollEffectData()
                 {
                     effectType = EffectType.Poison,
-                    Actor = Self,
+                    Actor = Character,
                     duration = EffectConfig.DebuffRound,
                     rollData = new RollData(1, 6, 0),
                 }
@@ -116,17 +116,17 @@ public class CanSat_SkillState : AISkillState
                 new()
                 {
                     duration = 2,
-                    Actor = Self,
+                    Actor = Character,
                     effectType = EffectType.CanSat_TakeAP,
                 }
             });
 
-            Self.Info.ApplyEffects(new List<EffectData>()
+            Character.Info.ApplyEffects(new List<EffectData>()
             {
                 new ActionPointEffect()
                 {
                     duration = 2,
-                    Actor = Self,
+                    Actor = Character,
                     effectType = EffectType.IncreaseActionPoints,
                     actionPoints = new List<int>(3),
                 }

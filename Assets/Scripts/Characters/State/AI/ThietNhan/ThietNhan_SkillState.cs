@@ -3,7 +3,7 @@ using System.Linq;
 
 public class ThietNhan_SkillState : AISkillState
 {
-    public ThietNhan_SkillState(Character self) : base(self)
+    public ThietNhan_SkillState(Character character) : base(character)
     {
     }
 
@@ -50,23 +50,23 @@ public class ThietNhan_SkillState : AISkillState
                         rollValue = 4,
                         add = 0
                     },
-                    Actor = Self
+                    Actor = Character
                 },
                 new ChangeStatEffect
                 {
                     effectType = EffectType.ThietNhan_ReduceMoveRange,
                     duration = EffectConfig.DebuffRound,
                     value = 2,
-                    Actor = Self
+                    Actor = Character
                 },
                 new()
                 {
                     effectType = EffectType.ThietNhan_BlockAP,
                     duration = EffectConfig.DebuffRound,
-                    Actor = Self
+                    Actor = Character
                 }
             },
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -108,13 +108,13 @@ public class ThietNhan_SkillState : AISkillState
                 {
                     effectType = EffectType.Poison,
                     duration = EffectConfig.DebuffRound,
-                    Actor = Self
+                    Actor = Character
                 },
                 new()
                 {
                     effectType = EffectType.Immobilize,
                     duration = EffectConfig.DebuffRound,
-                    Actor = Self
+                    Actor = Character
                 }
             }
         };
@@ -154,7 +154,7 @@ public class ThietNhan_SkillState : AISkillState
         {
             effectType = EffectType.ThietNhan_Infected,
             duration = EffectConfig.DebuffRound,
-            Actor = Self,
+            Actor = Character,
             rollsRemaining = 2, // Số lần roll để kiểm tra biến thành Thiết Nhân
         };
         
@@ -178,7 +178,7 @@ public class ThietNhan_SkillState : AISkillState
             {
                 infectedEffect
             },
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
 
@@ -211,7 +211,7 @@ public class ThietNhan_SkillState : AISkillState
                     rollValue = 4,
                     add = 0
                 },
-                Actor = Self
+                Actor = Character
             }
         };
         
@@ -225,7 +225,7 @@ public class ThietNhan_SkillState : AISkillState
             {
                 effectType = EffectType.Fear,
                 duration = 2, // Kéo dài 2 vòng
-                Actor = Self
+                Actor = Character
             });
             
             // Thêm hiệu ứng giảm chỉ số nhìn (chẳng hạn như giảm Hit Change)
@@ -234,7 +234,7 @@ public class ThietNhan_SkillState : AISkillState
                 effectType = EffectType.ReduceHitChange,
                 duration = 2,
                 value = 5, // Giảm 5 điểm Hit Change
-                Actor = Self
+                Actor = Character
             });
             
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Lây Nhiễm (EnemyTurn): Gây mù lòa (Fear + -5 Hit Change) cho {character.characterConfig.characterName}");
@@ -250,7 +250,7 @@ public class ThietNhan_SkillState : AISkillState
             {
                 effectType = EffectType.PoisonousBloodPool,
                 duration = EffectConfig.DebuffRound,
-                Actor = Self,
+                Actor = Character,
                 impacts = new List<Cell> { bloodPositionCell }
             });
             
@@ -261,7 +261,7 @@ public class ThietNhan_SkillState : AISkillState
         {
             Damage = baseDamage,
             Effects = effects,
-            ReceiveFromCharacter = Self
+            ReceiveFromCharacter = Character
         };
     }
     
