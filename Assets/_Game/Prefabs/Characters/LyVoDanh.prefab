@@ -244,7 +244,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: "Hai nh\xE1t ch\xE9m g\xE2y \u201Cch\u1EA3y m\xE1u\u201D."
+      description: "Hai nh\xE1t ch\xE9m ch\u1EA5n \u0111\u1ED9ng ph\u1EE7 t\u1EA1ng,
+        v\xF4 hi\u1EC7u h\xF3a ph\xF2ng ng\u1EF1 c\u1EE7a \u0111\u1ECBch, \u0111\xF2n
+        \u0111\xE1nh ch\u1EAFc ch\u1EAFn tr\xFAng \u0111\xEDch."
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 8c1777af8fdc083458f7882b7817ba9f, type: 3}

@@ -271,11 +271,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: "S\u1EED d\u1EE5ng ch\xE2n kh\xED r\u1ED1ng m\u1ED9t ti\u1EBFng,
-        ch\u1EA5n nhi\u1EBFp t\xE2m th\u1EA7n m\u1EE5c ti\xEAu. M\u1EE5c ti\xEAu
-        m\u1EA5t 1 AP cho t\u1EDBi khi hi\u1EC7u \u1EE9ng k\u1EBFt th\xFAc. Khi\xEAu
-        kh\xEDch m\u1EE5c ti\xEAu v\xE0 k\u1EBB \u0111\u1ECBch trong ph\u1EA1m vi
-        5 \xF4 quanh m\u1EE5c ti\xEAu. "
+      description: "Thi kh\xED h\xF3a th\xE0nh s\xF3ng, t\u1EA5n c\xF4ng k\u1EBB
+        \u0111\u1ECBch g\u1EA7n nh\u1EA5t.s\u1EED d\u1EE5ng ch\xE2n kh\xED r\u1ED1ng
+        m\u1ED9t ti\u1EBFng, ch\u1EA5n nhi\u1EBFp t\xE2m th\u1EA7n m\u1EE5c ti\xEAu.
+        Khi\xEAu kh\xEDch m\u1EE5c ti\xEAu v\xE0 k\u1EBB \u0111\u1ECBch trong ph\u1EA1m
+        vi 5 \xF4 quanh m\u1EE5c ti\xEAu."
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 334c1b9ed31741d49b05465de26ea373, type: 3}
       name: "H\u1EADn V\u1ECB Ti\xEAu"
@@ -290,12 +290,11 @@ MonoBehaviour:
       damageType: 4
       description: "Li\xEAn t\u1EE5c \u0111\u1EA5m 3 \u0111\xF2n v\xE0o \u0111\u1ECBch
         th\u1EE7, k\xEDch n\u1ED5 l\xE1 ch\u1EAFn, sau \u0111\xF3 ti\u1EBFn v\xE0o
-        tr\u1EA1ng th\xE1i cu\u1ED3ng b\u1EA1o. T\u0103ng s\xE1t th\u01B0\u01A1ng
-        c\u1EE7a \u0111\xF2n \u0111\xE1nh tay kh\xF4ng v\xE0 ph\u1EA1m vi di chuy\u1EC3n
+        tr\u1EA1ng th\xE1i cu\u1ED3ng b\u1EA1o. T\u0103ng ph\u1EA1m vi di chuy\u1EC3n
         th\xEAm 4 \xF4. Trong th\u1EDDi gian hi\u1EC7u \u1EE9ng t\u1ED3n t\u1EA1i,
         k\u1EBB \u0111\u1ECBch nh\xECn th\u1EA5y Ph\u1EA1m C\u1EF1 Ch\xEDch s\u1EBD
         c\xF3 t\u1EC9 l\u1EC7 b\u1ECB ho\u1EA3ng s\u1EE3 \u1EDF \u0111\u1EA7u m\u1ED7i
-        v\xF2ng "
+        v\xF2ng."
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 5dbd273f544d7004ebcec644e32ed464, type: 3}
@@ -339,10 +338,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "T\u1EA1o m\u1ED9t l\u1EDBp gi\xE1p s\u01B0\u01A1ng gi\xE1 cho
-        t\u1EA5t c\u1EA3 \u0111\u1ED3ng minh trong ph\u1EA1m vi 3 \xF4. \u0110\u1ED1i
-        th\u1EE7 t\u1EA5n c\xF4ng v\xE0o l\u1EDBp gi\xE1p s\u1EBD ch\u1ECBu hi\u1EC7u
-        \u1EE9ng bu\u1ED1t gi\xE1 . Gi\xE1 tr\u1ECB c\u1EE7a gi\xE1p = 5"
+      description: "T\u1EA1o m\u1ED9t l\u1EDBp gi\xE1p cho t\u1EA5t c\u1EA3 \u0111\u1ED3ng
+        minh trong ph\u1EA1m vi 3 \xF4. Gi\xE1 tr\u1ECB c\u1EE7a gi\xE1p = 5"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 92d6599197b118248b88e91a7f54c77e, type: 3}
       name: "S\u1EA7u Do T\u1EA1i"
@@ -405,9 +402,7 @@ MonoBehaviour:
       damageType: 4
       description: "Ph\u1EA3n l\u1EA1i \u0111\xF2n t\u1EA5n c\xF4ng c\u1EE7a \u0111\u1ECBch,
         sau \u0111\xF3 g\xE2y hi\u1EC7u \u1EE9ng khi\xEAu kh\xEDch l\xEAn k\u1EBB
-        t\u1EA5n c\xF4ng. \u0110\u1ED3ng th\u1EDDi, c\u1EA5m \u0111\u1ED1i ph\u01B0\u01A1ng
-        s\u1EED d\u1EE5ng v\xF5 k\u1EF9 trong th\u1EDDi gian hi\u1EC7u \u1EE9ng n\xE0y
-        t\u1ED3n t\u1EA1i. "
+        t\u1EA5n c\xF4ng."
       canBeDodged: 0
     - icon: {fileID: 21300000, guid: be209ed9a9367b04280db00f16dffb43, type: 3}
       name: "Kim H\xE0 T\u1EA1i"

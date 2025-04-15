@@ -258,8 +258,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: "Thi kh\xED h\xF3a th\xE0nh s\xF3ng, t\u1EA5n c\xF4ng k\u1EBB
-        \u0111\u1ECBch g\u1EA7n nh\u1EA5t, khi\u1EBFn \u0111\u1ED1i th\u1EE7 ch\u1ECBu
-        hi\u1EC7u \u1EE9ng gi\u1EA3i gi\u1EDBi "
+        \u0111\u1ECBch g\u1EA7n nh\u1EA5t."
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: f0d50b495edbd004898e55b4373d7b44, type: 3}
