@@ -414,12 +414,12 @@ MonoBehaviour:
       skillIndex: 3
       mpCost: 4
       damageDescription: 12-36
-      range: 9999
+      range: 4
       directionType: 512
       isDirectionalSkill: 0
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 4
+      damageType: 1
       description: "K\xEDch n\u1ED5 l\xE1 ch\u1EAFn, sau \u0111\xF3 bi\u1EBFn ph\u1EA1m
         vi 4 \xF4 quanh C\u1EF1 Ch\xEDch th\xE0nh chi\u1EBFn tr\u01B0\u1EDDng c\u1ED5.
         Ch\u1EB7n chi\xEAu th\u1EE9c t\u1EA7m xa c\u1EE7a \u0111\u1ED1i th\u1EE7.

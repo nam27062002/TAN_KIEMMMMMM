@@ -776,7 +776,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             if (SelectedCharacter)
                 MainCharacter?.Info.ResetBuffAfter();
-            CurrentPlayerIndex++;
+            bool isDeathInMainTurn = message.Contains("Chết");
+            if (!isDeathInMainTurn)
+            {
+                CurrentPlayerIndex++;
+            }
+            
             if (CurrentPlayerIndex >= Characters.Count)
             {
                 CurrentPlayerIndex = 0;
