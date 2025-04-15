@@ -532,14 +532,40 @@ public class CharacterInfo
             Debug.Log($"[{Character.characterConfig.characterName}] Giữ nguyên MoveAmount = {MoveAmount} từ save");
         }
         
-        foreach (var effect in EffectInfo.Effects.ToList()
+        // Thêm logic kiểm tra vũng máu độc cho AI khi bắt đầu lượt
+        if (Character.Type == Type.AI && Cell != null && Cell.poisonousBloodPool.enabled)
+        {
+            // Tìm hiệu ứng PoisonousBloodPoolEffect có chứa Cell hiện tại
+            foreach (var character in GameplayManager.Instance.Characters)
+            {
+                foreach (var effect in character.Info.EffectInfo.Effects)
+                {
+                    if (effect is PoisonousBloodPoolEffect bloodPool && 
+                        bloodPool.impacts.Contains(Cell))
+                    {
+                        // Áp dụng hiệu ứng Blind với Actor là người tạo ra bloodPool
+                        ApplyEffect(new EffectData
+                        {
+                            effectType = EffectType.Blind,
+                            duration = EffectConfig.DebuffRound,
+                            Actor = bloodPool.Actor
+                        });
+                        AlkawaDebug.Log(ELogCategory.EFFECT, 
+                            $"[{Character.characterConfig.characterName}] đứng trên vũng máu độc khi bắt đầu lượt => Bị Mù");
+                        break;
+                    }
+                }
+            }
+        }
+        
+        foreach (var item in EffectInfo.Effects.ToList()
                      .Where(effect => EffectInfo.TriggerAtStart.Contains(effect.effectType)))
         {
-            effect.duration--;
-            if (effect.duration != 0) continue;
+            item.duration--;
+            if (item.duration != 0) continue;
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Removed effect: {effect.effectType}");
-            EffectInfo.Effects.Remove(effect);
+                $"[{Character.characterConfig.characterName}] Removed effect: {item.effectType}");
+            EffectInfo.Effects.Remove(item);
         }
 
         HandleEffectCleanse();

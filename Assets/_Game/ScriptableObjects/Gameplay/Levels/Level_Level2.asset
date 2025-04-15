@@ -18,7 +18,7 @@ MonoBehaviour:
   levelType: 2
   spawnerConfig:
     spawnPoints:
-      m_keys: 030000000200000000000000
+      m_keys: 010000000200000000000000
       m_values:
       - points:
         - {x: 8, y: 6}
