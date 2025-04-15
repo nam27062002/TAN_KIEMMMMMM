@@ -130,4 +130,12 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         // Load scene Loading trước, sau đó Loading sẽ load MainMenu
         Loading(ESceneType.MainMenu);
     }
+
+    // Thêm phương thức mới
+    public void ResetReplayState()
+    {
+        AlkawaDebug.Log(ELogCategory.ENGINE, "Resetting replay state");
+        IsReplaying = false;
+        LevelToReplay = null;
+    }
 }

@@ -98,6 +98,12 @@ public class PauseGamePopup : PopupBase
     {
         DOTween.KillAll();
         
+        // Reset lại trạng thái replay
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ResetReplayState();
+        }
+        
         // Gọi DestroyAllCharacters để đảm bảo các bóng của CanSat được hủy
         var canSats = FindObjectsOfType<CanSat>();
         foreach (var canSat in canSats)
@@ -122,6 +128,6 @@ public class PauseGamePopup : PopupBase
         SceneLoader.UnloadSceneAsync(ESceneType.Game);
         UIManager.Instance.CloseCurrentMenu();
         Close();
-        AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked");
+        AlkawaDebug.Log(ELogCategory.UI, "Exit button clicked - Returning to main menu (not replaying)");
     }
 }
