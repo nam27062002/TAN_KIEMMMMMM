@@ -60,7 +60,8 @@ public class CharacterInfo
             { EffectType.ReduceAP, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Bleed, TryCheckEffectResistanceAndApplyEffect },
             { EffectType.Blind, TryCheckEffectResistanceAndApplyEffect },
-
+            { EffectType.ChiBan, TryCheckEffectResistanceAndApplyEffect },
+            
             { EffectType.IncreaseDamage, ApplyIncreaseDamage },
             { EffectType.BlockSkill, _ => ApplyBlockSkill() },
             { EffectType.BreakBloodSealDamage, ApplyBloodSealDamage },
@@ -579,7 +580,12 @@ public class CharacterInfo
 
     public bool CanCastSkill(SkillInfo skillInfo)
     {
-        return (CurrentMp >= skillInfo.mpCost || skillInfo.mpCost == 0) && HasEnoughActionPoints;
+        bool isChiBan = EffectInfo.Effects.Any(e => e.effectType == EffectType.ChiBan);
+        bool blockedByChiBan = isChiBan && skillInfo.mpCost > 0;
+        
+        return (CurrentMp >= skillInfo.mpCost || skillInfo.mpCost == 0) 
+               && HasEnoughActionPoints 
+               && !blockedByChiBan;
     }
 
     #region Action Points

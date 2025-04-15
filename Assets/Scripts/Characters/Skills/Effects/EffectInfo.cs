@@ -65,6 +65,7 @@ public class EffectInfo
         { EffectType.Bleed, (15, 15)},
         { EffectType.Drunk, (15, 15)},
         { EffectType.Blind, (15, 15)},
+        { EffectType.ChiBan, (15, 15)},
     };
     
     public static readonly HashSet<EffectType> DontRemoveEffect = new ()
@@ -128,4 +129,5 @@ public enum EffectType
     PoisonousBloodPool = 46,
     SetDefToZero = 47,
     Blind = 48,
+    ChiBan = 49
 }
