@@ -240,6 +240,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: 
+      canBeDodged: 1
     - icon: {fileID: 21300000, guid: 7d83262a187e20840a4c1b3890d9f54f, type: 3}
       name: "\u1EA2nh V\u1ECDng"
       skillIndex: 1
@@ -253,6 +254,7 @@ MonoBehaviour:
       damageType: 16
       description: "H\xECnh \u1EA3nh g\u1ECDi ra l\xE0 m\u1ED9t v\u0169 c\u01A1.
         T\u0103ng 6 spd v\xE0 4 def cho c\xE0n s\xE1t khi c\xF2n t\u1ED3n t\u1EA1i"
+      canBeDodged: 1
     - icon: {fileID: 21300000, guid: 97ece1ac75e34b64aa8fd4a1aec44dfb, type: 3}
       name: "C\xE0o x\xE9 "
       skillIndex: 2
@@ -271,6 +273,7 @@ MonoBehaviour:
         ch\xED m\u1EA1ng ri\xEAng. . Gi\u1EA3m mp = 1/3 s\xE1t th\u01B0\u01A1ng g\xE2y
         ra. Chi\xEAu n\xE0y k\xEDch ho\u1EA1t n\u1ED9i t\u1EA1i c\u01B0\u1EDBp AP
         2 l\u1EA7n ri\xEAng bi\u1EC7t, nh\u01B0ng ch\u1EC9 c\u01B0\u1EDBp 1 l\u1EA7n."
+      canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: aa1acb52e2c949b42ab3c9eee8184f71, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
@@ -284,6 +287,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: 
+      canBeDodged: 1
     - icon: {fileID: 21300000, guid: 1771d25e4d6fb884b970883be01be940, type: 3}
       name: 
       skillIndex: 1
@@ -296,6 +300,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: 
+      canBeDodged: 1
     - icon: {fileID: 21300000, guid: 139b9a1434e2550428d47ca0b125527a, type: 3}
       name: 
       skillIndex: 2
@@ -308,6 +313,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: 
+      canBeDodged: 1
     combatSkill:
     - icon: {fileID: 21300000, guid: 7383c9b7ca74ffd4dbb1bc4a8b3947cc, type: 3}
       name: "\u0110\xE1nh Th\u01B0\u1EDDng"
@@ -321,6 +327,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: 
+      canBeDodged: 1
     - icon: {fileID: 21300000, guid: bb2e02d8ea79a3946a89d0f09f46dacb, type: 3}
       name: "\u1EA2nh V\u1ECDng"
       skillIndex: 1
@@ -335,6 +342,7 @@ MonoBehaviour:
       description: "Assassin: H\xECnh \u1EA3nh g\u1ECDi ra l\xE0 m\u1ED9t n\u1EEF
         th\xEDch kh\xE1ch. T\u0103ng s\xE1t th\u01B0\u01A1ng t\u1EEB m\u1ECDi ngu\u1ED3n
         th\xEAm 2 v\xE0 gi\u1EA3m s\u1ED1 c\u1EA7n \u0111\u1EC3 crit \u0111i 1"
+      canBeDodged: 1
     - icon: {fileID: 21300000, guid: f170377e38ba20f429d7932e511f17a1, type: 3}
       name: "C\xE0o x\xE9 "
       skillIndex: 2
@@ -353,6 +361,7 @@ MonoBehaviour:
         h\u1ED3i m\xE1u, trong khi k\u1EBB kh\xE1c d\u1EABm ph\u1EA3i s\u1EBD c\xF3
         t\u1EC9 l\u1EC7 tr\xFAng \u0111\u1ED9c. . M\xE1u \u0111\u1ED9c  l\xE0 debuff
         12. M\xE1u C\xE0n S\xE1t h\u1ED3i = dmg \u0111\u1ED9c "
+      canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
       name: "N\u1ED9i t\u1EA1i"
@@ -381,6 +390,7 @@ MonoBehaviour:
         s\u1EE3.\r\n\xC1c linh truy\u1EC1n thuy\u1EBFt: Khi tham chi\u1EBFn, C\xE0n
         S\xE1t ngay l\u1EADp t\u1EE9c tri\u1EC7u h\u1ED3i v\u0169 c\xF4ng v\xE0 s\xE1t
         th\u1EE7."
+      canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
       name: "T\u1ED1c \u0111\u1ED9/Th\xE2n ph\xE1p"
@@ -394,6 +404,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 7 \xF4"
+      canBeDodged: 1
   passiveSkills: []
   Info:
     RoundIndex: 0

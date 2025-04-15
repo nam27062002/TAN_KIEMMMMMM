@@ -223,6 +223,7 @@ MonoBehaviour:
       damageType: 0
       description: "Khi\u1EBFn nh\u1EEFng sinh v\u1EADt tr\xED tu\u1EC7 th\u1EA5p
         b\u1EA3o v\u1EC7 m\xECnh"
+      canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
       name: "T\u1ED1c \u0111\u1ED9/ Th\xE2n ph\xE1p"
@@ -236,6 +237,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: "Kh\xF4ng th\u1EC3 di chuy\u1EC3n"
+      canBeDodged: 1
   passiveSkills: []
   Info:
     RoundIndex: 0

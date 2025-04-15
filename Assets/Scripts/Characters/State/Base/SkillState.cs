@@ -712,4 +712,11 @@ public class SkillState : CharacterState
         Debug.Log($"Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
         return totalDamage;
     }
+
+    public override void OnExit()
+    {
+        GpManager.SetInteract(true);
+        _processedDamageLogic = false;
+        base.OnExit();
+    }
 }

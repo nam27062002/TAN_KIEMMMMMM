@@ -707,9 +707,6 @@ public class CharacterInfo
 
     public void ReduceActionPoints()
     {
-#if UNITY_EDITOR
-        return;
-#endif
         var pointsToReduce = Character.GetSkillActionPoints(Character.GetSkillTurnType());
 
         if (TryReducePoints(GetActionPointEffects())) return;

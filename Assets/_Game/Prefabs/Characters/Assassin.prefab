@@ -201,6 +201,7 @@ MonoBehaviour:
       name: 
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -208,11 +209,13 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: 
+      canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
       name: 
       skillIndex: 0
       mpCost: 0
+      damageDescription: 
       range: 0
       directionType: 512
       isDirectionalSkill: 0
@@ -220,6 +223,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: 
+      canBeDodged: 1
   passiveSkills: []
   Info:
     RoundIndex: 0
