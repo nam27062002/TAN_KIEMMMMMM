@@ -225,10 +225,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 8
-      description: "Lao v\u1EC1 ph\xEDa tr\u01B0\u1EDBc , g\xE2y s\xE1t th\u01B0\u01A1ng
-        cho t\u1EA5t c\u1EA3 m\u1EE5c ti\xEAu tr\xEAn \u0111\u01B0\u1EDDng. Thi kh\xED
-        x\xE2m nh\u1EADp v\xE0o ng\u01B0\u1EDDi \u0111\u1ED1i th\u1EE7 khi\u1EBFn
-        v\u1EBFt th\u01B0\u01A1ng th\u1ED1i r\u1EEFa"
+      description: "Lao v\u1EC1 ph\xEDa tr\u01B0\u1EDBc (4 \xF4), g\xE2y s\xE1t th\u01B0\u01A1ng
+        cho t\u1EA5t c\u1EA3 m\u1EE5c ti\xEAu tr\xEAn \u0111\u01B0\u1EDDng."
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: b39c88e743443a949831189233ab6553, type: 3}
       name: "Hi\u1EC3u Nh\u1EADt Quang L\xE2m"

@@ -315,6 +315,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             
         character.Info.OnHpChangedInvoke(0);
         character.Info.OnMpChangedInvoke(0);
+
+        // Khôi phục giá trị VenomousParasite nếu là Đoàn Gia Linh
+        if (character.characterType == CharacterType.DoanGiaLinh)
+        {
+            var doanGiaLinh = character as DoanGiaLinh;
+            if (doanGiaLinh != null)
+            {
+                doanGiaLinh.SetVenomousParasite(data.venomousParasite);
+                //AlkawaDebug.Log(ELogCategory.SAVE, $"[LoadGame] Khôi phục Độc Trùng của Đoàn Gia Linh: {data.venomousParasite}");
+            }
+        }
     }
 
     public void HandleCharacterDeath(Character character, out Action callback)
@@ -1444,6 +1455,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             {
                 // Lưu vị trí cell shield
                 characterData.shieldCellPosition = hlh.CurrentShield.CellPosition;
+            }
+            
+            // Lưu giá trị VenomousParasite nếu là Đoàn Gia Linh
+            if (character.characterType == CharacterType.DoanGiaLinh)
+            {
+                var doanGiaLinh = character as DoanGiaLinh;
+                if (doanGiaLinh != null)
+                {
+                    characterData.venomousParasite = doanGiaLinh.GetVenomousParasite();
+                    //AlkawaDebug.Log(ELogCategory.SAVE, $"[SaveGame] Lưu Độc Trùng của Đoàn Gia Linh: {characterData.venomousParasite}");
+                }
             }
             
             levelData.characterDatas.Add(characterData);

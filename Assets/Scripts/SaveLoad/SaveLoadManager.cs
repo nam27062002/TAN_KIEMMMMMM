@@ -170,6 +170,9 @@ public class CharacterData
     
     // Thêm trường lưu MoveAmount 
     public int moveAmount;
+    
+    // Thêm trường lưu VenomousParasite cho Đoàn Gia Linh
+    public int venomousParasite;
 }
 
 [Serializable]
