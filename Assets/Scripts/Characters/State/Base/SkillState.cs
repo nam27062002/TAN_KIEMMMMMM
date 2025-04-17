@@ -379,7 +379,7 @@ public class SkillState : CharacterState
         {
             yield return new WaitUntil(() => !_waitForFeedback);
             yield return new WaitForSecondsRealtime(0.1f);
-            if (target.Type != Character.Type)
+            if (target.Type != Character.Type && damageTakenParams.Damage != 0)
             {
                 HandleApplyDamageOnEnemy(target);
             }
