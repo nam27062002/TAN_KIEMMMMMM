@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using System.Linq;
 
 [Serializable]
 public class EffectInfo
@@ -73,9 +74,56 @@ public class EffectInfo
         EffectType.Drunk
     };
 
+    // Thêm HashSet mới để phân loại hiệu ứng bất lợi
+    public static readonly HashSet<EffectType> DebuffEffects = new()
+    {
+        EffectType.Immobilize,
+        EffectType.ReduceMoveRange,
+        EffectType.Stun,
+        EffectType.Sleep,
+        EffectType.ReduceChiDef,
+        EffectType.Poison,
+        EffectType.ThietNhan_Poison,
+        EffectType.ThietNhan_ReduceMoveRange,
+        EffectType.ThietNhan_BlockAP,
+        EffectType.ThietNhan_Infected,
+        EffectType.Disarm,
+        EffectType.Taunt,
+        EffectType.Silence,
+        EffectType.ReduceAP,
+        EffectType.Bleed,
+        EffectType.Drunk,
+        EffectType.PoisonousBloodPool,
+        EffectType.SetDefToZero,
+        EffectType.Blind,
+        EffectType.ChiBan,
+        EffectType.Fear,
+        EffectType.Prone,
+        EffectType.VenomousParasite,
+        EffectType.ReduceHitChange,
+        EffectType.BlockSkill,
+        EffectType.BloodSealEffect,
+    };
+
+    // Thêm phương thức để kiểm tra hiệu ứng có phải bất lợi không
+    public static bool IsDebuff(EffectType effectType)
+    {
+        return DebuffEffects.Contains(effectType);
+    }
+
     public void AddEffect(EffectData effect)
     {
         Effects.Add(effect);
+    }
+    
+    // Thêm phương thức để xóa tất cả hiệu ứng bất lợi
+    public void RemoveAllDebuffs()
+    {
+        var debuffsToRemove = Effects.Where(effect => IsDebuff(effect.effectType)).ToList();
+        foreach (var debuff in debuffsToRemove)
+        {
+            Effects.Remove(debuff);
+        }
     }
 }
 

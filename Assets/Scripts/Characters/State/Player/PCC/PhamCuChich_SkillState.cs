@@ -9,9 +9,16 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
+        if (character.Type == Character.Type)
+        {
+            character.Info.EffectInfo.RemoveAllDebuffs();
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Đã xóa tất cả hiệu ứng bất lợi cho {character.characterConfig.characterName}");
+        }
+        
         var shield = GetShieldValue();
         var realShield = Utils.RoundNumber(shield * 1f / 2);
         AlkawaDebug.Log(ELogCategory.SKILL, $"Mỗi nhân vật nhận {realShield} giáp");
+        
         var effect = new List<EffectData>()
         {
             new ShieldEffect()
@@ -23,6 +30,8 @@ public class PhamCuChich_SkillState : SkillState
                 Actor = Character
             }
         };
+        Character.Info.EffectInfo.RemoveAllDebuffs();
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Đã xóa tất cả hiệu ứng bất lợi cho bản thân");
         Info.ApplyEffects(effect);
 
         return new DamageTakenParams

@@ -1123,7 +1123,7 @@ MonoBehaviour:
   greyBackground: {fileID: 679854189}
   cheat: {fileID: 1327207704}
   effectIcons:
-    m_keys: 01000000020000000300000004000000050000000700000008000000090000000a0000000b0000000c0000000e0000000d0000000f0000001000000013000000140000001500000016000000180000001a0000001b0000001c0000001e000000220000002600000027000000250000002d0000002c0000002a000000280000003000000031000000
+    m_keys: 01000000020000000300000004000000050000000700000008000000090000000a0000000b0000000c0000000e0000000d0000000f0000001000000013000000140000001500000016000000180000001a0000001b0000001c0000001e000000220000002600000027000000250000002d0000002c0000002a000000280000003000000031000000170000001d000000
     m_values:
     - {fileID: 21300000, guid: 793d27802c0205c4e965c999c9e36aa0, type: 3}
     - {fileID: 21300000, guid: c7e3679c38f16814da702acd5128ba30, type: 3}
@@ -1159,6 +1159,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 9623e1b87b847ba488e55612f932ce98, type: 3}
     - {fileID: 21300000, guid: df8730b732c56b94485dce5932d18852, type: 3}
     - {fileID: 21300000, guid: 42ef12aa3f2262145946ff60952bbc2e, type: 3}
+    - {fileID: 21300000, guid: 157fd33d67b34fd4aa24aff3a86c37a4, type: 3}
+    - {fileID: 21300000, guid: e148b6abca6cc454ebdf268c861323a6, type: 3}
   defaultIcon: {fileID: 21300000, guid: 66305a19e3614694f868c75a982e6b68, type: 3}
   notificationGameObject: {fileID: 71087672}
   notificationText: {fileID: 159170922}
@@ -2559,7 +2561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2756952727371338728, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -70.501465
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2756952727371338728, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2583,7 +2585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5231733631420061241, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -211.5044
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5231733631420061241, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2603,7 +2605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6544967898351090013, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.501465
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6544967898351090013, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2623,7 +2625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7015057886318947720, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 211.5044
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7015057886318947720, guid: e5e976eaabc63c3459d028675d40e0da, type: 3}
       propertyPath: m_AnchoredPosition.x
