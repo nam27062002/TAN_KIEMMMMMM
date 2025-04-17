@@ -779,8 +779,11 @@ public class CharacterInfo
 
     public void CheckEffectAfterReceiveDamage(DamageTakenParams damageTakenParams)
     {
-        // remove all sleep
-        if (damageTakenParams.Effects.All(p => p.effectType != EffectType.Sleep))
+        // Kiểm tra nếu damage không đến từ hiệu ứng Drunk
+        var isDrunkRelated = damageTakenParams.SkillStateParams?.SkillInfo != null &&
+                             damageTakenParams.Effects.Any(p => p.effectType == EffectType.Sleep);
+
+        if (!isDrunkRelated && damageTakenParams.Effects.All(p => p.effectType != EffectType.Sleep))
         {
             if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Sleep))
             {

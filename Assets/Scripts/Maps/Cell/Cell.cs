@@ -224,8 +224,7 @@ public class Cell : MonoBehaviour
     private void OnMouseOver()
     {
         if ((!GameplayManager.Instance.IsTutorialLevel) && Input.GetMouseButtonDown(1) && 
-            GameplayManager.Instance.CanInteract && 
-            (GameplayManager.Instance.SelectedCharacter == null || !GameplayManager.Instance.SelectedCharacter.IsCounter))
+            GameplayManager.Instance.CanInteract)
         {
             if (cellType == CellType.Character)
                 GameplayManager.Instance.ShowInfo(Character);

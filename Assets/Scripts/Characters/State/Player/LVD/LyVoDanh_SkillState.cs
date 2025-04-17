@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using UnityEngine;
 
 public class LyVoDanh_SkillState : SkillState
 {
@@ -442,18 +444,32 @@ public class LyVoDanh_SkillState : SkillState
     protected override void HandleApplyDamageOnEnemy(Character character)
     {
         base.HandleApplyDamageOnEnemy(character);
+        
+        // Sử dụng Coroutine để đợi xử lý damage xong
+        CoroutineDispatcher.RunCoroutine(ApplySleepAfterDamage(character));
+    }
+
+    private IEnumerator ApplySleepAfterDamage(Character target)
+    {
+        // Đợi đến cuối frame để đảm bảo damage đã được xử lý
+        yield return new WaitForEndOfFrame();
+        
         if (Character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk))
         {
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"{CharName} check say");
-            character.Info.ApplyEffects(new List<EffectData>()
+            // Kiểm tra lại xem target đã chết chưa
+            if (!target.Info.IsDie && target.Info.EffectInfo.Effects.All(p => p.effectType != EffectType.Sleep))
             {
-                new()
+                AlkawaDebug.Log(ELogCategory.EFFECT, $"{CharName} check say - Áp dụng Sleep sau khi nhận damage");
+                target.Info.ApplyEffects(new List<EffectData>()
                 {
-                    effectType = EffectType.Sleep,
-                    duration = EffectConfig.DebuffRound,
-                    Actor = Character
-                }
-            });
+                    new()
+                    {
+                        effectType = EffectType.Sleep,
+                        duration = EffectConfig.DebuffRound,
+                        Actor = Character
+                    }
+                });
+            }
         }
     }
 }
