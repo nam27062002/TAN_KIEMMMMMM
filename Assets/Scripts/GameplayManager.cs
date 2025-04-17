@@ -746,6 +746,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void SetCharacterReact(Character character, DamageTakenParams damageTakenParams)
     {
+        SetInteract(false);
         SetSelectedCharacter(character, new IdleStateParams
         {
             DamageTakenParams = damageTakenParams,

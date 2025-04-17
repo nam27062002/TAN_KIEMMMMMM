@@ -325,9 +325,15 @@ public class ThietNhan_SkillState : AISkillState
             }
             else
             {
-                // Nhân vật vượt qua kiểm tra, loại bỏ hiệu ứng
+                // Nhân vật vượt qua kiểm tra, loại bỏ hiệu ứng ngay lập tức
                 AlkawaDebug.Log(ELogCategory.EFFECT, $"[Hạt nhân lây nhiễm] Thành công! Nhân vật phá hủy được hạt nhân.");
-                duration = 0; // Sẽ bị loại bỏ ở cuối vòng
+                
+                // Loại bỏ hiệu ứng khỏi danh sách hiệu ứng của nhân vật
+                if (targetCharacter != null && targetCharacter.Info != null)
+                {
+                    targetCharacter.Info.EffectInfo.Effects.Remove(this);
+                    AlkawaDebug.Log(ELogCategory.EFFECT, $"[Hạt nhân lây nhiễm] Đã loại bỏ hiệu ứng");
+                }
             }
         }
     }
