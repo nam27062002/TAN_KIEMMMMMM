@@ -99,10 +99,7 @@ public class EffectInfo
         EffectType.ChiBan,
         EffectType.Fear,
         EffectType.Prone,
-        EffectType.VenomousParasite,
-        EffectType.ReduceHitChange,
         EffectType.BlockSkill,
-        EffectType.BloodSealEffect,
     };
 
     // Thêm phương thức để kiểm tra hiệu ứng có phải bất lợi không

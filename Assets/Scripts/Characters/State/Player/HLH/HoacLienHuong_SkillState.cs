@@ -311,7 +311,7 @@ public class HoacLienHuong_SkillState : SkillState
         var focusEnemy = GpManager.MainCharacter;
         GpManager.SwapPlayers(Character, focusEnemy);
         var character =
-            new List<Character>(GpManager.MapManager.GetCharactersInRange(Info.Cell, _skillStateParams.SkillInfo));
+            new List<Character>(GpManager.MapManager.GetCharactersInRange(Info.Cell, _skillStateParams.SkillInfo, 1));
 
         foreach (var item in character)
         {

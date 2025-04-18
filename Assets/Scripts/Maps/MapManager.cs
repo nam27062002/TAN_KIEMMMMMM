@@ -124,13 +124,13 @@ public class MapManager : MonoBehaviour
         return (from item in allCells where item.CellType == CellType.Character select item.Character).ToList();
     }
 
-    public HashSet<Character> GetCharactersInRange(Cell cell, SkillInfo info)
+    public HashSet<Character> GetCharactersInRange(Cell cell, SkillInfo info, int range = 0)
     {
         if (cell?.Character == null || info == null)
             return new HashSet<Character>();
 
         var self = cell.Character;
-        return GetCharacterInRange(cell, info.range, info.directionType).Where(c => CheckDamageTarget(c, self, info.damageType))
+        return GetCharacterInRange(cell, range == 0 ? info.range : range, info.directionType).Where(c => CheckDamageTarget(c, self, info.damageType))
             .ToHashSet();
     }
 

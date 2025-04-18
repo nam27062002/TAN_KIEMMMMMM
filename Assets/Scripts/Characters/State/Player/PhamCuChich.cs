@@ -93,20 +93,30 @@ public class PhamCuChich : PlayerCharacter
     // Thêm phương thức để kiểm tra khả năng sử dụng skill với mode toggle
     public bool CheckCanCastSkillWithToggle(SkillInfo skillInfo)
     {
+        // Nếu toggle tắt, sử dụng logic mặc định
         if (!Info.IsToggleOn)
         {
-            // Nếu toggle tắt, sử dụng logic mặc định
             return Info.CanCastSkill(skillInfo);
         }
+
+        // Nếu không tốn MP, luôn trả về true nếu có đủ action point
+        if (skillInfo.mpCost == 0)
+        {
+            return HasEnoughActionPoints();
+        }
+
+        // Tính toán nửa MP và HP cần thiết
+        int halfCost = Utils.RoundNumber(skillInfo.mpCost / 2f);
         
-        // Nếu toggle bật, kiểm tra cả HP và MP
-        int requiredMp = skillInfo.mpCost;
-        int halfMp = Utils.RoundNumber(requiredMp / 2f);
-        int halfHp = Utils.RoundNumber(requiredMp / 2f);
+        // Kiểm tra điều kiện sử dụng skill
+        bool hasEnoughMp = Info.CurrentMp >= halfCost;
+        bool hasEnoughHp = Info.CurrentHp > halfCost;
         
-        // Kiểm tra có đủ MP và HP không
-        bool enoughMp = Info.CurrentMp >= halfMp;
-        bool enoughHp = Info.CurrentHp > halfHp;
-        return enoughMp && enoughHp && Info.ActionPointsList.Any(point => point == 3);
+        return hasEnoughMp && hasEnoughHp && HasEnoughActionPoints();
+    }
+
+    private bool HasEnoughActionPoints()
+    {
+        return Info.ActionPointsList.Any(point => point == 3);
     }
 }
