@@ -141,16 +141,11 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Kiểm tra trạng thái vô hiệu hóa tạm thời
+        GameplayManager.Instance.SelectedCharacter.HideSkillTarget();
         if (_isTemporarilyDisabled) return;
-        
         if (!CanShowInfo) return;
         _isHovering = false;
         HideSkillPanel();
-        if (!_skillInfo.isDirectionalSkill && GameplayManager.Instance.SelectedCharacter != null && GameplayManager.Instance.SelectedCharacter.Info.SkillInfo != _skillInfo)
-        {
-            GameplayManager.Instance.SelectedCharacter.HideSkillTarget();
-        }
     }
 
     private void ShowSkillPanel()
