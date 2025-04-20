@@ -104,6 +104,7 @@ public class UI_Ingame : MenuBase
 
     private void OnSettingsClick()
     {
+        if (UIMng.CurrentPopup is ReactPopup) return;
         UIMng.OpenPopup(PopupType.PauseGame);
         AlkawaDebug.Log(ELogCategory.UI, "Clicked Settings");
     }
