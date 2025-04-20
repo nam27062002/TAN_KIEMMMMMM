@@ -115,7 +115,7 @@ public class Skill_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    private bool CanShowInfo => _skillIndex != 0;
+    private bool CanShowInfo => _skillIndex != 0 && GameplayManager.Instance.CanInteract;
     
     public void OnPointerEnter(PointerEventData eventData)
     {
