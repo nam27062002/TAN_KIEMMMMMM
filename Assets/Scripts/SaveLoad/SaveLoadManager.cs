@@ -18,6 +18,7 @@ public class SaveLoadManager : SingletonMonoBehavior<SaveLoadManager>
     {
         base.Awake();
         savePath = Application.persistentDataPath + "/levels.json";
+        AlkawaDebug.Log(ELogCategory.EDITOR, savePath);
         try
         {
             if (File.Exists(savePath))

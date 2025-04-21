@@ -197,8 +197,8 @@ MonoBehaviour:
       health: 40
       mana: 20
       atk: 8
-      def: 10
-      chiDef: 16
+      def: 0
+      chiDef: 0
       spd: 6
       baseDamageRollData:
         rollTime: 1
