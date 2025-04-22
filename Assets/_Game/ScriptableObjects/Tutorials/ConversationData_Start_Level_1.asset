@@ -15,9 +15,7 @@ MonoBehaviour:
   conversation:
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "H\u01B0\u01A1ng th\u01A1m \u0111\u1EBFn \u0111\xE2y th\xEC d\u1EEBng.
-      \u201CN\xF3\u201D h\u1EB3n l\xE0 ch\u1EC9 \u1EDF \u0111\xE2u \u0111\xF3 quanh
-      \u0111\xE2y th\xF4i. "
+    text: "The scent stops here. \u201CIt\u201D has to be around here somewhere. "
     hasSpawnCharacter: 1
     spawnCharacters:
     - character: {fileID: 8476363159216195691, guid: b66348842be014b4ba9d986355ab8d8f, type: 3}
@@ -33,15 +31,14 @@ MonoBehaviour:
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "N\xF3i c\xF4 l\xE0 ch\xF3 c\xF2n ch\u1ED1i. "
+    text: "And you said you weren\u2019t a dog. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "G\xE2u. Nguy\xEAn h\xECnh c\u1EE7a t\xF4i \u0111\xE3 b\u1ECB ng\xE0i \u201Ckh\xF4ng
-      b\u1EB1ng con ch\xF3\u201D v\u1EA1ch tr\u1EA7n m\u1EA5t r\u1ED3i! Ng\xE0i \u0111\xE3
-      h\xE0i l\xF2ng ch\u01B0a? "
+    text: "Woof! You\u2019ve ousted my true form, Mr. Not-even-as-smart-as-a-dog!
+      Happy now? "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
@@ -53,8 +50,7 @@ MonoBehaviour:
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "Tr\xF4ng m\u1EB7t anh \u0111\u1ED9t nhi\xEAn nghi\xEAm t\xFAc th\u1EBF
-      n\xE0y ch\u1EAFc l\xE0 h\u1EBFt gi\u1EDD \u0111\u1EC3 \u0111\xF9a r\u1ED3i. "
+    text: "Guess the time for jokes is over if you\u2019re looking that serious"
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
@@ -117,58 +113,53 @@ MonoBehaviour:
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "Ch\xE0o anh giai. Ng\u01B0\u1EDDi ta n\xF3i \xF4ng anh l\xE0 con trai
-      duy nh\u1EA5t c\u1EE7a ph\u1EE5 ho\xE0ng, c\u0169ng l\xE0 minh ch\u1EE9ng cho
-      s\u1EF1 tuy\u1EC7t t\u1EF1 c\u1EE7a d\xF2ng h\u1ECD L\xFD. "
+    text: "Hello, \u201Cbrother\u201D. People say you\u2019re the only son of my
+      royal father, as well as the living proof that the L\xFD Clan\u2019s lineage
+      has ended. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "Th\u1EB1ng em c\xF3 h\u01A1i kh\xF4ng ph\u1EE5c, n\xEAn mu\u1ED1n b\u1EAFt
-      \xF4ng anh v\u1EC1 \u0111\u1EB7ng tra r\xF5 th\u1EF1c h\u01B0. Mong \xF4ng
-      anh th\u1EE9c th\u1EDDi m\u1ED9t ch\xFAt, \u0111\u1EEBng \u0111\u1EC3 th\u1EB1ng
-      em n\xE0y ph\u1EA3i n\u1EB7ng tay. "
+    text: "I don\u2019t accept that, so I\u2019d like to capture you back for interrogation.
+      I\u2019m hoping you\u2019d be smart and cooperative so I wouldn\u2019t have
+      to beat you up too badly to accomplish that. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "Anh ch\u1EAFc R\u1ED1i Ng\u01B0\u1EDDi hi\u1EC3u nh\u1EEFng g\xEC ch\xFAng
-      ta n\xF3i kh\xF4ng?"
+    text: 'You sure the Man-urchin can even understand what we said? '
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "H\u1ECFi cho l\u1EC5 ph\xE9p th\xF4i. Nh\xECn c\xE1i m\u1EB7t ng\u01A1
-      ng\u01A1 ng\xE1c ng\xE1c n\xE0y c\u1EE7a n\xF3 ch\xEDn ph\u1EA7n m\u01B0\u1EDDi
-      l\xE0 kh\xF4ng hi\u1EC3u g\xEC r\u1ED3i.  "
+    text: "Just standard procedure. Just from looking at that blank face, it\u2019s
+      most likely it didn\u2019t understand a thing. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "M\u1EB9 ki\u1EBFp, c\xE1i th\u1EE9 n\xE0y m\xE0 c\u0169ng \u0111\xF2i
-      b\xE1o m\u1ED9ng ch\u1EEDi ph\u1EE5 ho\xE0ng tr\xF4i ch\u1EA3y \u0111\u01B0\u1EE3c
-      th\u1EBF \xE1? T\xF4i m\xE0 bi\u1EBFt th\u1EB1ng n\xE0o \u0111\u01A1m \u0111i\u1EC1u
-      b\u1ECBa chuy\u1EC7n tr\u1EAFng tr\u1EE3n nh\u01B0 th\u1EBF, t\xF4i v\u1EB7n
-      c\u1ED5. Th\u1EC1 \u0111\u1EA5y."
+    text: "Bloody hell! This thing supposedly was able to come to villagers\u2019
+      dreams and cursed Father out? I swear, if I ever find out who made up that
+      blatant slander, I\u2019m gonna break their necks! "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "T\u1EF1 tin qu\xE1 nh\u1EC9? Anh qu\xEAn l\xE0 mu\u1ED1n t\xECm ra th\u1EB1ng
-      kh\u1ED1n \u0111\xF3 th\xEC m\xECnh ph\u1EA3i s\u1ED1ng s\xF3t r\u1EDDi kh\u1ECFi
-      \u0111\xE2y \xE0? "
+    text: "You\u2019re getting ahead of yourself again! Aren\u2019t you forgetting
+      that in order to even find whoever the bastard is, we\u2019d have to get out
+      of here alive first? "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "B\u1ED1n \u0111\xE1nh t\xE1m th\xF4i m\xE0. Nh\xECn th\u1EBF n\xE0o c\u0169ng
-      th\u1EA5y b\xEAn ta m\u1EDBi l\xE0 phe m\u1EA1nh h\u01A1n."
+    text: "Oh, please, it\u2019s just a four versus eight. No matter how I look at
+      it, our side has the advantage here. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
@@ -180,9 +171,8 @@ MonoBehaviour:
     shake: 1
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "Xem! Anh giai kia ch\u1EDD m\xE3i kh\xF4ng th\u1EA5y ch\xFAng ta ho\u1EA3ng
-      s\u1EE3, n\u1ED5i n\xF3ng r\u1ED3i k\xECa. Hai ng\u01B0\u1EDDi n\xF3i \u0111\xFAng
-      kh\xF4ng?"
+    text: "See? It seems like my dear \u201Cbrother\u201D waited and waited but we\u2019re
+      still not afraid yet, so he\u2019s angry now. Amirite, guys? "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0

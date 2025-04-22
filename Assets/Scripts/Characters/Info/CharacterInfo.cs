@@ -890,7 +890,7 @@ public class CharacterInfo
         if (effectData is not ChangeStatEffect changeStatEffect || changeStatEffect.value == 0)
             return;
         ApplyEffect(effectData);
-        Character.ShowMessage($"Tăng {changeStatEffect.value} sát thương");
+        Character.ShowMessage($"Increase {changeStatEffect.value} damage");
     }
 
     private void ApplyBlockSkill()

@@ -201,13 +201,13 @@ public class TutorialManager : SingletonMonoBehavior<TutorialManager>
 
         UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters
         {
-            Message = "Sau một vòng, điểm hành động vàng chuyển thành màu xanh và có thể được sử dụng",
+            Message = "After one round, the golden action point turns green and can be used.",
         });
         yield return new WaitForSeconds(4f);
 
         UIManager.Instance.OpenPopup(PopupType.Message, new MessagePopupParameters
         {
-            Message = "Điểm hành động đỏ chuyển thành màu vàng. Không thể được sử dụng",
+            Message = "The red action point turns golden. It cannot be used.",
         });
         yield return new WaitForSeconds(4f);
 

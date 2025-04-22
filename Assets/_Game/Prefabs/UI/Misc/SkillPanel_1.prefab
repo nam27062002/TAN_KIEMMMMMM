@@ -176,6 +176,8 @@ MonoBehaviour:
   - {fileID: 4331787213515183142}
   - {fileID: 3294304614243001574}
   - {fileID: 5082707089293337209}
+  skillImageParent: {fileID: 0}
+  currentTurnTypeIndex: 0
 --- !u!1 &1236468944559108457
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,9 +273,9 @@ MonoBehaviour:
   m_fontSize: 20
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 8
+  m_fontSizeMax: 20
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

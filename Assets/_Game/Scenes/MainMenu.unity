@@ -134,7 +134,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "C\xE0i \u0111\u1EB7t"
+      value: Setting
       objectReference: {fileID: 0}
     - target: {fileID: 6393791704101510186, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_Sprite
@@ -182,7 +182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -59
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -397,7 +397,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "Tho\xE1t"
+      value: Quit
       objectReference: {fileID: 0}
     - target: {fileID: 6393791704101510186, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_Sprite
@@ -445,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -191.3375
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -677,7 +677,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "T\u1EA3i ti\u1EBFn tr\xECnh"
+      value: Load game
       objectReference: {fileID: 0}
     - target: {fileID: 6393791704101510186, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_Sprite
@@ -725,7 +725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 73.337494
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -924,6 +924,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 547767103}
     m_Modifications:
+    - target: {fileID: 908808298167332236, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_text
+      value: Fable of Blade and Flower
+      objectReference: {fileID: 0}
+    - target: {fileID: 908808298167332236, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_fontSize
+      value: 31.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 908808298167332236, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1135280906018112128, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1004,9 +1016,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1302222713090306238, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3091000993604783875, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
       propertyPath: m_Name
       value: GameTitle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045334554774605954, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1e98110d1bd50e4439055dc29755cc49, type: 3}
+    - target: {fileID: 5045334554774605954, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045334554774605954, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5045334554774605954, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153247718893428015, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 535.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153247718893428015, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 67.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153247718893428015, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -49.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153247718893428015, guid: 57841e2b9c9ceb04d921ea7ac55be3cf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8.86
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1021,6 +1069,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 400073848}
     m_Modifications:
+    - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
+      propertyPath: m_text
+      value: New game
+      objectReference: {fileID: 0}
     - target: {fileID: 8203351197425597890, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_Name
       value: StartGame
@@ -1063,7 +1115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 205.67499
       objectReference: {fileID: 0}
     - target: {fileID: 8586378635269368847, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_LocalPosition.z

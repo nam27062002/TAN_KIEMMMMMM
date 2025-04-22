@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Level_Level2
   m_EditorClassIdentifier: 
   canSkipStartConversation: 1
-  levelName: "M\xE0n 1"
+  levelName: Level 2
   cameraSize: 7
   levelType: 2
   spawnerConfig:
     spawnPoints:
-      m_keys: 000000000200000003000000
+      m_keys: 00000000020000000300000001000000040000000500000008000000
       m_values:
       - points:
         - {x: 8, y: 6}
@@ -26,6 +26,14 @@ MonoBehaviour:
         - {x: 10, y: 6}
       - points:
         - {x: 8, y: 7}
+      - points:
+        - {x: 3, y: 3}
+      - points:
+        - {x: 4, y: 4}
+      - points:
+        - {x: 5, y: 5}
+      - points:
+        - {x: 6, y: 6}
   specialSpawnerConfig:
     spawnPoints:
       m_keys: 05000000

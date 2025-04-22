@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbda2cb0a2b6458599472f3a6c2e92d0, type: 3}
   m_Name: React_ConfirmPopup
   m_EditorClassIdentifier: 
-  title: "B\u1EA1n mu\u1ED1n ph\u1EA3n c\xF4ng?"
-  message: 
-  confirmText: "C\xF3"
-  cancelText: "H\u1EE7y"
+  title: Counter attack?
+  message: Enemy 1 has attacked Character 1 with Skill 1.\n  Choose to react?
+  confirmText: React
+  cancelText: Cancel

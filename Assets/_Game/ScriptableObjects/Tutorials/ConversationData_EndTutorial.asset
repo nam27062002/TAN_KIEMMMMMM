@@ -15,63 +15,60 @@ MonoBehaviour:
   conversation:
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "Mau \u0111i theo t\xF4i, R\u1ED1i Ng\u01B0\u1EDDi ch\u1EAFn ch\u1EAFn
-      ch\u1EC9 \u1EDF g\u1EA7n \u0111\xE2y th\xF4i."
+    text: 'Come on! Follow me! The Man-urchin is definitely somewhere around here! '
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "C\xF4 ph\xE1t hi\u1EC7n \u0111\u01B0\u1EE3c manh m\u1ED1i g\xEC th\xEC
-      c\u1EE9 gi\u1EA3i th\xEDch to\u1EA1c ra xem n\xE0o, sao ph\u1EA3i \xFAp \xFAp
-      m\u1EDF m\u1EDF th\u1EBF? "
+    text: 'Why? What clues did you find? Stop being cryptic about it and just spit
+      it out! '
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110\u01B0\u1EE3c r\u1ED3i, h\u1ECDc tr\xF2 th\xEDch nghe gi\u1EA3ng
-      b\xE0i nh\u01B0 th\u1EBF th\xEC \u0111\u1EC3 b\u1ED5n gi\xE1o t\u1EADp \u0111\xE2y
-      gi\u1EA3ng cho m\xE0 nghe.  "
+    text: 'Alright, young grasshopper. If the disciple wants to learn, the master
+      shall teach. '
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "Thi\u1EBFt Nh\xE2n th\u1EADt ra kh\xF4ng ph\u1EA3i sinh v\u1EADt c\xF3
-      t\u01B0 t\u01B0\u1EDFng ri\xEAng. C\u1EA3 b\u1EA7y n\u1EB1m d\u01B0\u1EDBi
-      s\u1EF1 ki\u1EC3m so\xE1t c\u1EE7a m\u1ED9t \xFD th\u1EE9c chung, m\u1ED9t
-      con ch\xFAa n\xE0o \u0111\xF3 n\xE1u m\xECnh s\xE2u trong hoang m\u1EA1c Tro
-      Tr\u1EAFng."
+    text: "Steelborn aren\u2019t creatures with minds of their own. Their entire
+      pack share a hive mind controlled by a leader hidden somewhere deep in the
+      White Ash Desert.  "
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "Ngo\u1EA1i tr\u1EEB l\xFAc \u0111\xE1nh nhau, m\u1ED7i Thi\u1EBFt Nh\xE2n
-      \u0111\u1EC1u c\xF3 m\u1ED9t l\u1ED9 tr\xECnh c\u1ED1 \u0111\u1ECBnh. C\xF3
-      l\u1EBD do s\u1ED1 l\u01B0\u1EE3ng c\xE1 th\u1EC3 trong b\u1EA7y qu\xE1 l\u1EDBn,
-      con ch\xFAa kh\xF4ng ti\u1EC7n ch\u1EC9 huy t\u1EEBng con. Th\u1EBF nh\u01B0ng,
-      anh c\u0169ng \u0111\xE3 theo d\xF5i con Thi\u1EBFt Nh\xE2n \u0111\xF3 ba ng\xE0y
-      r\u1ED3i, c\xF3 \xFD ki\u1EBFn g\xEC kh\xF4ng? "
+    text: "Aside from when they\u2019re in a fight, Steelborn always follow the same
+      route, almost like a routine. Perhaps the numbers of Steelborn in a pack are
+      too large for the leader to control each of them individually. But, you\u2019ve
+      been following that Steelborn for three days now, have you noticed anything? "
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "M\u1ED7i ng\xE0y, n\xF3 \u0111i m\u1ED9t con \u0111\u01B0\u1EDDng kh\xE1c
-      nhau. Gi\u1ED1ng nh\u01B0 th\u1EC3 n\xF3 kh\xF4ng nghe l\u1EC7nh c\u1EE7a con
-      ch\xFAa. Ho\u1EB7c l\xE0 n\xF3i, quy\u1EC1n ki\u1EC3m so\xE1t n\xF3 \u0111\xE3
-      b\u1ECB th\u1EE9 g\xEC \u0111\xF3 c\u01B0\u1EDBp m\u1EA5t? M\u1ED9t th\u1EE9
-      gi\u1ED1ng nh\u01B0 R\u1ED1i Ng\u01B0\u1EDDi? "
+    text: "Every day, it picked a different path. Like it wasn\u2019t following the
+      orders of its leader. Or rather, the control over it was taken by something
+      else? Something like the Man-urchin? "
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "V\xE0 v\xEC kh\xF4ng c\xF3 \u0111\u1EE7 Thi\u1EBFt Nh\xE2n, ho\u1EB7c
-      c\xF3 l\u1EBD l\xE0 kh\xF4ng bi\u1EBFt t\u1EADp t\xEDnh c\u1EE7a ch\xFAng,
-      n\xEAn m\u1EE5c ti\xEAu c\u1EE7a ch\xFAng ta m\u1EDBi \u0111\u1EC3 l\u1ED9
-      s\u01A1 h\u1EDF?"
+    text: "And because it doesn\u2019t have enough Steelborn under its control, or
+      maybe it doesn\u2019t know their behaviors, our target failed to cover its
+      track? "
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\xC0, \u0111\u1EA5y, h\xF3a ra anh c\u0169ng bi\u1EBFt \u0111\u1ED9ng
-      n\xE3o."
+    text: 'My my, turns out you do have a brain. '
     hasSpawnCharacter: 0
     spawnCharacters: []
+    shake: 0

@@ -181,7 +181,7 @@ public class UI_Ingame : MenuBase
         }
 
         if (characterParams.Character.IsMainCharacter)
-            characterFocusName.text = $"Lượt của {characterParams.Character.characterConfig.characterName}";
+            characterFocusName.text = $"Turn of {characterParams.Character.characterConfig.characterName}";
         endTurnButton.gameObject.SetActiveIfNeeded(characterParams.Character.CanEndTurn);
         characterName.text = characterParams.Character.characterConfig.characterName;
         characterIcon.sprite = characterParams.Character.characterConfig.characterIcon;
@@ -205,7 +205,7 @@ public class UI_Ingame : MenuBase
             if (poisonScript != null)
             {
                 notification.gameObject.SetActive(true);
-                notification.text = $"Độc Trùng: {poisonScript.VenomousParasite}";
+                notification.text = $"Venomous Parasites: {poisonScript.VenomousParasite}";
             }
         }
         else
@@ -297,7 +297,7 @@ public class UI_Ingame : MenuBase
 
     private void SetRound()
     {
-        roundIndex.text = $"Vòng " + GameplayManager.Instance.CurrentRound;
+        roundIndex.text = $"Round " + GameplayManager.Instance.CurrentRound;
     }
 
     private void OnSkipButtonClicked()
@@ -342,7 +342,7 @@ public class UI_Ingame : MenuBase
             if (poisonScript != null)
             {
                 notification.gameObject.SetActive(true);
-                notification.text = $"Độc Trùng: {poisonScript.VenomousParasite}";
+                notification.text = $"Venomous Parasites: {poisonScript.VenomousParasite}";
             }
         }
     }

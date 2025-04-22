@@ -15,86 +15,78 @@ MonoBehaviour:
   conversation:
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "Ra \u0111\xE2y l\xE0 R\u1ED1i Ng\u01B0\u1EDDi sao?"
+    text: 'So, this is the Man-urchin, eh? '
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "\u0110\u1EE9a con \u0111\u1ED9c nh\u1EA5t c\u1EE7a Th\u1EA7n T\xF4ng,
-      ph\u1EE5 ho\xE0ng c\u1EA5t c\xF4ng c\u1EA7u th\u1EA7n ph\u1EADt m\u1EDBi sinh
-      ra \u0111\u01B0\u1EE3c. K\u1EBB ch\xEDnh mi\u1EC7ng n\xF3i ph\u1EE5 ho\xE0ng
-      v\xF4 \u0111\u1EA1o b\u1EA5t nh\xE2n, b\u1ECB tr\u1EDDi ph\u1EA1t m\xE0 tuy\u1EC7t
-      h\u1EADu."
+    text: "   The only heir of Emperor Th\u1EA7n T\xF4ng, the one whom my Royal Father
+      had to beg the gods for. The one who cursed him out as inhumane and punsished
+      by the Heaven to have no descendant. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "H\xF3a ra c\u0169ng ch\u1EC9 c\xF3 th\u1EBF."
+    text: "And that\u2019s all you got? "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 2ac3f8aee4816ff44ae7fbc44e327d95, type: 3}
-    text: "Th\u1ED1ng l\u0129nh quan t\xE2m l\xE0m g\xEC? Ch\u1EB3ng qua c\u0169ng
-      l\xE0 c\xE1i chuy\u1EC7n tr\xE0 d\u01B0 t\u1EEDu h\u1EADu, th\u1EA7n qu\xE1i
-      v\u1EDB v\u1EA9n l\xF2e \u0111\xE1m d\xE2n \u0111en."
+    text: "Commander, there\u2019s no need to pay any mind to those baseless rumors.
+      They\u2019re just non-sense about gods and demons to fool peasants. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: b9f0356a1487a054aa17f9403c763869, type: 3}
-    text: "M\u1ED9t c\xE2u chuy\u1EC7n khi qu\xE2n ph\u1EA1m th\u01B0\u1EE3ng nh\u01B0
-      th\u1EBF, v\u1EADy m\xE0 trong v\xE0i n\u0103m ng\u1EAFn ng\u1EE7i \u0111\xE3
-      lan xa, c\u1EA3 thi\xEAn h\u1EA1 ai c\u0169ng bi\u1EBFt. N\u1EBFu n\xF3i \u1EDF
-      trong kh\xF4ng c\xF3 k\u1EBB n\xE0o h\xE0 h\u01A1i ti\u1EBFp s\u1EE9c, ch\u1EC9
-      d\u1EF1a v\xE0o l\u1EDDi \u0111\u1ED3n d\xE2n gian c\u0169ng c\xF3 th\u1EC3
-      t\u1EA1o th\xE0nh hi\u1EC7u qu\u1EA3 n\xE0y..."
+    text: "A story that was blatant slander against the Emperor himself, yet in just
+      a few years was able to spread to every corner of the kingdom. If you say there
+      was no one secretly pushing an agenda behind the scene, and it\u2019s all just
+      rumors and words of mouth\u2026 "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: b9f0356a1487a054aa17f9403c763869, type: 3}
-    text: "Th\xEC ch\u1EC9 c\xF3 k\u1EBB ng\u1ED1c m\u1EDBi tin."
+    text: Only fools would believe that
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "Nh\u1EEFng chuy\u1EC7n ch\xEDnh tr\u1ECB ch\xEDnh em n\xE0y c\xF3 th\u1EC3
-      ch\u1EDD \u0111\u1EBFn khi v\u1EC1 trong ph\xF2ng, \u0111\u1ED1t l\xF2 l\u1EEDa,
-      pha b\xECnh tr\xE0 n\xF3ng, l\xE0m \u0111\u0129a b\xE1nh r\xE1n r\u1ED3i t\u1EEB
-      t\u1EEB n\xF3i \u0111\u01B0\u1EE3c kh\xF4ng? "
+    text: 'Uh, guys, can we wait until after we get back to the comfort of our room,
+      with some deep-fried riceball and a hot cup of tea to start all these politics
+      talk? '
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "Ch\u1EADm \u0111\xE3. M\u1ECDi ng\u01B0\u1EDDi c\xF3 ng\u1EEDi \u0111\u01B0\u1EE3c
-      m\xF9i g\xEC kh\xF4ng?"
+    text: 'Wait. Do you guys smell it? '
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 2ac3f8aee4816ff44ae7fbc44e327d95, type: 3}
-    text: "Th\xEC... m\xF9i m\u1ED3 h\xF4i. V\u1EEBa \u0111\xE1nh nhau m\u1ED9t tr\u1EADn,
-      ng\u01B0\u1EDDi c\xF3 m\xF9i l\xE0 chuy\u1EC7n b\xECnh th\u01B0\u1EDDng. C\xF3
-      g\xEC \u0111\xE2u m\xE0 l\u1EA1?"
+    text: "Our sweat, you mean? Like, we\u2019ve just had a huge battle, boss, we\u2019re
+      bound to smell bad\u2026 "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "Kh\xF4ng. C\xF3 c\u1EA3 m\xF9i tanh. V\u1EEBa gi\u1ED1ng m\xF9i m\xE1u,
-      l\u1EA1i gi\u1ED1ng m\xF9i ch\u1EA5t \u0111\u1ED9c. "
+    text: "No. There\u2019s also a fishy smell. A little like blood, but at the same
+      time, like poison. "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "Xem ra ph\u1EA3i \u0111\u1EC3 sau th\u1EADt r\u1ED3i. M\u1ECDi ng\u01B0\u1EDDi
-      chu\u1EA9n b\u1ECB ngh\xEAnh chi\u1EBFn. "
+    text: "Guess we\u2019re really are saving the politics talk for later. Everyone,
+      prepare for battle! "
     hasSpawnCharacter: 0
     spawnCharacters: []
     shake: 0

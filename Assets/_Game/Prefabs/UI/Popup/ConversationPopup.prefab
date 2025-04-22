@@ -75,8 +75,11 @@ MonoBehaviour:
   conversationText: {fileID: 4529761117179828936}
   nextButton: {fileID: 5483717989638316667}
   skipButton: {fileID: 3390720851788576029}
+  bg: {fileID: 0}
   typeSpeed: 0.01
   autoNextDelay: 5
+  autoNextEnabled: 1
+  moveDuration: 3
 --- !u!1001 &7950829892162488805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92,6 +95,14 @@ PrefabInstance:
     - target: {fileID: 138850921452792186, guid: 665a3577aa3dd31428880f5b0dcc06a6, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311009776464981712, guid: 665a3577aa3dd31428880f5b0dcc06a6, type: 3}
+      propertyPath: m_text
+      value: Skip
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110800245734721139, guid: 665a3577aa3dd31428880f5b0dcc06a6, type: 3}
+      propertyPath: m_text
+      value: Next
       objectReference: {fileID: 0}
     - target: {fileID: 8637695002959325182, guid: 665a3577aa3dd31428880f5b0dcc06a6, type: 3}
       propertyPath: m_Pivot.x

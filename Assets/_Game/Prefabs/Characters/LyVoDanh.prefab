@@ -104,55 +104,38 @@ MonoBehaviour:
     characterIcon: {fileID: 21300000, guid: 16d4b1c00db987b48a4146fb70d10aab, type: 3}
     slideBarIcon: {fileID: 21300000, guid: db80c193a5922034a867789949cb417c, type: 3}
     characterNoBgIcon: {fileID: -4477680213585926689, guid: a791611831f15974aa600c1a8f970a7b, type: 3}
-    story: "\u0110\u1ED1i v\u1EDBi h\u1ED9i s\u0103n y\xEAu, g\xE3 l\xE0 m\u1ED9t
-      T\xFAy Tu La \u2013 nh\xE2n v\u1EADt phong v\xE2n c\u1EE7a th\u1EBF h\u1EC7
-      tr\u1EBB. \xC1o tr\u1EAFng tr\xEAn ng\u01B0\u1EDDi, ki\u1EBFm s\u1EAFt n\u01A1i
-      tay, eo \u0111eo b\u1EA7u r\u01B0\u1EE3u hai m\xE0u, t\xF3c bu\u1ED9c s\u1EE3i
-      d\xE2y \u0111\u1ECF m\xE1u. Kh\xF4ng bi\u1EBFt bao nhi\xEAu nhi\u1EC7m v\u1EE5
-      t\u01B0\u1EDFng ch\u1EEBng b\u1EBF t\u1EAFc b\u1ECB g\xE3 gi\u1EA3i quy\u1EBFt,
-      h\xE0ng ch\u1EE5c y\xEAu ma nguy hi\u1EC3m b\u1ECB g\xE3 b\u1EAFt v\u1EC1.
-      \u0110\u1ED1i v\u1EDBi nhi\u1EC1u ng\u01B0\u1EDDi, g\xE3 thanh ni\xEAn th\u01B0\u1EDDng
-      xuy\xEAn quay v\u1EC1 t\u1ED5ng b\u1ED9 trong b\u1ED9 d\u1EA1ng ng\u01B0\u1EDDi
-      n\u1ED3ng n\u1EB7c h\u01A1i men, \xE1o nhu\u1ED9m \u0111\u1EABm m\xE1u \u0111\u1ECF
-      kia ch\xEDnh l\xE0 t\u01B0\u01A1ng lai c\u1EE7a gi\u1EDBi s\u0103n y\xEAu.\r\n\r\n\r\n\u0110\u1ED1i
-      v\u1EDBi Tam Di\u1EC7n Th\u1EA7n Gi\xE1o \u2013 d\u1ECB gi\xE1o t\xF4n th\u1EDD
-      c\xE1i ch\u1EBFt \u2013 L\xFD V\xF4 Danh l\xE0 m\u1ED9t kh\xE1ch h\xE0ng l\u1EDBn.
-      G\xE3 kh\xF4ng bao gi\u1EDD m\u1EB7c c\u1EA3, ch\u01B0a l\u1EA7n n\xE0o thanh
-      to\xE1n ch\u1EADm d\xF9 ch\u1EC9 m\u1ED9t h\xF4m, v\xE0 m\u1EE5c ti\xEAu g\xE3
-      ch\u1ECDn th\xEC ch\u01B0a bao gi\u1EDD \u0111\u01A1n gi\u1EA3n. N\u1EBFu kh\xF4ng
-      ph\u1EA3i c\xE1i \u0111\u1EA7u c\u1EE7a c\u1EF1 ph\xFA m\u1ED9t ph\u01B0\u01A1ng
-      th\xEC c\u0169ng l\xE0 t\xEDnh m\u1EA1ng c\u1EE7a quan to m\u1ED9t ch\u1ED1n.
-      R\u1EA5t nhi\u1EC1u gi\xE1o ch\xFAng, th\u1EADm ch\xED l\xE0 c\u1EA3 c\xE1c
-      h\u1ED9 ph\xE1p, \u0111\u1EC1u r\u1EA5t th\xEDch nh\u1EADn nhi\u1EC7m v\u1EE5
-      c\u1EE7a L\xFD V\xF4 Danh.\r\n\r\n\r\n\u0110\u1ED1i v\u1EDBi nh\xE0 h\u1ECD
-      \u0110o\xE0n \u1EDF l\xE0ng Chi\xEAn \u0110\xE0n, L\xFD V\xF4 Danh l\xE0 k\u1EBB
-      khi\u1EBFn b\u1ECDn h\u1EAFn c\u1EA3m th\u1EA5y v\xF4 c\xF9ng ph\u1EE9c t\u1EA1p.
-      Y\xEAu, ph\u1EA7n v\xEC g\xE3 l\xE0 \u0111\u1ED3 \u0111\u1EC7 c\u1EE7a \u0110o\xE0n
-      \u0110\xF4ng H\u1EA3i \u2013 gia ch\u1EE7 \u0111\u1EDDi tr\u01B0\u1EDBc c\u1EE7a
-      h\u1ECD, ph\u1EA7n l\xE0 v\xEC nh\u1EDD c\xF3 g\xE3 m\xE0 h\xE0ng n\u0103m
-      l\xE0ng Chi\xEAn \u0110\xE0n thu v\u1EC1 h\xE0ng r\u01B0\u01A1ng b\u1EA1c tr\u1EAFng,
-      tr\u1EDF th\xE0nh tr\u1ECDc ph\xFA nh\u1EA5t nh\xEC thi\xEAn h\u1EA1. C\xF2n
-      h\u1EADn l\xE0 do \u0110o\xE0n \u0110\xF4ng H\u1EA3i v\xEC gi\u1EEF t\xEDnh
-      m\u1EA1ng c\u1EE7a L\xFD V\xF4 Danh m\xE0 \u0111\u1EBFn Thi\xEAn \u0110\xF4
-      ch\u1ECBu ch\u1EBFt.\r\n\r\nH\u1ECD \u0110o\xE0n b\u1ECDn h\u1ECD c\u0169ng
-      v\xEC chuy\u1EC7n n\xE0y m\xE0 b\u1ECB li\xEAn \u0111\u1EDBi, n\u1EBFu kh\xF4ng
-      c\xF3 t\u1EA5m Kim B\xE0i Mi\u1EC5n T\u1EED \u0111\u01B0\u1EE3c Th\u1EA7n T\xF4ng
-      ban cho th\xEC \u0111\xE3 b\u1ECB t\u1ED9i tru di tam t\u1ED9c, ch\u1EBFt kh\xF4ng
-      c\xF2n m\u1ED9t m\u1ED1ng.\r\n\r\n\r\n\u0110\u1ED1i v\u1EDBi th\u01B0\u01A1ng
-      h\u1ED9i H\u1ED3ng Giang \u2013 th\u01B0\u01A1ng h\u1ED9i l\u1EDBn nh\u1EA5t
-      c\u1EA3 n\u01B0\u1EDBc \u2013 L\xFD V\xF4 Danh l\xE0 m\u1ED9t d\u1ECB lo\u1EA1i
-      \u0111\u1EA7y m\xE2u thu\u1EABn.\r\n\r\n\r\nC\xF2n \u0111\u1ED1i v\u1EDBi Vong
-      \u2013 t\u1ED5 ch\u1EE9c ph\u1EA3n tri\u1EC1u \u0111\xECnh kh\xE9t ti\u1EBFng
-      \u2013 L\xFD V\xF4 Danh c\xF3 \u0111\u1ECBa v\u1ECB kh\xF4ng th\u1EC3 thay
-      th\u1EBF. Kh\xF4ng ch\u1EC9 v\xEC g\xE3 l\xE0 \u0111\u1EC7 t\u1EED c\u1EE7a
-      \u0110o\xE0n \u0110\xF4ng H\u1EA3i, ng\u01B0\u1EDDi v\u1EEBa k\u1EBF th\u1EEBa
-      ch\u1EE9c th\u1ED1ng l\u0129nh c\u1EE7a t\u1ED5 ch\u1EE9c, m\xE0 c\xF2n v\xEC
-      d\xF2ng m\xE1u \u0111ang ch\u1EA3y trong ng\u01B0\u1EDDi g\xE3.\r\n\r\n\r\nL\xFD
-      V\xF4 Danh l\xE0 con trai ru\u1ED9t, ho\xE0ng t\u1EED duy nh\u1EA5t c\u1EE7a
-      Th\u1EA7n T\xF4ng, k\u1EBB c\xF3 quy\u1EC1n \u0111\u01B0\u1EE3c th\u1EEBa h\u01B0\u1EDFng
-      ngai r\u1ED3ng \u1EDF th\xE0nh Thi\xEAn \u0110\xF4.\r\n\r\n\r\nL\xFD V\xF4
-      Danh th\u1EC9nh tho\u1EA3ng c\u0169ng t\u1EF1 h\u1ECFi, r\u1ED1t cu\u1ED9c
-      \u0111\xE2u m\u1EDBi l\xE0 con ng\u01B0\u1EDDi th\u1EADt c\u1EE7a m\xECnh."
+    story: "To the demon hunters, he was known as the Drunken Asura \u2013 a famous
+      figure of the younger generation. Wearing white clothes, iron-sword in hand,
+      with a two-colored wine gourd tied to his waist and a blood red string tying
+      his hair back, he solved countless of missions that seemed to have been deadlocked
+      and captured dozens of dangerous demons. To many people, the young man who
+      often came back to HQ reeking of alcohol and soaked in blood was the future
+      of the demon hunters.\r\n\r\n\r\nTo the Cult of the Three Visages \u2013 a
+      heretical cult that worshipped death \u2013 L\xFD V\xF4 Danh was a big customer.
+      He never bargained, never paid late for even a day, and the targets he chose
+      were never simple. If it wasn\u2019t the head of a local tycoon, then it was
+      the life of a local official. Many of the cultists, even the high ranking guardians,
+      all loved to accept L\xFD V\xF4 Danh\u2019s missions.\r\n\r\n\r\nTo the \u0110o\xE0n
+      clan in Chi\xEAn \u0110\xE0n Village, L\xFD V\xF4 Danh was someone who invoked
+      extremely complicated feelings. On one hand, they loved him. Partly because
+      he was the disciple of \u0110o\xE0n \u0110\xF4ng H\u1EA3i \u2013 their previous
+      clan head, partly because thanks to him, Chi\xEAn \u0110\xE0n Village has a
+      stable income of silver chests every year, becoming one of the richest people
+      in the world. On the other hand, they loathed him. Because, to save L\xFD V\xF4
+      Danh\u2019s life, \u0110o\xE0n \u0110\xF4ng H\u1EA3i went to Thi\xEAn \u0110\xF4
+      Citadel to die, implicating the rest of the \u0110o\xE0n clan in the process.
+      If it weren\u2019t for the Imunity Card that the late emperor Th\u1EA7n T\xF4ng
+      granted their clan, they all would have been wiped out without a single descendants
+      left.\r\n\r\n\r\nTo the Red River Trading Guild \u2013 the largest merchant
+      guild in the country, L\xFD V\xF4 Danh was a special case, always so contradictory
+      to himself.\r\n\r\n\r\nWhile to Vong \u2013 the notorious insurgent organization,
+      L\xFD V\xF4 Danh had an irreplaceable position. Not only because, being the
+      disciple of \u0110o\xE0n \u0110\xF4ng H\u1EA3i, he\u2019d just inherited its
+      leadership, but also because of the blood flowing in his veins.\r\n\r\n\r\nL\xFD
+      V\xF4 Danh was the biological son, the sole Prince and heir of Emperor Th\u1EA7n
+      T\xF4ng, and the only person who had a claim to the throne in Thi\xEAn \u0110\xF4
+      Citadel.\r\n\r\n\r\nSometimes, L\xFD V\xF4 Danh would wonder to himself, which
+      of those identities was really his truest self?"
     characterAttributes:
       maxMoveRange: 5
       health: 40
@@ -191,7 +174,7 @@ MonoBehaviour:
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 5a881b8a6a8de22419817212449f2a56, type: 3}
-      name: "\u0110\xE1nh th\u01B0\u1EDDng"
+      name: Normal Attack
       skillIndex: 0
       mpCost: 0
       damageDescription: 4-11
@@ -204,7 +187,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: f8c6300edbc219b4099992fb8366474e, type: 3}
-      name: "V\u1EA5n Truy L\u01B0u"
+      name: Questioning the Monks in Black
       skillIndex: 1
       mpCost: 2
       damageDescription: 8-20
@@ -214,12 +197,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "G\xE2y 1,5*s\xE1t th\u01B0\u01A1ng c\u01A1 b\u1EA3n c\u1EE7a
-        v\xF5 k\u1EF9. \u0110\u1ED3ng th\u1EDDi, tr\u1EEB ch\xE2n kh\xED c\u1EE7a
-        \u0111\u1ED1i th\u1EE7 b\u1EB1ng 0,5s\xE1t th\u01B0\u01A1ng g\xE2y ra."
+      description: dealing 1.5 times the base skill dmg. At the same time, reducing
+        the opponent's MP by 0.5 of the dmg dealt
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 4a284cf3f3d4fae4baee0a01744b5c0c, type: 3}
-      name: "Nh\u1EA5t Giang Y\xEAn Tr\xFAc"
+      name: By the Misty Bamboo Riverside
       skillIndex: 2
       mpCost: 0
       damageDescription: 
@@ -229,12 +211,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "U\u1ED1ng r\u01B0\u1EE3u m\u1EA1nh V\xE2n Thi\xEAu, t\u0103ng
-        s\xE1t th\u01B0\u01A1ng t\u01B0\u01A1ng \u0111\u01B0\u01A1ng v\u1EDBi 10%
-        l\u01B0\u1EE3ng m\xE1u hi\u1EC7n t\u1EA1i."
+      description: "Drink the strong wine V\xE2n Thi\xEAu, increasing dmg dealt by
+        10% current HP."
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 748b49141ded6bb4cb3e062af2c159e2, type: 3}
-      name: "Th\u1EA5t Ca Ng\xE2m"
+      name: The Seven songs
       skillIndex: 3
       mpCost: 3
       damageDescription: 8-21
@@ -244,11 +225,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: "Hai nh\xE1t ch\xE9m g\xE2y \u201Cch\u1EA3y m\xE1u\u201D. "
+      description: the double-slash inflicts bleeding on target.
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 8c1777af8fdc083458f7882b7817ba9f, type: 3}
-      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      name: Normal Attack
       skillIndex: 0
       mpCost: 0
       damageDescription: 4-11
@@ -261,7 +242,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 66c1d166a644d474aa81ba1e38e8b0ff, type: 3}
-      name: "Hu\u1EC1 H\u1ED3 Vi\u1EC5n Du"
+      name: A Drunkard wanders toward the Monastery
       skillIndex: 1
       mpCost: 2
       damageDescription: 8-20
@@ -271,11 +252,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "G\xE2y cho\xE1ng, \u0111\u1ED3ng th\u1EDDi t\u0103ng t\u1EC9
-        l\u1EC7 b\u1EA1o k\xEDch cho b\u1EA3n th\xE2n v\xE0 \u0111\u1ED3ng \u0111\u1ED9i."
+      description: Stunning enemy while increasing critical hit rate for self and
+        all allies.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: a58a7c4ec4bd53843a53239ef355700a, type: 3}
-      name: "Li\xEAn V\u1EA5n"
+      name: Face redder than a Lotus
       skillIndex: 2
       mpCost: 0
       damageDescription: 
@@ -285,14 +266,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "U\u1ED1ng c\u1EA3 hai lo\u1EA1i r\u01B0\u1EE3u pha v\xE0o nhau,
-        t\u0103ng m\u1EA1nh kh\u1EA3 n\u0103ng tr\xE1nh n\xE9. K\u1EBB \u0111\u1ECBch
-        t\u1EA5n c\xF4ng tr\u01B0\u1EE3t ch\u1EAFc ch\u1EAFn s\u1EBD say. K\u1EBB
-        \u0111\u1ECBch say t\u1EA5n c\xF4ng tr\u01B0\u1EE3t s\u1EBD b\u1ECB ph\u1EA3n
-        s\xE1t th\u01B0\u01A1ng."
+      description: Drink a mixture of the 2 wines, massively increases dodge rate.
+        Enemies who miss are guaranteed to get drunk. Drunken enemies who miss will
+        be dealt spike dmg.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 7ee6655c6c54f3149a563a40311e01b6, type: 3}
-      name: "B\u1EA5t Th\xE0nh Danh"
+      name: Not Anybody Important
       skillIndex: 3
       mpCost: 3
       damageDescription: 8-21
@@ -302,13 +281,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: "Hai nh\xE1t ch\xE9m ch\u1EA5n \u0111\u1ED9ng ph\u1EE7 t\u1EA1ng,
-        v\xF4 hi\u1EC7u h\xF3a ph\xF2ng ng\u1EF1 c\u1EE7a \u0111\u1ECBch, \u0111\xF2n
-        \u0111anh ch\u1EAFc ch\u1EAFn tr\xFAng \u0111\xEDch."
+      description: The double-slash shook the enemies' insides, disabling their defense.
       canBeDodged: 0
     combatSkill:
     - icon: {fileID: 21300000, guid: 9abd56b3b82f07549b9766afd97db3bb, type: 3}
-      name: "\u0110\xE1nh th\u01B0\u1EDDng"
+      name: Normal Attack
       skillIndex: 0
       mpCost: 0
       damageDescription: 4-11
@@ -321,7 +298,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: f1127bb72f6e3fe44ad3741940e4a4cb, type: 3}
-      name: "S\u1EA1 B\u1EA5t Ki\u1EBFn"
+      name: Sudden Spell of Dizziness
       skillIndex: 1
       mpCost: 2
       damageDescription: 8-20
@@ -331,12 +308,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 1
       damageType: 4
-      description: "Ch\u1EB7n s\xE1t th\u01B0\u01A1ng t\u1EEB k\u1EBB th\xF9, \u0111\u1ED3ng
-        th\u1EDDi ph\u1EA3n c\xF4ng khi\u1EBFn \u0111\u1ED1i ph\u01B0\u01A1ng b\u1ECB
-        ph\xE1 kh\xED. "
+      description: Blocking and countering the opponent's attack, disrupting their
+        chi flow. Inflicts Chi Ban for 2 turns.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: c85a2b1dd3dfcad4c9099661931b738b, type: 3}
-      name: "M\xEDnh \u0110\xEDnh Quy Lai"
+      name: Walking Home Drunk
       skillIndex: 2
       mpCost: 0
       damageDescription: 
@@ -346,11 +322,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "U\u1ED1ng r\u01B0\u1EE3u nh\u1EB9 M\xF4ng V\u0169, gia t\u0103ng
-        kh\u1EA3 n\u0103ng h\xFAt m\xE1u  "
+      description: "Drinking the light wine M\xF4ng V\u0169, gaining lifesteal."
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 122e4b20043b2004b9195a0f862c1f1e, type: 3}
-      name: "\u0110\u1EA1p Thi\xEAn Nhai"
+      name: Sorrowful Journey
       skillIndex: 3
       mpCost: 3
       damageDescription: 8-21
@@ -360,11 +335,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: "Hai nh\xE1t ch\xE9m \u0111\xE1nh ng\xE3 \u0111\u1ED1i th\u1EE7. "
+      description: The double-slash makes enemy falls down, inflicts prone to the
+        target.
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
-      name: "Phi H\u1ED3ng"
+      name: Bloody Rainbow
       skillIndex: 100
       mpCost: 0
       damageDescription: 
@@ -374,18 +350,15 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "M\u1ED7i 4 m\xE1u m\u1EA5t \u0111i, t\u0103ng 1 s\xE1t th\u01B0\u01A1ng
-        (max 5). M\u1ED7i 8 m\xE1u m\u1EA5t \u0111i, gi\u1EA3m s\u1ED1 c\u1EA7n c\xF3
-        \u0111\u1EC3 roll ra crit \u0111i 1 (max 3). M\u1ED7i 2 n\u1ED9i l\u1EF1c
-        m\u1EA5t \u0111i, t\u0103ng 2 s\xE1t th\u01B0\u01A1ng nh\u1EADn v\xE0o v\xE0
-        1 \xF4 di chuy\u1EC3n (max 5) \u0110i\u1EC3m h\xE0nh \u0111\u1ED9ng s\u1EED
-        d\u1EE5ng \u1EDF l\u01B0\u1EE3t \u0111\u1ED1i ph\u01B0\u01A1ng s\u1EBD chuy\u1EC3n
-        v\xE0ng, nh\u01B0ng trong l\u01B0\u1EE3t \u0111\u1ED3ng \u0111\u1ED9i s\u1EBD
-        chuy\u1EC3n \u0111\u1ECF."
+      description: "Every 4 HP lost, increases dmg dealt by 1 (max 5). Every 8 HP
+        lost, \r\nreduce the requirements for rolling a crit by 1 (max 3). Every
+        2 MP \r\nlost, increases dmg received by 2 and movement range by 1 (max 5).
+        \r\nAP used in enemies\u2019 turns will change to yellow but AP used in allies\u2019
+        \r\nturns will change to red."
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
-      name: "To\xE0n Phong"
+      name: Flying Tempest
       skillIndex: 0
       mpCost: 0
       damageDescription: 
@@ -395,10 +368,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 5 \xF4. \r\nHi\u1EC7u
-        \u1EE9ng: Sau khi di chuy\u1EC3n 1 qu\xE3ng \u2265 5 \xF4, g\xE2y s\xE1t
-        th\u01B0\u01A1ng t\u01B0\u01A1ng \u0111\u01B0\u01A1ng v\u1EDBi \u0111\xF2n
-        \u0111\xE1nh th\u01B0\u1EDDng ra xung quanh"
+      description: "Base movement range: 5. Effects: after moving 5 square or more,
+        \r\ndeal dmg equal to that of a normal attack to all enemies around self."
       canBeDodged: 1
   passiveSkills:
   - {fileID: 1068771806723808600}

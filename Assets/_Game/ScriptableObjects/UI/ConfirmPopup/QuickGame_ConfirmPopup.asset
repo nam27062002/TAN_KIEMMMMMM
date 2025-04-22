@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbda2cb0a2b6458599472f3a6c2e92d0, type: 3}
   m_Name: QuickGame_ConfirmPopup
   m_EditorClassIdentifier: 
-  title: "Tho\xE1t tr\xF2 ch\u01A1i?"
-  message: "B\u1EA1n c\xF3 mu\u1ED1n tho\xE1t T\xE0n Ki\u1EBFm?"
-  confirmText: "Tho\xE1t"
-  cancelText: "Hu\u1EF7"
+  title: Quit?
+  message: "Do you want to quit T\xE0n Ki\u1EBFm?"
+  confirmText: Save & Quit
+  cancelText: Cancel

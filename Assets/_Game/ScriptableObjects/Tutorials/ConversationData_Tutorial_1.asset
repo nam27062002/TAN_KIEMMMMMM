@@ -15,49 +15,70 @@ MonoBehaviour:
   conversation:
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110o\xE0n Gia Linh: V\xE3ng s\u1EF1 th\u01B0\u01A1ng t\xE2m giang nguy\u1EC7t
-      hi\u1EC3u. Y\xEAn ba h\xE0 x\u1EE9 \u0111i\u1EBFu anh h\xF9ng.\_"
+    text: "Only the moon knows the sorrows of the past. Only the waves can send off
+      heroes to the afterlife. \u266A (???)"
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "L\xFD V\xF4 Danh: Be b\xE9 c\xE1i m\u1ED3m th\xF4i b\xE0 n\u1ED9i. C\u1EE9
-      ngo\u1EA1c c\xE1i m\u1ECF ra th\u1EBF, s\u1EE3 n\xF3 kh\xF4ng nghe th\u1EA5y
-      m\xECnh \u0111\u1EA5y \xE0? Ch\u1EB3ng may n\xF3 k\xE9o c\u1EA3 b\u1EA7y \u0111\u1EBFn
-      th\xEC c\xF4 t\u1EF1 \u0111i m\xE0 \u0111\xE1nh nh\xE9?\_"
+    text: 'Will you keep it down? Stop being so loud! Are you trying to get it to
+      notice us? If it calls its entire pack, are you gonna deal with them? '
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110o\xE0n Gia Linh: Lanh cha lanh chanh! T\xF4i ch\u01B0a n\xF3i g\xEC
-      th\xEC th\xF4i, anh lo b\xF2 tr\u1EAFng r\u0103ng c\xE1i g\xEC?\_"
+    text: "Oh don\u2019t get ahead of yourself! What are you worrying about? "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110o\xE0n Gia Linh: Y\xEAn t\xE2m. T\xF4i d\xE1m l\u1EA5y danh d\u1EF1
-      ra kh\u1EB3ng \u0111\u1ECBnh. Ch\u1EAFc ch\u1EAFn l\xE0 con n\xE0y! Ch\u1EC9
-      c\u1EA7n \u0111i theo l\xE0 ch\xFAng ta s\u1EBD t\xECm \u0111\u01B0\u1EE3c
-      n\u01A1i \u201Cn\xF3\u201D \u0111ang tr\u1ED1n.\_"
+    text: "Rest assured. I can bet my honor on it if you like. It\u2019s most definitely
+      this one! We just need to follow it and it will lead us right to where \u201Cthat
+      thing\u201D is hiding. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "L\xFD V\xF4 Danh: V\u1EADy sao? T\xF4i th\u1EA5y n\xF3 c\xF3 kh\xE1c g\xEC
-      nh\u1EEFng con Thi\u1EBFt Nh\xE2n b\xECnh th\u01B0\u1EDDng \u0111\xE2u?\_"
+    text: "Really? I don\u2019t see anything different about it from the other Steelborn\u2026"
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110o\xE0n Gia Linh: Th\u1EBF m\u1EDBi n\xF3i l\xE0 anh lanh chanh.
-      Y\xEAn t\xE2m \u0111i. Cho d\xF9 anh kh\xF4ng tin t\xF4i, th\xEC c\u0169ng
-      ph\u1EA3i tin v\xE0o h\u1ECD \u0110o\xE0n ch\u1EE9? Th\u1EED h\u1ECFi tr\xEAn
-      \u0111\u1EDDi c\xF2n ai hi\u1EC3u r\xF5 \u0111\xE1m Thi\u1EBFt Nh\xE2n n\xE0y
-      h\u01A1n nh\xE0 ch\xFAng t\xF4i?\_"
+    text: "That\u2019s why I said you were getting ahead of yourself. Stop worrying!
+      Even if you don\u2019t trust me, you should at least trust the \u0110o\xE0n
+      family name, shouldn\u2019t you? Think about it, who else in the entire world
+      would understand these Steelborn better than my clan? "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "L\xFD V\xF4 Danh: H\u1ECD \u0110o\xE0n th\xEC t\xF4i kh\xF4ng d\xE1m nghi
-      ng\u1EDD, nh\u01B0ng m\xE0 c\xF4 th\xEC kh\xE1c.\_"
+    text: "Oh, I trust the \u0110o\xE0n clan, but you on the other hand\u2026 "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110o\xE0n Gia Linh: V\xE2ng v\xE2ng. Th\u1EBF \u0111\u1EC3 t\xF4i vi\u1EBFt
-      th\u01B0 v\u1EC1 nh\xE0 g\u1ECDi ng\u01B0\u1EDDi kh\xE1c \u0111\u1EBFn cho
-      anh an t\xE2m nh\xE9? T\xF4i v\u1EC1...\_"
+    text: "I can always write home and get you someone else if it makes you feel
+      better. I\u2019m going home\u2026 "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "L\xFD V\xF4 Danh: Kh\xF4ng tr\xE2u th\xEC \u0111\xE0nh b\u1EAFt ch\xF3
-      \u0111i c\xE0y, m\xE9o m\xF3 c\xF3 h\u01A1n kh\xF4ng c\u0169ng \u0111\u01B0\u1EE3c.\_"
+    text: "I mean, they do say if you don\u2019t have a buffalo, a dog can plow the
+      field just fine. You\u2019re still better than nothing, I suppose. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110o\xE0n Gia Linh: T\xF4i m\xE0 l\xE0 ch\xF3 th\xEC anh ch\u1EC9 \u0111\xE1ng
-      l\xE0m con l\u1EE3n.\_"
+    text: "Well, if I\u2019m a dog, then you\u2019re a pig. "
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0

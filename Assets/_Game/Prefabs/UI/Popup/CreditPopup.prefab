@@ -555,31 +555,27 @@ MonoBehaviour:
   creditText: {fileID: 5523085906723709683}
   scrollRect: {fileID: 1600917933025700958}
   credits:
-  - "\u0110\u1EA7u ti\xEAn, C\xF2 L\xF9i team ch\xE2n th\xE0nh xin l\u1ED7i v\xEC
-    \u0111\xE3 g\u1ECDi b\xE1c Rick Astley xu\u1EA5t hi\u1EC7n tr\u01B0\u1EDBc m\u1EB7t
-    ng\u01B0\u1EDDi ch\u01A1i nh\u01B0 v\u1EADy.\_\_"
-  - "Nh\u01B0ng v\u1EDBi kinh nghi\u1EC7m ch\u01A1i game hai m\u01B0\u01A1i n\u0103m,
-    c\u0169ng nh\u01B0 tham kh\u1EA3o \xFD ki\u1EBFn c\u1EE7a nhi\u1EC1u tester,
-    b\u1ECDn m\xECnh \u0111\xE3 \u0111i \u0111\u1EBFn k\u1EBFt lu\u1EADn ch\u1EC9
-    c\xF3 rickroll th\xEC may ra anh em game th\u1EE7 m\u1EDBi ch\u1ECBu ng\xF3 qua
-    c\xE1i credit m\u1ED9t ch\xFAt."
-  - "Gi\u1EDD, n\u1EBFu m\u1ECDi ng\u01B0\u1EDDi \u0111\xE3 ch\xFA \xFD r\u1ED3i,
-    b\u1ECDn m\xECnh xin \u0111\u01B0\u1EE3c g\u1EEDi l\u1EDDi c\u1EA3m \u01A1n ch\xE2n
-    th\xE0nh \u0111\u1EBFn m\u1ECDi ng\u01B0\u1EDDi v\xEC \u0111\xE3 b\u1ECF th\u1EDDi
-    gian tr\u1EA3i nghi\u1EC7m b\u1EA3n ch\u01A1i th\u1EED c\u1EE7a T\xE0n Ki\u1EBFm.
-    D\xF9 c\xF2n nhi\u1EC1u thi\u1EBFu s\xF3t, v\xEC c\u1EA3 nguy\xEAn nh\xE2n ch\u1EE7
-    quan l\u1EABn kh\xE1ch quan, team C\xF2 L\xF9i th\u1EADt s\u1EF1 c\u1EA3m k\xEDch
-    v\xEC m\u1ECDi ng\u01B0\u1EDDi \u0111\xE3 l\u1EF1a ch\u1ECDn \u1EDF l\u1EA1i
-    \u0111\u1EBFn t\u1EADn c\xE1i k\u1EBFt.\_"
-  - "N\u1EBFu m\u1ECDi ng\u01B0\u1EDDi th\u1EA5y h\u1EE9ng th\xFA v\u1EDBi nh\xE2n
-    v\u1EADt, th\u1EBF gi\u1EDBi, ho\u1EB7c l\u1ED1i ch\u01A1i c\u1EE7a b\u1EA3n
-    demo, th\xEC team hi v\u1ECDng m\u1ECDi ng\u01B0\u1EDDi c\xF3 th\u1EC3 gi\xFAp
-    b\u1ECDn m\xECnh bi\u1EBFn b\u1EA3n ch\u01A1i th\u1EED n\xE0y tr\u1EDF th\xE0nh
-    m\u1ED9t game ho\xE0n ch\u1EC9nh. C\xF2 L\xF9i team cam k\u1EBFt s\u1EBD kh\u1EAFc
-    ph\u1EE5c, c\u1EA3i thi\u1EC7n nh\u1EEFng v\u1EA5n \u0111\u1EC1 c\xF2n t\u1ED3n
-    \u0111\u1ECDng \u1EDF b\u1EA3n demo \u0111\u1EC3 c\xF3 th\u1EC3 \u0111\u01B0a
-    \u0111\u1EBFn cho ng\u01B0\u1EDDi ch\u01A1i m\u1ED9t s\u1EA3n ph\u1EA9m cu\u1ED1i
-    c\xF9ng ch\u1EA5t l\u01B0\u1EE3ng nh\u1EA5t."
+  - 'Firstly, Team Turtley Storked sincerely apologize for that Rickroll just now. '
+  - 'However, as gamers ourselves for over twenty years, as well as consulting with
+    beta testers, we kinda came to the conclusion that Rickroll was perhaps the only
+    bold and insane enough move we could pull that stood any chance of piquing your
+    interest to look through our credits. '
+  - "Gi\u1EDD, Now that we have your attention, we\u2019d like to sincerely thank
+    you for trying out this demo of our game \u2013 The Fable of Sword and Flower.
+    Despite our many shortcomings as an Indie Team, Turtley Storked are grateful
+    you\u2019ve chosen to play until this credit. m\u1ECDi ng\u01B0\u1EDDi \u0111\xE3
+    ch\xFA \xFD r\u1ED3i, b\u1ECDn m\xECnh xin \u0111\u01B0\u1EE3c g\u1EEDi l\u1EDDi
+    c\u1EA3m \u01A1n ch\xE2n th\xE0nh \u0111\u1EBFn m\u1ECDi ng\u01B0\u1EDDi v\xEC
+    \u0111\xE3 b\u1ECF th\u1EDDi gian tr\u1EA3i nghi\u1EC7m b\u1EA3n ch\u01A1i th\u1EED
+    c\u1EE7a T\xE0n Ki\u1EBFm. D\xF9 c\xF2n nhi\u1EC1u thi\u1EBFu s\xF3t, v\xEC c\u1EA3
+    nguy\xEAn nh\xE2n ch\u1EE7 quan l\u1EABn kh\xE1ch quan, team C\xF2 L\xF9i th\u1EADt
+    s\u1EF1 c\u1EA3m k\xEDch v\xEC m\u1ECDi ng\u01B0\u1EDDi \u0111\xE3 l\u1EF1a ch\u1ECDn
+    \u1EDF l\u1EA1i \u0111\u1EBFn t\u1EADn c\xE1i k\u1EBFt.\_"
+  - "If you\u2019ve found yourself enjoying this demo, whether because of the characters,
+    world building, or gameplay, then our team hope you could help us turn this demo
+    into a complete game. Our team promise we\u2019ll fix and improve any outstanding
+    problems and issues in the demo, so that the final product will have the highest
+    quality within our capability and budget. "
   rectMask2D: {fileID: 4350433493766308048}
 --- !u!82 &584546097839046488
 AudioSource:

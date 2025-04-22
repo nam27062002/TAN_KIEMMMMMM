@@ -21,7 +21,7 @@
     {
         if (DamageTakenParams.CanDodge)
         {
-            Character.ShowMessage("Né");
+            Character.ShowMessage("Dodge");
         }
         if (CanCounter())
         {

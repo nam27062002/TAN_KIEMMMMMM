@@ -15,12 +15,19 @@ MonoBehaviour:
   conversation:
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "\u0110o\xE1n \u0111\xFAng r\u1ED3i. R\u1ED1i Ng\u01B0\u1EDDi ch\u1EAFc
-      ch\u1EAFn \u1EDF \u0111\xE2y."
+    text: 'I knew it! The Man-urchin is definitely nearby! '
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 423a9da2fb801e44eb5742257ff9abbe, type: 3}
-    text: "\u0110\xE1nh xong hai con n\xE0y \u0111i r\u1ED3i n\xF3i \u0111i c\xF3
-      \u0111\u01B0\u1EE3c kh\xF4ng?"
+    text: 'Fight now, talk later! '
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0
   - useAvt: 1
     avatar: {fileID: 21300000, guid: 07f3b70fd920e594587fc1f5b3c6cb49, type: 3}
-    text: "R\u1ED3i r\u1ED3i. T\u1EF1 d\u01B0ng nghi\xEAm t\xFAc th\u1EBF?"
+    text: 'Alright alright. Why so serious all of a sudden? '
+    hasSpawnCharacter: 0
+    spawnCharacters: []
+    shake: 0

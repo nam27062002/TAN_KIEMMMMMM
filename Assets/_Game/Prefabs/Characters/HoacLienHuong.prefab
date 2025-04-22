@@ -109,61 +109,46 @@ MonoBehaviour:
     characterIcon: {fileID: 21300000, guid: 58031a0e34e068948b7c03fb8666c0c1, type: 3}
     slideBarIcon: {fileID: 21300000, guid: ba210eef1d5e48448a88c12ecea548a0, type: 3}
     characterNoBgIcon: {fileID: -4284080389631902950, guid: af9ac18f582242145a6ec78860c4a297, type: 3}
-    story: "\u1EDE n\u01B0\u1EDBc Nguy\u1EC7t Minh v\u1EABn c\xF3 c\xE1ch n\xF3i
-      \u201Cx\u01B0\u1EDBng ca v\xF4 lo\xE0i\u201D, \xFD l\xE0 c\xE1nh ph\u01B0\u1EDDng
-      ch\xE8o con h\xE1t l\xE0 lo\u1EA1i c\xF9ng \u0111inh m\u1EA1t h\u1EA1ng, kh\xF4ng
-      \u0111\xE1ng \u0111\u01B0\u1EE3c x\u1EBFp v\xE0o t\u1EE9 d\xE2n. \u1EA4y l\xE0
-      do m\u1EA5y tr\u0103m n\u0103m tr\u01B0\u1EDBc, c\xF3 m\u1ED9t v\u1ECB ho\xE0ng
-      \u0111\u1EBF h\u1EA1 ch\u1EC9 cho H\u1ED9 B\u1ED9 th\u1ED1ng k\xEA nh\u1EEFng
-      ng\u01B0\u1EDDi h\xE1t rong, \u0111\xE0o k\xE9p c\u1EA3 n\u01B0\u1EDBc l\u1EA1i,
-      th\xE0nh l\u1EADp m\u1ED9t danh s\xE1ch g\u1ECDi l\xE0 Nh\u1EA1c T\u1ECBch.
-      Ng\u01B0\u1EDDi c\xF3 t\xEAn trong s\u1ED5 n\xE0y ch\u1EB3ng nh\u1EEFng ph\u1EA3i
-      \u0111\xF3ng thu\u1EBF th\xE2n cao g\u1EA5p hai ng\u01B0\u1EDDi th\u01B0\u1EDDng,
-      m\xE0 c\xF2n ch\u1ECBu \u0111\u1EE7 lo\u1EA1i g\xF2 b\xF3. T\u1EC9 nh\u01B0
-      ph\u1EA3i c\xF3 gi\u1EA5y chu\u1ED9c th\xE2n \u0111\u01B0\u1EE3c quan ph\u1EE7
-      x\xE1c nh\u1EADn th\xEC m\u1EDBi \u0111\u01B0\u1EE3c ph\xE9p chuy\u1EC3n ngh\u1EC1
-      kh\xE1c, \u0111\u01B0\u1EE3c mua nh\xE0 t\u1EADu ru\u1ED9ng. Ph\xE0m khi c\u1EA7n
-      khai hoang, ch\u1ED1ng gi\u1EB7c \u1EDF bi\xEAn c\u01B0\u01A1ng c\u0169ng \u01B0u
-      ti\xEAn l\u1EF1a ch\u1ECDn nh\u1EEFng ng\u01B0\u1EDDi n\xE0y.\r\n\r\n\r\n\u0110\u1EBFn
-      hai m\u01B0\u01A1i n\u0103m tr\u01B0\u1EDBc, Th\u1EA7n T\xF4ng l\u1EA1i ban
-      l\u1EC7nh \u201Cli\xEAn \u0111\u1EDBi ba \u0111\u1EDDi\u201D; t\u1EE9c l\xE0
-      con, ch\xE1u c\u1EE7a ca c\u01A1, k\u1EF9 n\u1EEF c\u0169ng t\xEDnh l\xE0 ng\u01B0\u1EDDi
-      trong Nh\u1EA1c T\u1ECBch c\u1EA3. T\u1EEB \u0111\xF3, \u0111\u1ECBa v\u1ECB
-      x\xE3 h\u1ED9i c\u1EE7a h\u1EA1ng \u1EA3 \u0111\xE0o, con h\xE1t r\u01A1i xu\u1ED1ng
-      t\u1EADn \u0111\xE1y v\u1EF1c, kh\xF4ng b\u1EB1ng c\u1EA3 tr\xE2u b\xF2.\r\n\r\n\r\nSong
-      \u1EDF \u0111\u1EDDi chuy\u1EC7n g\xEC c\u0169ng c\xF3 ngo\u1EA1i l\u1EC7.\r\n\r\n\r\nNgay
-      \u1EDF Thi\xEAn \u0110\xF4, n\u01A1i l\u1EC7nh \u201Cli\xEAn \u0111\u1EDBi
-      ba \u0111\u1EDDi\u201D \u0111\u01B0\u1EE3c tr\xEAn d\u01B0\u1EDBi H\u1ED9 B\u1ED9
-      thi h\xE0nh nghi\xEAm ng\u1EB7t nh\u1EA5t th\xEC v\u1EABn c\xF3 m\u1ED9t gi\xE1o
-      ph\u01B0\u1EDDng \u0111\u1EB7c bi\u1EC7t, g\u1ECDi l\xE0 Ki\u1EBFn Long L\u1EA7u.
-      Tr\xEAn t\u1EEB c\xF4ng khanh qu\xFD t\u1ED9c, d\u01B0\u1EDBi \u0111\u1EBFn
-      c\xE1c \u0111\u1EA1i ca h\u1EAFc bang, c\u01A1 h\u1ED3 kh\xF4ng m\u1ED9t ai
-      mu\u1ED1n ch\u1EE7 \u0111\u1ED9ng ch\u1ECDc v\xE0o b\xE0 ch\u1EE7 n\u01A1i
-      n\xE0y.\r\n\r\n\r\nTr\u1EA3i qua m\u1EA5y n\u0103m, Ki\u1EBFn Long L\u1EA7u
-      thu l\u01B0u nh\u1EEFng ng\u01B0\u1EDDi h\xE1t rong, nh\u1EEFng ph\u01B0\u1EDDng
-      \u0111\xE0o k\xE9p phi\xEAu linh t\u1EE9 x\u1EE9 v\u1EC1, ch\u1EB3ng m\u1EA5y
-      m\xE0 \u0111\xE3 c\xF3 trong tay h\xE0ng tr\u0103m ca c\u01A1 n\u1EE9c ti\u1EBFng.
-      M\u1ED7i ng\xE0y, \u0111\u1EE7 lo\u1EA1i ng\u01B0\u1EDDi v\u1EDBi \u0111\u1EE7
-      c\xE1c lo\u1EA1i th\xE2n ph\u1EADn, \u0111\u1ECBa v\u1ECB, ngh\u1EC1 nghi\u1EC7p
-      b\u01B0\u1EDBc qua c\xE1nh c\u1EEDa s\u01A1n son, u\u1ED1ng r\u01B0\u1EE3u
-      nghe h\xE1t l\xE0m vui. R\u01B0\u1EE3u v\xE0o l\u1EDDi ra, th\u1EBF n\xEAn
-      ch\u1EB3ng m\u1EA5t bao l\xE2u, b\xE0 ch\u1EE7 c\u1EE7a gi\xE1o ph\u01B0\u1EDDng
-      Ki\u1EBFn Long L\u1EA7u \u0111\xE3 tr\u1EDF th\xE0nh ng\u01B0\u1EDDi c\xF3
-      tin t\u1EE9c linh th\xF4ng nh\u1EA5t nh\xEC th\xE0nh Thi\xEAn \u0110\xF4.\r\n\r\n\r\n\u0110\u1ED1i
-      v\u1EDBi chuy\u1EC7n n\xE0y, b\xE0 ch\u1EE7 ch\u1EB3ng nh\u1EEFng kh\xF4ng
-      lo s\u1EE3, tr\xE1i l\u1EA1i c\xF2n m\u1EEBng r\u1EE1.\r\n\r\n\r\nNg\u01B0\u1EDDi
-      kh\xE1c, c\xF3 l\u1EBD s\u1EBD s\u1EE3 bi\u1EBFt qu\xE1 nhi\u1EC1u, b\u1ECB
-      th\u1EE7 ti\xEAu l\xFAc n\xE0o kh\xF4ng hay.\r\n\r\nTh\u1EBF nh\u01B0ng ch\u1EE7
-      nh\xE2n c\u1EE7a Ki\u1EBFn Long L\u1EA7u l\u1EA1i kh\xE1c.\r\n\r\n\r\nCh\u1EC9
-      c\xF3 tr\u1EDF th\xE0nh k\u1EBB \u201Cb\xE1ch s\u1EF1 th\xF4ng\u201D \u1EDF
-      Thi\xEAn \u0110\xF4, th\u1ECB m\u1EDBi c\xF3 th\u1EC3 ho\xE0n th\xE0nh \u0111\u01B0\u1EE3c
-      nhi\u1EC7m v\u1EE5 c\u1EE7a t\u1ED5 ch\u1EE9c giao cho.\r\n\r\n\r\nT\u1ED5ng
-      l\xE2u ch\u1EE7 c\u1EE7a Ki\u1EBFn Long L\u1EA7u \u2013 Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng
-      \u2013 th\u1EF1c ra v\u1EABn c\xF2n c\xF3 m\u1ED9t th\xE2n ph\u1EADn n\u1EEFa.
-      C\xF4 ta l\xE0 \u0111\u01B0\u1EDDng ch\u1EE7 ch\u1EEF Phong c\u1EE7a t\u1ED5
-      ch\u1EE9c Vong, ph\u1EE5 tr\xE1ch thay t\u1ED5 ch\u1EE9c thu th\u1EADp t\xECnh
-      b\xE1o, \u0111\u1ECBa v\u1ECB ch\u1EC9 d\u01B0\u1EDBi th\u1ED1ng l\u0129nh
-      L\xFD V\xF4 Danh."
+    story: "In the country of Nguy\u1EC7t Minh (lit: Moonbright), troupes and performers
+      are treated like a subhuman class, not worthy of being classified as the four
+      types of citizens. This was the result of a decree by an emperor several hundreds
+      years ago, in which he ordered the Ministry of Finance to compile a list of
+      all singers, actors, and street performers in the country. People whose names
+      were on this Performers List not only had to pay twice as high personal taxes
+      as ordinary people, but also suffered from all kinnds of restrictions. For
+      example, they\u2019re required to have a certificate issued by the government
+      connfirming that their freedom have been paid for to even be allowed to change
+      professions, or buy any lands or properties. And whenever there are needs for
+      venturing into unexplored lands or fighting invaders at the borders, these
+      people were also priorized for mandatory recruitments.\r\n\r\n\r\nTwenty years
+      ago, Emperor Th\u1EA7n T\xF4ng issued another decree called \u201CAssociation
+      by three generation\u201D; which essentially said that any children or grandchildren
+      of performers and prostitutes were also included in the Performers List by
+      default. This further solidified the social status of performers as lowest
+      of the low, rock bottom, worse than cattle, even.\r\n\r\n\r\nYet, in life,
+      there\u2019d always be exceptions.\r\n\r\n\r\nEven in Thi\xEAn \u0110\xF4 Citadel,
+      where the Ministry of Finance enforced the \u201CAssociation by three generations\u201D
+      decree most strictly, there was a special case, a Brothel called Ki\u1EBFn
+      Long House. From the local officials to gangs around the area, no one would
+      dare to provoke the Madame of this place (Ki\u1EBFn Long literally means \u201Cmeeting
+      dragon\u201D, elluding to the fact even the Emperor would visit this place
+      from time to time).\r\n\r\n\r\nSeveral years passed, Ki\u1EBFn Long House would
+      take in street performers and wandering entertainers of all kinds from all
+      over the country, and in no time, it had hundreds of famous performers. Every
+      day, all kinds of people with different backgrounds, social statuses, and professions
+      would pass through the vermilion door of the House, to drink and be entertained.
+      As the wine poured in and the words poured out, it didn\u2019t take long before
+      the Madame of Ki\u1EBFn Long House became the most well-informed person in
+      Thi\xEAn \u0110\xF4 Citadel.\r\n\r\n\r\nRegarding this fact, the Madame of
+      the House was not at all afraid. On the contrary, she was overjoyed.\r\n\r\n\r\nOthers
+      would perhaps worry about knowing too much, and getting eliminated who knows
+      when as a result.\r\n\r\n\r\nThe Madame of Ki\u1EBFn Long House, however, was
+      different.\r\n\r\n\r\nOnly by becoming a \u201Ckhow-it-all\u201D in Thi\xEAn
+      \u0110\xF4 Citadel could she complete the missions assigned to her by her organization.\r\n\r\n\r\nThe
+      Madame of Ki\u1EBFn Long House \u2013 Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng \u2013
+      had, in fact, another identity. She was the leader of the Wind Sect of the
+      Vong Organization, in charge of gathering intelligence on behalf of the organization.
+      Her position is only below that of Commander L\xFD V\xF4 Danh"
     characterAttributes:
       maxMoveRange: 8
       health: 44
@@ -202,7 +187,7 @@ MonoBehaviour:
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 51b2cc13f0bc51242997a7d34460129d, type: 3}
-      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      name: Normal Attack
       skillIndex: 0
       mpCost: 0
       damageDescription: 5-14
@@ -215,7 +200,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 15fccd12ffb8db54bb61743f025b5d18, type: 3}
-      name: "\u0110\u1ED3ng Quan Long"
+      name: Dragon's Coffin
       skillIndex: 1
       mpCost: 2
       damageDescription: 6-18
@@ -225,11 +210,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 8
-      description: "Lao v\u1EC1 ph\xEDa tr\u01B0\u1EDBc (4 \xF4), g\xE2y s\xE1t th\u01B0\u01A1ng
-        cho t\u1EA5t c\u1EA3 m\u1EE5c ti\xEAu tr\xEAn \u0111\u01B0\u1EDDng."
+      description: 'Leap forward (4 squares), dealing dmg to all enemies in her path.
+        This skill deal additional dmg base on the number of bodies on the battle
+        field. '
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: b39c88e743443a949831189233ab6553, type: 3}
-      name: "Hi\u1EC3u Nh\u1EADt Quang L\xE2m"
+      name: Morning's First Light
       skillIndex: 2
       mpCost: 5
       damageDescription: 
@@ -239,13 +225,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "T\u1EA1o ra m\u1ED9t t\xF2a th\xE1p , ch\u1EB7n projectiles t\u1EEB
-        b\xEAn ngo\xE0i . K\u1EBB \u0111\u1ECBch b\u1ECB nh\u1ED1t trong th\xE1p
-        li\xEAn t\u1EE5c m\u1EA5t m\xE1u m\u1ED7i v\xF2ng . HP c\u1EE7a th\xE1p =
-        3 "
+      description: summon a tower (4 squares AoE), blocking 3 instances of dmg the
+        outside. Enemies trapped inside the tower takes dmg every round.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: c8b0ea87cef61dc4fa6548e048416e41, type: 3}
-      name: "Tr\u01B0\u1EDDng Giang"
+      name: Neverending River of Ashes
       skillIndex: 3
       mpCost: 2
       damageDescription: 9-24
@@ -255,12 +239,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "Thi kh\xED h\xF3a th\xE0nh s\xF3ng, t\u1EA5n c\xF4ng k\u1EBB
-        \u0111\u1ECBch g\u1EA7n nh\u1EA5t."
+      description: Turning death energy into neverending waves of attacks on nearest
+        enemies.
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: f0d50b495edbd004898e55b4373d7b44, type: 3}
-      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      name: Normal Attack
       skillIndex: 0
       mpCost: 0
       damageDescription: 5-14
@@ -273,7 +257,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: -3170110953543520844, guid: e39c1aef6103eb646856ed502c1b48a1, type: 3}
-      name: "Ch\u1EA9m Giang T\u1EEB"
+      name: Riverside Temple
       skillIndex: 1
       mpCost: 2
       damageDescription: 6-18
@@ -283,15 +267,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 8
-      description: "L\u01B0\u1EDBt v\u1EC1 ph\xEDa \u0111\u1ED3ng \u0111\u1ED9i ,
-        d\xF9ng thi kh\xED t\u1EA1o ra m\u1ED9t li\xEAn k\u1EBFt gi\u1EEFa hai ng\u01B0\u1EDDi.
-        \u0110\xF2n \u0111\xE1nh c\u1EE7a \u0111\u1ED3ng \u0111\u1ED9i g\xE2y th\xEAm
-        s\xE1t th\u01B0\u01A1ng ch\u1EEBng n\xE0o li\xEAn k\u1EBFt c\xF2n t\u1ED3n
-        t\u1EA1i . M\u1ED9t n\u1EEDa s\xE1t th\u01B0\u01A1ng Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng
-        nh\u1EADn ph\u1EA3i s\u1EBD chuy\u1EC3n sang cho \u0111\u1ED3ng \u0111\u1ED9i. "
+      description: "Give the turn master a Snake Armor while giving herself a Dragon
+        Armor. Snake Armor increases Chi Defense and partially reflect (spike dmg)
+        Chi attacks. As long as both Armors exist, 50% of Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng's
+        MP used is instead taken from the Snake Armor wearer."
       canBeDodged: 1
     - icon: {fileID: -3537580891591011323, guid: a97897a1fec02854282671c8d23474ec, type: 3}
-      name: "Long X\xE0 \u0110\xF4i Tr\xE1c"
+      name: Dragon & Snake Twin Armors
       skillIndex: 2
       mpCost: 5
       damageDescription: 2-8
@@ -310,7 +292,7 @@ MonoBehaviour:
         m\u1EB7c Long gi\xE1p "
       canBeDodged: 1
     - icon: {fileID: -8178576035687786624, guid: 980a727da5c46cc4da1ee06a07d3b5dc, type: 3}
-      name: "V\xE2n H\u01B0\u01A1ng"
+      name: Mystical Land of Ashcloud
       skillIndex: 3
       mpCost: 2
       damageDescription: 9-24
@@ -320,15 +302,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "Xu\u1EA5t hi\u1EC7n b\xEAn c\u1EA1nh \u0111\u1ED3ng minh, nh\u1EADn
-        m\u1ED9t l\u01B0\u1EE3ng l\u1EDBn h\u1ED9 th\u1EC3 . Cho \u0111\u1EBFn v\xF2ng
-        \u0111\u1EA5u sau, t\u1EA5t c\u1EA3 \u0111\xF2n t\u1EA5n c\xF4ng nh\u1EAFm
-        v\xE0o \u0111\u1ED3ng minh \u0111\u01B0\u1EE3c ch\u1EC9 \u0111\u1ECBnh s\u1EBD
-        chuy\u1EC3n sang Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng. "
+      description: "Teleports to an ally (the turn master), and gives herself a massive
+        amount of Chi Defense. Until next round, all attacks targeting said ally
+        will be redirected towards Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng instead."
       canBeDodged: 1
     combatSkill:
     - icon: {fileID: 2037120817534264460, guid: 72139ca088282ff48ab52ed50ead1d13, type: 3}
-      name: "\u0110\xE1nh Th\u01B0\u1EDDng"
+      name: Normal Attack
       skillIndex: 0
       mpCost: 0
       damageDescription: 5-14
@@ -341,7 +321,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 3516235422905818384, guid: 51f8435cfc8e1ee4391ea7047d65e05c, type: 3}
-      name: "Ng\u01B0ng B\xE1ch Ni\xEAn"
+      name: A Hundred Years of Reflection
       skillIndex: 1
       mpCost: 2
       damageDescription: 6-18
@@ -351,14 +331,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 8
-      description: "Lui l\u1EA1i , c\u01B0\u1EDBp thi kh\xED tr\xEAn v\u0169 kh\xED
-        \u0111\u1ED1i th\u1EE7 r\u1ED3i h\u1EA5t tr\u1EA3 ng\u01B0\u1EE3c l\u1EA1i,
-        g\xE2y m\xF9. N\u1EBFu v\xF5 k\u1EF9 n\xE0y khi\u1EBFn Ho\u1EAFc Li\xEAn
-        H\u01B0\u01A1ng lui ra kh\u1ECFi ph\u1EA1m vi \u1EA3nh h\u01B0\u1EDFng c\u1EE7a
-        v\xF5 k\u1EF9 \u0111\u1ED1i th\u1EE7 th\xEC v\xF5 k\u1EF9 \u0111\xF3 tr\u01B0\u1EE3t. "
+      description: Leap backward (2 squares), extracting death energy from the attacking
+        enemy's weapon before redirecting it back at them, blinding them. If her
+        new position is out of enemy's attack range, then enemy's skill misses by
+        default.
       canBeDodged: 1
     - icon: {fileID: -8359747887217438903, guid: 7d3603f082f7ba54a9c4a7fa5d1967f9, type: 3}
-      name: "D\u1EA1 Phong X\xFAy Kh\u1EDFi"
+      name: Chilling Night Breeze
       skillIndex: 2
       mpCost: 5
       damageDescription: 5-14
@@ -368,12 +347,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 1
       damageType: 4
-      description: "V\xF4 hi\u1EC7u s\xE1t th\u01B0\u01A1ng ph\u1EA3i ch\u1ECBu,
-        sau \u0111\xF3 h\xF3a th\xE0nh c\u01A1n gi\xF3 l\u01B0\u1EDBt v\u1EC1 ph\xEDa
-        sau k\u1EBB \u0111\u1ECBch v\u1EEBa t\u1EA5n c\xF4ng. "
+      description: Nullifying incoming dmg, then turns herself into a breeze that
+        sneaks behind the attacking enemy.
       canBeDodged: 1
     - icon: {fileID: 7338152196854973384, guid: e5a7bd3a9bde49b4289d09ca454e84f0, type: 3}
-      name: "Long H\u01B0ng"
+      name: Rising Dragon of Smokes
       skillIndex: 3
       mpCost: 2
       damageDescription: 9-24
@@ -383,14 +361,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "Ho\xE1n \u0111\u1ED5i v\u1ECB tr\xED v\u1EDBi k\u1EBB \u0111\u1ECBch,
-        \u0111\u1ED3ng th\u1EDDi qu\xE9t th\u01B0\u01A1ng t\u1EA5n c\xF4ng ph\u1EA1m
-        vi 1 \xF4 quanh m\xECnh. H\u01B0\u1EDBng t\u1EA5n c\xF4ng c\u1EE7a v\xF5
-        k\u1EF9 \u0111\u1ECBch thi tri\u1EC3n gi\u1EEF nguy\xEAn. "
+      description: "Switch place with the attacking enemy, then sweep her spear,
+        dealing dmg to all enemies (1 square) around her.\_"
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
-      name: "Y\xEAu Cung"
+      name: Empresses' Bowstrings
       skillIndex: 0
       mpCost: 0
       damageDescription: 
@@ -400,18 +376,15 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Sau m\u1ED7i v\xF2ng \u0111\u1EA5u, t\u0103ng s\xE1t th\u01B0\u01A1ng
-        g\xE2y ra th\xEAm 2, gi\u1EA3m s\u1ED1 c\u1EA7n \u0111\u1EC3 crit \u0111i
-        1, \u0111\u1EBFn t\u1ED1i \u0111a l\xE0 6 s\xE1t th\u01B0\u01A1ng v\xE0 3
-        \u0111i\u1EC3m crit. C\u1ED9ng th\xEAm 2d4 s\xE1t th\u01B0\u01A1ng b\u1EA1o
-        k\xEDch. \r\nKhi s\xE1t th\u01B0\u01A1ng c\u1ED9ng th\xEAm c\u1EE7a Y\xEAu
-        Cung \u0111\u1EA1t t\u1ED1i \u0111a, m\u1ED7i \u0111\xF2n \u0111\xE1nh g\xE2y
-        m\u1ED9t l\u01B0\u1EE3ng s\xE1t th\u01B0\u01A1ng nh\u1EA5t \u0111\u1ECBnh
-        l\xEAn b\u1EA3n th\xE2n"
+      description: "\r\nEmpresses' Bowstrings \r\n\r\nAfter each round, increases
+        dmg dealt by 2 points and reduces rolls required for crit by 1, to the maximum
+        of 6 dmg and 3 crit chance. Increases crit dmg by 2d4. When the maximum buff
+        of Empresses\u2019 Bowstrings is reached, every attack also dmg the user.
+        \r\n\r\n"
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
-      name: "H\u1ECFa V\u0169"
+      name: 'Dance of the Fleeting Flames '
       skillIndex: 0
       mpCost: 0
       damageDescription: 
@@ -421,12 +394,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 8 \xF4, gi\u1EA3m
-        1 sau m\u1ED7i v\xF2ng, \u0111\u1EBFn t\u1ED1i thi\u1EC3u l\xE0 3 \xF4\r\nKh\u1EDFi
-        \u0111\u1EA7u v\u1EDBi + 4 kh\u1EA3 n\u0103ng tr\xE1nh n\xE9 \u0111\u1ED9c
-        l\u1EADp, gi\u1EA3m d\u1EA7n sau m\u1ED7i v\xF2ng (-1). Khi con s\u1ED1 n\xE0y
-        \u0111\u1EA1t 0, AP s\u1EED d\u1EE5ng trong l\u01B0\u1EE3t \u0111\u1ECBch
-        c\xF3 c\u01A1 h\u1ED9i h\xF3a v\xE0ng thay v\xEC \u0111\u1ECF."
+      description: "Base movement range: 8 squares, reducing by 1 each round, to
+        a minimum of 3 squares. \r\n\r\nStart each battle with +4 dodge chance, which
+        reduces by 1 at the end of the round. When dodge chance is reduced to 0,
+        AP used during enemy's turn has a chance to turn yellow instead of red. This
+        chance increases after each failure to activate, and resets after a successful
+        activation. "
       canBeDodged: 1
   passiveSkills:
   - {fileID: 4073403874055096316}

@@ -6,7 +6,7 @@
         Info.OnDamageTaken(damageTakenParams);
         if (damageTakenParams.Damage == 0)
         {
-            ShowMessage("Né");
+            ShowMessage("Dodge");
         }
         damageTakenParams.OnSetDamageTakenFinished?.Invoke(new FinishApplySkillParams()
         {

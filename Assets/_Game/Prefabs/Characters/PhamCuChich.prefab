@@ -134,65 +134,50 @@ MonoBehaviour:
     characterIcon: {fileID: 21300000, guid: f22538280a262904986d0e104fe27de8, type: 3}
     slideBarIcon: {fileID: 21300000, guid: fd4ab39730964d6499dec9573bda009d, type: 3}
     characterNoBgIcon: {fileID: -5652554396240936272, guid: 2db015e9bd976ab4d997ec4b926a7c2a, type: 3}
-    story: "\u201CTr\u01B0\u1EDBc khi Nguy\u1EC7t Minh l\u1EADp qu\u1ED1c, \u1EDF
-      v\xF9ng \u0111\u1EA5t ph\xEDa nam B\xECnh Nguy\xEAn Ch\u1EBFt b\xE2y gi\u1EDD
-      l\xE0 n\u01B0\u1EDBc V\u1EA1n S\u01A1n. V\u1EA1n S\u01A1n kh\xF4ng ph\u1EA3i
-      qu\u1ED1c gia c\u1EE7a con ng\u01B0\u1EDDi, m\xE0 do m\u1ED9t ch\u1EE7ng t\u1ED9c
-      c\xF3 c\xE1nh sau l\u01B0ng l\u1EADp n\xEAn.\r\n\r\n\r\n\u1EDE V\u1EA1n S\u01A1n,
-      con ng\u01B0\u1EDDi b\u1ECB coi l\xE0 v\u1EADt ph\u1EA9m b\u1ECB t\u1ED9c c\xF3
-      c\xE1nh s\u1EDF h\u1EEFu, d\u1ED3n v\xE0o nu\xF4i nh\u1ED1t \u1EDF c\xE1c trang
-      tr\u1EA1i ch\u1EB3ng kh\xE1c n\xE0o b\xF2 ng\u1EF1a. B\u1ECDn n\xE0y l\u1EA1i
-      t\u1EF1 x\u01B0ng l\xE0 th\u1EA7n, cho x\xE2y mi\u1EBFu th\u1EDD \u0111\u1EC1n
-      \u0111\xE0i kh\u1EAFp n\u01A1i, b\u1EAFt tr\u0103m h\u1ECD th\u1EDD ph\u1EE5ng,
-      nay \u1EDF Nguy\u1EC7t Minh v\u1EABn c\xF2n t\xE0n t\xEDch. M\u1ED7i l\u1EA7n
-      c\xF3 d\u1ECBp g\xEC quan tr\u1ECDng, ng\u1EE5y th\u1EA7n l\u1EA1i t\u1ED5
-      ch\u1EE9c nh\u1EEFng l\u1EC5 hi\u1EBFn t\u1EBF \u0111\u1EABm m\xE1u. Nhi\u1EC1u
-      khi m\u1ED9t \u0111\xEAm ch\u1EBFt c\u1EA3 ng\xE0n nh\xE2n m\u1EA1ng, \u0111\u1EA7u
-      ng\u01B0\u1EDDi ch\u1EA5t th\xE0nh g\xF2 cao v\xFAt, m\xE1u t\u01B0\u01A1i
-      \u0111\u1ED5 \u0111ong \u0111\u1EA7y c\u1EA3 c\xE1i ao n\u01B0\u1EDBc.\r\n\r\n\r\nS\xE1u
-      tr\u0103m n\u0103m tr\u01B0\u1EDBc, ng\u1EE5y th\u1EA7n huy \u0111\u1ED9ng
-      hai v\u1EA1n n\xF4 l\u1EC7, khu\xE2n \u0111\u1EA5t v\u1EA7n \u0111\xE1 x\xE2y
-      m\u1ED9t t\xF2a th\xE0nh c\xF3 hai t\u1EA7ng. Th\xE0nh x\xE2y h\u01A1n m\u1ED9t
-      th\u1EBF k\u1EF7 th\xEC xong, h\xECnh d\xE1ng nh\u01B0 t\u1ED5 chim, b\u1ED1n
-      ph\xEDa cao m\xE0 ch\xEDnh gi\u1EEFa th\u1EA5p xu\u1ED1ng. T\u1EA7ng tr\xEAn
-      l\xE0 l\xF2ng t\u1ED5 chim, \u0111\xF3n \xE1nh n\u1EAFng \u1EA5m \xE1p, h\u01B0\u1EDFng
-      gi\xF3 m\xE1t kh\xED tr\u1EDDi. Ng\u1EE5y th\u1EA7n th\xEDch \u1EDF ch\u1ED7
-      cao, n\xEAn l\u1EA5y t\u1EA7ng n\xE0y l\xE0m ch\u1ED7 c\u01B0 ng\u1EE5, cho
-      x\xE2y d\u1EF1ng r\u1EA7m r\u1ED9 \u0111\u1EE7 c\u1EA3 v\u01B0\u1EDDn hoa h\u1ED3
-      n\u01B0\u1EDBc, n\xFAi gi\u1EA3 r\u1EEBng tr\u1ED3ng, d\xE2n gian v\u1EABn
-      g\u1ECDi l\xE0 Th\xE0nh Tr\xEAn. Th\xE0nh D\u01B0\u1EDBi l\xE0 ph\u1EA7n b\xEAn
-      d\u01B0\u1EDBi n\u1EC1n t\u1ED5 chim, b\xED b\xE1ch ng\u1ED9t ng\u1EA1t, m\u1ED9t
-      khi \u0111\xF3ng c\u1EEDa th\xE0nh l\xE0 c\u01A1 h\u1ED3 k\xEDn nh\u01B0 b\u01B0ng.
-      Con ng\u01B0\u1EDDi b\u1ECB d\u1ED3n xu\u1ED1ng Th\xE0nh D\u01B0\u1EDBi sinh
-      ho\u1EA1t, quanh n\u0103m ch\u1EC9 c\xF3 l\xFAc l\xE0m ru\u1ED9ng l\xE0 th\u1EA5y
-      \u0111\u01B0\u1EE3c \xE1nh n\u1EAFng m\u1EB7t tr\u1EDDi.\r\n\r\n\r\nBa tr\u0103m
-      n\u0103m tr\u01B0\u1EDBc, m\u1ED9t ng\u01B0 d\xE2n ch\u1EA1y v\xE0o hoang m\u1EA1c
-      Tro Tr\u1EAFng, \u0111\xF3n \u0111\u01B0\u1EE3c th\u1EA7n n\u1EEF gi\xE1ng
-      tr\u1EA7n. Hai ng\u01B0\u1EDDi d\u1EA5y binh, d\u1EABn m\u1ED9t \u0111\u1ED9i
-      qu\xE2n g\u1ECDi l\xE0 Huy\u1EC1n Thi\u1EBFt qu\xE2n t\u1EA5n c\xF4ng Thi\xEAn
-      \u0110\xF4.\r\n\r\n\r\nN\u01B0\u1EDBc V\u1EA1n S\u01A1n di\u1EC7t vong, ng\u01B0
-      d\xE2n ti\u1EBFp nh\u1EADn m\u1EC7nh tr\u1EDDi, m\u1EDF n\u01B0\u1EDBc m\u1EDBi
-      \u0111\u1EB7t t\xEAn l\xE0 Nguy\u1EC7t Minh, \u0111\u1ECBnh \u0111\xF4 \u1EDF
-      Thi\xEAn \u0110\xF4, x\u01B0ng l\xE0 H\u1EAFc \u0110\u1EBF. \u0110\u1EBF bi\u1EBFm
-      ng\u1EE5y th\u1EA7n th\xE0nh t\u1ED9i t\u1ED9c, ban chi\u1EBFu \u201C\u0110o\u1EA1n
-      D\u1EF1c\u201D. Trai tr\xE1ng th\xEC ch\u1EB7t c\xE1nh, b\u1EAFt \u0111i lao
-      d\u1ECBch kh\u1ED5 sai. \u0110\xE0n b\xE0 th\xEC b\u1ECB c\u1EAFt g\xE2n \u1EDF
-      c\u1ED5 tay v\xE0 c\u1ED5 ch\xE2n, gi\u1EEF l\u1EA1i \u0111\u1EC3 l\xE0m v\u0169
-      n\u1EEF cung \u0111\xECnh, ho\u1EB7c ban cho quan l\u1EA1i d\u01B0\u1EDBi tr\u01B0\u1EDBng.\r\n\r\n\r\nH\u1EAFc
-      \u0110\u1EBF l\u1EA1i cho ng\u01B0\u1EDDi \u0111\u1EE5c t\xE1m c\xE1i l\u1ED7
-      \u1EDF th\xE0nh tr\xEAn, x\u01B0ng l\xE0 gi\u1EBFng M\u1EAFt R\u1ED3ng. R\u1ED3i
-      x\xE2y thang g\u1ED7 k\xE9o b\u1EB1ng r\xF2ng r\u1ECDc \u1EDF s\xE1t m\xE9p
-      gi\u1EBFng, g\u1ECDi l\xE0 Thi\xEAn Th\xEA. T\u1EEB \u0111\xF3 Th\xE0nh D\u01B0\u1EDBi
-      th\u1EA5y \u0111\u01B0\u1EE3c \xE1nh s\xE1ng m\u1EB7t tr\u1EDDi, ng\u01B0\u1EDDi
-      \u1EDF Th\xE0nh D\u01B0\u1EDBi c\u0169ng c\xF3 c\u01A1 h\u1ED9i \u0111\u1EA1p
-      thang tr\u1EDDi l\xEAn Th\xE0nh Tr\xEAn.\u201D\r\n\r\n\r\nPh\u1EA1m C\u1EF1
-      Ch\xEDch g\u1EA5p quy\u1EC3n s\xE1ch s\u1EED l\u1EA1i, m\u1ED7i l\u1EA7n \u0111\u1ECDc
-      \u0111\u1EBFn \u0111o\u1EA1n H\u1EAFc \u0110\u1EBF kh\u1EDFi binh, sau l\u01B0ng
-      g\xE3 l\u1EA1i \xEA \u1EA9m. G\xE3 \u0111\u01B0a m\u1EAFt nh\xECn v\u1EC1 c\u1EA1nh
-      b\xE0n, ch\u1ED7 c\xF3 m\u1ED9t t\u1EA5m l\u1EC7nh b\xE0i \u0111\u1EA1i di\u1EC7n
-      cho th\xE2n ph\u1EADn hi\u1EC7n gi\u1EDD c\u1EE7a g\xE3: \u0111\u01B0\u1EDDng
-      ch\u1EE7 ch\u1EEF L\xE2m c\u1EE7a Vong.\r\n\r\n\r\nC\u01A1n \u0111au r\xE2m
-      ran sau l\u01B0ng g\xE3 c\u0169ng ch\u1EA7m ch\u1EADm bi\u1EBFn m\u1EA5t."
+    story: "\u201CBefore the country of Nguy\u1EC7t Minh was founded, the lands in
+      the south of what is now called the Dead Plains was a country called V\u1EA1n
+      S\u01A1n (lit: ten thousand mountains). V\u1EA1n S\u01A1n was not a country
+      of humans, but rather one of a race with wings behind their backs.\r\n\r\n\r\n\u201CIn
+      V\u1EA1n S\u01A1n, humans were considered goods owned by the winged race, and
+      were herded into farms like cattle and horses. This race of people called themselves
+      gods, built temples and shrines everywhere, and forced humans to worship them.
+      Even today, there are still ruins in Nguy\u1EC7t Minh of these shrines and
+      temples. Every time there was an important occasion, these false gods would
+      organize brutal and bloody sacrifices. Several times, thousands of people were
+      killed in one night, their heads would get piled up into towering mounds and
+      fresh blood would turn ponds red.\r\n\r\n\r\n\u201CSix hundred years ago, the
+      false gods mobilized twenty thousand slaves to construct a two-story Citadel.
+      The Citadel, which shaped like a bird\u2019s nest \u2013 high walls all around
+      with a lowered center, took over a century to complete. The upper floor was
+      the center of the nest, welcoming warm sunlight and cooling breeze. The false
+      god liked it up high, so they used this floor to live. They carried out large-scale
+      construction, including a flower garden, lakes and ponds, fake mountains and
+      even a planted forest. This was called the Upper City. The Lower City was the
+      parts below the bird\u2019s nest, confined and stuffy. Once the Citadel\u2019s
+      gate was closed, it was almost completely sealed off. Humans were forced to
+      live in the Lower City, and only saw sunlight when they were out farming all
+      years round.\r\n\r\n\r\n\u201CThree hundred years ago, a fisherman escaped
+      into the White Ash Desert and was met with a goddess decending onto Earth.
+      Together, they raised an army called the Army of Nightfall and came back to
+      launch a siege on Thi\xEAn \u0110\xF4 Citadel.\r\n\r\n\r\n\u201CThe Nation
+      of V\u1EA1n S\u01A1n fell, and the fisherman accepted the mandate of the Heaven.
+      He founded the country of Nguy\u1EC7t Minh in Thi\xEAn \u0110\xF4 Citadel,
+      and proclaimed himself as the Obsidian Emperor. The new Emperor dethroned the
+      false gods, labeled their entire race \u2013 the Winged Ones \u2013 as criminals,
+      and issued a \u201CWings Severing\u201D Decree. Men of this criminal race\r\n\r\nhad
+      their wings cut off before being forced into labors, while women of their race
+      had their wrists\u2019 and ankles\u2019 tendons severed and kept as court dancers
+      or given to court officials.\r\n\r\n\r\n\u201CThe Obsidian Emperor then had
+      eight holes drilled onto the floor of the Upper City, naming them the Dragon
+      Eye Wells. He then commisioned wooden ladders operated by pulleys at the edges
+      of the wells, naming them the Heavenly Bridge. From then on, the Lower City
+      can finally see sunlight, and also the opportunity to ascend to the Upper City
+      via the Heavenly Bridge.\u201D\r\n\r\n\r\nPh\u1EA1m C\u1EF1 Ch\xEDch closed
+      the history book in front of him. Every time he read to the part about the
+      Obsidian Emperor raising his army for the seige, his back would ache. He sighed
+      and looked to the edge of the table, where there was a token representing his
+      current status and identity: the leader of the Forest Sect of Vong.\r\n\r\n\r\nAnd
+      the tingling pain on his back slowly receeded."
     characterAttributes:
       maxMoveRange: 8
       health: 60
@@ -231,7 +216,7 @@ MonoBehaviour:
   skillConfig:
     internalSkill:
     - icon: {fileID: 21300000, guid: 9ef43ef1af5c8c5458d7d52e27a18622, type: 3}
-      name: "\u0110\xE1nh th\u01B0\u1EDDng"
+      name: Normal Skill
       skillIndex: 0
       mpCost: 0
       damageDescription: ' 3-6'
@@ -244,7 +229,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: ed41dc3e16022d94eaeaea17898d18b4, type: 3}
-      name: "Phong V\u0169 T\u1ECBch Ch\u01B0\u1EDBng"
+      name: Sweeping Storm
       skillIndex: 1
       mpCost: 4
       damageDescription: 3-8
@@ -261,7 +246,7 @@ MonoBehaviour:
         c\xF3 h\u1EA1i c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng khi t\u1EA1o gi\xE1p. "
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 1b2d23e89f1fd0c458748be4e723a89d, type: 3}
-      name: "C\u1ED5 Kh\xED Ti\xEAu Linh"
+      name: Submerging in the Ancient Atmosphere
       skillIndex: 2
       mpCost: 4
       damageDescription: 
@@ -271,14 +256,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: "Thi kh\xED h\xF3a th\xE0nh s\xF3ng, t\u1EA5n c\xF4ng k\u1EBB
-        \u0111\u1ECBch g\u1EA7n nh\u1EA5t.s\u1EED d\u1EE5ng ch\xE2n kh\xED r\u1ED1ng
-        m\u1ED9t ti\u1EBFng, ch\u1EA5n nhi\u1EBFp t\xE2m th\u1EA7n m\u1EE5c ti\xEAu.
-        Khi\xEAu kh\xEDch m\u1EE5c ti\xEAu v\xE0 k\u1EBB \u0111\u1ECBch trong ph\u1EA1m
-        vi 5 \xF4 quanh m\u1EE5c ti\xEAu."
+      description: Target a single ally, then shield both himself and that ally (each
+        shield is only 50% of the base skill amount). Removes all debuffs from ally
+        when the shield is first applied.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 334c1b9ed31741d49b05465de26ea373, type: 3}
-      name: "H\u1EADn V\u1ECB Ti\xEAu"
+      name: Everlasting Blue
       skillIndex: 3
       mpCost: 4
       damageDescription: 12-36
@@ -288,17 +271,14 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "Li\xEAn t\u1EE5c \u0111\u1EA5m 3 \u0111\xF2n v\xE0o \u0111\u1ECBch
-        th\u1EE7, k\xEDch n\u1ED5 l\xE1 ch\u1EAFn, sau \u0111\xF3 ti\u1EBFn v\xE0o
-        tr\u1EA1ng th\xE1i cu\u1ED3ng b\u1EA1o. T\u0103ng ph\u1EA1m vi di chuy\u1EC3n
-        th\xEAm 4 \xF4. Trong th\u1EDDi gian hi\u1EC7u \u1EE9ng t\u1ED3n t\u1EA1i,
-        k\u1EBB \u0111\u1ECBch nh\xECn th\u1EA5y Ph\u1EA1m C\u1EF1 Ch\xEDch s\u1EBD
-        c\xF3 t\u1EC9 l\u1EC7 b\u1ECB ho\u1EA3ng s\u1EE3 \u1EDF \u0111\u1EA7u m\u1ED7i
-        v\xF2ng."
+      description: punch the targeted enemy three times, exploding his shield. Entering
+        Berserker state after the shield exploded. Increasing movement range by 4
+        squares and has a chance to inflict Fear on all enemies at the beginning
+        of each turn.
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 5dbd273f544d7004ebcec644e32ed464, type: 3}
-      name: "\u0110\xE1nh th\u01B0\u1EDDng"
+      name: Normal Skill
       skillIndex: 0
       mpCost: 0
       damageDescription: ' 3-6'
@@ -311,7 +291,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 263f590a658309b4b845afe6477a570d, type: 3}
-      name: "B\xEDch Th\u1EE7y Thanh S\u01A1n"
+      name: Everlasting Beauty
       skillIndex: 1
       mpCost: 4
       damageDescription: 3-8
@@ -321,14 +301,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "Ch\u1EA1y \u0111\u1EBFn g\u1EA7n m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh,
-        t\u1EA1o l\xE1 ch\u1EAFn d\u1EF1a tr\xEAn s\xE1t th\u01B0\u01A1ng m\xE0 v\xF5
-        k\u1EF9 \u0111\u1ED3ng \u0111\u1ED9i g\xE2y ra cho \u0111\u1ECBch th\u1EE7.
-        K\u1EBB \u0111\u1ECBch t\u1EA5n c\xF4ng v\xE0o l\xE1 ch\u1EAFn n\xE0y b\u1ECB
-        ph\u1EA3n ch\u1EA5n, gi\u1EA3m s\xE1t th\u01B0\u01A1ng g\xE2y ra."
+      description: Move to the turn master and shield them for an amount equal to
+        the skill dmg they last dealt to enemy. All enemies attacking this shield
+        will receive spike dmg and have their ATK decreased.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: a534078403968c745918d0771f2fde33, type: 3}
-      name: "S\u01B0\u01A1ng Nh\u1EA1n Th\xF9y Th\xE0nh"
+      name: Descending on the Misty Citadel
       skillIndex: 2
       mpCost: 4
       damageDescription: 
@@ -338,11 +316,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "T\u1EA1o m\u1ED9t l\u1EDBp gi\xE1p cho t\u1EA5t c\u1EA3 \u0111\u1ED3ng
-        minh trong ph\u1EA1m vi 3 \xF4. Gi\xE1 tr\u1ECB c\u1EE7a gi\xE1p = 5"
+      description: "Creating a 5-points mist armor for all allies within 3 squares
+        area around himself.\_"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 92d6599197b118248b88e91a7f54c77e, type: 3}
-      name: "S\u1EA7u Do T\u1EA1i"
+      name: Melancholic Blue
       skillIndex: 3
       mpCost: 0
       damageDescription: 12-36
@@ -352,16 +330,14 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "K\xEDch n\u1ED5 l\xE1 ch\u1EAFn, sau \u0111\xF3 t\u1EA1o m\u1ED9t
-        l\u1EDBp gi\xE1p cho m\u1EE5c ti\xEAu ch\u1EE7 l\u01B0\u1EE3t. Cho \u0111\u1EBFn
-        h\u1EBFt v\xF2ng sau, t\u1EA5t c\u1EA3 c\xE1c ngu\u1ED3n s\xE1t th\u01B0\u01A1ng
-        ng\u01B0\u1EDDi m\u1EB7c nh\u1EADn v\xE0o tr\u1EDF th\xE0nh 1. Trong th\u1EDDi
-        gian hi\u1EC7u l\u1EF1c, ph\xF2ng th\u1EE7 c\u1EE7a C\u1EF1 Ch\xEDch v\u1EC1
-        0. "
+      description: "After the shield explode, gives a temporary shield to the turn
+        master for 2 rounds. Until the end of next round, all incoming dmg to the
+        ally shielded by this skill is reduced to 1. While this shield is active,
+        Ph\u1EA1m C\u1EF1 Ch\xEDch's Defense is reduced to 0."
       canBeDodged: 1
     combatSkill:
     - icon: {fileID: 21300000, guid: 1831d2f14b54a8c4c85470249722a4c7, type: 3}
-      name: "\u0110\xE1nh th\u01B0\u1EDDng"
+      name: Normal Skill
       skillIndex: 0
       mpCost: 0
       damageDescription: ' 3-6'
@@ -374,7 +350,7 @@ MonoBehaviour:
       description: 
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 0427816c1fabae74489bff2188d82ec1, type: 3}
-      name: "\u0110an T\xE2m B\u1EA1ch Ph\xE1t"
+      name: Unwavering Heart
       skillIndex: 1
       mpCost: 4
       damageDescription: 3-8
@@ -384,13 +360,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "H\u1EA5p th\u1EE5 s\xE1t th\u01B0\u01A1ng \u0111\u1ECBch g\xE2y
-        ra t\u1EA1o n\xEAn l\xE1 ch\u1EAFn. Trong v\xF2ng n\xE0y, s\xE1t th\u01B0\u01A1ng
-        c\u1EE7a \u0111\u1ED3ng \u0111\u1ED9i trong ph\u1EA1m vi 2 \xF4 c\u0169ng
-        \u0111\u01B0\u1EE3c C\u1EF1 Ch\xEDch ch\u1ECBu thay."
+      description: Absorbed enemy's attack and turn the dmg into a shield instead.
+        Until the end of the round, he'll take dmg targeting all allies within 2
+        squares around himself as well.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 07d6b726ee041ef4eb3634fe49385904, type: 3}
-      name: "T\xE1 Kh\xE1ch V\xE2n Th\xEA "
+      name: Climbing up the Cloud Ladder
       skillIndex: 2
       mpCost: 4
       damageDescription: 
@@ -400,12 +375,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 1
       damageType: 4
-      description: "Ph\u1EA3n l\u1EA1i \u0111\xF2n t\u1EA5n c\xF4ng c\u1EE7a \u0111\u1ECBch,
-        sau \u0111\xF3 g\xE2y hi\u1EC7u \u1EE9ng khi\xEAu kh\xEDch l\xEAn k\u1EBB
-        t\u1EA5n c\xF4ng."
+      description: Reflect the enemy's attack, then inflict Taunt on the attacker.
       canBeDodged: 0
     - icon: {fileID: 21300000, guid: be209ed9a9367b04280db00f16dffb43, type: 3}
-      name: "Kim H\xE0 T\u1EA1i"
+      name: Memories of Blue (Ancient Battlefield)
       skillIndex: 3
       mpCost: 4
       damageDescription: 12-36
@@ -415,15 +388,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "K\xEDch n\u1ED5 l\xE1 ch\u1EAFn, sau \u0111\xF3 bi\u1EBFn ph\u1EA1m
-        vi 4 \xF4 quanh C\u1EF1 Ch\xEDch th\xE0nh chi\u1EBFn tr\u01B0\u1EDDng c\u1ED5.
-        Ch\u1EB7n chi\xEAu th\u1EE9c t\u1EA7m xa c\u1EE7a \u0111\u1ED1i th\u1EE7.
-        Qu\xE2n \u0111\u1ECBch ti\u1EBFn v\xE0o ph\u1EA1m vi chi\u1EBFn tr\u01B0\u1EDDng
-        s\u1EBD nh\u1EADn hi\u1EC7u \u1EE9ng ch\u1EA3y m\xE1u "
+      description: "After the shield explode, turn the 4 squares area around Ph\u1EA1m
+        C\u1EF1 Ch\xEDch into an Ancient Battlefield. Ancient Battlefield blocks
+        enemies' range attacks and inflicts Bleeding on all enemies who enter it."
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
-      name: "\u0110\u1ED3ng T\u01B0\u1EDDng Thi\u1EBFt B\xEDch "
+      name: Iron Walls
       skillIndex: 0
       mpCost: 0
       damageDescription: 
@@ -433,14 +404,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "S\u1EED d\u1EE5ng m\xE1u thay cho 1/2 l\u01B0\u1EE3ng n\u1ED9i
-        l\u1EF1c ti\xEAu hao (passive, toggle \u0111\u01B0\u1EE3c). \u1EDE m\u1ED7i
-        v\xF2ng \u0111\u1EA5u, c\u1ED9ng s\xE1t th\u01B0\u01A1ng b\u1EB1ng s\u1ED1
-        m\xE1u \u0111\xE3 m\u1EA5t."
+      description: "Whenever using skills, will use HP instead of \xBD of the MP
+        cost (toggleable passive). Increases ATK based on HP lost. "
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
-      name: "B\u1EA5t \u0110\u1ED9ng Nh\u01B0  S\u01A1n"
+      name: 'Still like Mountain '
       skillIndex: 0
       mpCost: 0
       damageDescription: 
@@ -450,10 +419,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Ph\u1EA1m vi di chuy\u1EC3n c\u01A1 b\u1EA3n: 4 \xF4. \r\nT\u0103ng
-        m\u1ED9t l\u01B0\u1EE3ng l\u1EDBn h\u1ED9 th\u1EC3 v\xE0 ph\xF2ng ng\u1EF1.
-        Khi ph\u1EA1m vi di chuy\u1EC3n trong v\xF2ng \u0111\u1EA5u c\u1EE7a Ph\u1EA1m
-        C\u1EF1 Ch\xEDch c\xF2n <= 3. M\u1EA5t \u1EDF cu\u1ED1i v\xF2ng"
+      description: "Base movement range: 4 squares. Massively increases Defense &
+        Chi Defense when movement range used in a round is \u2264 3"
       canBeDodged: 1
   passiveSkills: []
   Info:

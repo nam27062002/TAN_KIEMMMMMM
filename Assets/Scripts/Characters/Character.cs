@@ -205,7 +205,7 @@ public abstract class Character : MonoBehaviour
                 Character = this,
                 WaitForCounter = true,
             });
-            ShowMessage("Chặn sát thương");
+            ShowMessage("Block damage");
             return true;
         }
         return false;

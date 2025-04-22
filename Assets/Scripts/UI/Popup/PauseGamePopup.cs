@@ -79,10 +79,10 @@ public class PauseGamePopup : PopupBase
         Close();
         var parameters = new 
             ConfirmPopupParameters(
-                title: "Lưu trò chơi",
-                message: "Bạn có muốn lưu trò chơi",
-                confirmText: "Lưu",
-                cancelText: "Hủy",
+                title: "Save game progress?",
+                message: "Do you want to save this game progress?",
+                confirmText: "Save",
+                cancelText: "Cancel",
                 confirmAction: () => GameplayManager.Instance.OnSave()
                 );
         UIManager.Instance.OpenPopup(PopupType.ConfirmPopup, parameters);

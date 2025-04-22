@@ -349,7 +349,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "L\u01B0u"
+      value: Save game
       objectReference: {fileID: 0}
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_fontStyle
@@ -474,7 +474,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "Tho\xE1t"
+      value: Quit
       objectReference: {fileID: 0}
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_fontStyle
@@ -599,7 +599,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "C\xE0i \u0111\u1EB7t"
+      value: Setting
       objectReference: {fileID: 0}
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_fontStyle
@@ -724,7 +724,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "Ch\u01A1i l\u1EA1i"
+      value: Restart
       objectReference: {fileID: 0}
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_fontStyle

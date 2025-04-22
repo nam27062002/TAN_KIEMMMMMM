@@ -86,7 +86,7 @@ public class BloodyRainbow : PassiveSkill
     private void IncreaseDamage()
     {
         character.Info.Attributes.atk += increasedDamageValue;
-        character.ShowMessage("Tăng 1 sát thương");
+        character.ShowMessage("Increase 1 damage");
         AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} tăng {increasedDamageValue} damage");
     }
 
@@ -105,7 +105,7 @@ public class BloodyRainbow : PassiveSkill
         character.Info.ApplyEffect(reduceHitChangeEffect);
         
         // Hiển thị thông báo
-        character.ShowMessage($"Giảm yêu cầu crit đi {critThresholdReduction}");
+        character.ShowMessage($"Reduce crit requirement by {critThresholdReduction}");
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] giảm yêu cầu crit đi {critThresholdReduction}, tăng tỉ lệ chí mạng");
     }
 
@@ -113,6 +113,6 @@ public class BloodyRainbow : PassiveSkill
     {
         // character.CharacterInfo.Attributes.damageTaken += increasedDamageTaken;
         character.Info.MoveAmount += increasedMovement;
-        character.ShowMessage($"Tăng {increasedMovement} di chuyển và nhận {increasedDamageTaken} sát thương");
+        character.ShowMessage($"Increase {increasedMovement} movement and receive {increasedDamageTaken} damage");
     }
 }
