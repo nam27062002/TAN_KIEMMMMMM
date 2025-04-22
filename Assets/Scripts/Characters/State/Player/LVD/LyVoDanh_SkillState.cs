@@ -451,15 +451,13 @@ public class LyVoDanh_SkillState : SkillState
 
     private IEnumerator ApplySleepAfterDamage(Character target)
     {
-        // Đợi đến cuối frame để đảm bảo damage đã được xử lý
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1f);
         
         if (Character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk))
         {
-            // Kiểm tra lại xem target đã chết chưa
             if (!target.Info.IsDie && target.Info.EffectInfo.Effects.All(p => p.effectType != EffectType.Sleep))
             {
-                AlkawaDebug.Log(ELogCategory.EFFECT, $"{CharName} check say - Áp dụng Sleep sau khi nhận damage");
+                AlkawaDebug.Log(ELogCategory.EFFECT, $"{CharName} check say");
                 target.Info.ApplyEffects(new List<EffectData>()
                 {
                     new()

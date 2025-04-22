@@ -197,8 +197,8 @@ MonoBehaviour:
       health: 40
       mana: 20
       atk: 8
-      def: 10
-      chiDef: 16
+      def: 0
+      chiDef: 0
       spd: 6
       baseDamageRollData:
         rollTime: 1
@@ -220,7 +220,7 @@ MonoBehaviour:
       atkOverride: 100
       overrideMaxMoveRange: 0
       maxMoveRangeOverride: 0
-      overrideMaxHp: 0
+      overrideMaxHp: 1
       maxHpOverride: 200
     actionPoints:
       m_keys: 000000000100000002000000

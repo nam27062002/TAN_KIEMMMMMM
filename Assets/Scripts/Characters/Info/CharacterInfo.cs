@@ -779,29 +779,19 @@ public class CharacterInfo
 
     public void CheckEffectAfterReceiveDamage(DamageTakenParams damageTakenParams)
     {
-        // Kiểm tra xem người gây damage (ReceiveFromCharacter) có hiệu ứng Drunk không
+        // Đánh dấu xem kẻ tấn công có hiệu ứng Drunk không (để log)
         bool isDamageFromDrunkAttacker = damageTakenParams.ReceiveFromCharacter != null &&
                                          damageTakenParams.ReceiveFromCharacter.Info.EffectInfo.Effects.Any(e => e.effectType == EffectType.Drunk);
-
-        // Chỉ xóa Sleep nếu:
-        // 1. Damage không đến từ kẻ tấn công đang có Drunk
-        // 2. DamageTakenParams không chứa hiệu ứng Sleep (trường hợp Sleep đến từ nguồn khác)
-        if (!isDamageFromDrunkAttacker && damageTakenParams.Effects.All(p => p.effectType != EffectType.Sleep))
+        
+        // Kiểm tra xem có hiệu ứng Sleep đang tồn tại không
+        if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Sleep))
         {
-            // Chỉ xóa Sleep nếu nó đang tồn tại
-            if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Sleep))
-            {
-                EffectInfo.Effects.RemoveAll(p => p.effectType == EffectType.Sleep);
-                AlkawaDebug.Log(ELogCategory.EFFECT,
-                    $"[{Character.characterConfig.characterName}] nhận damage (không phải từ Drunk) => removed effect: Sleep");
-            }
+            // // Luôn xóa hiệu ứng Sleep khi nhận damage
+            EffectInfo.Effects.RemoveAll(p => p.effectType == EffectType.Sleep);
+            AlkawaDebug.Log(ELogCategory.EFFECT,
+                $"[{Character.characterConfig.characterName}] nhận damage => removed effect: Sleep");
         }
-        else if (isDamageFromDrunkAttacker)
-        {
-            // Log khi không xóa Sleep do damage từ Drunk attacker
-             AlkawaDebug.Log(ELogCategory.EFFECT,
-                 $"[{Character.characterConfig.characterName}] nhận damage từ attacker có Drunk => Không xóa Sleep");
-        }
+        
     }
 
     private void HandleEffectCleanse()
