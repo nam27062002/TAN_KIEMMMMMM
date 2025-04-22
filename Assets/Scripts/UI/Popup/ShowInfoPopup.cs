@@ -210,6 +210,7 @@ public class ShowInfoPopup : PopupBase
     public override void Close()
     {
         scrollType = ScrollType.Skill;
+        SetScrollUI();
         ClearSkillInfo();
         ResetScroll();
         skillButton.onClick.RemoveAllListeners();
