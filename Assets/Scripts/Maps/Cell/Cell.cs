@@ -130,7 +130,7 @@ public class Cell : MonoBehaviour
         currentShieldHP--;
         hpBar.SetValue(currentShieldHP * 1f / shieldHeath);
         AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"Hiểu Nhật Quang Lâm: chặn sát thương cho {to.characterConfig.characterName} từ đòn đánh của {from.characterConfig.characterName}");
+            $"Hieu Nhat Quang Lam: blocked damage for {to.characterConfig.characterName} from {from.characterConfig.characterName}\'s attack");
         if (currentShieldHP <= 0)
         {
             UnsetShieldImpact(3); // hard code
@@ -147,7 +147,7 @@ public class Cell : MonoBehaviour
 
         UnsetShieldImpact(this);
         shieldSprite.gameObject.SetActiveIfNeeded(false);
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Hiểu Nhật Quang Lâm: tháp bị phá hủy");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"Hieu Nhat Quang Lam: tower destroyed");
     }
 
     private void SetShieldImpact(Cell cell)

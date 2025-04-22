@@ -38,7 +38,7 @@ public class HoacLienHuong : PlayerCharacter
             if (additionalDamage > maxAdditionalDamage)
                 additionalDamage = maxAdditionalDamage;
                 
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yêu Cung: Tăng sát thương cộng thêm lên {additionalDamage}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yeu Cung: Increased additional damage to {additionalDamage}");
         }
         
         if (critReduction < maxCritReduction)
@@ -47,7 +47,7 @@ public class HoacLienHuong : PlayerCharacter
             if (critReduction > maxCritReduction)
                 critReduction = maxCritReduction;
                 
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yêu Cung: Giảm số cần để crit xuống {critReduction}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yeu Cung: Reduced crit requirement to {critReduction}");
         }
     }
     
@@ -57,7 +57,7 @@ public class HoacLienHuong : PlayerCharacter
         var path = MapManager.FindShortestPath(damageTakenParams.SkillStateParams.Source.Info.Cell, SkillStateParams.TargetCell);
         if (path == null) return false;
         var canDodge = path.Count > damageTakenParams.SkillStateParams.SkillInfo.range;
-        Debug.Log($"Khoảng cách hiện tại = {path.Count} | Khoảng cách skill = {damageTakenParams.SkillStateParams.SkillInfo.range} => né = {canDodge}");
+        Debug.Log($"Current distance = {path.Count} | Skill range = {damageTakenParams.SkillStateParams.SkillInfo.range} => dodge = {canDodge}");
         return canDodge;
     }
     
@@ -75,7 +75,7 @@ public class HoacLienHuong : PlayerCharacter
             // Gây 1d4 sát thương lên bản thân
             int selfDamage = Roll.RollDice(1, 4, 0);
             Info.HandleDamageTaken(-selfDamage, this);
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yêu Cung đạt tối đa: mất {selfDamage} máu (1d4)");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yeu Cung maxed: lost {selfDamage} hp (1d4)");
             
             // Đánh dấu đã gọi
             _hasAppliedSelfDamageThisSkill = true;
@@ -106,19 +106,19 @@ public class HoacLienHuong : PlayerCharacter
         {
             float roll = UnityEngine.Random.value;
             int ap = roll < 0.25f ? 1 : 2;
-            AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Lượt địch - Kết quả roll AP: {roll} => AP = {ap}");
+            AlkawaDebug.Log(ELogCategory.SKILL,$"Movement Technique: Enemy Turn - AP roll result: {roll} => AP = {ap}");
             
             if(roll < goldenAPChance)
             {
                 goldenAPChance = 0.25f;
-                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Kích hoạt AP vàng! (Xác suất: {goldenAPChance}, Roll: {roll})");
-                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Xác suất AP vàng được reset: {goldenAPChance}");
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Movement Technique: Activated golden AP! (Chance: {goldenAPChance}, Roll: {roll})");
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Movement Technique: Golden AP chance reset: {goldenAPChance}");
             }
             else
             {
-                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Kích hoạt AP đỏ. (Xác suất: {goldenAPChance}, Roll: {roll})");
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Movement Technique: Activated red AP. (Chance: {goldenAPChance}, Roll: {roll})");
                 goldenAPChance = Mathf.Min(goldenAPChance + 0.10f, 1f);
-                AlkawaDebug.Log(ELogCategory.SKILL,$"Thân pháp: Xác suất AP vàng tăng lên: {goldenAPChance}");
+                AlkawaDebug.Log(ELogCategory.SKILL,$"Movement Technique: Golden AP chance increased: {goldenAPChance}");
             }
             return ap;
         }

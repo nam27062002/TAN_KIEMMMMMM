@@ -12,7 +12,7 @@ public class AIMoveState : MoveState
         if (to.poisonousBloodPool.enabled)
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, 
-                $"[{Character.characterConfig.characterName}] đi vào vũng máu độc => Bị Mù");
+                $"[{Character.characterConfig.characterName}] entered poisonous blood pool => Blind");
             Info.ApplyEffects(new List<EffectData>()
             {
                 new()
@@ -26,7 +26,7 @@ public class AIMoveState : MoveState
 
         if (from.mainBlockProjectile == null && to.mainBlockProjectile != null)
         {
-            Debug.Log($"[{Character.characterConfig.characterName}] đi vào chiến trường => nhận hiệu ứng chảy máu");
+            Debug.Log($"[{Character.characterConfig.characterName}] entered battlefield => received bleed effect");
             Info.ApplyEffects(new List<EffectData>()
             {
                 new()

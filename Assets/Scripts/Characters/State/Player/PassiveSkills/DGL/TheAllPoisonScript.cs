@@ -39,7 +39,7 @@ public class TheAllPoisonScript : PassiveSkill
             if (parasitesEarned > 0)
             {
                 VenomousParasite += parasitesEarned;
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Độc Điển: mất {Mathf.Abs(value)} máu => nhận {parasitesEarned} độc trùng");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] The All Poison: lost {Mathf.Abs(value)} hp => gained {parasitesEarned} venomous parasites");
             }
         }
     }

@@ -138,7 +138,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 
                 if (shadowPrefab == null)
                 {
-                    Debug.LogError($"Không thể tìm thấy prefab cho bóng loại {shadowType}");
+                    Debug.LogError($"Cannot find prefab for shadow type {shadowType}");
                     continue;
                 }
                 
@@ -154,7 +154,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                     
                 if (shadow == null)
                 {
-                    Debug.LogError($"Không thể tạo bóng loại {shadowType}");
+                    Debug.LogError($"Cannot create shadow type {shadowType}");
                     Destroy(go);
                     continue;
                 }
@@ -192,12 +192,12 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 if (shadowData.actionPoints != null && shadowData.actionPoints.Count > 0)
                 {
                     shadow.Info.ActionPoints = new List<int>(shadowData.actionPoints);
-                    Debug.Log($"[{shadow.characterConfig.characterName}] Khôi phục Action Points: {string.Join(", ", shadowData.actionPoints)}");
+                    Debug.Log($"[{shadow.characterConfig.characterName}] Restored Action Points: {string.Join(", ", shadowData.actionPoints)}");
                 }
             }
             else
             {
-                Debug.LogError($"Không tìm thấy owner với ID {shadowData.ownerID} cho bóng loại {shadowType}");
+                Debug.LogError($"Cannot find owner with ID {shadowData.ownerID} for shadow type {shadowType}");
             }
         }
 
@@ -226,7 +226,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             if (characterData.actionPoints != null && characterData.actionPoints.Count > 0)
             {
                 character.Info.ActionPoints = new List<int>(characterData.actionPoints);
-                Debug.Log($"[{character.characterConfig.characterName}] Khôi phục Action Points: {string.Join(", ", characterData.actionPoints)}");
+                Debug.Log($"[{character.characterConfig.characterName}] Restored Action Points: {string.Join(", ", characterData.actionPoints)}");
             }
 
             // Khôi phục shield cho Hoắc Liên Hương
@@ -309,9 +309,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         character.Info.IsFirstRoundAfterLoad = isFirstCharacter;
         
         if (isFirstCharacter)
-            Debug.Log($"[{character.characterConfig.characterName}] Đây là nhân vật chính đầu tiên, sẽ giữ nguyên MoveAmount = {data.moveAmount}");
+            Debug.Log($"[{character.characterConfig.characterName}] This is the first main character, will keep MoveAmount = {data.moveAmount}");
         else
-            Debug.Log($"[{character.characterConfig.characterName}] Không phải nhân vật chính đầu tiên, sẽ reset MoveAmount thành 0 khi đến lượt");
+            Debug.Log($"[{character.characterConfig.characterName}] Not the first main character, will reset MoveAmount to 0 on their turn");
             
         character.Info.OnHpChangedInvoke(0);
         character.Info.OnMpChangedInvoke(0);
@@ -358,7 +358,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         HandleSpecialForLevel1(character);
         if (character.IsMainCharacter)
         {
-            HandleEndTurn( "Chết trong lượt chính");
+            HandleEndTurn( "Died in main turn");
         }
         else if (SelectedCharacter == character)
         {
@@ -368,7 +368,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
             if (character.Type != MainCharacter.Type)
             {
-                Debug.Log($"[{character.characterConfig.characterName}] chết trong lượt counter => quay về lượt hiện tại");
+                Debug.Log($"[{character.characterConfig.characterName}] died during counter => return to current turn");
                 if (PreviousSelectedCharacter != null)
                     callback = () => SetSelectedCharacter(PreviousSelectedCharacter);
                 else if (MainCharacter != null)
@@ -378,7 +378,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             }
             else
             {
-                Debug.Log($"[WARNING] AI chết nhưng không quay về lượt hiện tại - Character: {character.characterConfig.characterName}, Type: {character.Type}, MainType: {MainCharacter.Type}");
+                Debug.Log($"[WARNING] AI died but did not return to current turn - Character: {character.characterConfig.characterName}, Type: {character.Type}, MainType: {MainCharacter.Type}");
             }
         }
     }
@@ -650,7 +650,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
         if (delay > 0)
         {
-            Debug.Log("Đang đợi CanSat khởi tạo các bóng...");
+            Debug.Log("Waiting for CanSat to initialize shadows...");
             Invoke(nameof(SetMainCharacter), delay);
         }
         else
@@ -700,7 +700,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             if (MainCharacter == null || MainCharacter.Info.IsDie)
             {
-                HandleEndTurn("Chết khi chuẩn bị đến lượt");
+                HandleEndTurn("Died before turn start");
             }
             else
             {
@@ -712,7 +712,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 // Hiển thị tầm di chuyển sau khi load từ save
                 if (_hasOverrideLevelConfig && MainCharacter.Type == Type.Player)
                 {
-                    AlkawaDebug.Log(ELogCategory.EDITOR, $"Load từ save - Hiển thị tầm di chuyển cho {MainCharacter.characterConfig.characterName}");
+                    AlkawaDebug.Log(ELogCategory.EDITOR, $"Load from save - Showing move range for {MainCharacter.characterConfig.characterName}");
                     // Đảm bảo hiển thị tầm di chuyển ngay khi load từ save
                     MainCharacter.ShowMoveRange();
                 }
@@ -738,7 +738,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         UpdateCharacterInfo();
         if (SelectedCharacter.Info.IsDie)
         {
-            HandleEndTurn("Chết trong khi focus vào nhân vật (có thể do bị phản công)");
+            HandleEndTurn("Died while focusing on character (possibly due to counter attack)");
         }
 
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
@@ -788,7 +788,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             if (SelectedCharacter)
                 MainCharacter?.Info.ResetBuffAfter();
-            bool isDeathInMainTurn = message.Contains("Chết");
+            bool isDeathInMainTurn = message.Contains("Died");
             if (!isDeathInMainTurn)
             {
                 CurrentPlayerIndex++;

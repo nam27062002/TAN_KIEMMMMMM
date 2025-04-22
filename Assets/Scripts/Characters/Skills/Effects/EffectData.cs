@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using UnityEngine;
 
 [JsonObject(ItemTypeNameHandling = TypeNameHandling.Auto)]
 [Serializable]
@@ -29,7 +30,7 @@ public class EffectData
             Actor = mapManager.GetCharacterById(characterId);
             if (Actor == null)
             {
-                UnityEngine.Debug.LogWarning($"Không tìm thấy nhân vật với ID {characterId} cho hiệu ứng {effectType}");
+                UnityEngine.Debug.LogWarning($"Character with ID {characterId} not found for effect {effectType}");
             }
         }
     }

@@ -288,19 +288,19 @@ public abstract class Character : MonoBehaviour
             else if(SkillStateParams?.DamageTakenParams?.ReceiveFromCharacter != null)
             {
                 primaryTarget = SkillStateParams.DamageTakenParams.ReceiveFromCharacter;
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công bằng skill không định hướng ({Info.SkillInfo?.name}), kiểm tra range tới {primaryTarget.characterConfig.characterName}");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Countering with non-directional skill ({Info.SkillInfo?.name}), checking range to {primaryTarget.characterConfig.characterName}");
             }
             else
             {
                 primaryTarget = GpManager.MainCharacter;
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công: ({Info.SkillInfo?.name}), kiểm tra range tới {primaryTarget.characterConfig.characterName}");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Counter attack: ({Info.SkillInfo?.name}), checking range to {primaryTarget.characterConfig.characterName}");
             }
 
             if (primaryTarget != null)
             {
                 if (Info.SkillInfo == null)
                 {
-                    AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] SkillInfo là null khi kiểm tra range phản công!");
+                    AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] SkillInfo is null when checking counter range!");
                     UnSelectSkill();
                     ChangeState(ECharacterState.Idle);
                     return;
@@ -310,9 +310,9 @@ public abstract class Character : MonoBehaviour
                 if (!currentSkillRange.Contains(primaryTarget.Info.Cell))
                 {
                     AlkawaDebug.Log(ELogCategory.EDITOR, 
-                        $"[{characterConfig.characterName}] Phản công bị hủy: Mục tiêu {primaryTarget.characterConfig.characterName} ở ô {primaryTarget.Info.Cell.CellPosition} nằm ngoài tầm đánh ({Info.SkillInfo.range}) của skill '{Info.SkillInfo.name}'.");
+                        $"[{characterConfig.characterName}] Counter canceled: Target {primaryTarget.characterConfig.characterName} at cell {primaryTarget.Info.Cell.CellPosition} is out of range ({Info.SkillInfo.range}) for skill '{Info.SkillInfo.name}'.");
                     
-                    UIManager.Instance.ShowNotification($"Phản công thất bại: {primaryTarget.characterConfig.characterName} ngoài tầm!", 2.5f);
+                    UIManager.Instance.ShowNotification($"Counter failed: {primaryTarget.characterConfig.characterName} out of range!", 2.5f);
 
                     UnSelectSkill();
                     ChangeState(ECharacterState.Idle);
@@ -320,14 +320,14 @@ public abstract class Character : MonoBehaviour
                 }
                 else
                 {
-                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Phản công hợp lệ: Mục tiêu {primaryTarget.characterConfig.characterName} trong tầm của skill '{Info.SkillInfo.name}'.");
+                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Valid counter: Target {primaryTarget.characterConfig.characterName} is within range of skill '{Info.SkillInfo.name}'.");
                 }
             }
             else
             {
-                AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] Không thể xác định mục tiêu chính để kiểm tra range khi phản công.");
+                AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] Cannot determine main target to check range for counter attack.");
                 
-                UIManager.Instance.ShowNotification("Phản công thất bại: Không thể xác định mục tiêu!", 2.5f);
+                UIManager.Instance.ShowNotification("Counter failed: Cannot determine target!", 2.5f);
                 
                 UnSelectSkill();
                 ChangeState(ECharacterState.Idle);
@@ -399,7 +399,7 @@ public abstract class Character : MonoBehaviour
         SkillInfo selectedSkill = GetSkillInfo(skillIndex);
         if (selectedSkill == null)
         {
-            Debug.LogWarning($"[{characterConfig.characterName}] HandleSelectSkill: Không tìm thấy skill với index {skillIndex}");
+            Debug.LogWarning($"[{characterConfig.characterName}] HandleSelectSkill: Skill with index {skillIndex} not found");
             return;
         }
         
@@ -415,7 +415,7 @@ public abstract class Character : MonoBehaviour
         {
             if (Info.Cell == null)
             {
-                Debug.LogWarning($"[{characterConfig.characterName}] HandleSelectSkill: Cell của nhân vật là null!");
+                Debug.LogWarning($"[{characterConfig.characterName}] HandleSelectSkill: Character's Cell is null!");
                 return;
             }
             
@@ -555,17 +555,17 @@ public abstract class Character : MonoBehaviour
         if (!IsMainCharacter) return;
         
         int moveRange = Info.GetMoveRange();
-        AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] Hiển thị tầm di chuyển: {moveRange} ô, MoveAmount = {Info.MoveAmount}");
+        AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] Showing move range: {moveRange} cells, MoveAmount = {Info.MoveAmount}");
         
         Info.MoveRange = MapManager.GetHexagonsInMoveRange(Info.Cell, moveRange, characterConfig.moveDirection);
         
         if (Info.MoveRange.Count == 0)
         {
-            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] CẢNH BÁO: MoveRange có độ dài bằng 0! moveRange = {moveRange}");
+            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] WARNING: MoveRange has length 0! moveRange = {moveRange}");
         }
         else
         {
-            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] MoveRange có {Info.MoveRange.Count} ô");
+            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] MoveRange has {Info.MoveRange.Count} cells");
         }
         
         foreach (var item in Info.MoveRange)
@@ -589,14 +589,14 @@ public abstract class Character : MonoBehaviour
     {
         if (Info == null || Info.Cell == null || Info.SkillInfo == null)
         {
-            Debug.LogWarning($"[{characterConfig.characterName}] ShowSkillRange: Info, Cell hoặc SkillInfo là null!");
+            Debug.LogWarning($"[{characterConfig.characterName}] ShowSkillRange: Info, Cell, or SkillInfo is null!");
             return;
         }
         
         Info.SkillRange = MapManager.GetHexagonsInAttack(Info.Cell, Info.SkillInfo);
         if (Info.SkillRange == null)
         {
-            Debug.LogWarning($"[{characterConfig.characterName}] ShowSkillRange: Không thể lấy được SkillRange!");
+            Debug.LogWarning($"[{characterConfig.characterName}] ShowSkillRange: Cannot get SkillRange!");
             return;
         }
         
@@ -607,7 +607,7 @@ public abstract class Character : MonoBehaviour
 
         if (Info.SkillRange.Count == 0)
         {
-            UIManager.Instance.ShowNotification("Không có mục tiêu nào trong tầm", 2f);
+            UIManager.Instance.ShowNotification("No targets in range", 2f);
         }
     }
 

@@ -71,7 +71,7 @@ public class EmpressesBowstrings : PassiveSkill
             int decreaseAmount = Mathf.Min(moveRangeDecreasePerRound, _currentMoveRange - minMoveRange);
             _currentMoveRange -= decreaseAmount;
             ReduceMoveRange(decreaseAmount);
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Hỏa Vũ: giảm phạm vi di chuyển xuống {_currentMoveRange} ô");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Fire Dance: reduced move range to {_currentMoveRange} cells");
         }
         
         if (_currentDodgeBonus > 0)
@@ -96,7 +96,7 @@ public class EmpressesBowstrings : PassiveSkill
     private void ReduceMoveRange(int value)
     {
         character.Info.Attributes.maxMoveRange -= value;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Hỏa Vũ: giảm ô di chuyển (move range = {character.Info.Attributes.maxMoveRange})");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Fire Dance: reduced move cells (move range = {character.Info.Attributes.maxMoveRange})");
 
     }
     
@@ -109,13 +109,13 @@ public class EmpressesBowstrings : PassiveSkill
     {
         if (character.Info == null) return;
         character.Info.Attributes.def += value;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Né tránh: +{value} def (ban đầu: {character.Info.Attributes.def})");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Dodge: +{value} def (initial: {character.Info.Attributes.def})");
     }
     
     private void ReduceDodge(int value)
     {
         character.Info.Attributes.def -= value;
         character.Info.Attributes.def = Mathf.Max(0, character.Info.Attributes.def);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Né tránh: giảm {value} def sau mỗi vòng | def = {character.Info.Attributes.def}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] Dodge: reduced {value} def each round | def = {character.Info.Attributes.def}");
     }
 }

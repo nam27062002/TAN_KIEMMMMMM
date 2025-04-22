@@ -116,7 +116,7 @@ public class CanSat : AICharacter
                     {
                         Enemy = tauntSource;
                         HandleCastSkill(skill, new List<Character> { Enemy });
-                        AlkawaDebug.Log(ELogCategory.AI, $"Bị Taunt: tấn công {tauntSource.characterConfig.characterName} với {skill.name}");
+                        AlkawaDebug.Log(ELogCategory.AI, $"Taunted: attacking {tauntSource.characterConfig.characterName} with {skill.name}");
                         return;
                     }
                 }
@@ -148,7 +148,7 @@ public class CanSat : AICharacter
         }
         else
         {
-            GpManager.HandleEndTurn("không thể tiếp tục");
+            GpManager.HandleEndTurn("cannot continue");
         }
     }
 

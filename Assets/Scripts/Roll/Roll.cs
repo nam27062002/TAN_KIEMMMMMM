@@ -22,7 +22,7 @@ public class Roll
 
         if (_isCriticalHit && !oldValue)
         {
-            Debug.Log("CRITICAL HIT! Cộng thêm xúc xắc cho mọi nguồn sát thương.");
+            Debug.Log("CRITICAL HIT! Added extra dice to all damage sources.");
         }
     }
 
@@ -52,7 +52,7 @@ public class Roll
                 totalReduceValue += effect.value;
             }
             AlkawaDebug.Log(ELogCategory.EFFECT, 
-                $"[{_characterName}] có {reduceHitChangeEffects.Count()} hiệu ứng tăng tỉ lệ chí mạng: tổng -" + totalReduceValue);
+                $"[{_characterName}] has {reduceHitChangeEffects.Count()} increased crit chance effect(s): total -" + totalReduceValue);
         }
         
         // Tính toán hitChange với rollValue đã được điều chỉnh
@@ -76,11 +76,11 @@ public class Roll
         if (_characterInfo.Character.GetSkillTurnType() == SkillTurnType.EnemyTurn && _characterInfo.Character == GameplayManager.Instance.SelectedCharacter)
         {
             effectResistance += 5;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} + 5 = {effectResistance}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Effect Resistance = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} + 5 = {effectResistance}");
         }
         else
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Kháng hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} = {effectResistance}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Effect Resistance = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} = {effectResistance}");
         }
         return effectResistance;
     }
@@ -89,7 +89,7 @@ public class Roll
     {
         var rollData = _attributes.effectEffectCleanseRollData;
         var effectCleanse = RollDice(rollData, _characterInfo.GetChiDef() / 4);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Giải hiệu ứng = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} = {effectCleanse}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{_characterName}] | Effect Cleanse = {rollData.rollTime}d{rollData.rollValue} + {_characterInfo.GetChiDef() / 4} = {effectCleanse}");
         return effectCleanse;
     }
     

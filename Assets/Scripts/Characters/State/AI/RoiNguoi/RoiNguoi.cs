@@ -33,7 +33,7 @@ public class RoiNguoi : AICharacter
         var rollData = Roll.RollDice(1, 20, 0);
         if (rollData >= 10)
         {
-            Debug.Log($"Roll data = {rollData} >= 10 => kích hoạt nội tại");
+            Debug.Log($"Roll data = {rollData} >= 10 => activate passive");
             Info.ApplyEffects(new List<EffectData>()
             {
                 new ChangeStatEffect()
@@ -63,13 +63,13 @@ public class RoiNguoi : AICharacter
         }
         else
         {
-            Debug.Log($"Roll data = {rollData} < 10 => không kích hoạt nội tại");
+            Debug.Log($"Roll data = {rollData} < 10 => do not activate passive");
         }
     }
     
     public override void HandleAIPlay()
     {
         AlkawaDebug.Log(ELogCategory.AI,"HandleAIPlay");
-        GameplayManager.Instance.HandleEndTurn("Không thể di chuyển + dùng skill");
+        GameplayManager.Instance.HandleEndTurn("Cannot move + use skill");
     }
 }

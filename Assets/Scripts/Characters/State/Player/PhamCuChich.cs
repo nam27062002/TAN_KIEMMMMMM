@@ -32,7 +32,7 @@ public class PhamCuChich : PlayerCharacter
         if (_damage != 0)
         {
             Info.Attributes.atk -= _damage;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: new round => Reset damage");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Immovable Mountain: new round => Reset damage");
             _damage = 0;
         }
         
@@ -40,7 +40,7 @@ public class PhamCuChich : PlayerCharacter
         {
             _damage = Utils.RoundNumber(_damageLostInCurrentRound * 0.3f);
             Info.Attributes.atk += _damage;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: Áp dụng {_damage} damage từ máu đã mất ở round trước (30%)");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Immovable Mountain: Applied {_damage} damage from lost hp in previous round (30%)");
             _damageLostInCurrentRound = 0;
         }
     }
@@ -49,7 +49,7 @@ public class PhamCuChich : PlayerCharacter
     {
         if (Info == null) return;
         _damageLostInCurrentRound += damage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Bất Động Như Sơn: Lưu {damage} damage, tổng {_damageLostInCurrentRound} (sẽ áp dụng ở round tiếp theo)");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Immovable Mountain: Stored {damage} damage, total {_damageLostInCurrentRound} (will apply next round)");
     }
 
     public override void HandleMpChanged(int value)

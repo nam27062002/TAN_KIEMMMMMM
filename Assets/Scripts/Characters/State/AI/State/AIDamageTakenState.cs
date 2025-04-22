@@ -17,42 +17,42 @@ public class AIDamageTakenState : DamageTakenState
         var target = DamageTakenParams.ReceiveFromCharacter;
         if (target == null)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì không có mục tiêu.");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter because there is no target.");
             return false;
         }
 
         if (Info.MustEndTurn)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - không thể vì phải kết thúc lượt.");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter because must end turn.");
             return false;
         }
 
         List<CastSkillData> castSkillData = Character.GetValidSkills(target);
         if (castSkillData == null || castSkillData.Count == 0)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì không có kỹ năng hợp lệ.");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter because no valid skills.");
             return false;
         }
         
         if (Character.lastDamageTakenCountered)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì đã counter lần trước.");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter because already countered last time.");
             return false;
         }
 
         if (Info.CurrentHp > Character.GetMaxHp() / 2)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: ({Info.CurrentHp}/{Character.GetMaxHp()})");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter: ({Info.CurrentHp}/{Character.GetMaxHp()})");
             return false;
         }
 
         if (Random.value > 0.3f)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: {Random.value} > 0.3");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter: {Random.value} > 0.3");
             return false;
         }
         _castSkillData = castSkillData[Random.Range(0, castSkillData.Count)];
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - dùng skill {_castSkillData.SkillInfo.name} lên {target.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - using skill {_castSkillData.SkillInfo.name} on {target.characterConfig.characterName}");
 
         return true;
     }
@@ -65,7 +65,7 @@ public class AIDamageTakenState : DamageTakenState
         HandleCastSkill();
         
         Character.lastDamageTakenCountered = true;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Đã thực hiện counter thành công");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Counter executed successfully");
     }
 
     private void HandleCastSkill()

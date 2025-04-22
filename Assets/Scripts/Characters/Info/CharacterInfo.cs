@@ -165,7 +165,7 @@ public class CharacterInfo
     {
         if (EffectInfo.Effects.Any(p => p.effectType == EffectType.Cover_PhamCuChich_Skill3))
         {
-            Debug.Log($"[{Character.characterConfig.characterName}] có buff từ skill 3 của PCC => damage nhận = 1");
+            Debug.Log($"[{Character.characterConfig.characterName}] has buff from PCC skill 3 => damage taken = 1");
             damage = -1;
         }
     }
@@ -177,7 +177,7 @@ public class CharacterInfo
         if (dragonArmor == null) return;
         damage = -damage;
         GameplayManager.Instance.MainCharacter.Info.HandleDamageTaken(damage, character);
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Long Giáp: phản sát thương");
+        AlkawaDebug.Log(ELogCategory.EFFECT, "Dragon Armor: reflect damage");
     }
 
     private void TryHandleCoverEffect(ref int damage)
@@ -263,7 +263,7 @@ public class CharacterInfo
     {
         DamageDealtInCurrentRound += damage;
         TryApplyLifeStealEffect();
-        Debug.Log($"[{Character.characterConfig.characterName}] Sát thương đã gây ra trong round = {DamageDealtInCurrentRound}");
+        Debug.Log($"[{Character.characterConfig.characterName}] Damage dealt in round = {DamageDealtInCurrentRound}");
     }
 
     private void TryApplyLifeStealEffect()
@@ -276,7 +276,7 @@ public class CharacterInfo
             CurrentHp = Mathf.Min(CurrentHp, Character.GetMaxHp());
             OnHpChangedInvoke(heal);
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}]: Hút máu = {rollEffectData.rollData.rollTime}d{rollEffectData.rollData.rollValue} + {rollEffectData.rollData.add} = {heal}");
+                $"[{Character.characterConfig.characterName}]: Life Steal = {rollEffectData.rollData.rollTime}d{rollEffectData.rollData.rollValue} + {rollEffectData.rollData.add} = {heal}");
         }
     }
 
@@ -319,7 +319,7 @@ public class CharacterInfo
         if (EffectInfo.Effects.Any(p => p.effectType == EffectType.SetDefToZero))
         {
             AlkawaDebug.Log(ELogCategory.EFFECT, 
-                $"[{Character.characterConfig.characterName}] có hiệu ứng SetDefToZero => DEF = 0");
+                $"[{Character.characterConfig.characterName}] has SetDefToZero effect => DEF = 0");
             return 0;
         }
         
@@ -388,7 +388,7 @@ public class CharacterInfo
             .Sum(e => ((ChangeStatEffect)e).value);
             
         AlkawaDebug.Log(ELogCategory.EDITOR, 
-            $"[{Character.characterConfig.characterName}] Tính lại tầm di chuyển: maxMove = {maxMove}, MoveAmount = {MoveAmount}, tầm còn lại = {baseValue + moveBuff}");
+            $"[{Character.characterConfig.characterName}] Recalculate move range: maxMove = {maxMove}, MoveAmount = {MoveAmount}, remaining range = {baseValue + moveBuff}");
             
         return baseValue + moveBuff;
     }
@@ -415,7 +415,7 @@ public class CharacterInfo
                         var reduction = Roll.RollDice(1, 4, 0);
                         AlkawaDebug.Log(
                             ELogCategory.EFFECT,
-                            $"Apply debuff {effect.effectType}: giảm di chuyển = 1d4 = {reduction}"
+                            $"Apply debuff {effect.effectType}: reduce movement = 1d4 = {reduction}"
                         );
                         totalReduction += reduction;
                         break;
@@ -424,7 +424,7 @@ public class CharacterInfo
                     totalReduction += changeStatEffect.value;
                     AlkawaDebug.Log(
                         ELogCategory.EFFECT,
-                        $"Apply debuff {effect.effectType}: giảm di chuyển = {changeStatEffect.value}"
+                        $"Apply debuff {effect.effectType}: reduce movement = {changeStatEffect.value}"
                     );
                     break;
             }
@@ -478,7 +478,7 @@ public class CharacterInfo
         {
             // Nếu có độc trùng, kích hoạt PoisonousBloodPool
             AlkawaDebug.Log(ELogCategory.EFFECT, 
-                $"[{Character.characterConfig.characterName}] Hoa biến mất, kích hoạt độc trùng");
+                $"[{Character.characterConfig.characterName}] Flower disappeared, activated venomous parasite");
 
             // Tìm hiệu ứng độc trùng
             var parasiteEffect = venomousParasiteEffects.First();
@@ -511,7 +511,7 @@ public class CharacterInfo
             {
                 EffectInfo.Effects.Remove(parasiteEffect);
                 AlkawaDebug.Log(ELogCategory.EFFECT, 
-                    $"[{Character.characterConfig.characterName}] Độc trùng đã hết");
+                    $"[{Character.characterConfig.characterName}] Venomous parasite ran out");
             }
         }
     }
@@ -529,7 +529,7 @@ public class CharacterInfo
         {
             // Đánh dấu là đã xử lý lần đầu sau khi load
             IsFirstRoundAfterLoad = false;
-            Debug.Log($"[{Character.characterConfig.characterName}] Giữ nguyên MoveAmount = {MoveAmount} từ save");
+            Debug.Log($"[{Character.characterConfig.characterName}] Keep MoveAmount = {MoveAmount} from save");
         }
         
         // Thêm logic kiểm tra vũng máu độc cho AI khi bắt đầu lượt
@@ -551,7 +551,7 @@ public class CharacterInfo
                             Actor = bloodPool.Actor
                         });
                         AlkawaDebug.Log(ELogCategory.EFFECT, 
-                            $"[{Character.characterConfig.characterName}] đứng trên vũng máu độc khi bắt đầu lượt => Bị Mù");
+                            $"[{Character.characterConfig.characterName}] stood on poisonous blood pool at turn start => Blind");
                         break;
                     }
                 }
@@ -597,7 +597,7 @@ public class CharacterInfo
                 description = originalSkillInfo.description,
                 canBeDodged = originalSkillInfo.canBeDodged
             };
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Tầm sử dụng kỹ năng [{originalSkillInfo.name}] giảm từ {originalSkillInfo.range} xuống {modifiedSkillInfo.range}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] is Blind => Skill range [{originalSkillInfo.name}] reduced from {originalSkillInfo.range} to {modifiedSkillInfo.range}");
             return modifiedSkillInfo;
         }
         
@@ -789,7 +789,7 @@ public class CharacterInfo
             // // Luôn xóa hiệu ứng Sleep khi nhận damage
             EffectInfo.Effects.RemoveAll(p => p.effectType == EffectType.Sleep);
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] nhận damage => removed effect: Sleep");
+                $"[{Character.characterConfig.characterName}] took damage => removed effect: Sleep");
         }
         
     }
@@ -802,7 +802,7 @@ public class CharacterInfo
             var effectCleanse = _roll.GetEffectCleanse();
             var baseEffectCleanse = value.Item2;
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"{item.effectType}: Giải hiệu ứng = {effectCleanse} - Quy ước: {baseEffectCleanse}");
+                $"{item.effectType}: Cleanse effect = {effectCleanse} - Base: {baseEffectCleanse}");
 #if !ALWAY_APPLY_EFFECT
             if (effectCleanse < baseEffectCleanse) continue;
             EffectInfo.Effects.Remove(item);
@@ -838,7 +838,7 @@ public class CharacterInfo
         {
             Debug.Log(
                 $"[{Character.characterConfig.characterName}] sleep = {HasSleepEffect} or stun = {HasStunEffect} => End turn");
-            GameplayManager.Instance.HandleEndTurn("Có debuff sleep hoặc stun");
+            GameplayManager.Instance.HandleEndTurn("Has sleep or stun debuff");
         }
         else
         {
@@ -870,7 +870,7 @@ public class CharacterInfo
         var effectResistance = _roll.GetEffectResistance();
         var baseEffectResistance = EffectInfo.AppliedEffect[effectData.effectType].Item1;
         AlkawaDebug.Log(ELogCategory.EFFECT,
-            $"Debuff {effectData.effectType}: Kháng hiệu ứng = {effectResistance} - Quy ước: {baseEffectResistance}");
+            $"Debuff {effectData.effectType}: Effect Resistance = {effectResistance} - Base: {baseEffectResistance}");
 #if !ALWAY_APPLY_EFFECT
         return effectResistance < baseEffectResistance;
 #else
@@ -913,7 +913,7 @@ public class CharacterInfo
         var damage = Utils.RoundNumber(hpDecreased * 1f / 10);
         if (CurrentHp > 0) HandleDamageTaken(-damage, effectData.Actor);
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{Character.characterConfig.characterName}] Huyết Ấn: máu đã mất = {hpDecreased} => damage = {damage}");
+            $"[{Character.characterConfig.characterName}] Blood Seal: lost hp = {hpDecreased} => damage = {damage}");
     }
 
     private void TryCheckEffectResistanceAndApplyEffect(EffectData effectData)
@@ -931,13 +931,13 @@ public class CharacterInfo
         {
             EffectInfo.AddEffect(effectData);
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] roll data = {rollData} < 10 => Added effect: Độc Phấn");
+                $"[{Character.characterConfig.characterName}] roll data = {rollData} < 10 => Added effect: Poison Powder");
         }
 #if !ALWAY_APPLY_EFFECT
         else
         {
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Độc Phấn");
+                $"[{Character.characterConfig.characterName}] roll data = {rollData} >= 10 => can't add effect: Poison Powder");
         }
 #endif
     }
@@ -1012,7 +1012,7 @@ public class CharacterInfo
         {
             ApplySimpleEffect(effectData);
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Đã nhiễm {venomousParasiteEffect.value} độc trùng");
+                $"[{Character.characterConfig.characterName}] Infected with {venomousParasiteEffect.value} venomous parasites");
         }
         else if (effectData is ChangeStatEffect oldVersionEffect)
         {
@@ -1026,7 +1026,7 @@ public class CharacterInfo
             };
             ApplySimpleEffect(venomousParasite);
             AlkawaDebug.Log(ELogCategory.EFFECT,
-                $"[{Character.characterConfig.characterName}] Đã nhiễm {oldVersionEffect.value} độc trùng (từ phiên bản cũ)");
+                $"[{Character.characterConfig.characterName}] Infected with {oldVersionEffect.value} venomous parasites (from old version)");
         }
     }
 
@@ -1046,8 +1046,8 @@ public class CharacterInfo
 
         if (ShieldEffectData != null)
         {
-            Debug.Log($"Nhận lượng shield = {changeStatEffect} | lương shield hiện tại = {ShieldEffectData.value}");
-            Debug.Log($"damage khi nổ shield = {ShieldEffectData.damage}");
+            Debug.Log($"Received shield amount = {changeStatEffect} | current shield amount = {ShieldEffectData.value}");
+            Debug.Log($"damage on shield break = {ShieldEffectData.damage}");
             HandleShieldChange(Character);
         }
     }
@@ -1104,7 +1104,7 @@ public class CharacterInfo
         var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.effectType == EffectType.Bleed);
         if (effect is not BleedEffect bleedEffect) return;
         var damage = Utils.RoundNumber(moveRange * 1f / bleedEffect.move);
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Thất Ca ngâm gây {moveRange}/3 = {damage} lên {Character.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"That Ca Ngam dealt {moveRange}/3 = {damage} to {Character.characterConfig.characterName}");
         HandleDamageTaken(-damage, effect.Actor);
     }
 
@@ -1113,7 +1113,7 @@ public class CharacterInfo
         var effect = EffectInfo.Effects.FirstOrDefault(effect => effect.effectType == EffectType.Bleed);
         if (effect is not BleedEffect bleedEffect) return;
         var damage = ap * 2;
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"Thất Ca ngâm gây {ap} * 2 = {damage} lên {Character.characterConfig.characterName}");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"That Ca Ngam dealt {ap} * 2 = {damage} to {Character.characterConfig.characterName}");
         HandleDamageTaken(-damage, effect.Actor);
     }
     #endregion

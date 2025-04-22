@@ -53,7 +53,7 @@ public class DoanGiaLinh_SkillState : SkillState
             );
         }
         
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Áp dụng Độc Phấn lên tất cả nhân vật");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Applied Poison Powder to all characters");
     }
 
     private int ApplyVenomousParasiteExtraDamage(
@@ -74,7 +74,7 @@ public class DoanGiaLinh_SkillState : SkillState
             int extraDamage = Roll.RollDice(1, 6, 0, isCrit) * value;
             AlkawaDebug.Log(
                 ELogCategory.SKILL,
-                $"[{CharName}] Độc trùng ăn hoa (sát thương phụ): damage = {value} * {rollTimes}d6 = {extraDamage}"
+                $"[{CharName}] Venomous Parasite consumes flower (extra damage): damage = {value} * {rollTimes}d6 = {extraDamage}"
             );
             return currentDamage + extraDamage;
         }
@@ -95,7 +95,7 @@ public class DoanGiaLinh_SkillState : SkillState
         Character.Info.OnHpChangedInvoke(healAmount);
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] {skillName}: Hút {stack} độc phấn => Hồi {healAmount} máu"
+            $"[{CharName}] {skillName}: Drained {stack} poison powder => Healed {healAmount} HP"
         );
 
         return stack;
@@ -104,7 +104,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhiên Huyết");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhien Huyet");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
@@ -129,7 +129,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Mộng Yểm");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Mong Yem");
         int damage = 0;
         var effects = new List<EffectData>()
         {
@@ -165,7 +165,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Băng Hoại");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Bang Hoai");
         int damage = 0;
         var effects = new List<EffectData>()
         {
@@ -201,11 +201,11 @@ public class DoanGiaLinh_SkillState : SkillState
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Thược Dược Đỏ: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
+            $"[{CharName}] Red Dahlia: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Thược Dược Đỏ: damage = {baseDamage} + {skillDamage} = {realDamage}"
+            $"[{CharName}] Red Dahlia: damage = {baseDamage} + {skillDamage} = {realDamage}"
         );
         var effects = new List<EffectData>()
         {
@@ -236,11 +236,11 @@ public class DoanGiaLinh_SkillState : SkillState
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Sen Trắng: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
+            $"[{CharName}] White Lotus: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Sen Trắng: damage = {baseDamage} + {skillDamage} = {realDamage}"
+            $"[{CharName}] White Lotus: damage = {baseDamage} + {skillDamage} = {realDamage}"
         );
         var effects = new List<EffectData>()
         {
@@ -271,11 +271,11 @@ public class DoanGiaLinh_SkillState : SkillState
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Cúc Vạn Thọ: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
+            $"[{CharName}] Marigold: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Cúc Vạn Thọ: damage = {baseDamage} + {skillDamage} = {realDamage}"
+            $"[{CharName}] Marigold: damage = {baseDamage} + {skillDamage} = {realDamage}"
         );
         var effects = new List<EffectData>()
         {
@@ -317,11 +317,11 @@ public class DoanGiaLinh_SkillState : SkillState
 
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Tuyết Điểm Hồng Phấn: skill damage = {rollTimes}d4 * {stack} = {totalSkillDamage}"
+            $"[{CharName}] Tuyet Diem Hong Phan: skill damage = {rollTimes}d4 * {stack} = {totalSkillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Tuyết Điểm Hồng Phấn: damage = {baseDamage} + {totalSkillDamage} = {realDamage}"
+            $"[{CharName}] Tuyet Diem Hong Phan: damage = {baseDamage} + {totalSkillDamage} = {realDamage}"
         );
 
         var effects = new List<EffectData>()
@@ -347,10 +347,10 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Hồng Ti");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Hong Ti");
 
         // Hút độc phấn và hồi máu
-        DrainPoisonPowderAndHeal(target, "Hồng Ti");
+        DrainPoisonPowderAndHeal(target, "Hong Ti");
 
         return new DamageTakenParams
         {
@@ -372,10 +372,10 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Kim Tước Mai");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Kim Tuoc Mai");
 
         // Hút độc phấn và hồi máu
-        DrainPoisonPowderAndHeal(target, "Kim Tước Mai");
+        DrainPoisonPowderAndHeal(target, "Kim Tuoc Mai");
 
         int damage = 0;
         var effects = new List<EffectData>()
@@ -431,13 +431,13 @@ public class DoanGiaLinh_SkillState : SkillState
         if (flower > 0 && venomousParasite > 0)
         {
             AlkawaDebug.Log(ELogCategory.SKILL, 
-                $"[{CharName}] Check áp dụng độc trùng sau khi kỹ năng hoàn thành: Hoa={flower}, Độc trùng={venomousParasite}");
+                $"[{CharName}] Check applying Venomous Parasite after skill finish: Flower={flower}, Parasite={venomousParasite}");
             
             int value = Mathf.Min(flower, venomousParasite);
             SetVenomousParasite(venomousParasite - value);
             
             AlkawaDebug.Log(ELogCategory.SKILL, 
-                $"[{CharName}] Áp dụng {value} độc trùng lên {target.characterConfig.characterName}, Độc trùng còn lại: {GetVenomousParasite()}");
+                $"[{CharName}] Applied {value} Venomous Parasite to {target.characterConfig.characterName}, Remaining Parasites: {GetVenomousParasite()}");
             
             // Chỉ áp dụng VenomousParasite, không tạo PoisonousBloodPool
             // PoisonousBloodPool sẽ được tạo khi hoa bị xóa sau 3 round
@@ -578,7 +578,7 @@ public class DoanGiaLinh_SkillState : SkillState
         if (flowerCount <= 0) return; // Thực ra không cần thiết vì đã check sourceFlowerType
 
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Skill 4: Kích hoạt {flowerCount} hoa ({sourceFlowerType}) trên người {target.characterConfig.characterName}");
+            $"[{CharName}] Skill 4: Activated {flowerCount} flower(s) ({sourceFlowerType}) on {target.characterConfig.characterName}");
 
         // Xóa tất cả hiệu ứng hoa SAU KHI đã xác định loại
         target.Info.RemoveAllFlowerEffects();
@@ -596,7 +596,7 @@ public class DoanGiaLinh_SkillState : SkillState
             if (parasitesToActivate > 0)
             {
                 AlkawaDebug.Log(ELogCategory.SKILL,
-                    $"[{CharName}] Skill 4: Hoa nở, kích hoạt {parasitesToActivate} độc trùng trên {target.characterConfig.characterName}");
+                    $"[{CharName}] Skill 4: Flower bloomed, activated {parasitesToActivate} Venomous Parasite(s) on {target.characterConfig.characterName}");
 
                 // Kích hoạt PoisonousBloodPool với loại hoa đã xác định
                 target.Info.ApplyEffects(
@@ -619,14 +619,14 @@ public class DoanGiaLinh_SkillState : SkillState
                 // Giảm số lượng độc trùng
                 venomousParasiteEffect.value -= parasitesToActivate;
                 AlkawaDebug.Log(ELogCategory.SKILL,
-                    $"[{CharName}] Skill 4: Số độc trùng còn lại trên {target.characterConfig.characterName}: {venomousParasiteEffect.value}");
+                    $"[{CharName}] Skill 4: Remaining Venomous Parasites on {target.characterConfig.characterName}: {venomousParasiteEffect.value}");
                 
                 // Nếu độc trùng về 0, xóa hiệu ứng
                 if (venomousParasiteEffect.value <= 0)
                 {
                     target.Info.EffectInfo.Effects.Remove(venomousParasiteEffect);
                     AlkawaDebug.Log(ELogCategory.SKILL,
-                        $"[{CharName}] Skill 4: Đã xóa hết độc trùng trên {target.characterConfig.characterName}");
+                        $"[{CharName}] Skill 4: Removed all Venomous Parasites from {target.characterConfig.characterName}");
                 }
             }
         }

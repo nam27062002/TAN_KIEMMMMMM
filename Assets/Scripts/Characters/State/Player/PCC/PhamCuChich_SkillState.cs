@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PhamCuChich_SkillState : SkillState
@@ -12,12 +13,12 @@ public class PhamCuChich_SkillState : SkillState
         if (character.Type == Character.Type)
         {
             character.Info.EffectInfo.RemoveAllDebuffs();
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Đã xóa tất cả hiệu ứng bất lợi cho {character.characterConfig.characterName}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Removed all debuffs for {character.characterConfig.characterName}");
         }
         
         var shield = GetShieldValue();
         var realShield = Utils.RoundNumber(shield * 1f / 2);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Mỗi nhân vật nhận {realShield} giáp");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"Each character receives {realShield} shield");
         
         var effect = new List<EffectData>()
         {
@@ -31,7 +32,7 @@ public class PhamCuChich_SkillState : SkillState
             }
         };
         Character.Info.EffectInfo.RemoveAllDebuffs();
-        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Đã xóa tất cả hiệu ứng bất lợi cho bản thân");
+        AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Removed all debuffs for self");
         Info.ApplyEffects(effect);
 
         return new DamageTakenParams
@@ -43,7 +44,7 @@ public class PhamCuChich_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character character)
     {
         var damageDealt = character.Info.DamageDealtInCurrentRound;
-        Debug.Log($"[{character.skillConfig}] Sát thương đã gây ra: {damageDealt} => shield nhận được = {damageDealt}");
+        Debug.Log($"[{character.skillConfig}] Damage dealt: {damageDealt} => shield received = {damageDealt}");
         var shield = damageDealt;
         var effect = new List<EffectData>()
         {
@@ -245,7 +246,7 @@ public class PhamCuChich_SkillState : SkillState
         bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
         int rollTimes = Roll.GetActualRollTimes(2, isCrit);
         var shield = Roll.RollDice(2, 6, 4, isCrit);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"Lá chắn = {rollTimes}d6 + 4 = {shield}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"Shield = {rollTimes}d6 + 4 = {shield}");
         return shield;
     }
 
@@ -311,7 +312,7 @@ public class PhamCuChich_SkillState : SkillState
     {
         if (Character.Info.ShieldEffectData == null)
         {
-            Debug.Log("Không có shield => không gây damage");
+            Debug.Log("No shield => no damage");
             return;
         }
         Character.Info.HandleBreakShield(range, Character.Info.ShieldEffectData.damage);

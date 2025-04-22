@@ -195,7 +195,7 @@ public class SkillState : CharacterState
         // Kiểm tra hiệu ứng Blind trước
         if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Blind))
         {
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] bị Mù => Không thể Crit");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] is Blind => Cannot Crit");
             var paramsNoCrit = Info.HitChangeParams;
             paramsNoCrit.IsCritical = false; // Đảm bảo không crit
             return paramsNoCrit;
@@ -203,7 +203,7 @@ public class SkillState : CharacterState
         
         if (character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Prone))
         {
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} có hiệu ứng LỢI THẾ");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} has ADVANTAGE effect");
             var roll1 = Info.HitChangeParams;
             var roll2 = Info.HitChangeParams;
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
@@ -212,7 +212,7 @@ public class SkillState : CharacterState
 
         if (Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Fear && p.Actor == character))
         {
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"{Character.characterConfig.characterName} có hiệu ứng BẤT LỢI");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"{Character.characterConfig.characterName} has DISADVANTAGE effect");
             var roll1 = Info.HitChangeParams;
             var roll2 = Info.HitChangeParams;
             AlkawaDebug.Log(ELogCategory.EFFECT, $"{character.characterConfig.characterName} roll1 = {roll1.HitChangeValue} | roll2 = {roll2.HitChangeValue}");
@@ -266,7 +266,7 @@ public class SkillState : CharacterState
                 Character = target,
                 WaitForCounter = false,
             });
-            AlkawaDebug.Log(ELogCategory.EFFECT, $"Kim Hà Tại: chặn sát thương cho {target.characterConfig.characterName} từ đòn đánh của {Character.characterConfig.characterName}");
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"Kim Ha Tai: blocked damage for {target.characterConfig.characterName} from {Character.characterConfig.characterName}'s attack");
         }
         else
         {
@@ -286,7 +286,7 @@ public class SkillState : CharacterState
                 {
                     if (target.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk && p is DrunkEffect { SleepWhileMiss: true }))
                     {
-                        Debug.Log($"{target.characterConfig.characterName} có hiệu ứng say, {CharName} đánh hụt => sleep");
+                        Debug.Log($"{target.characterConfig.characterName} has Drunk effect, {CharName} missed => sleep");
                         Character.Info.ApplyEffect(
                             new EffectData
                             {
@@ -296,7 +296,7 @@ public class SkillState : CharacterState
                             });
                         var damageParams = GetDamageParams(target);
                         Character.Info.HandleDamageTaken(-damageParams.Damage, target);
-                        Debug.Log($"{CharName} bị phản sát thương: damage = {damageParams.Damage}");
+                        Debug.Log($"{CharName} took reflected damage: damage = {damageParams.Damage}");
                     }
                     var dodgeDamageParams = new DamageTakenParams
                     {
@@ -322,7 +322,7 @@ public class SkillState : CharacterState
 
                     if (isCrit)
                     {
-                        AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Character.characterConfig.characterName} gây crit vào {target.characterConfig.characterName}");
+                        AlkawaDebug.Log(ELogCategory.SKILL, $"CRITICAL HIT! {Character.characterConfig.characterName} crit {target.characterConfig.characterName}");
                     }
 
                     CoroutineDispatcher.RunCoroutine(HandleApplyDamage(target, damageParams));
@@ -332,7 +332,7 @@ public class SkillState : CharacterState
             }
             else // Skill không thể bị né
             {
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] dùng skill không thể né [{_skillStateParams.SkillInfo.name}] vào [{target.characterConfig.characterName}]");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] used unevadable skill [{_skillStateParams.SkillInfo.name}] on [{target.characterConfig.characterName}]");
                 _processedDamageLogic = true;
                 var damageParams = GetDamageParams(target);
                 // Skill không né được cũng có thể crit, nhưng không cần check HitChange nữa
@@ -473,9 +473,11 @@ public class SkillState : CharacterState
     protected virtual DamageTakenParams GetDamageParams_Skill4_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage(); // Đã được xử lý crit nếu có
-        var rollDamage = Roll.RollDice(2, 4, 2); // Tự động thêm 1 xúc xắc nếu đang trong trạng thái crit
+        bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); // Add crit check
+        int rollTimes = Roll.GetActualRollTimes(2, isCrit); // Get actual roll times considering crit
+        var rollDamage = Roll.RollDice(2, 4, 2, isCrit); // Tự động thêm 1 xúc xắc nếu đang trong trạng thái crit
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Thất ca Ngâm: damage {baseDamage} + 2d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] That Ca Ngam: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -656,13 +658,13 @@ public class SkillState : CharacterState
     {
         if (cell == null)
         {
-            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Cell đích là null!");
+            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Target Cell is null!");
             return;
         }
 
         if (Info == null || Info.Cell == null)
         {
-            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Info hoặc Info.Cell là null!");
+            Debug.LogWarning($"[{Character?.characterConfig.characterName}] TeleportToCell: Info or Info.Cell is null!");
             
             // Thử teleport theo cách khác
             if (Character != null && Character.Info != null)

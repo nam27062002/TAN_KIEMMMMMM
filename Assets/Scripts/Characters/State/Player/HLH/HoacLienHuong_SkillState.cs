@@ -41,7 +41,7 @@ public class HoacLienHuong_SkillState : SkillState
         int rollTimes = Roll.GetActualRollTimes(1, isCrit);
         var skillDamage = Roll.RollDice(1, 4, 0, isCrit) + deathCount;
         var totalDamage = baseDamage + skillDamage;
-        Debug.Log($"Số thi thể = {deathCount}");
+        Debug.Log($"Corpse count = {deathCount}");
         Debug.Log($"Skill Damage = {rollTimes}d4 + {deathCount} = {skillDamage}");
         Debug.Log($"Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
         return new DamageTakenParams
@@ -64,7 +64,7 @@ public class HoacLienHuong_SkillState : SkillState
             
             if (additionalDamage > 0)
             {
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yêu Cung: Cộng thêm {additionalDamage} sát thương cơ bản");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yeu Cung: Added {additionalDamage} base damage");
             }
             
             // Nếu đạt tối đa, có cơ hội thêm 2d4 sát thương (coi như là hiệu ứng bạo kích)
@@ -75,7 +75,7 @@ public class HoacLienHuong_SkillState : SkillState
                 {
                     int critDamage = Roll.RollDice(2, 4, 0);
                     baseDamage += critDamage;
-                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yêu Cung đạt tối đa: Kích hoạt bạo kích, cộng thêm {critDamage} sát thương (2d4)");
+                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yeu Cung maxed: Activated crit, added {critDamage} damage (2d4)");
                 }
             }
         }
@@ -96,7 +96,7 @@ public class HoacLienHuong_SkillState : SkillState
                 Actor = coveredBy,
             });
         }
-        Debug.Log($"Liên kết với đồng minh gần nhất: {coveredBy.characterConfig.characterName}");
+        Debug.Log($"Linked with nearest ally: {coveredBy.characterConfig.characterName}");
         return new DamageTakenParams()
         {
             Effects = effects,
@@ -106,7 +106,7 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ngưng Bách Niên");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ngung Bach Nien");
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>
@@ -147,7 +147,7 @@ public class HoacLienHuong_SkillState : SkillState
         
         bool isCritSnake = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); 
         int shieldValueSnake = Roll.RollDice(2, 4, 0, isCritSnake);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - Xà Giáp: Thêm {shieldValueSnake} shield (2d4) cho bản thân");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - Snake Armor: Added {shieldValueSnake} shield (2d4) to self");
         
         var shieldSnake = new ShieldEffect()
         {
@@ -333,7 +333,7 @@ public class HoacLienHuong_SkillState : SkillState
     {
         if (cell == null)
         {
-            Debug.LogWarning($"[{CharName}] TeleportToCell: Cell đích là null!");
+            Debug.LogWarning($"[{CharName}] TeleportToCell: Target Cell is null!");
             return;
         }
 
@@ -345,14 +345,14 @@ public class HoacLienHuong_SkillState : SkillState
         {
             _hlhCharacter.CurrentShield = cell;
             _hlhCharacter.CurrentShieldPosition = cell.CellPosition;
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Cập nhật CurrentShield = {cell.CellPosition}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Updated CurrentShield = {cell.CellPosition}");
         }
         
         // Cập nhật MainCell nếu là nhân vật chính
         if (Character.IsMainCharacter)
         {
             GpManager.SetMainCell(cell);
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Cập nhật MainCell = {cell.CellPosition}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Updated MainCell = {cell.CellPosition}");
         }
     }
 }
