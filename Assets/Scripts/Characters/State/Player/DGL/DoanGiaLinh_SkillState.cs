@@ -564,22 +564,63 @@ public class DoanGiaLinh_SkillState : SkillState
     private void ActivateFlowerAndParasite(Character target)
     {
         if (target == null) return;
-
-        // Get flower type BEFORE removing
         EffectType sourceFlowerType = GetSourceFlowerTypeFromTarget(target);
-        if (sourceFlowerType == EffectType.None) return; // No flowers to activate
+        if (sourceFlowerType == EffectType.None) return; 
         
-        int flowerCount = target.Info.CountFlower(); // Count flowers before removing
-        if (flowerCount <= 0) return; // Not really necessary because sourceFlowerType was already checked
+        int flowerCount = target.Info.CountFlower();
+        if (flowerCount <= 0) return; 
 
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Skill 4: Activated {flowerCount} flower(s) ({sourceFlowerType}) on {target.characterConfig.characterName}");
-
-        // Remove all flower effects AFTER determining the type
         target.Info.RemoveAllFlowerEffects();
 
-        // Check and activate venomous parasites
-        CheckAndApplyVenomousParasite(target);
+        // Kiểm tra và kích hoạt độc trùng
+        var venomousParasiteEffect = target.Info.EffectInfo.Effects
+            .OfType<VenomousParasiteEffect>()
+            .FirstOrDefault();
+
+        if (venomousParasiteEffect != null)
+        {
+            // Calculate the number of parasites to activate
+            int parasitesToActivate = Mathf.Min(flowerCount, venomousParasiteEffect.value);
+            
+            if (parasitesToActivate > 0)
+            {
+                AlkawaDebug.Log(ELogCategory.SKILL,
+                    $"[{CharName}] Skill 4: Flower bloomed, activated {parasitesToActivate} Venomous Parasite(s) on {target.characterConfig.characterName}");
+
+                // Activate PoisonousBloodPool with the determined flower type
+                target.Info.ApplyEffects(
+                    new List<EffectData>()
+                    {
+                        new PoisonousBloodPoolEffect()
+                        {
+                            effectType = EffectType.PoisonousBloodPool,
+                            duration = 2,
+                            Actor = Character, // Actor là Doan Gia Linh
+                            impacts = GpManager.MapManager
+                                .GetAllHexagonInRange(target.Info.Cell, 1)
+                                .ToList(),
+                            effects = new List<EffectData>(), // Poison effect will be determined in DamageTaken
+                            sourceFlowerType = sourceFlowerType // Use the previously determined flower type
+                        }
+                    }
+                );
+
+                // Giảm số lượng độc trùng
+                venomousParasiteEffect.value -= parasitesToActivate;
+                AlkawaDebug.Log(ELogCategory.SKILL,
+                    $"[{CharName}] Skill 4: Remaining Venomous Parasites on {target.characterConfig.characterName}: {venomousParasiteEffect.value}");
+                
+                // If parasites reach 0, remove effect
+                if (venomousParasiteEffect.value <= 0)
+                {
+                    target.Info.EffectInfo.Effects.Remove(venomousParasiteEffect);
+                    AlkawaDebug.Log(ELogCategory.SKILL,
+                        $"[{CharName}] Skill 4: Removed all Venomous Parasites from {target.characterConfig.characterName}");
+                }
+            }
+        }
     }
 
     // Helper function to get the first flower type found on the target

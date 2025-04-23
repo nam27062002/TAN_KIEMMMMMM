@@ -527,23 +527,18 @@ public class CharacterInfo
         }
         else
         {
-            // Đánh dấu là đã xử lý lần đầu sau khi load
             IsFirstRoundAfterLoad = false;
             Debug.Log($"[{Character.characterConfig.characterName}] Keep MoveAmount = {MoveAmount} from save");
         }
         
-        // Thêm logic kiểm tra vũng máu độc cho AI khi bắt đầu lượt
         if (Character.Type == Type.AI && Cell != null && Cell.poisonousBloodPool.enabled)
         {
-            // Tìm hiệu ứng PoisonousBloodPoolEffect có chứa Cell hiện tại
             foreach (var character in GameplayManager.Instance.Characters)
             {
                 foreach (var effect in character.Info.EffectInfo.Effects)
                 {
-                    if (effect is PoisonousBloodPoolEffect bloodPool && 
-                        bloodPool.impacts.Contains(Cell))
+                    if (effect is PoisonousBloodPoolEffect bloodPool && bloodPool.impacts.Contains(Cell))
                     {
-                        // Áp dụng hiệu ứng Blind với Actor là người tạo ra bloodPool
                         ApplyEffect(new EffectData
                         {
                             effectType = EffectType.Blind,

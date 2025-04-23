@@ -111,8 +111,8 @@ public class BloodyRainbow : PassiveSkill
 
     private void IncreaseDamageTakenAndMovement()
     {
-        // character.CharacterInfo.Attributes.damageTaken += increasedDamageTaken;
-        character.Info.MoveAmount += increasedMovement;
-        character.ShowMessage($"Increase {increasedMovement} movement and receive {increasedDamageTaken} damage");
+        // chưa xử lí tăng 2 damage nhận vào
+        character.Info.Attributes.maxMoveRange += increasedMovement;
+        AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} - Bloody Rainbow: Increase {increasedMovement} movement and receive {increasedDamageTaken} damage");
     }
 }
