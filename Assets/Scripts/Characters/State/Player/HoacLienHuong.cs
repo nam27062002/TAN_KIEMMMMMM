@@ -38,7 +38,7 @@ public class HoacLienHuong : PlayerCharacter
             if (additionalDamage > maxAdditionalDamage)
                 additionalDamage = maxAdditionalDamage;
                 
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yeu Cung: Increased additional damage to {additionalDamage}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Empresses' Bowstrings: Increased additional damage to {additionalDamage}");
         }
         
         if (critReduction < maxCritReduction)
@@ -47,7 +47,7 @@ public class HoacLienHuong : PlayerCharacter
             if (critReduction > maxCritReduction)
                 critReduction = maxCritReduction;
                 
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yeu Cung: Reduced crit requirement to {critReduction}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Empresses' Bowstrings: Reduced crit requirement to {critReduction}");
         }
     }
     
@@ -75,7 +75,7 @@ public class HoacLienHuong : PlayerCharacter
             // Gây 1d4 sát thương lên bản thân
             int selfDamage = Roll.RollDice(1, 4, 0);
             Info.HandleDamageTaken(-selfDamage, this);
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Yeu Cung maxed: lost {selfDamage} hp (1d4)");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{characterConfig.characterName}] Empresses' Bowstrings maxed: lost {selfDamage} hp (1d4)");
             
             // Đánh dấu đã gọi
             _hasAppliedSelfDamageThisSkill = true;
