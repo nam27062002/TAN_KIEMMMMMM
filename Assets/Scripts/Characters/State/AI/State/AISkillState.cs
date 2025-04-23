@@ -1,13 +1,19 @@
-﻿public class AISkillState : SkillState
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+public class AISkillState : SkillState
 {
-    public AISkillState(Character self) : base(self)
+    public AISkillState(Character character) : base(character)
     {
     }
     
     protected override void HandleAllTargetFinish()
     {
         base.HandleAllTargetFinish();
-        HandleEndTurn();
+        if (!WaitForReact)
+        {
+            GameplayManager.Instance.HandleEndTurn(1f, "Finished using skill");
+        }
     }
     
     private void HandleEndTurn()
@@ -16,7 +22,7 @@
         {
             if (Character == GpManager.MainCharacter)
             {
-                GameplayManager.Instance.HandleEndTurn(1f, "Đã dùng xong skill");   
+                GameplayManager.Instance.HandleEndTurn(1f, "Finished using skill");   
             }
             else
             {

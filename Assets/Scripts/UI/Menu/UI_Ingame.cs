@@ -122,7 +122,7 @@ public class UI_Ingame : MenuBase
             Skill_UI.TemporarilyDisableSkills(1f);
             
             // Sau đó gọi hàm EndTurn
-            GameplayManager.HandleEndTurn("Click vào end turn");
+            GameplayManager.HandleEndTurn("Clicked end turn");
         }
     }
 

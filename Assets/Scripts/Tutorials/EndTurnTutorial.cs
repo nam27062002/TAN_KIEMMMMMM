@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class EndTurnTutorial : TutorialSequence
 {
@@ -37,7 +38,7 @@ public class EndTurnTutorial : TutorialSequence
             Tutorial.OnTutorialClicked(index);
         }
 
-        GameplayManager.Instance.HandleEndTurn("Clicked vào end turn");
+        GameplayManager.Instance.HandleEndTurn("Clicked end turn");
 
     }
 }

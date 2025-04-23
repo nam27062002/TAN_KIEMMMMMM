@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CanSat_SkillState : AISkillState
@@ -108,8 +109,8 @@ public class CanSat_SkillState : AISkillState
     {
         bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
         int d20Roll = Roll.RollDice(1, 20, 0);
-        Debug.Log($"Cướp AP: value = 1d20 = {d20Roll}");
-        if (d20Roll < 10)
+        Debug.Log($"Steal AP: value = 1d20 = {d20Roll}");
+        if (d20Roll >= 10)
         {
             character.Info.ApplyEffects(new List<EffectData>()
             {

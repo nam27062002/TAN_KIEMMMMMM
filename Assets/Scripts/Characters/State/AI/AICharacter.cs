@@ -44,7 +44,7 @@ public abstract class AICharacter : Character
             if (!TryMoving() || MoveCount >= 2)
             {
                 MoveCount = 0;
-                GameplayManager.Instance.HandleEndTurn("Hết trường hợp");
+                GameplayManager.Instance.HandleEndTurn("No more actions");
             }
         }
     }
