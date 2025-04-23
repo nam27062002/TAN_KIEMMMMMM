@@ -291,22 +291,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nT\xEAn
-    c\xE1c chi\xEAu th\u1EE9c trong b\u1EA3n demo m\u01B0\u1EE3n \xFD t\u1EEB nh\u1EEFng
-    b\xE0i th\u01A1 sau:\r\n\r\nB\u1EA1c V\xE3n T\xFAy Quy\r\nDu \u0110\u1EB1ng giang
-    d\u1EEF h\u1EEFu nh\xE2n \u0111\u0103ng Kim Chung t\u1EF1\r\nTu\xFD h\u1EADu
-    l\u01B0u \u0111\u1EC1\r\nD\u1EA1 du B\u1ED1i Am \u0111\u1ED9ng\r\nTu\xFD h\u1EADu
-    ch\u1EA5p ch\xFAc \u0111\u1EC1 b\xEDch \u2013 Cao B\xE1 Qu\xE1t\r\nB\u1EA1c Nguy\u1EC5n
-    gia l\u0103ng \u2013 Nguy\u1EC5n Phi Khanh\r\nB\u1EA3o Nghi\xEAm Th\xE1p \u2013
-    Tr\u1EA7n Nguy\xEAn \u0110\xE1n\_\r\n\_B\xE1t Tr\xE0ng lung y\xEAn \u2013 khuy\u1EBFt
-    danh\_\r\n\_\xC1n Thao Giang l\u1ED9 - Ph\u1EA1m S\u01B0 M\u1EA1nh\_\r\n\_B\xE0
-    Ch\xE2u c\u1ED5 th\xE1p \u2013 Tr\u1ECBnh Ho\xE0i \u0110\u1EE9c\r\nB\xE0nh Th\xE0nh
-    ho\xE0i c\u1ED5 ho\u1EA1 ch\xE1nh s\u1EE9 Nguy\u1EC5n Ph\xE1c Ph\u1EE7 v\u1EADn
-    \u2013 Ng\xF4 Tr\xED H\xF2a\r\n\r\n\n\n\n\n\nNh\xE2n s\u1EF1:\r\nTr\u1EA7n L\xE2m
-    V\u0169 - creative director, story writer\_\r\n\_Nguy\u1EC5n H\u1ED3ng Vi\u1EC7t
-    \u2013 consultant, level designer\_\r\n\_\u0110\u1ED7 Minh Qu\xE2n - CTO game
-    DTPAPP\_\_\r\n\_Tr\u01B0\u01A1ng Nh\u01B0 H\xE0 - senior game artist\_\_\r\n\_Nguy\u1EC5n
-    Th\u1ECB B\u1EA3o Ng\xE2n - senior project manager\n\n\n\n\n"
+  m_text: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFirstly,
+    Team Turtley Storked sincerely apologize for that Rickroll just now. \r\n\r\nHowever,
+    as gamers ourselves for over twenty years, as well as consulting with beta testers,
+    we kinda came to the conclusion that Rickroll was perhaps the only bold and insane
+    enough move we could pull that stood any chance of piquing your interest to look
+    through our credits. \r\n \r\nNow that we have your attention, we\u2019d like
+    to sincerely thank you for trying out this demo of our game \u2013 The Fable
+    of Sword and Flower. Despite our many shortcomings as an Indie Team, Turtley
+    Storked are grateful you\u2019ve chosen to play until this credit. \r\n \r\nIf
+    you\u2019ve found yourself enjoying this demo, whether because of the characters,
+    world building, or gameplay, then our team hope you could help us turn this demo
+    into a complete game. Our team promise we\u2019ll fix and improve any outstanding
+    problems and issues in the demo, so that the final product will have the highest
+    quality within our capability and budget. \r\n \r\nPersonnel:\r\n \r\nTr\u1EA7n
+    L\xE2m V\u0169 - creative director, story writer \r\n \r\nNguy\u1EC5n H\u1ED3ng
+    Vi\u1EC7t \u2013 consultant, level designer \r\n \r\n\u0110\u1ED7 Minh Qu\xE2n
+    - CTO game DTPAPP  \r\n \r\nTr\u01B0\u01A1ng Nh\u01B0 H\xE0 - senior game artist 
+    \r\n \r\nNguy\u1EC5n Th\u1ECB B\u1EA3o Ng\xE2n - senior project manager\n\n\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

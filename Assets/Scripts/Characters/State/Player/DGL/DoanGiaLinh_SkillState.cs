@@ -399,6 +399,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override void SetTargetCharacters_Skill4_TeammateTurn()
     {
         SetTargetCharactersForAllySkill4();
+        AddTargetCharacters(Character);
     }
 
     protected override void SetTargetCharacters_Skill4_EnemyTurn()
@@ -417,8 +418,6 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             AddTargetCharacters(character);
         }
-
-        AddTargetCharacters(Character);
     }
 
     private void CheckAndApplyVenomousParasite(Character target)
