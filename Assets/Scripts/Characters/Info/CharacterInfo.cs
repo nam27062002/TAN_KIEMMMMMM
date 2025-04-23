@@ -609,9 +609,30 @@ public class CharacterInfo
         bool isChiBan = EffectInfo.Effects.Any(e => e.effectType == EffectType.ChiBan);
         bool blockedByChiBan = isChiBan && skillInfo.mpCost > 0;
         
-        return (CurrentMp >= skillInfo.mpCost || skillInfo.mpCost == 0) 
+        // Tính toán mp cost thực tế khi có DragonArmor
+        int actualMpCost = GetActualMpCost(skillInfo);
+        
+        return (CurrentMp >= actualMpCost || actualMpCost == 0) 
                && HasEnoughActionPoints 
                && !blockedByChiBan;
+    }
+    
+    // Phương thức mới để tính toán chi phí mana thực tế khi có buff DragonArmor
+    public int GetActualMpCost(SkillInfo skillInfo)
+    {
+        if (skillInfo.mpCost == 0)
+            return 0;
+            
+        // Kiểm tra xem nhân vật có buff DragonArmor không
+        bool hasDragonArmor = DragonArmorEffectData != null;
+        
+        if (hasDragonArmor)
+        {
+            // Nếu có DragonArmor, chi phí mana giảm một nửa
+            return Utils.RoundNumber(skillInfo.mpCost * 0.5f);
+        }
+        
+        return skillInfo.mpCost;
     }
 
     #region Action Points
