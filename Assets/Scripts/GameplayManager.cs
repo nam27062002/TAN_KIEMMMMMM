@@ -1284,6 +1284,17 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private IEnumerator WaitForCharactersExitCamera(List<Character> characters, Action action = null)
     {
+        // Lọc bỏ nhân vật null trước khi bắt đầu đợi
+        characters = characters.Where(c => c != null).ToList();
+        
+        if (characters.Count == 0)
+        {
+            Debug.LogWarning("No valid characters to wait for! Proceeding immediately.");
+            CleanupSequence();
+            action?.Invoke();
+            yield break;
+        }
+        
         yield return WaitUntilAllCharactersExitCamera(characters);
         CleanupSequence();
         action?.Invoke();
@@ -1313,21 +1324,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool AreAllCharactersOutOfCamera(List<Character> characters, Camera camera)
     {
+        bool allOutOfCamera = true;
+        
         foreach (var character in characters)
         {
-            if (character == null)
-            {
-                CleanupSequence();
-                return true;
-            }
-
+            if (character == null) continue; // Bỏ qua nhân vật null
+            
             if (IsCharacterVisible(character.transform.position, camera))
             {
-                return false;
+                allOutOfCamera = false;
+                break;
             }
         }
-
-        return true;
+        
+        return allOutOfCamera;
     }
 
     private bool IsCharacterVisible(Vector3 worldPosition, Camera camera)

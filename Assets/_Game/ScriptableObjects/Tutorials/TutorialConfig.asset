@@ -78,7 +78,7 @@ MonoBehaviour:
   - tutorialTypes: 3
     arrowPosition: {x: -103.5, y: 285.9}
     arrowRotation: {x: 0, y: 0, z: 0, w: 0}
-    tutorialMenuText: 
+    tutorialMenuText: Right-click on the target to display character information
   - tutorialTypes: 3
     arrowPosition: {x: -103.5, y: 285.9}
     arrowRotation: {x: 0, y: 0, z: 0, w: 0}
