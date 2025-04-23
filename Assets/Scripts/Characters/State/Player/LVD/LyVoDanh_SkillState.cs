@@ -70,7 +70,7 @@ public class LyVoDanh_SkillState : SkillState
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Van Truyen Luu: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -114,7 +114,7 @@ public class LyVoDanh_SkillState : SkillState
         var reducedMana = (int)(0.5f * totalDamage);
         
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Sa Bat Kien: damage = {baseDamage} + {skillDamage} = {totalDamage} | reduced Mana = {reducedMana}");
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {skillDamage} = {totalDamage} | reduced Mana = {reducedMana}");
             
         return (totalDamage, reducedMana);
     }
@@ -139,7 +139,7 @@ public class LyVoDanh_SkillState : SkillState
 
     private void ApplyReduceHitChangeEffect()
     {
-        // Tạo hiệu ứng tăng tỉ lệ chí mạng
+        // Create effect to increase critical hit chance
         var reduceHitChangeEffect = new ChangeStatEffect()
         {
             effectType = EffectType.ReduceHitChange,
@@ -148,19 +148,19 @@ public class LyVoDanh_SkillState : SkillState
             value = 1,
         };
 
-        // Áp dụng cho chủ lượt nếu khác với nhân vật hiện tại
+        // Apply to current turn's main character if different from current character
         var mainCharacter = GpManager.MainCharacter;
         if (mainCharacter != null && mainCharacter != Character)
         {
             mainCharacter.Info.ApplyEffect(reduceHitChangeEffect);
             AlkawaDebug.Log(ELogCategory.EFFECT, 
-                $"[{CharName}] Hue Ho Vien Du: Applied increased crit chance to {mainCharacter.characterConfig.characterName}");
+                $"[{CharName}] {_skillStateParams.SkillInfo.name}: Applied increased crit chance to {mainCharacter.characterConfig.characterName}");
         }
 
-        // Áp dụng cho bản thân
+        // Apply to self
         Character.Info.ApplyEffect(reduceHitChangeEffect);
         AlkawaDebug.Log(ELogCategory.EFFECT, 
-            $"[{CharName}] Hue Ho Vien Du: Applied increased crit chance to self");
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: Applied increased crit chance to self");
     }
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
@@ -173,7 +173,7 @@ public class LyVoDanh_SkillState : SkillState
         var realDamage = baseDamage + skillDamage;
         var reducedMana = (int)(0.5f * realDamage);
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Hue Ho Vien Du: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {skillDamage} = {realDamage} | reduced Mana = {reducedMana}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -199,7 +199,7 @@ public class LyVoDanh_SkillState : SkillState
     {
         var increaseDamage = Utils.RoundNumber(Character.Info.CurrentHp * 1f / 10);
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] Nhat Giang Yen Truc: increase damage = {Character.Info.CurrentHp} * 10% = {increaseDamage}");
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: increase damage = {Character.Info.CurrentHp} * 10% = {increaseDamage}");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
@@ -225,7 +225,7 @@ public class LyVoDanh_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill3_EnemyTurn(Character character)
     {
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Minh Dinh Quy Lai");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
@@ -251,7 +251,7 @@ public class LyVoDanh_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill3_TeammateTurn(Character character)
     {
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Lien Van");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
@@ -284,7 +284,7 @@ public class LyVoDanh_SkillState : SkillState
         int rollTimes = Roll.GetActualRollTimes(2, isCrit);
         var rollDamage = Roll.RollDice(2, 4, 2, isCrit);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] That Ca Ngam: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -315,7 +315,7 @@ public class LyVoDanh_SkillState : SkillState
         int rollTimes = Roll.GetActualRollTimes(2, isCrit);
         var rollDamage = Roll.RollDice(2, 4, 2, isCrit);
         var realDamage = baseDamage + rollDamage;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Bat Thanh Danh: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -345,7 +345,7 @@ public class LyVoDanh_SkillState : SkillState
         var rollDamage = Roll.RollDice(2, 4, 2, isCrit);
         var realDamage = baseDamage + rollDamage;
         AlkawaDebug.Log(ELogCategory.SKILL,
-            $"[{CharName}] That Ca Ngam: damage = {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {rollTimes}d4 + 2 = {realDamage}");
         return new DamageTakenParams
         {
             Damage = realDamage,
@@ -377,7 +377,7 @@ public class LyVoDanh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_PassiveSkill2_MyTurn(Character character)
     {
         var baseDamage = GetBaseDamage();
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Toan Phong: damage = {baseDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage}");
         return new DamageTakenParams
         {
             Damage = baseDamage,
@@ -445,12 +445,13 @@ public class LyVoDanh_SkillState : SkillState
     {
         base.HandleApplyDamageOnEnemy(character);
         
-        // Sử dụng Coroutine để đợi xử lý damage xong
+        // Use Coroutine to wait for damage processing to complete
         CoroutineDispatcher.RunCoroutine(ApplySleepAfterDamage(character));
     }
 
     private IEnumerator ApplySleepAfterDamage(Character target)
     {
+        // Wait for damage processing to complete
         yield return new WaitForSeconds(1f);
         
         if (Character.Info.EffectInfo.Effects.Any(p => p.effectType == EffectType.Drunk))

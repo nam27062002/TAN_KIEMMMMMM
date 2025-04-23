@@ -115,6 +115,7 @@ public class MapManager : MonoBehaviour
     public List<Cell> GetCellsWalkableInRange(Cell cell, int range, DirectionType direction)
     {
         var allCells = _pathfinding.GetHexagonsInMoveRange(cell, range, direction);
+        allCells.Remove(cell);
         return allCells.Where(c => c.CellType == CellType.Walkable).ToList();
     }
     

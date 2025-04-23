@@ -368,7 +368,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
             if (character.Type != MainCharacter.Type)
             {
-                Debug.Log($"[{character.characterConfig.characterName}] chết trong lượt counter => quay về lượt hiện tại");
+                Debug.Log($"[{character.characterConfig.characterName}] died during counter turn => returning to current turn");
                 if (PreviousSelectedCharacter != null)
                     callback = () => SetSelectedCharacter(PreviousSelectedCharacter);
                 else if (MainCharacter != null)
@@ -378,7 +378,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             }
             else
             {
-                Debug.Log($"[WARNING] AI chết nhưng không quay về lượt hiện tại - Character: {character.characterConfig.characterName}, Type: {character.Type}, MainType: {MainCharacter.Type}");
+                Debug.Log($"[WARNING] AI died but did not return to current turn - Character: {character.characterConfig.characterName}, Type: {character.Type}, MainType: {MainCharacter.Type}");
             }
         }
     }
@@ -738,7 +738,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         UpdateCharacterInfo();
         if (SelectedCharacter.Info.IsDie)
         {
-            HandleEndTurn("Chết trong khi focus vào nhân vật (có thể do bị phản công)");
+            HandleEndTurn("Died while focusing on character (possibly due to counter attack)");
         }
 
         AlkawaDebug.Log(ELogCategory.GAMEPLAY, $"SetSelectedCharacter: {character.characterConfig.characterName}");
@@ -1375,6 +1375,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         }
 
         _process = true;
+        Debug.LogError($"ProceedToNextLevel: {levelConfig.levelType}");
     }
 
     private void ShowAfterCredit()

@@ -13,7 +13,7 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override void HandleCastSkill()
     {
-        // Reset cờ khi bắt đầu kỹ năng mới
+        // Reset flag when starting a new skill
         _hlhCharacter?.ResetSelfDamageFlag();
         
         base.HandleCastSkill();
@@ -23,12 +23,12 @@ public class HoacLienHuong_SkillState : SkillState
         }
     }
 
-    // Override các phương thức tấn công để gây sát thương lên bản thân khi đạt tối đa
+    // Override methods for attacking to deal damage to self if max is reached
     protected override void HandleApplyDamageOnEnemy(Character character)
     {
         base.HandleApplyDamageOnEnemy(character);
         
-        // Kiểm tra và gây sát thương lên bản thân nếu đạt tối đa
+        // Check and deal damage to self if max is reached
         _hlhCharacter?.ApplySelfDamageIfMaxDamage();
     }
 
@@ -51,12 +51,12 @@ public class HoacLienHuong_SkillState : SkillState
         };
     }
 
-    // Override phương thức lấy sát thương cơ bản để thêm sát thương cộng thêm và hiệu ứng crit
+    // Override the method for getting base damage to add additional damage and crit effect
     protected override int GetBaseDamage()
     {
         var baseDamage = base.GetBaseDamage();
         
-        // Thêm sát thương cộng thêm từ Yêu Cung
+        // Add additional damage from Empresses' Bowstrings
         if (_hlhCharacter != null)
         {
             int additionalDamage = _hlhCharacter.GetAdditionalDamage();
@@ -64,18 +64,18 @@ public class HoacLienHuong_SkillState : SkillState
             
             if (additionalDamage > 0)
             {
-                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yeu Cung: Added {additionalDamage} base damage");
+                AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Empresses' Bowstrings: Added {additionalDamage} base damage");
             }
             
-            // Nếu đạt tối đa, có cơ hội thêm 2d4 sát thương (coi như là hiệu ứng bạo kích)
+            // If max is reached, chance to add 2d4 damage (considered as crit effect)
             if (_hlhCharacter.IsMaxAdditionalDamage())
             {
-                // Xác suất 20% gây sát thương bạo kích
+                // 20% chance to deal crit damage
                 if (Random.value <= 0.2f)
                 {
                     int critDamage = Roll.RollDice(2, 4, 0);
                     baseDamage += critDamage;
-                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Yeu Cung maxed: Activated crit, added {critDamage} damage (2d4)");
+                    AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Empresses' Bowstrings maxed: Activated crit, added {critDamage} damage (2d4)");
                 }
             }
         }
@@ -106,7 +106,7 @@ public class HoacLienHuong_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character character)
     {
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Ngung Bach Nien");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
         return new DamageTakenParams()
         {
             Effects = new List<EffectData>
@@ -114,11 +114,11 @@ public class HoacLienHuong_SkillState : SkillState
                 new()
                 {
                     effectType = EffectType.Blind,
-                    duration = EffectConfig.DebuffRound, // Sử dụng thời gian debuff chuẩn
-                    Actor = Character // Người gây hiệu ứng là Hoắc Liên Hương
+                    duration = EffectConfig.DebuffRound, // Use standard debuff time
+                    Actor = Character // The effect is caused by Hoac Lien Huong
                 }
             },
-            ReceiveFromCharacter = Character // Người nhận hiệu ứng là 'character' (người tấn công HLH)
+            ReceiveFromCharacter = Character // The person receiving the effect is 'character' (who attacked HLH)
         };
     }
 
@@ -134,7 +134,7 @@ public class HoacLienHuong_SkillState : SkillState
         Info.Cell.SetShield(Character.Type, 3);
         ((HoacLienHuong)character).CurrentShield = Info.Cell;
         
-        // Gây sát thương lên bản thân nếu đạt tối đa
+        // Deal damage to self if max is reached
         _hlhCharacter?.ApplySelfDamageIfMaxDamage();
         
         return new DamageTakenParams();
@@ -147,7 +147,7 @@ public class HoacLienHuong_SkillState : SkillState
         
         bool isCritSnake = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive(); 
         int shieldValueSnake = Roll.RollDice(2, 4, 0, isCritSnake);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - Snake Armor: Added {shieldValueSnake} shield (2d4) to self");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] - {_skillStateParams.SkillInfo.name}: Added {shieldValueSnake} shield (2d4) to self");
         
         var shieldSnake = new ShieldEffect()
         {
@@ -208,7 +208,7 @@ public class HoacLienHuong_SkillState : SkillState
         var skillDamage = GetSkillDamage(new RollData(2, 4, 2));
         var totalDamage = GetTotalDamage(baseDamage, skillDamage);
         
-        // Gây sát thương lên bản thân nếu đạt tối đa
+        // Deal damage to self if max is reached
         _hlhCharacter?.ApplySelfDamageIfMaxDamage();
         
         return new DamageTakenParams
@@ -323,7 +323,7 @@ public class HoacLienHuong_SkillState : SkillState
     {
         var damageParams = base.GetDamageParams_Skill1_MyTurn(character);
         
-        // Gây sát thương lên bản thân nếu đạt tối đa
+        // Deal damage to self if max is reached
         _hlhCharacter?.ApplySelfDamageIfMaxDamage();
         
         return damageParams;
@@ -337,10 +337,10 @@ public class HoacLienHuong_SkillState : SkillState
             return;
         }
 
-        // Gọi phương thức của lớp cha
+        // Call the method from the base class
         base.TeleportToCell(cell);
         
-        // Cập nhật CurrentShield nếu có
+        // Update CurrentShield if exists
         if (_hlhCharacter != null && cell.mainShieldCell == cell)
         {
             _hlhCharacter.CurrentShield = cell;
@@ -348,7 +348,7 @@ public class HoacLienHuong_SkillState : SkillState
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] TeleportToCell: Updated CurrentShield = {cell.CellPosition}");
         }
         
-        // Cập nhật MainCell nếu là nhân vật chính
+        // Update MainCell if it's the main character
         if (Character.IsMainCharacter)
         {
             GpManager.SetMainCell(cell);

@@ -92,7 +92,7 @@ public class BloodyRainbow : PassiveSkill
 
     private void ReduceCritRequirement()
     {
-        // Tạo hiệu ứng ReduceHitChange để giảm số lần crit đi 1 (vĩnh viễn)
+        // Create a ReduceHitChange effect to permanently reduce crit count by 1
         var reduceHitChangeEffect = new ChangeStatEffect
         {
             effectType = EffectType.ReduceHitChange,
@@ -101,7 +101,7 @@ public class BloodyRainbow : PassiveSkill
             value = critThresholdReduction // Giảm số lần crit đi 1
         };
 
-        // Áp dụng hiệu ứng vào nhân vật
+        // Apply the effect to the character
         character.Info.ApplyEffect(reduceHitChangeEffect);
         
         // Hiển thị thông báo

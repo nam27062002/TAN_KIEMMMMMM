@@ -179,7 +179,7 @@ MonoBehaviour:
       current status and identity: the leader of the Forest Sect of Vong.\r\n\r\n\r\nAnd
       the tingling pain on his back slowly receeded."
     characterAttributes:
-      maxMoveRange: 8
+      maxMoveRange: 4
       health: 60
       mana: 20
       atk: 10

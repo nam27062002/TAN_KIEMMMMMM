@@ -66,8 +66,8 @@ public class DoanGiaLinh_SkillState : SkillState
         int venomousParasite = GetVenomousParasite();
         if (flower > 0 && venomousParasite > 0 && Character.Info.IsToggleOn)
         {
-            // Tính toán sát thương phụ từ độc trùng ăn hoa, nhưng không áp dụng hiệu ứng 
-            // (sẽ áp dụng sau trong HandleAfterDamageTakenFinish)
+            // Calculate additional damage from poison insects eating flowers, but do not apply effect
+            // (will be applied later in HandleAfterDamageTakenFinish)
             int value = Mathf.Min(flower, venomousParasite);
             bool isCrit = CheatManager.HasInstance && CheatManager.Instance.IsAlwaysCritActive();
             int rollTimes = Roll.GetActualRollTimes(1, isCrit);
@@ -89,7 +89,7 @@ public class DoanGiaLinh_SkillState : SkillState
         if (stack <= 0)
             return stack;
 
-        int healAmount = Mathf.Max(1, stack); // Tối thiểu là 1
+        int healAmount = Mathf.Max(1, stack); // Minimum is 1
         Character.Info.CurrentHp += healAmount;
         Character.Info.CurrentHp = Mathf.Min(Character.Info.CurrentHp, Character.GetMaxHp());
         Character.Info.OnHpChangedInvoke(healAmount);
@@ -104,7 +104,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Nhien Huyet");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
         return new DamageTakenParams
         {
             Effects = new List<EffectData>()
@@ -129,7 +129,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_EnemyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Mong Yem");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
         int damage = 0;
         var effects = new List<EffectData>()
         {
@@ -165,7 +165,7 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill2_TeammateTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Bang Hoai");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
         int damage = 0;
         var effects = new List<EffectData>()
         {
@@ -201,11 +201,11 @@ public class DoanGiaLinh_SkillState : SkillState
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Red Dahlia: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Red Dahlia: damage = {baseDamage} + {skillDamage} = {realDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {skillDamage} = {realDamage}"
         );
         var effects = new List<EffectData>()
         {
@@ -236,11 +236,11 @@ public class DoanGiaLinh_SkillState : SkillState
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] White Lotus: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] White Lotus: damage = {baseDamage} + {skillDamage} = {realDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {skillDamage} = {realDamage}"
         );
         var effects = new List<EffectData>()
         {
@@ -271,11 +271,11 @@ public class DoanGiaLinh_SkillState : SkillState
         int realDamage = baseDamage + skillDamage;
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Marigold: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: skill damage = {rollTimes}d4 + 2 = {skillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Marigold: damage = {baseDamage} + {skillDamage} = {realDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {skillDamage} = {realDamage}"
         );
         var effects = new List<EffectData>()
         {
@@ -310,18 +310,18 @@ public class DoanGiaLinh_SkillState : SkillState
         int rollTimes = Roll.GetActualRollTimes(1, isCrit);
         int skillDamage = Roll.RollDice(1, 4, 0, isCrit);
     
-        int stack = DrainPoisonPowderAndHeal(target, "Tuyết Điểm Hồng Phấn");
+        int stack = DrainPoisonPowderAndHeal(target, _skillStateParams.SkillInfo.name);
 
         int totalSkillDamage = skillDamage * stack;
         int realDamage = baseDamage + totalSkillDamage;
 
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Tuyet Diem Hong Phan: skill damage = {rollTimes}d4 * {stack} = {totalSkillDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: skill damage = {rollTimes}d4 * {stack} = {totalSkillDamage}"
         );
         AlkawaDebug.Log(
             ELogCategory.SKILL,
-            $"[{CharName}] Tuyet Diem Hong Phan: damage = {baseDamage} + {totalSkillDamage} = {realDamage}"
+            $"[{CharName}] {_skillStateParams.SkillInfo.name}: damage = {baseDamage} + {totalSkillDamage} = {realDamage}"
         );
 
         var effects = new List<EffectData>()
@@ -347,10 +347,10 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_TeammateTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Hong Ti");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
 
         // Hút độc phấn và hồi máu
-        DrainPoisonPowderAndHeal(target, "Hong Ti");
+        DrainPoisonPowderAndHeal(target, _skillStateParams.SkillInfo.name);
 
         return new DamageTakenParams
         {
@@ -372,10 +372,10 @@ public class DoanGiaLinh_SkillState : SkillState
     protected override DamageTakenParams GetDamageParams_Skill4_EnemyTurn(Character target)
     {
         ApplyPoisonPowder(target);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Kim Tuoc Mai");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
 
         // Hút độc phấn và hồi máu
-        DrainPoisonPowderAndHeal(target, "Kim Tuoc Mai");
+        DrainPoisonPowderAndHeal(target, _skillStateParams.SkillInfo.name);
 
         int damage = 0;
         var effects = new List<EffectData>()
@@ -417,11 +417,13 @@ public class DoanGiaLinh_SkillState : SkillState
         {
             AddTargetCharacters(character);
         }
+
+        AddTargetCharacters(Character);
     }
 
     private void CheckAndApplyVenomousParasite(Character target)
     {
-        // Chỉ áp dụng nếu toggle độc trùng bật và có đối tượng
+        // Only apply if toggle is on and target exists
         if (!Character.Info.IsToggleOn || target == null)
             return;
 
@@ -439,8 +441,8 @@ public class DoanGiaLinh_SkillState : SkillState
             AlkawaDebug.Log(ELogCategory.SKILL, 
                 $"[{CharName}] Applied {value} Venomous Parasite to {target.characterConfig.characterName}, Remaining Parasites: {GetVenomousParasite()}");
             
-            // Chỉ áp dụng VenomousParasite, không tạo PoisonousBloodPool
-            // PoisonousBloodPool sẽ được tạo khi hoa bị xóa sau 3 round
+            // Only apply VenomousParasite, not creating PoisonousBloodPool
+            // PoisonousBloodPool will be created when flowers are removed after 3 rounds
             target.Info.ApplyEffects(
                 new List<EffectData>()
                 {
@@ -459,17 +461,17 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override void HandleAfterDamageTakenFinish_Skill1_MyTurn()
     {
-        // Nhiên Huyết (Skill 2 MyTurn) không có đối tượng, không cần áp dụng độc trùng
+        // Naturally Blood (Skill 2 MyTurn) has no target, no need to apply venomous parasite
     }
 
     protected override void HandleAfterDamageTakenFinish_Skill2_MyTurn()
     {
-        // Không có đối tượng, không cần áp dụng độc trùng
+        // No target, no need to apply venomous parasite
     }
 
     protected override void HandleAfterDamageTakenFinish_Skill2_TeammateTurn()
     {
-        // Băng Hoại - Áp dụng độc trùng vào đối tượng
+        // Ice Decay - Apply venomous parasite to target
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
@@ -481,7 +483,7 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override void HandleAfterDamageTakenFinish_Skill2_EnemyTurn()
     {
-        // Mộng Yểm - Áp dụng độc trùng vào đối tượng
+        // Dream Suppression - Apply venomous parasite to target
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
@@ -493,7 +495,7 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override void HandleAfterDamageTakenFinish_Skill3_MyTurn()
     {
-        // Thược Dược Đỏ - Có thể áp dụng cả hoa và độc trùng cùng lúc
+        // Red Dahlia - Can apply both flower and venomous parasite simultaneously
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
@@ -505,7 +507,7 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override void HandleAfterDamageTakenFinish_Skill3_TeammateTurn()
     {
-        // Sen Trắng - Có thể áp dụng cả hoa và độc trùng cùng lúc
+        // White Lotus - Can apply both flower and venomous parasite simultaneously
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
@@ -517,7 +519,7 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override void HandleAfterDamageTakenFinish_Skill3_EnemyTurn()
     {
-        // Cúc Vạn Thọ - Có thể áp dụng cả hoa và độc trùng cùng lúc
+        // Marigold - Can apply both flower and venomous parasite simultaneously
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
@@ -529,39 +531,33 @@ public class DoanGiaLinh_SkillState : SkillState
 
     protected override void HandleAfterDamageTakenFinish_Skill4_MyTurn()
     {
-        // Tuyết Điểm Hồng Phấn - Kích hoạt nở hoa ngay lập tức
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
             {
                 ActivateFlowerAndParasite(target);
-                // CheckAndApplyVenomousParasite(target); // Thay thế bằng ActivateFlowerAndParasite
             }
         }
     }
 
     protected override void HandleAfterDamageTakenFinish_Skill4_TeammateTurn()
     {
-        // Hồng Ti - Kích hoạt nở hoa ngay lập tức
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
             {
                 ActivateFlowerAndParasite(target);
-                // CheckAndApplyVenomousParasite(target); // Thay thế bằng ActivateFlowerAndParasite
             }
         }
     }
 
     protected override void HandleAfterDamageTakenFinish_Skill4_EnemyTurn()
     {
-        // Kim Tước Mai - Kích hoạt nở hoa ngay lập tức
         if (_skillStateParams.Targets != null && _skillStateParams.Targets.Count > 0)
         {
             foreach (var target in _skillStateParams.Targets)
             {
                 ActivateFlowerAndParasite(target);
-                // CheckAndApplyVenomousParasite(target); // Thay thế bằng ActivateFlowerAndParasite
             }
         }
     }
@@ -570,69 +566,24 @@ public class DoanGiaLinh_SkillState : SkillState
     {
         if (target == null) return;
 
-        // Lấy loại hoa TRƯỚC KHI xóa
+        // Get flower type BEFORE removing
         EffectType sourceFlowerType = GetSourceFlowerTypeFromTarget(target);
-        if (sourceFlowerType == EffectType.None) return; // Không có hoa nào để kích hoạt
+        if (sourceFlowerType == EffectType.None) return; // No flowers to activate
         
-        int flowerCount = target.Info.CountFlower(); // Đếm số lượng hoa trước khi xóa
-        if (flowerCount <= 0) return; // Thực ra không cần thiết vì đã check sourceFlowerType
+        int flowerCount = target.Info.CountFlower(); // Count flowers before removing
+        if (flowerCount <= 0) return; // Not really necessary because sourceFlowerType was already checked
 
         AlkawaDebug.Log(ELogCategory.SKILL,
             $"[{CharName}] Skill 4: Activated {flowerCount} flower(s) ({sourceFlowerType}) on {target.characterConfig.characterName}");
 
-        // Xóa tất cả hiệu ứng hoa SAU KHI đã xác định loại
+        // Remove all flower effects AFTER determining the type
         target.Info.RemoveAllFlowerEffects();
 
-        // Kiểm tra và kích hoạt độc trùng
-        var venomousParasiteEffect = target.Info.EffectInfo.Effects
-            .OfType<VenomousParasiteEffect>()
-            .FirstOrDefault();
-
-        if (venomousParasiteEffect != null)
-        {
-            // Tính toán số lượng độc trùng cần kích hoạt
-            int parasitesToActivate = Mathf.Min(flowerCount, venomousParasiteEffect.value);
-            
-            if (parasitesToActivate > 0)
-            {
-                AlkawaDebug.Log(ELogCategory.SKILL,
-                    $"[{CharName}] Skill 4: Flower bloomed, activated {parasitesToActivate} Venomous Parasite(s) on {target.characterConfig.characterName}");
-
-                // Kích hoạt PoisonousBloodPool với loại hoa đã xác định
-                target.Info.ApplyEffects(
-                    new List<EffectData>()
-                    {
-                        new PoisonousBloodPoolEffect()
-                        {
-                            effectType = EffectType.PoisonousBloodPool,
-                            duration = 2,
-                            Actor = Character, // Actor là Doan Gia Linh
-                            impacts = GpManager.MapManager
-                                .GetAllHexagonInRange(target.Info.Cell, 1)
-                                .ToList(),
-                            effects = new List<EffectData>(), // Hiệu ứng nhiễm độc sẽ được xác định trong DamageTaken
-                            sourceFlowerType = sourceFlowerType // Sử dụng loại hoa đã lấy trước đó
-                        }
-                    }
-                );
-
-                // Giảm số lượng độc trùng
-                venomousParasiteEffect.value -= parasitesToActivate;
-                AlkawaDebug.Log(ELogCategory.SKILL,
-                    $"[{CharName}] Skill 4: Remaining Venomous Parasites on {target.characterConfig.characterName}: {venomousParasiteEffect.value}");
-                
-                // Nếu độc trùng về 0, xóa hiệu ứng
-                if (venomousParasiteEffect.value <= 0)
-                {
-                    target.Info.EffectInfo.Effects.Remove(venomousParasiteEffect);
-                    AlkawaDebug.Log(ELogCategory.SKILL,
-                        $"[{CharName}] Skill 4: Removed all Venomous Parasites from {target.characterConfig.characterName}");
-                }
-            }
-        }
+        // Check and activate venomous parasites
+        CheckAndApplyVenomousParasite(target);
     }
 
-    // Hàm trợ giúp để lấy loại hoa đầu tiên tìm thấy trên mục tiêu
+    // Helper function to get the first flower type found on the target
     private EffectType GetSourceFlowerTypeFromTarget(Character target)
     {
         var flowerEffect = target.Info.EffectInfo.Effects.FirstOrDefault(e => 

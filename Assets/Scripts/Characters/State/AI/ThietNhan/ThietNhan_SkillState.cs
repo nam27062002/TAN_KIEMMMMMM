@@ -18,13 +18,13 @@ public class ThietNhan_SkillState : AISkillState
 
         // Log theo định dạng chung
         string critInfo = isCrit ? " (CRIT)" : "";
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw: Base Damage = {baseDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw: Skill Formula = {rollTimes}d4{critInfo}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw: Skill Damage = {rollTimes}d4 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw: Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Base Damage = {baseDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Skill Formula = {rollTimes}d4{critInfo}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Skill Damage = {rollTimes}d4 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
 
         var friends = GpManager.MapManager.GetAllTypeInRange(Info.Cell, CharacterType.ThietNhan, 1);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw: {friends.Count} ThietNhan nearby");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: {friends.Count} ThietNhan nearby");
 
         int beforeFriendDamage = totalDamage;
         totalDamage = ProcessFriendAttacks(friends, totalDamage);
@@ -32,7 +32,7 @@ public class ThietNhan_SkillState : AISkillState
         // Log tổng damage sau khi tính cả sát thương từ bạn bè
         if (totalDamage > beforeFriendDamage)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw: Final Damage = {beforeFriendDamage} (Own) + {totalDamage - beforeFriendDamage} (Friends) = {totalDamage}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Final Damage = {beforeFriendDamage} (Own) + {totalDamage - beforeFriendDamage} (Friends) = {totalDamage}");
         }
 
         return new DamageTakenParams
@@ -84,11 +84,11 @@ public class ThietNhan_SkillState : AISkillState
 
         // Log theo định dạng chung
         string critInfo = isCrit ? " (CRIT)" : "";
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw (EnemyTurn): Base Damage = {baseDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw (EnemyTurn): {friends.Count} ThietNhan within 3 cells");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw (EnemyTurn): Skill Formula = {rollTimes}d4 + {friendBonus}{critInfo}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw (EnemyTurn): Skill Damage = {rollTimes}d4 + {friendBonus} = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw (EnemyTurn): Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Base Damage = {baseDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): {friends.Count} ThietNhan within 3 cells");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Skill Formula = {rollTimes}d4 + {friendBonus}{critInfo}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Skill Damage = {rollTimes}d4 + {friendBonus} = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Total Damage = {baseDamage} + {skillDamage} = {totalDamage}");
 
         int beforeFriendDamage = totalDamage;
         totalDamage = ProcessFriendAttacks(friends, totalDamage);
@@ -96,7 +96,7 @@ public class ThietNhan_SkillState : AISkillState
         // Log tổng damage sau khi tính cả sát thương từ bạn bè
         if (totalDamage > beforeFriendDamage)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Stone Throw (EnemyTurn): Final Damage = {beforeFriendDamage} (Own) + {totalDamage - beforeFriendDamage} (Friends) = {totalDamage}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Final Damage = {beforeFriendDamage} (Own) + {totalDamage - beforeFriendDamage} (Friends) = {totalDamage}");
         }
 
         return new DamageTakenParams
@@ -132,21 +132,21 @@ public class ThietNhan_SkillState : AISkillState
 
         // Log theo định dạng chung
         string critInfo = isCrit ? " (CRIT)" : "";
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection: Base Damage = {baseDamage} (ATK = {Info.GetCurrentDamage()})");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection: Skill Formula = {rollTimes}d4{critInfo}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection: Skill Damage = {rollTimes}d4 = {skillDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection: Total Damage = {baseDamage} (Base) + {skillDamage} (Skill) = {totalDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Base Damage = {baseDamage} (ATK = {Info.GetCurrentDamage()})");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Skill Formula = {rollTimes}d4{critInfo}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Skill Damage = {rollTimes}d4 = {skillDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Total Damage = {baseDamage} (Base) + {skillDamage} (Skill) = {totalDamage}");
             
         // Xử lý tấn công từ Thiết Nhân đứng cạnh (tương tự skill 2)
         var friends = GpManager.MapManager.GetAllTypeInRange(Info.Cell, CharacterType.ThietNhan, 1);
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection: {friends.Count} ThietNhan nearby");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: {friends.Count} ThietNhan nearby");
         int beforeFriendDamage = totalDamage;
         totalDamage = ProcessFriendAttacks(friends, totalDamage);
         
         // Log tổng damage sau khi tính cả sát thương từ bạn bè
         if (totalDamage > beforeFriendDamage)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection: Final Damage = {beforeFriendDamage} (Own) + {totalDamage - beforeFriendDamage} (Friends) = {totalDamage}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}: Final Damage = {beforeFriendDamage} (Own) + {totalDamage - beforeFriendDamage} (Friends) = {totalDamage}");
         }
         
         // Tạo hiệu ứng ThietNhan_Infected và đăng ký sự kiện
@@ -187,10 +187,10 @@ public class ThietNhan_SkillState : AISkillState
         int bloodDamage = Roll.RollDice(2, 4, 0); // 2d4 sát thương từ máu độc
         
         // Log theo định dạng chung
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): Base Damage = {baseDamage} (ATK = {Info.GetCurrentDamage()})");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): Blood Damage Formula = 2d4");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): Blood Damage = 2d4 = {bloodDamage}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): Total Base Damage = {baseDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Base Damage = {baseDamage} (ATK = {Info.GetCurrentDamage()})");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Blood Damage Formula = 2d4");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Blood Damage = 2d4 = {bloodDamage}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Total Base Damage = {baseDamage}");
         
         // Tính toán vị trí máu độc
         Cell bloodPositionCell = CalculateBloodPosition(character);
@@ -213,7 +213,7 @@ public class ThietNhan_SkillState : AISkillState
             }
         };
         
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): DOT Poison = 2d4 per round");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): DOT Poison = 2d4 per round");
         
         // Tỉ lệ gây suy giảm khả năng nhìn (30% cơ hội)
         if (UnityEngine.Random.value <= 0.3f)
@@ -235,13 +235,13 @@ public class ThietNhan_SkillState : AISkillState
                 Actor = Character
             });
             
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): Caused blindness (Fear + -5 Hit Change) to {character.characterConfig.characterName}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Caused blindness (Fear + -5 Hit Change) to {character.characterConfig.characterName}");
         }
         
         // Nếu máu độc xuất hiện ở vị trí có cell
         if (bloodPositionCell != null)
         {
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): Poisonous blood appeared at {bloodPositionCell.CellPosition}");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Poisonous blood appeared at {bloodPositionCell.CellPosition}");
             
             // Tạo pool máu độc nếu cần
             effects.Add(new PoisonousBloodPoolEffect
@@ -252,7 +252,7 @@ public class ThietNhan_SkillState : AISkillState
                 impacts = new List<Cell> { bloodPositionCell }
             });
             
-            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] Infection (EnemyTurn): Poison pool deals additional 2d4 damage");
+            AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name} (EnemyTurn): Poison pool deals additional 2d4 damage");
         }
         
         return new DamageTakenParams
