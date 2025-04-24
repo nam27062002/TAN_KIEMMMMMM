@@ -239,11 +239,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "Ch\u1EC9 \u0111\u1ECBnh m\u1ED9t \u0111\u1ED3ng minh, t\u1EA1o
-        m\u1ED9t l\u1EDBp l\xE1 ch\u1EAFn cho c\u1EA3 Ch\xEDch v\xE0 \u0111\u1ED3ng
-        \u0111\u1ED9i. Gi\xE1 tr\u1ECB c\u1EE7a l\xE1 ch\u1EAFn b\u1EB1ng m\u1ED9t
-        n\u1EEDa gi\xE1 tr\u1ECB g\u1ED1c. Thanh t\u1EA9y c\xE1c thu\u1ED9c t\xEDnh
-        c\xF3 h\u1EA1i c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng khi t\u1EA1o gi\xE1p. "
+      description: Target a single ally, then shield both himself and that ally (each
+        shield is only 50% of the base skill amount). Removes all debuffs from ally
+        when the shield is first applied.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 1b2d23e89f1fd0c458748be4e723a89d, type: 3}
       name: Submerging in the Ancient Atmosphere
