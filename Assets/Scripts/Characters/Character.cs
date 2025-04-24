@@ -225,6 +225,12 @@ public abstract class Character : MonoBehaviour
 
     private void HandleCounter()
     {
+        if (SkillStateParams == null)
+        {
+            Debug.LogWarning($"[{characterConfig.characterName}] HandleCounter: SkillStateParams is null");
+            return;
+        }
+        
         SkillStateParams.IdleStateParams = null;
         SkillStateParams.EndTurnAfterFinish = true;
         CanUseSkill = false;
