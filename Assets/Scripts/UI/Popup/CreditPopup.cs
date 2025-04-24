@@ -120,11 +120,7 @@ public class CreditPopup : PopupBase
         {
             creditText.text = credit;
             // yield return TypewriterEffect(credit, textFadeDuration);
-#if UNITY_EDITOR
-            yield return new WaitForSecondsRealtime(0);
-#else
             yield return new WaitForSecondsRealtime(delayBetweenCredits);
-#endif
         }
     }
 

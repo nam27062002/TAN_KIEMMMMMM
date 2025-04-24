@@ -299,6 +299,10 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         character.Info.CurrentMp = data.currentMp;
         character.Info.MoveAmount = data.moveAmount;
         
+        // Khôi phục IncreasedDamageTaken và maxMoveRange
+        character.Info.IncreasedDamageTaken = data.increasedDamageTaken;
+        character.Info.Attributes.maxMoveRange = data.maxMoveRange;
+        
         // Thêm code để khôi phục Action Points
         if (data.actionPoints != null && data.actionPoints.Count > 0)
         {
@@ -1459,7 +1463,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 effectInfo = GetEffects(character),
                 actionPoints = character.Info.ActionPoints,
                 isShadow = false,
-                moveAmount = character.Info.MoveAmount
+                moveAmount = character.Info.MoveAmount,
+                increasedDamageTaken = character.Info.IncreasedDamageTaken,
+                maxMoveRange = character.Info.Attributes.maxMoveRange
             };
             
             // Thêm xử lý đặc biệt cho Hoắc Liên Hương
@@ -1498,7 +1504,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
                 isShadow = true,
                 ownerID = owner.CharacterId,
                 shadowType = shadow.characterType,
-                moveAmount = shadow.Info.MoveAmount
+                moveAmount = shadow.Info.MoveAmount,
+                increasedDamageTaken = shadow.Info.IncreasedDamageTaken,
+                maxMoveRange = shadow.Info.Attributes.maxMoveRange
             };
             levelData.characterDatas.Add(shadowData);
         }

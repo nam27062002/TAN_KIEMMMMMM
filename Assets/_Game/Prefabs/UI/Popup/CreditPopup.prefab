@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7335282570376523302}
   - component: {fileID: 633372667028538097}
-  - component: {fileID: 4080301936942130386}
+  - component: {fileID: 1091180571969841827}
   m_Layer: 5
   m_Name: CreditText
   m_TagString: Untagged
@@ -260,8 +260,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 579.81616}
-  m_SizeDelta: {x: 0, y: -1159.6326}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0.000015258789}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &633372667028538097
 CanvasRenderer:
@@ -271,7 +271,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3094989936036385036}
   m_CullTransparentMesh: 1
---- !u!114 &4080301936942130386
+--- !u!114 &1091180571969841827
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,105 +280,54 @@ MonoBehaviour:
   m_GameObject: {fileID: 3094989936036385036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFirstly,
-    Team Turtley Storked sincerely apologize for that Rickroll just now. \r\n\r\nHowever,
-    as gamers ourselves for over twenty years, as well as consulting with beta testers,
-    we kinda came to the conclusion that Rickroll was perhaps the only bold and insane
-    enough move we could pull that stood any chance of piquing your interest to look
-    through our credits. \r\n \r\nNow that we have your attention, we\u2019d like
-    to sincerely thank you for trying out this demo of our game \u2013 The Fable
-    of Sword and Flower. Despite our many shortcomings as an Indie Team, Turtley
-    Storked are grateful you\u2019ve chosen to play until this credit. \r\n \r\nIf
-    you\u2019ve found yourself enjoying this demo, whether because of the characters,
-    world building, or gameplay, then our team hope you could help us turn this demo
-    into a complete game. Our team promise we\u2019ll fix and improve any outstanding
-    problems and issues in the demo, so that the final product will have the highest
-    quality within our capability and budget. \r\n \r\nPersonnel:\r\n \r\nTr\u1EA7n
-    L\xE2m V\u0169 - creative director, story writer \r\n \r\nNguy\u1EC5n H\u1ED3ng
-    Vi\u1EC7t \u2013 consultant, level designer \r\n \r\n\u0110\u1ED7 Minh Qu\xE2n
-    - CTO game DTPAPP  \r\n \r\nTr\u01B0\u01A1ng Nh\u01B0 H\xE0 - senior game artist 
-    \r\n \r\nNguy\u1EC5n Th\u1ECB B\u1EA3o Ng\xE2n - senior project manager\n\n\n\n\n"
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 33
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe names of
+    moves in this demo take inspiration from the following poems: \r\n \r\n\u8584\u665A\u9189\u6B78
+    \u2013 B\u1EA1c V\xE3n T\xFAy Quy (return, drunk, late at noon); \u904A\u85E4\u6C5F\u8207\u53CB\u4EBA\u767B\u91D1\u9418\u5BFA\u9189\u5F8C\u7559\u984C
+    (went to river \u0110\u1EB1ng with friend, visit Kim Chung pagoda, written when
+    drunk) \u2013 Du \u0110\u1EB1ng giang d\u1EEF h\u1EEFu nh\xE2n \u0111\u0103ng
+    Kim Chung t\u1EF1, tu\xFD h\u1EADu l\u01B0u \u0111\u1EC1; \u591C\u904A\u8C9D\u5EB5\u5CD2\u9189\u5F8C\u57F7\u71ED\u984C\u58C1
+    \u2013 D\u1EA1 du B\u1ED1i Am \u0111\u1ED9ng, t\xFAy h\u1EADu ch\u1EA5p ch\xFAc
+    \u0111\u1EC1 b\xEDch (visit B\u1ED1i Am cave at night, holding a torch, written
+    on the cave wall when drunk) \u2013 Cao B\xE1 Qu\xE1t\r\n\r\n\u6CCA\u962E\u5BB6\u9675
+    \u2013 B\u1EA1c Nguy\u1EC5n gia l\u0103ng (went to the Nguy\u1EC5n\u2019s clan
+    mausoleum on boat) \u2013 Nguy\u1EC5n Phi Khanh\r\n\r\n \u5BF6\u56B4\u5854 \u2013
+    B\u1EA3o Nghi\xEAm th\xE1p (B\u1EA3o Nghi\xEAm\u2019s temple) \u2013 Tr\u1EA7n
+    Nguy\xEAn \u0110\xE1n\r\n\r\n\u7F3D\u5834\u7C60\u7159 \u2013 B\xE1t Tr\xE0ng
+    lung y\xEAn (smoke covering B\xE1t Tr\xE0ng) \u2013 anonymous\r\n\r\n\u6309\u6D2E\u6C5F\u8DEF
+    \u2013 \xC1n Thao Giang l\u1ED9 (going on imperial businesses at Thao Giang)
+    \u2013 Ph\u1EA1m S\u01B0 M\u1EA1nh\r\n\r\nB\xE0 Ch\xE2u c\u1ED5 th\xE1p (old
+    tower at B\xE0 Ch\xE2u) \u2013 Tr\u1ECBnh Ho\xE0i \u0110\u1EE9c\r\n\r\n\u5F6D\u57CE\u61F7\u53E4\u548C\u6B63\u4F7F\u962E\u6734\u8386\u97FB
+    \u2013 B\xE0nh Th\xE0nh ho\xE0i c\u1ED5 h\u1ECDa ch\xE1nh s\u1EED Nguy\u1EC5n
+    Ph\xE1c Ph\u1EE7 v\u1EADn (at Pengcheng, writing poem with ambassador Nguy\u1EC5n
+    Ph\xE1c Ph\u1EE7)\r\n\r\n\n\n\n\n\nStaff:\r\n \r\nTr\u1EA7n L\xE2m V\u0169 -
+    creative director, story writer \r\n \r\nNguy\u1EC5n H\u1ED3ng Vi\u1EC7t \u2013
+    consultant, level designer \r\n \r\n\u0110\u1ED7 Minh Qu\xE2n - CTO game DTPAPP 
+    \r\n \r\nTr\u01B0\u01A1ng Nh\u01B0 H\xE0 - senior game artist  \r\n \r\nNguy\u1EC5n
+    Th\u1ECB B\u1EA3o Ng\xE2n - senior project manager"
 --- !u!1 &3425716434757163684
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,8 +361,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -579.81616}
-  m_SizeDelta: {x: 1100, y: 2239.6326}
+  m_AnchoredPosition: {x: 0, y: -888.96985}
+  m_SizeDelta: {x: 1100, y: 2857.94}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3780023958803938491
 GameObject:
@@ -562,17 +511,10 @@ MonoBehaviour:
     beta testers, we kinda came to the conclusion that Rickroll was perhaps the only
     bold and insane enough move we could pull that stood any chance of piquing your
     interest to look through our credits. '
-  - "Gi\u1EDD, Now that we have your attention, we\u2019d like to sincerely thank
-    you for trying out this demo of our game \u2013 The Fable of Sword and Flower.
-    Despite our many shortcomings as an Indie Team, Turtley Storked are grateful
-    you\u2019ve chosen to play until this credit. m\u1ECDi ng\u01B0\u1EDDi \u0111\xE3
-    ch\xFA \xFD r\u1ED3i, b\u1ECDn m\xECnh xin \u0111\u01B0\u1EE3c g\u1EEDi l\u1EDDi
-    c\u1EA3m \u01A1n ch\xE2n th\xE0nh \u0111\u1EBFn m\u1ECDi ng\u01B0\u1EDDi v\xEC
-    \u0111\xE3 b\u1ECF th\u1EDDi gian tr\u1EA3i nghi\u1EC7m b\u1EA3n ch\u01A1i th\u1EED
-    c\u1EE7a T\xE0n Ki\u1EBFm. D\xF9 c\xF2n nhi\u1EC1u thi\u1EBFu s\xF3t, v\xEC c\u1EA3
-    nguy\xEAn nh\xE2n ch\u1EE7 quan l\u1EABn kh\xE1ch quan, team C\xF2 L\xF9i th\u1EADt
-    s\u1EF1 c\u1EA3m k\xEDch v\xEC m\u1ECDi ng\u01B0\u1EDDi \u0111\xE3 l\u1EF1a ch\u1ECDn
-    \u1EDF l\u1EA1i \u0111\u1EBFn t\u1EADn c\xE1i k\u1EBFt.\_"
+  - "Now that we have your attention, we\u2019d like to sincerely thank you for trying
+    out this demo of our game \u2013 The Fable of Sword and Flower. Despite our many
+    shortcomings as an Indie Team, Turtley Storked are grateful you\u2019ve chosen
+    to play until this credit."
   - "If you\u2019ve found yourself enjoying this demo, whether because of the characters,
     world building, or gameplay, then our team hope you could help us turn this demo
     into a complete game. Our team promise we\u2019ll fix and improve any outstanding

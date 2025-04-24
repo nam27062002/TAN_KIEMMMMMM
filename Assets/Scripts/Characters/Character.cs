@@ -559,14 +559,14 @@ public abstract class Character : MonoBehaviour
         
         Info.MoveRange = MapManager.GetHexagonsInMoveRange(Info.Cell, moveRange, characterConfig.moveDirection);
         
-        if (Info.MoveRange.Count == 0)
-        {
-            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] WARNING: MoveRange has length 0! moveRange = {moveRange}");
-        }
-        else
-        {
-            AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] MoveRange has {Info.MoveRange.Count} cells");
-        }
+        // if (Info.MoveRange.Count == 0)
+        // {
+        //     AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] WARNING: MoveRange has length 0! moveRange = {moveRange}");
+        // }
+        // else
+        // {
+        //     AlkawaDebug.Log(ELogCategory.EDITOR, $"[{characterConfig.characterName}] MoveRange has {Info.MoveRange.Count} cells");
+        // }
         
         foreach (var item in Info.MoveRange)
         {

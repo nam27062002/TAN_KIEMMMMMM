@@ -67,13 +67,10 @@ public class CustomBuildScript
                     File.Delete(zipPath);
                 }
                 
-                // Compress folder
                 ZipFile.CreateFromDirectory(buildPath, zipPath);
                 
                 Debug.Log($"Successfully compressed: {zipPath}");
                 EditorUtility.DisplayProgressBar("Build Completed", "Build and compression completed!", 1.0f);
-                
-                // Open folder containing ZIP file
                 EditorUtility.RevealInFinder(zipPath);
             }
             else

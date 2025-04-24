@@ -91,6 +91,7 @@ public class CharacterInfo
     public CharacterAttributes Attributes { get; set; }
     public int CurrentHp { get; set; }
     public int CurrentMp { get; set; }
+    public int IncreasedDamageTaken { get; set; } = 0;
 
     public int MoveAmount
     {
@@ -249,6 +250,14 @@ public class CharacterInfo
                 hp = -remainingDamage;
                 HandleBreakShield(1, ShieldEffectData.damage);
             }
+        }
+
+        // Áp dụng tăng sát thương nhận vào
+        if (hp < 0 && IncreasedDamageTaken > 0)
+        {
+            int originalDamage = -hp;
+            hp -= IncreasedDamageTaken; // hp là số âm, trừ đi IncreasedDamageTaken sẽ làm nó âm hơn
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Increased damage taken by {IncreasedDamageTaken}. Original damage: {originalDamage}, New damage: {-hp}");
         }
 
         CurrentHp += hp;
