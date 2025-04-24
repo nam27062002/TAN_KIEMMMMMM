@@ -50,18 +50,27 @@ public class CreditPopup : PopupBase
 
     private void OnReplayButtonClick()
     {
-        if (GameplayManager.Instance != null)
+        DOTween.KillAll();
+        var canSats = FindObjectsOfType<CanSat>();
+        foreach (var canSat in canSats)
         {
-            var lastLevelType = GameplayManager.Instance.LevelConfig.levelType;
-            GameManager.Instance.RequestReplay(lastLevelType);
-            AlkawaDebug.Log(ELogCategory.UI, $"Replay button clicked in Credits - Requesting replay for {lastLevelType}");
+            if (canSat.dancer != null)
+            {
+                canSat.dancer.DestroyCharacter(); 
+                canSat.dancer = null;
+            }
+
+            if (canSat.assassin != null)
+            {
+                canSat.assassin.DestroyCharacter();
+                canSat.assassin = null;
+            }
         }
-        else
-        {
-            // AlkawaDebug.LogWarning(ELogCategory.UI, "GameplayManager not found in Credits. Loading Main Menu instead.");
-            GameManager.Instance.LoadMainMenu();
-        }
-        Close();
+        var currentLevelType = GameplayManager.Instance.LevelConfig.levelType; 
+        GameManager.Instance.RequestReplay(currentLevelType);
+        UIManager.Instance.CloseCurrentMenu(); 
+        Close(); 
+        AlkawaDebug.Log(ELogCategory.UI, "Replay button clicked - Requesting replay via GameManager");
     }
     
     private void OnExitButtonClick()

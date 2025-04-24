@@ -18,7 +18,7 @@ public class CharacterInfo
 #endif
         CurrentMp = characterAttributes.mana;
         _roll = new Roll(this, Character.characterConfig.characterName);
-
+    
         _effectHandlers = new Dictionary<EffectType, Action<EffectData>>
         {
             { EffectType.IncreaseMoveRange, ApplySimpleEffect },
@@ -91,6 +91,7 @@ public class CharacterInfo
     public CharacterAttributes Attributes { get; set; }
     public int CurrentHp { get; set; }
     public int CurrentMp { get; set; }
+    public int IncreasedDamageTaken { get; set; } = 0;
 
     public int MoveAmount
     {
@@ -251,6 +252,13 @@ public class CharacterInfo
             }
         }
 
+        if (hp < 0 && IncreasedDamageTaken > 0)
+        {
+            int originalDamage = -hp;
+            hp -= IncreasedDamageTaken; // hp là số âm, trừ đi IncreasedDamageTaken sẽ làm nó âm hơn
+            AlkawaDebug.Log(ELogCategory.EFFECT, $"[{Character.characterConfig.characterName}] Increased damage taken by {IncreasedDamageTaken}. Original damage: {originalDamage}, New damage: {-hp}");
+        }
+        
         CurrentHp += hp;
         if (hp < 0)
             OnReduceHp?.Invoke(this, -hp);
@@ -383,6 +391,12 @@ public class CharacterInfo
         int effectiveMoveAmount = Mathf.Min(MoveAmount, maxMove);
         
         var baseValue = maxMove - effectiveMoveAmount;
+        if (baseValue <= 0)
+        {
+            AlkawaDebug.Log(ELogCategory.EDITOR, 
+                $"[{Character.characterConfig.characterName}] Đã sử dụng hết tầm di chuyển, không tính buff IncreaseMoveRange");
+            return 0;
+        }
         var moveBuff = EffectInfo.Effects
             .Where(e => e.effectType == EffectType.IncreaseMoveRange)
             .Sum(e => ((ChangeStatEffect)e).value);
@@ -609,9 +623,28 @@ public class CharacterInfo
         bool isChiBan = EffectInfo.Effects.Any(e => e.effectType == EffectType.ChiBan);
         bool blockedByChiBan = isChiBan && skillInfo.mpCost > 0;
         
-        return (CurrentMp >= skillInfo.mpCost || skillInfo.mpCost == 0) 
+        int actualMpCost = GetActualMpCost(skillInfo);
+         
+        return (CurrentMp >= actualMpCost || actualMpCost == 0) 
                && HasEnoughActionPoints 
                && !blockedByChiBan;
+    }
+    
+    public int GetActualMpCost(SkillInfo skillInfo)
+    {
+        if (skillInfo.mpCost == 0)
+            return 0;
+             
+        // Kiểm tra xem nhân vật có buff DragonArmor không
+        bool hasDragonArmor = DragonArmorEffectData != null;
+         
+        if (hasDragonArmor)
+        {
+            // Nếu có DragonArmor, chi phí mana giảm một nửa
+            return Utils.RoundNumber(skillInfo.mpCost * 0.5f);
+        }
+         
+        return skillInfo.mpCost;
     }
 
     #region Action Points

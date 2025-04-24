@@ -174,6 +174,8 @@ public class CharacterData
     
     // Thêm trường lưu VenomousParasite cho Đoàn Gia Linh
     public int venomousParasite;
+    public int increasedDamageTaken;
+    public int maxMoveRange;
 }
 
 [Serializable]
