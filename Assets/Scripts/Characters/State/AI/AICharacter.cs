@@ -142,7 +142,9 @@ public abstract class AICharacter : Character
         if (validSkills.Count > 0)
         {
             // Chọn ngẫu nhiên một index trong danh sách skill thỏa mãn
-            int randomIndex = UnityEngine.Random.Range(0, validSkills.Count);
+
+            int randomIndex;
+            randomIndex = GpManager.IsTutorialLevel ? 0 : UnityEngine.Random.Range(0, validSkills.Count);
             var selectedSkill = validSkills[randomIndex];
             
             // Với hiệu ứng Taunt, Enemy luôn là nguồn gây Taunt
@@ -154,8 +156,8 @@ public abstract class AICharacter : Character
             else if (GameplayManager.Instance.IsTutorialLevel)
             {
                 // Trong tutorial level, tấn công nhân vật gần nhất thay vì ngẫu nhiên
-                Enemy = FindNearestEnemy(selectedSkill.enemies);
-                AlkawaDebug.Log(ELogCategory.AI, $"Tutorial - Tấn công nhân vật gần nhất: {Enemy.characterConfig.characterName}");
+                Enemy = FindFarthestEnemy(selectedSkill.enemies);
+                // AlkawaDebug.Log(ELogCategory.AI, $"Tutorial - Tấn công nhân vật gần nhất: {Enemy.characterConfig.characterName}");
             }
             else
             {
@@ -203,5 +205,37 @@ public abstract class AICharacter : Character
         
         return nearest;
     }
+    
+    // Phương thức để tìm nhân vật xa nhất
+    private Character FindFarthestEnemy(List<Character> enemies)
+    {
+        if (enemies.Count == 0) return null;
+        if (enemies.Count == 1) return enemies[0];
+        
+        Character farthest = null;
+        float maxDistance = float.MinValue;
+        
+        foreach (var enemy in enemies)
+        {
+            // Tính khoảng cách thực tế giữa hai nhân vật
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            
+            // Hoặc sử dụng khoảng cách trên grid thông qua pathfinding
+            var path = MapManager.FindShortestPath(Info.Cell, enemy.Info.Cell);
+            int pathLength = path?.Count ?? int.MaxValue;
+            
+            // Ưu tiên khoảng cách trên grid nếu có
+            float effectiveDistance = pathLength != int.MaxValue ? pathLength : distance;
+            
+            if (effectiveDistance > maxDistance)
+            {
+                maxDistance = effectiveDistance;
+                farthest = enemy;
+            }
+        }
+        
+        return farthest;
+    }
+    
 }
 
