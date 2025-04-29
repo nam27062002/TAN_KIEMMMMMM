@@ -142,7 +142,9 @@ public abstract class AICharacter : Character
         if (validSkills.Count > 0)
         {
             // Chọn ngẫu nhiên một index trong danh sách skill thỏa mãn
-            int randomIndex = UnityEngine.Random.Range(0, validSkills.Count);
+
+            int randomIndex;
+            randomIndex = GpManager.IsTutorialLevel ? 0 : UnityEngine.Random.Range(0, validSkills.Count);
             var selectedSkill = validSkills[randomIndex];
             
             // Với hiệu ứng Taunt, Enemy luôn là nguồn gây Taunt
