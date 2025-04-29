@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: QuickGame_ConfirmPopup
   m_EditorClassIdentifier: 
   title: Quit?
-  message: "Do you want to quit T\xE0n Ki\u1EBFm?"
+  message: Do you want to quit Fable of Blade and Flower?
   confirmText: Save & Quit
   cancelText: Cancel

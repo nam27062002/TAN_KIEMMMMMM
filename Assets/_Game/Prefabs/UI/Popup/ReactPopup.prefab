@@ -129,7 +129,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "B\u1EA1n mu\u1ED1n ph\u1EA3n c\xF4ng?"
+  m_text: Counter attack?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -592,7 +592,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "H\u1EE7y"
+      value: Cancel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
+      propertyPath: m_fontSize
+      value: 35.8
       objectReference: {fileID: 0}
     - target: {fileID: 5835402907527523391, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_SizeDelta.x
@@ -729,7 +733,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_text
-      value: "C\xF3"
+      value: React
+      objectReference: {fileID: 0}
+    - target: {fileID: 2318323694505886579, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
+      propertyPath: m_fontSize
+      value: 35.8
       objectReference: {fileID: 0}
     - target: {fileID: 2376783277438549460, guid: 29b03d0d3c40b6540bea93464ca48ca6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
