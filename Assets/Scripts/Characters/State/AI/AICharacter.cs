@@ -142,9 +142,7 @@ public abstract class AICharacter : Character
         if (validSkills.Count > 0)
         {
             // Chọn ngẫu nhiên một index trong danh sách skill thỏa mãn
-
-            int randomIndex;
-            randomIndex = GpManager.IsTutorialLevel ? 0 : UnityEngine.Random.Range(0, validSkills.Count);
+            int randomIndex = UnityEngine.Random.Range(0, validSkills.Count);
             var selectedSkill = validSkills[randomIndex];
             
             // Với hiệu ứng Taunt, Enemy luôn là nguồn gây Taunt
@@ -156,8 +154,8 @@ public abstract class AICharacter : Character
             else if (GameplayManager.Instance.IsTutorialLevel)
             {
                 // Trong tutorial level, tấn công nhân vật gần nhất thay vì ngẫu nhiên
-                Enemy = FindFarthestEnemy(selectedSkill.enemies);
-                // AlkawaDebug.Log(ELogCategory.AI, $"Tutorial - Tấn công nhân vật gần nhất: {Enemy.characterConfig.characterName}");
+                Enemy = FindNearestEnemy(selectedSkill.enemies);
+                //AlkawaDebug.Log(ELogCategory.AI, $"Tutorial - Attacking nearest character: {Enemy.characterConfig.characterName}");
             }
             else
             {
