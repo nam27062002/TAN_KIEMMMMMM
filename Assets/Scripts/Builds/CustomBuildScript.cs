@@ -72,6 +72,20 @@ public class CustomBuildScript
                 Debug.Log($"Successfully compressed: {zipPath}");
                 EditorUtility.DisplayProgressBar("Build Completed", "Build and compression completed!", 1.0f);
                 EditorUtility.RevealInFinder(zipPath);
+                
+                // Delete the build folder after zipping
+                try
+                {
+                    if (Directory.Exists(buildPath))
+                    {
+                        Directory.Delete(buildPath, true);
+                        Debug.Log($"Deleted build folder: {buildPath}");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"Failed to delete build folder: {e.Message}");
+                }
             }
             else
             {
@@ -152,4 +166,4 @@ public class CustomBuildScript
         }
     }
 }
-#endif 
+#endif
