@@ -8078,7 +8078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 20
-  delayTime: 1
+  delayTime: 3
   highlightable:
     highlightType: 0
     highlightObject: {fileID: 0}

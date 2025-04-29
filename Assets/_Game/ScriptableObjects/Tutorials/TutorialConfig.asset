@@ -107,8 +107,17 @@ MonoBehaviour:
     arrowRotation: {x: 0, y: 0, z: 0, w: 0}
     tutorialMenuText: 'Select <color=#0000FF>Drunken Poem on the Monastery''s Wall:
       Sudden Spell of Dizziness</color>'
+    tutorialMenuText: "Ch\u1ECDn <color=#0000FF>Ma \xE2m: M\u1ED9ng y\u1EC3m</color>"
   - tutorialTypes: 3
     arrowPosition: {x: 63.7, y: 192.9}
     arrowRotation: {x: 0, y: 0, z: 0, w: 0}
+    tutorialMenuText: "Ch\u1ECDn <color=#0000FF>Thi\u1EBFt Nh\xE2n</color> \u0111\u1EC3
+      s\u1EED d\u1EE5ng k\u0129 n\u0103ng trong l\u01B0\u1EE3t c\u1EE7a k\u1EBB \u0111\u1ECBch"
+  - tutorialTypes: 3
+    arrowPosition: {x: -494.5, y: -460.7}
+    arrowRotation: {x: 0, y: 0, z: 0.70710677, w: -0.70710677}
+    tutorialMenuText: "\u0110i\u1EC3m h\xE0nh \u0111\u1ED9ng \u0111\u01B0\u1EE3c
+      s\u1EED d\u1EE5ng trong l\u01B0\u1EE3t \u0111\u1ECBch s\u1EBD chuy\u1EC3n th\xE0nh
+      m\xE0u \u0111\u1ECF"
     tutorialMenuText: "Click on <color=#0000FF>Thi\u1EBFt Nh\xE2n</color> to use
       the skill during an enemy's turn."
