@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PhamCuChich_SkillState : SkillState
@@ -9,7 +10,7 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
-        if (character.Type == Character.Type)
+        if (character.Type == Character.Type  && character != Character)
         {
             character.Info.EffectInfo.RemoveAllDebuffs();
             AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Đã xóa tất cả hiệu ứng bất lợi cho {character.characterConfig.characterName}");
@@ -30,10 +31,15 @@ public class PhamCuChich_SkillState : SkillState
                 Actor = Character
             }
         };
+        
         Character.Info.EffectInfo.RemoveAllDebuffs();
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Đã xóa tất cả hiệu ứng bất lợi cho bản thân");
-        Info.ApplyEffects(effect);
-
+        
+        if (Character != character)
+        {
+            Info.ApplyEffects(effect);
+        }
+        
         return new DamageTakenParams
         {
             Effects = effect,

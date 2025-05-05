@@ -94,21 +94,25 @@ public class MapManager : MonoBehaviour
             {
                 bool isSameTeam = item.Character.Type == cell.Character.Type;
             
-                if ((skillInfo.damageType == DamageTargetType.Team && isSameTeam) ||
-                    (skillInfo.damageType == DamageTargetType.Enemies && !isSameTeam))
+                if ((skillInfo.damageType.HasFlag(DamageTargetType.Team)&& isSameTeam) ||
+                    (skillInfo.damageType.HasFlag(DamageTargetType.Enemies) && !isSameTeam))
                 {
                     results.Add(item);
                 }
             }
             else if (item.CellType == CellType.Walkable)
             {
-                if (skillInfo.damageType == DamageTargetType.Move)
+                if (skillInfo.damageType.HasFlag(DamageTargetType.Move))
                 {
                     results.Add(item);
                 }
             }
         }
-    
+
+        if (skillInfo.damageType.HasFlag(DamageTargetType.Self))
+        {
+            results.Add(cell);
+        }
         return results;
     }
     
