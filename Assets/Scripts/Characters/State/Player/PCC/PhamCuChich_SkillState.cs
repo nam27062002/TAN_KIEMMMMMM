@@ -10,7 +10,7 @@ public class PhamCuChich_SkillState : SkillState
 
     protected override DamageTakenParams GetDamageParams_Skill2_MyTurn(Character character)
     {
-        if (character.Type == Character.Type)
+        if (character.Type == Character.Type  && character != Character)
         {
             character.Info.EffectInfo.RemoveAllDebuffs();
             AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Removed all debuffs for {character.characterConfig.characterName}");
@@ -31,10 +31,15 @@ public class PhamCuChich_SkillState : SkillState
                 Actor = Character
             }
         };
+        
         Character.Info.EffectInfo.RemoveAllDebuffs();
         AlkawaDebug.Log(ELogCategory.EFFECT, $"[{CharName}] Removed all debuffs for self");
-        Info.ApplyEffects(effect);
-
+        
+        if (Character != character)
+        {
+            Info.ApplyEffects(effect);
+        }
+        
         return new DamageTakenParams
         {
             Effects = effect,

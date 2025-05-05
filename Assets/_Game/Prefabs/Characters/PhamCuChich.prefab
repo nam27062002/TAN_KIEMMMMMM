@@ -238,7 +238,7 @@ MonoBehaviour:
       isDirectionalSkill: 1
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
-      damageType: 2
+      damageType: 3
       description: Target himself and one single ally, granting both a shield, which
         will explode and deal dmg to enemies when destroyed. Removes all debuffs
         from targeted ally when the shield is first applied.
