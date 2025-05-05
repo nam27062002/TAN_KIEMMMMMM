@@ -23,9 +23,7 @@ public class BloodyRainbow : PassiveSkill
     [BoxGroup("Internal Force Trigger")]
     [SerializeField] private int increasedDamageTaken = 2;
     [BoxGroup("Internal Force Trigger")]
-    [SerializeField] private int increasedMovement = 1;
-    [BoxGroup("Internal Force Trigger")]
-    [SerializeField] private int maxInternalForceTriggers = 5;
+    [SerializeField] private int maxInternalForceTriggers = 2;
     
     private int _hpDecreased;
     private int _internalForceDecreased;
@@ -65,7 +63,7 @@ public class BloodyRainbow : PassiveSkill
         if (value < 0)
         {
             _internalForceDecreased -= value;
-            ProcessTrigger(ref _internalForceDecreased, internalForceThreshold, maxInternalForceTriggers, ref _internalForceTriggerCount, IncreaseDamageTakenAndMovement);
+            ProcessTrigger(ref _internalForceDecreased, internalForceThreshold, maxInternalForceTriggers, ref _internalForceTriggerCount, IncreaseDamageTaken);
         }
     }
 
@@ -92,7 +90,7 @@ public class BloodyRainbow : PassiveSkill
 
     private void ReduceCritRequirement()
     {
-        // Tạo hiệu ứng ReduceHitChange để giảm số lần crit đi 1 (vĩnh viễn)
+        // Create a ReduceHitChange effect to permanently reduce crit count by 1
         var reduceHitChangeEffect = new ChangeStatEffect
         {
             effectType = EffectType.ReduceHitChange,
@@ -101,18 +99,19 @@ public class BloodyRainbow : PassiveSkill
             value = critThresholdReduction // Giảm số lần crit đi 1
         };
 
-        // Áp dụng hiệu ứng vào nhân vật
+        // Apply the effect to the character
         character.Info.ApplyEffect(reduceHitChangeEffect);
         
         // Hiển thị thông báo
-        character.ShowMessage($"Giảm yêu cầu crit đi {critThresholdReduction}");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] giảm yêu cầu crit đi {critThresholdReduction}, tăng tỉ lệ chí mạng");
+        character.ShowMessage($"Reduce crit requirement by {critThresholdReduction}");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] reduced crit requirement by {critThresholdReduction}, increased crit chance");
     }
 
-    private void IncreaseDamageTakenAndMovement()
+    private void IncreaseDamageTaken()
     {
+        // Tăng sát thương nhận vào
         character.Info.IncreasedDamageTaken += increasedDamageTaken;
-        character.Info.Attributes.maxMoveRange += increasedMovement;
-        AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} - Phi Hồng: Tăng {increasedMovement} di chuyển và nhận {increasedDamageTaken} sát thương");
+        
+        //AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} - Phi Hồng: Tăng {increasedMovement} di chuyển và nhận {increasedDamageTaken} sát thương");
     }
 }
