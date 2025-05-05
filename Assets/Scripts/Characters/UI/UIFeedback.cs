@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIFeedback : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI feedbackText;
+    public TextMeshProUGUI characterName;
     [SerializeField] private Character character;
     private readonly List<EffectUI> _effectUIs = new();
 

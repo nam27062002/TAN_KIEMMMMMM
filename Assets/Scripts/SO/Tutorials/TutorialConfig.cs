@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -33,6 +34,25 @@ public class TutorialConfig : ScriptableObject
         [TextArea]
         [LabelText("Menu Text")]
         public string tutorialMenuText;
+    }
+    
+    [Button("Find Longest Menu Text")]
+    public void FindLongestMenuText()
+    {
+        if (tutorials == null || tutorials == null || tutorials.Count == 0)
+        {
+            Debug.LogWarning("TutorialConfig is missing or empty.");
+            return;
+        }
+
+        var longest = tutorials
+            .Where(t => t.tutorialTypes.HasFlag(TutorialType.Menu) && !string.IsNullOrEmpty(t.tutorialMenuText))
+            .OrderByDescending(t => t.tutorialMenuText.Length)
+            .FirstOrDefault();
+
+        Debug.Log(longest != null
+            ? $"Longest Menu Text ({longest.tutorialMenuText.Length} chars):\n{longest.tutorialMenuText}"
+            : "No tutorial with Menu text found.");
     }
 }
 
