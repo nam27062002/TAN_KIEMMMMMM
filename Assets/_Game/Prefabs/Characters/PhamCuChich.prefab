@@ -239,9 +239,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: Target a single ally, then shield both himself and that ally (each
-        shield is only 50% of the base skill amount). Removes all debuffs from ally
-        when the shield is first applied.
+      description: Target himself and one single ally, granting both a shield, which
+        will explode and deal dmg to enemies when destroyed. Removes all debuffs
+        from targeted ally when the shield is first applied.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 1b2d23e89f1fd0c458748be4e723a89d, type: 3}
       name: Submerging in the Ancient Atmosphere
@@ -254,9 +254,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: Target a single ally, then shield both himself and that ally (each
-        shield is only 50% of the base skill amount). Removes all debuffs from ally
-        when the shield is first applied.
+      description: Performs a roar imbued with Chi. Taunt the target and all enemies
+        in the areas of 5 squares around the target.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 334c1b9ed31741d49b05465de26ea373, type: 3}
       name: Everlasting Blue
@@ -269,10 +268,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: punch the targeted enemy three times, exploding his shield. Entering
-        Berserker state after the shield exploded. Increasing movement range by 4
-        squares and has a chance to inflict Fear on all enemies at the beginning
-        of each turn.
+      description: Punch the targeted enemy with all his might, exploding his shield
+        and heals himself based on the amount of remaining shield. Then enters Berserker
+        state after the shield exploded. Increasing movement range by 4 squares and
+        has a chance to inflict Fear on all enemies at the beginning of each turn.
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 5dbd273f544d7004ebcec644e32ed464, type: 3}
@@ -299,9 +298,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: Move to the turn master and shield them for an amount equal to
-        the skill dmg they last dealt to enemy. All enemies attacking this shield
-        will receive spike dmg and have their ATK decreased.
+      description: Grant the turn master a shield for an amount equal to the dmg
+        they last dealt to enemy
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: a534078403968c745918d0771f2fde33, type: 3}
       name: Descending on the Misty Citadel
@@ -315,7 +313,8 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 2
       description: "Creating a 5-points mist armor for all allies within 3 squares
-        area around himself.\_"
+        area around himself, while taunting all enemies in the areas of 5 squares
+        around the turn\u2019s master."
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 92d6599197b118248b88e91a7f54c77e, type: 3}
       name: Melancholic Blue
@@ -328,7 +327,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "After the shield explode, gives a temporary shield to the turn
+      description: "Explode his shield and heal himself based on the amount of shield
+        remaining. After the shield explode, gives a temporary shield to the turn
         master for 2 rounds. Until the end of next round, all incoming dmg to the
         ally shielded by this skill is reduced to 1. While this shield is active,
         Ph\u1EA1m C\u1EF1 Ch\xEDch's Defense is reduced to 0."
@@ -358,9 +358,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Absorbed enemy's attack and turn the dmg into a shield instead.
-        Until the end of the round, he'll take dmg targeting all allies within 2
-        squares around himself as well.
+      description: Gained shield equal to the amount of dmg taken. Until the end
+        of the round, he'll take dmg targeting all allies within 2 squares around
+        himself as well.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 07d6b726ee041ef4eb3634fe49385904, type: 3}
       name: Climbing up the Cloud Ladder
@@ -386,7 +386,8 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "After the shield explode, turn the 4 squares area around Ph\u1EA1m
+      description: "Explode his shield and heal himself based on the amount of shield
+        remaining. After the shield explode, turn the 4 squares area around Ph\u1EA1m
         C\u1EF1 Ch\xEDch into an Ancient Battlefield. Ancient Battlefield blocks
         enemies' range attacks and inflicts Bleeding on all enemies who enter it."
       canBeDodged: 1
@@ -403,7 +404,7 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: "Whenever using skills, will use HP instead of \xBD of the MP
-        cost (toggleable passive). Increases ATK based on HP lost. "
+        cost (toggleable passive). Increases ATK based on HP lost."
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
