@@ -455,8 +455,7 @@ MonoBehaviour:
   maxCritTriggers: 3
   internalForceThreshold: 2
   increasedDamageTaken: 2
-  increasedMovement: 1
-  maxInternalForceTriggers: 5
+  maxInternalForceTriggers: 2
 --- !u!1 &1430476920419069654 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1345610228408147755, guid: 9e6b909fea7cce749ac48a51d3c5b7d2, type: 3}
