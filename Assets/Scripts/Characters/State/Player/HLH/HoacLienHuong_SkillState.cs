@@ -109,16 +109,16 @@ public class HoacLienHuong_SkillState : SkillState
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{CharName}] {_skillStateParams.SkillInfo.name}");
         return new DamageTakenParams()
         {
-            Effects = new List<EffectData>
-            {
-                new()
-                {
-                    effectType = EffectType.Blind,
-                    duration = EffectConfig.DebuffRound, // Use standard debuff time
-                    Actor = Character // The effect is caused by Hoac Lien Huong
-                }
-            },
-            ReceiveFromCharacter = Character // The person receiving the effect is 'character' (who attacked HLH)
+            // Effects = new List<EffectData>
+            // {
+            //     new()
+            //     {
+            //         effectType = EffectType.Blind,
+            //         duration = EffectConfig.DebuffRound, // Use standard debuff time
+            //         Actor = Character // The effect is caused by Hoac Lien Huong
+            //     }
+            // },
+            // ReceiveFromCharacter = Character // The person receiving the effect is 'character' (who attacked HLH)
         };
     }
 
