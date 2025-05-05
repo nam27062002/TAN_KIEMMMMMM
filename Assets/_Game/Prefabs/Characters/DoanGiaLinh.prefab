@@ -212,11 +212,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: the sound and poison focus on unleashing the potential of ally
-        an within the areas of 4 squares around the user, increasing their movement
-        range by 2 squares and AP by 1 temporarily (removed after usage or at the
-        end of the round). Allies cannot use these temporary resources on the same
-        turn this skill was used.
+      description: Ring the little bell on her wrist while releasing poison into
+        the air. The combination of the sound and poison focuses on unleashing the
+        potential of an ally within the areas of 4 squares around the user, increasing
+        their movement (2 squares) and AP (1-once time used). Allies cannot take
+        actions on the same turn this skill was used.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: ce02b039dfb1d974385826061c887829, type: 3}
       name: Red Dahlia
@@ -271,8 +271,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: "the sound and poison cause paralysis, slowing enemies' reactions,
-        giving allies\u2019 attacks an advantage."
+      description: "Ring the little bell on her wrist while releasing poison into
+        the air. The combination of the sound and poison causes dizziness, slowing
+        enemies' reactions, giving allies\u2019 attacks an advantage."
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: e9b2156db6f0d7148838129e6c1b2b01, type: 3}
       name: White Lotus
@@ -328,9 +329,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: the sound and poison cause the attacking enemy to hallucinate,
-        stunning them and dealing continuous damage. Afterward, a Night Cactus blooms
-        on the affected enemy
+      description: Ring the little bell on her wrist while releasing poison into
+        the air. The combination of the sound and poison causes the attacking enemy
+        to hallucinate, stunning them and dealing continuous damage. Afterward, a
+        Night Cactus blooms on the affected enemy.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: c209965e5c9cd4d45a226df6607e7407, type: 3}
       name: Marigold
@@ -372,15 +374,16 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "For every 3 HP lost, gains a venomous parasite. Skills can transfer
-        these parasites onto enemies (passive, toggleable). \r\n\r\n! Venomous Parasites:
-        Eats the Poisonous Flowers that bloom on enemies, dealing dmg and creating
-        a poisonous bloodpool, which spreads the same poison to the areas of 1 square
-        around the target. \r\n\r\n! Poison powder: every time this character uses
-        any skill, has a chance to inflict poison powder on every other character
-        on the map. Poison powder stacks up to 5 times per target, and, while doesn't
-        deal dmg directly, can interact with Poisonous Flowers and this character's
-        skills.\" "
+      description: 'Passive: For every 3 HP lost, gains a venomous parasite. Skills
+        can transfer these parasites onto enemies (toggleable).
+
+        Parasites
+        can eat the Poisonous Flowers that bloom on enemies, dealing dmg and spreading
+        the same poison in the form of a bloodpool (1 square radius).
+
+        !
+        Poison powder: every time this character uses any skill, she has a chance
+        to inflict poison powder on every other character on the map.'
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}

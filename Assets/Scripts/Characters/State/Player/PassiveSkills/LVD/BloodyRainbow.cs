@@ -23,9 +23,7 @@ public class BloodyRainbow : PassiveSkill
     [BoxGroup("Internal Force Trigger")]
     [SerializeField] private int increasedDamageTaken = 2;
     [BoxGroup("Internal Force Trigger")]
-    [SerializeField] private int increasedMovement = 1;
-    [BoxGroup("Internal Force Trigger")]
-    [SerializeField] private int maxInternalForceTriggers = 5;
+    [SerializeField] private int maxInternalForceTriggers = 2;
     
     private int _hpDecreased;
     private int _internalForceDecreased;
@@ -65,7 +63,7 @@ public class BloodyRainbow : PassiveSkill
         if (value < 0)
         {
             _internalForceDecreased -= value;
-            ProcessTrigger(ref _internalForceDecreased, internalForceThreshold, maxInternalForceTriggers, ref _internalForceTriggerCount, IncreaseDamageTakenAndMovement);
+            ProcessTrigger(ref _internalForceDecreased, internalForceThreshold, maxInternalForceTriggers, ref _internalForceTriggerCount, IncreaseDamageTaken);
         }
     }
 
@@ -109,16 +107,13 @@ public class BloodyRainbow : PassiveSkill
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{character.characterConfig.characterName}] reduced crit requirement by {critThresholdReduction}, increased crit chance");
     }
 
-    private void IncreaseDamageTakenAndMovement()
+    private void IncreaseDamageTaken()
     {
         // Tăng sát thương nhận vào
         character.Info.IncreasedDamageTaken += increasedDamageTaken;
 
-        // Tăng ô di chuyển
-        character.Info.Attributes.maxMoveRange += increasedMovement;
-
         // Hiển thị thông báo và log
-        character.ShowMessage($"Receive +{increasedDamageTaken} dmg / +{increasedMovement} move");
-        AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} - Bloody Rainbow: Increase {increasedMovement} movement and receive {increasedDamageTaken} more damage");
+        character.ShowMessage($"Receive +{increasedDamageTaken} dmg");
+        AlkawaDebug.Log(ELogCategory.SKILL, $"{character.characterConfig.characterName} - Bloody Rainbow: Receive {increasedDamageTaken} more damage");
     }
 }
