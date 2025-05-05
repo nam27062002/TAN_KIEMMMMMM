@@ -229,8 +229,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: The poison causes blindness, decreasing the opponent's accuracy
-        for 10 rounds. Afterwards, a Red Dahlia blooms on the affected enemy.
+      description: Thrusts forward with a quill, injecting a poison which causes
+        blindness into one enemy, decreasing their accuracy for 10 rounds. Afterwards,
+        a Red Dahlia blooms on the affected enemy.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 495b61bfe7e7a2d46b7e55a40df97d16, type: 3}
       name: Winter Rose
@@ -244,7 +245,9 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: Retrieving all poison powder from all enemies, reducing their
-        Chi Defense depending on the number of stacks removed.
+        Chi Defense depending on the number of stacks removed. When the poison is
+        recalled, it immediately causes any and all flowers on them to bloom, dealing
+        dmg to the target and healing Linh based on the number of stacks removed.
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: e1109e1473cbe4a43a1ded5a0cde98a6, type: 3}
@@ -286,8 +289,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: the poison causes sleepiness. Afterwards, a White Lotus blooms
-        on the affected enemy.
+      description: Thrusts forward with a quill, injecting a poison which causes
+        sleepiness into one enemy. Afterwards, a White Lotus blooms on the affected
+        enemy.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 4227811f9b7bb39408552d36a7dd212c, type: 3}
       name: Red Dodder
@@ -300,9 +304,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 2
-      description: Retrieving all poison powder from the turn's master, giving and
-        herself 1 point of life steal per stack of poison powder removed. Allies
-        are granted life-steal buff
+      description: Retrieving all poison powder from the turn's master, healing and
+        giving herself 1 point of life steal per stack of poison powder removed.
+        Grants all allies in range life-steal.
       canBeDodged: 1
     combatSkill:
     - icon: {fileID: 21300000, guid: 412bd91e9a05fce4a9aa62acfe3e8ad8, type: 3}
@@ -345,8 +349,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: ' the poison causes paralysis, slowly causing the target to stiffen
-        like a statue. Afterwards, a Marigold blooms on the affected enemy.'
+      description: Thrusts forward with a quill, injecting a poison which causes
+        paralysis into the attacking enemy, slowly causing the target to stiffen
+        like a statue. Afterwards, a Marigold blooms on the affected enemy.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: f0245e1542ae3204080686bb10664dc7, type: 3}
       name: Sundews
@@ -359,8 +364,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 1
       damageType: 4
-      description: Retrieving all poison powder from the attacking enemy, annulling
-        all physical dmg from said enemy.
+      description: 'Retrieving all poison powder from the attacking enemy, annulling
+        all physical dmg from said enemy. When the poison is recalled, it immediately
+        causes any and all flowers on them to bloom, dealing dmg to the target and
+        healing Linh based on the number of stacks removed. '
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
@@ -400,7 +407,7 @@ MonoBehaviour:
       description: "Base movement range: 6 squares. \r\n\r\nMovement range cannot
         be reduced by debuffs.  \r\n\r\nWhen enemies standing inside the Poisonous
         Bloodpool created by Venomous Parasites are hit, they're guaranteed to be
-        poisoned"
+        poisoned."
       canBeDodged: 1
   passiveSkills:
   - {fileID: 3033158562719900191}
