@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
@@ -64,6 +65,7 @@ public abstract class Character : MonoBehaviour
         SetStateMachine();
         GpManager.OnEndTurn += OnEndTurn;
         GpManager.OnNewRound += OnNewRound;
+        uiFeedback.characterName.SetText(characterConfig.characterName);
     }
 
     private void OnEndTurn(object sender, EventArgs e)
