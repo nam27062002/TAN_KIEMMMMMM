@@ -11,6 +11,8 @@
     
     protected override void HandleCounter()
     {
+        AlkawaDebug.Log(ELogCategory.SKILL, $"{Character.characterConfig.characterName} is under attacked by {DamageTakenParams.ReceiveFromCharacter.characterConfig.characterName}");
+        
         UIManager.Instance.OpenPopup(PopupType.React, new ReactPopupParameters()
         {
             OnConfirm = OnConFirmReact,
