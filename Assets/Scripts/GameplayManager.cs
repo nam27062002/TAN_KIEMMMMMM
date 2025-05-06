@@ -346,7 +346,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         SetInteract(true);
         int characterIndex = Characters.IndexOf(character);
         Characters.Remove(character);
-        if (characterIndex < CurrentPlayerIndex)
+        if (characterIndex < CurrentPlayerIndex && characterIndex >= 0)
         {
             CurrentPlayerIndex--;
         }
@@ -781,7 +781,6 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     public void HandleEndTurn(string message)
     {
-        
         if (SelectedCharacter == null || IsPauseGameInternal) return;
         SetInteract(true);
         Debug.Log($"[{SelectedCharacter.characterConfig.characterName}]: End turn - {message}");
@@ -793,7 +792,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             if (SelectedCharacter)
                 MainCharacter?.Info.ResetBuffAfter();
-            CurrentPlayerIndex++;
+            ++CurrentPlayerIndex;
             if (CurrentPlayerIndex >= Characters.Count)
             {
                 CurrentPlayerIndex = 0;
