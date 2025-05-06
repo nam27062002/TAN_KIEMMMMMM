@@ -20,7 +20,7 @@ public class TraumaInducer : SingletonMonoBehavior<TraumaInducer>
     public IEnumerator ShakeCoroutine()
     {
         yield return new WaitForSeconds(Delay);
-        var targets = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        var targets = FindObjectsOfType<GameObject>();
         for(int i = 0; i < targets.Length; ++i)
         {
             var receiver = targets[i].GetComponent<StressReceiver>();
