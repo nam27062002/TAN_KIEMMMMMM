@@ -2225,8 +2225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 271, y: -37.25}
-  m_SizeDelta: {x: 384, y: 338.5}
+  m_AnchoredPosition: {x: 307.0149, y: -37.25}
+  m_SizeDelta: {x: 456.0297, y: 338.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2371309015897388958
 CanvasRenderer:
@@ -3175,7 +3175,7 @@ MonoBehaviour:
   m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 0}
+  m_Viewport: {fileID: 6887666034473806612}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 0
@@ -3385,6 +3385,7 @@ MonoBehaviour:
   skillScrollRect: {fileID: 5943518628918490707}
   skillPanelImage: {fileID: 7064077344483168652}
   skillTitleName: {fileID: 5527223733712951131}
+  scrollSensitivity: 10
   storyScrollObject: {fileID: 2786593446351350254}
   storyContainer: {fileID: 2340741090659905907}
   storyText: {fileID: 2182424571955496710}

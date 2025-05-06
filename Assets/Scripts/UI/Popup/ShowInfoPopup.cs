@@ -27,6 +27,9 @@ public class ShowInfoPopup : PopupBase
     public ScrollRect skillScrollRect;
     public Image skillPanelImage;
     public Image skillTitleName;
+    
+    // Thêm tham số kiểm soát scroll
+    [SerializeField] private float scrollSensitivity = 10f;
 
     [Title("Story Info"), Space]
     public GameObject storyScrollObject;
@@ -40,6 +43,9 @@ public class ShowInfoPopup : PopupBase
     public Button skillButton;
     public Button storyButton;
 
+    // Danh sách các SkillInfo_UI được tạo ra
+    private List<SkillInfo_UI> _skillInfoUIs = new List<SkillInfo_UI>();
+
     public enum ScrollType
     {
         Skill,
@@ -47,6 +53,17 @@ public class ShowInfoPopup : PopupBase
     }
 
     [SerializeField, HideInInspector] private ContentSizeFitter storyContentSizeFitter;
+
+    private void Awake()
+    {
+        // Đảm bảo ScrollRect của popup chỉ scroll theo chiều dọc
+        if (skillScrollRect != null)
+        {
+            skillScrollRect.horizontal = false;
+            skillScrollRect.vertical = true;
+            skillScrollRect.scrollSensitivity = scrollSensitivity;
+        }
+    }
 
     public override void Open(UIBaseParameters parameters = null)
     {
@@ -85,6 +102,9 @@ public class ShowInfoPopup : PopupBase
         storyPanelImage.enabled = scrollType == ScrollType.Story;
         skillTitleName.color = scrollType == ScrollType.Skill ? Color.black : Color.white;
         storyTitleName.color = scrollType == ScrollType.Story ? Color.black : Color.white;
+        
+        // Đặt lại vị trí cuộn và cập nhật trạng thái ScrollRect con
+        ResetScroll();
     }
 
     private void SetupAvatar(CharacterConfig config)
@@ -125,10 +145,8 @@ public class ShowInfoPopup : PopupBase
 
     private void ShowSkillInfo()
     {
-        foreach (Transform child in container)
-        {
-            Destroy(child.gameObject);
-        }
+        ClearSkillInfo();
+        _skillInfoUIs.Clear();
 
         var passiveSkill1 = _showInfoCharacterParameters.Character.skillConfig.passtiveSkill1;
         var passiveSkill2 = _showInfoCharacterParameters.Character.skillConfig.passtiveSkill2;
@@ -144,6 +162,7 @@ public class ShowInfoPopup : PopupBase
             var passiveSkillUI = passiveGo.GetComponent<SkillInfo_UI>();
             passiveSkillUI.SetupPassives(passiveSkill1, passiveSkill2);
             skillObjects.Add(passiveGo);
+            _skillInfoUIs.Add(passiveSkillUI);
         }
 
         var skills = _showInfoCharacterParameters.Skills[_showInfoCharacterParameters.skillTurnType];
@@ -160,13 +179,37 @@ public class ShowInfoPopup : PopupBase
                 (int)_showInfoCharacterParameters.skillTurnType
             );
             skillObjects.Add(go);
+            _skillInfoUIs.Add(skillInfoUI);
             count++;
         }
+
+        // Cấu hình ScrollRect con
+        ConfigureNestedScrollRects();
 
         int totalSkillCount = skillObjects.Count;
         float newHeight = skillInfoHeight * totalSkillCount + space * (totalSkillCount - 1);
         container.sizeDelta = new Vector2(container.sizeDelta.x, newHeight);
         verticalLayoutGroup.spacing = space;
+    }
+    
+    private void ConfigureNestedScrollRects()
+    {
+        // Đảm bảo mỗi ScrollRect con được cấu hình đúng
+        foreach (var skillUI in _skillInfoUIs)
+        {
+            if (skillUI.scrollRect != null)
+            {
+                // Đặt ScrollRect con chỉ scroll theo chiều dọc
+                skillUI.scrollRect.horizontal = false;
+                skillUI.scrollRect.vertical = true;
+                
+                // Đăng ký sự kiện để kiểm soát khi nào ScrollRect cha nên hoạt động
+                skillUI.scrollRect.onValueChanged.AddListener((pos) => {
+                    // Cập nhật trạng thái scroll
+                    skillUI.CheckScrollBounds();
+                });
+            }
+        }
     }
 
     private void SetupStoryContent()
@@ -224,6 +267,7 @@ public class ShowInfoPopup : PopupBase
 
     private void ClearSkillInfo()
     {
+        _skillInfoUIs.Clear();
         foreach (Transform child in container)
         {
             Destroy(child.gameObject);
@@ -235,6 +279,15 @@ public class ShowInfoPopup : PopupBase
         if (skillScrollRect != null)
         {
             skillScrollRect.verticalNormalizedPosition = 1;
+            
+            // Đặt lại vị trí scroll cho tất cả các SkillInfo_UI
+            foreach (var skillUI in _skillInfoUIs)
+            {
+                if (skillUI != null && skillUI.scrollRect != null)
+                {
+                    skillUI.ResetScrollPosition();
+                }
+            }
         }
     }
 
