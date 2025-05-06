@@ -9,7 +9,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     //new 
-    public int CharacterId { get; set; }
+    [ShowInInspector] public int CharacterId;
     public event EventHandler<Character> OnDeath;
     // old
     [Title("Character Type")] public CharacterType characterType;

@@ -30,17 +30,18 @@ public class ThietNhan : AICharacter
         {
             base.SetSpeed();
         }
+#if UNITY_EDITOR
+        Info.Speed = Info.Cell.CellPosition == new Vector2Int(2, 6) ? 800 : 600;
+#endif
     }
     
     protected override bool TryMoving()
     {
         if (MoveCount >= 1) return false;
         
-        // Kiểm tra hiệu ứng Taunt
         var tauntEffect = Info.EffectInfo.Effects.FirstOrDefault(e => e.effectType == EffectType.Taunt);
         if (tauntEffect != null)
         {
-            // Khi bị Taunt, luôn ưu tiên di chuyển bất kể đã di chuyển mấy lần
             return base.TryMoving();
         }
         

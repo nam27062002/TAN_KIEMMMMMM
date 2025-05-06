@@ -498,7 +498,8 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     public GameObject mapPrefab;
     [ShowInInspector] public readonly List<Character> Players = new();
     [ShowInInspector] public readonly List<Character> Enemies = new();
-    [ShowInInspector] public List<Character> Characters { get; private set; } = new();
+    public int CurrentPlayerIndex;
+    public List<Character> Characters = new();
 
     public List<Character> charactersInConversation = new();
     [ShowInInspector] public Character MainCharacter { get; set; }
@@ -508,7 +509,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
     private Character _focusedCharacter;
 
     public int CurrentRound { get; private set; }
-    public int CurrentPlayerIndex { get; private set; }
+
     private bool IsRoundOfPlayer => MainCharacter.Type == Type.Player;
     public bool CanInteract { get; set; }
     public LevelConfig LevelConfig => levelConfig;
@@ -792,12 +793,7 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         {
             if (SelectedCharacter)
                 MainCharacter?.Info.ResetBuffAfter();
-            bool isDeathInMainTurn = message.Contains("Chết");
-            if (!isDeathInMainTurn)
-            {
-                CurrentPlayerIndex++;
-            }
-            
+            CurrentPlayerIndex++;
             if (CurrentPlayerIndex >= Characters.Count)
             {
                 CurrentPlayerIndex = 0;

@@ -15,7 +15,7 @@ MonoBehaviour:
   canSkipStartConversation: 0
   levelName: Level 3
   cameraSize: 7
-  levelType: 1
+  levelType: 3
   spawnerConfig:
     spawnPoints:
       m_keys: 00000000030000000800000002000000

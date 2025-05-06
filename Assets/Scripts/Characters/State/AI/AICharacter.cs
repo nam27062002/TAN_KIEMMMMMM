@@ -66,7 +66,7 @@ public abstract class AICharacter : Character
         // Nếu dính hiệu ứng Taunt, ưu tiên di chuyển về phía nguồn gây Taunt
         if (tauntSource != null)
         {
-            AlkawaDebug.Log(ELogCategory.AI, $"Đang bị hiệu ứng Taunt từ {tauntSource.characterConfig.characterName}");
+            AlkawaDebug.Log(ELogCategory.AI, $"Affected by Taunt from {tauntSource.characterConfig.characterName}");
             foreach (var cell in cells)
             {
                 var p = MapManager.FindShortestPath(cell, tauntSource.Info.Cell);
@@ -151,7 +151,7 @@ public abstract class AICharacter : Character
             if (tauntSource != null && selectedSkill.enemies.Contains(tauntSource))
             {
                 Enemy = tauntSource;
-                AlkawaDebug.Log(ELogCategory.AI,$"Tấn công nguồn gây Taunt: {tauntSource.characterConfig.characterName}");
+                AlkawaDebug.Log(ELogCategory.AI,$"Attacking Taunt source: {tauntSource.characterConfig.characterName}");
             }
             else if (GameplayManager.Instance.IsTutorialLevel)
             {
