@@ -75,6 +75,20 @@ public class TopBar_UI : MonoBehaviour
         if (count == 0) return;
 
         var startIndex = Gameplay.CurrentPlayerIndex;
+        if (startIndex < 0 || startIndex >= Gameplay.Characters.Count)
+        {
+            Debug.LogWarning($"Invalid CurrentPlayerIndex: {startIndex}, Characters count: {Gameplay.Characters.Count}");
+            startIndex = 0;
+        }
+
+        if (count != Gameplay.Characters.Count)
+        {
+            Debug.LogWarning($"Avatar count ({count}) does not match Characters count ({Gameplay.Characters.Count}). Reinitializing UI...");
+            TryInitUI();
+            count = _avtSpdUI.Count;
+            if (count == 0) return;
+        }
+
         var fixedY = _avtSpdUI[0].GetComponent<RectTransform>().anchoredPosition.y;
         var poolRect = characterPool.GetComponent<RectTransform>();
         var poolWidth = poolRect.rect.width;
@@ -85,23 +99,35 @@ public class TopBar_UI : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int index = (startIndex + i) % count;
+            if (index < 0 || index >= Gameplay.Characters.Count || index >= _avtSpdUI.Count)
+            {
+                Debug.LogWarning($"Invalid index: {index}, Characters count: {Gameplay.Characters.Count}, Avatar count: {_avtSpdUI.Count}");
+                continue;
+            }
+            
             bool isFocused = Gameplay.Characters[index].IsMainCharacter;
             float S = isFocused ? focusedScale : unfocusedScale;
             scales.Add(S);
         }
 
         float sumWidths = 0;
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < scales.Count; i++)
         {
             sumWidths += W * scales[i];
         }
-        float totalWidth = sumWidths + (count - 1) * D;
+        float totalWidth = sumWidths + (scales.Count - 1) * D;
         float P = (poolWidth - totalWidth) / 2;
 
         float leftEdge = P;
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < scales.Count; i++)
         {
             int index = (startIndex + i) % count;
+            if (index < 0 || index >= Gameplay.Characters.Count || index >= _avtSpdUI.Count)
+            {
+                Debug.LogWarning($"Invalid index: {index}, Characters count: {Gameplay.Characters.Count}, Avatar count: {_avtSpdUI.Count}");
+                continue;
+            }
+            
             var avatar = _avtSpdUI[index];
             var rt = avatar.GetComponent<RectTransform>();
             float S = scales[i];

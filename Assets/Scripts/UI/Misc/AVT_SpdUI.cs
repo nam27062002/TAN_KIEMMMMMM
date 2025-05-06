@@ -88,11 +88,27 @@ public class AVT_SpdUI : MonoBehaviour
 
     private void HandleCharacterDeath(object sender, Character character)
     {
-        if (_topBar != null)
+        try
         {
-            _topBar.DestroyAvt(this);
+            if (_topBar != null)
+            {
+                _topBar.DestroyAvt(this);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
-        Destroy(gameObject);
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"Error in HandleCharacterDeath: {ex.Message}\n{ex.StackTrace}");
+            
+            // Nếu có lỗi, thử huỷ trực tiếp
+            if (gameObject != null)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
     #endregion
 
