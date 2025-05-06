@@ -298,8 +298,11 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
         character.Info.CurrentHp = data.currentHp;
         character.Info.CurrentMp = data.currentMp;
         character.Info.MoveAmount = data.moveAmount;
+        
+        // Khôi phục IncreasedDamageTaken và maxMoveRange
         character.Info.IncreasedDamageTaken = data.increasedDamageTaken;
         character.Info.Attributes.maxMoveRange = data.maxMoveRange;
+        
         // Thêm code để khôi phục Action Points
         if (data.actionPoints != null && data.actionPoints.Count > 0)
         {
@@ -1285,8 +1288,9 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private IEnumerator WaitForCharactersExitCamera(List<Character> characters, Action action = null)
     {
+        // Lọc bỏ nhân vật null trước khi bắt đầu đợi
         characters = characters.Where(c => c != null).ToList();
-         
+        
         if (characters.Count == 0)
         {
             Debug.LogWarning("No valid characters to wait for! Proceeding immediately.");
@@ -1294,20 +1298,26 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             action?.Invoke();
             yield break;
         }
-        yield return WaitUntilAllCharactersExitCamera(characters);
-        CleanupSequence();
-        action?.Invoke();
-    }
-
-    private IEnumerator WaitUntilAllCharactersExitCamera(List<Character> characters)
-    {
-        Camera mainCamera = GetMainCamera();
-        if (mainCamera == null) yield break;
-
-        while (!AreAllCharactersOutOfCamera(characters, mainCamera))
+        
+        // Thêm hệ thống timeout - giới hạn thời gian đợi tối đa là 10 giây
+        float timeoutDuration = 10f;
+        float elapsedTime = 0f;
+        
+        // Chỉ đợi nhân vật ra khỏi camera hoặc hết timeout
+        while (!AreAllCharactersOutOfCamera(characters, GetMainCamera()) && elapsedTime < timeoutDuration)
         {
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
+        
+        // Nếu hết thời gian đợi, ghi log để debug
+        if (elapsedTime >= timeoutDuration)
+        {
+            Debug.LogWarning("Timeout reached waiting for characters to exit camera. Proceeding anyway.");
+        }
+        
+        CleanupSequence();
+        action?.Invoke();
     }
 
     private Camera GetMainCamera()
@@ -1323,21 +1333,20 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
 
     private bool AreAllCharactersOutOfCamera(List<Character> characters, Camera camera)
     {
+        bool allOutOfCamera = true;
+        
         foreach (var character in characters)
         {
-            if (character == null)
-            {
-                CleanupSequence();
-                return true;
-            }
-
+            if (character == null) continue; // Bỏ qua nhân vật null
+            
             if (IsCharacterVisible(character.transform.position, camera))
             {
-                return false;
+                allOutOfCamera = false;
+                break;
             }
         }
-
-        return true;
+        
+        return allOutOfCamera;
     }
 
     private bool IsCharacterVisible(Vector3 worldPosition, Camera camera)

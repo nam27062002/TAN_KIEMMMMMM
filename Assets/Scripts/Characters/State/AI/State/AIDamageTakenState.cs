@@ -33,7 +33,7 @@ public class AIDamageTakenState : DamageTakenState
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì không có kỹ năng hợp lệ.");
             return false;
         }
-        
+#if !UNITY_EDITOR
         if (Character.lastDamageTakenCountered)
         {
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter vì đã counter lần trước.");
@@ -51,6 +51,7 @@ public class AIDamageTakenState : DamageTakenState
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Không thể counter: {Random.value} > 0.3");
             return false;
         }
+#endif
         _castSkillData = castSkillData[Random.Range(0, castSkillData.Count)];
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - dùng skill {_castSkillData.SkillInfo.name} lên {target.characterConfig.characterName}");
 
