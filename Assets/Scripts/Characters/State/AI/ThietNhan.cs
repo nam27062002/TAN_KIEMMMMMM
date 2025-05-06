@@ -36,11 +36,9 @@ public class ThietNhan : AICharacter
     {
         if (MoveCount >= 1) return false;
         
-        // Kiểm tra hiệu ứng Taunt
         var tauntEffect = Info.EffectInfo.Effects.FirstOrDefault(e => e.effectType == EffectType.Taunt);
         if (tauntEffect != null)
         {
-            // Khi bị Taunt, luôn ưu tiên di chuyển bất kể đã di chuyển mấy lần
             return base.TryMoving();
         }
         
