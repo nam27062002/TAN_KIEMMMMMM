@@ -26,6 +26,13 @@ public class SkillInfo_UI : MonoBehaviour
     private bool _hasPassiveSkill1;
     private bool _hasPassiveSkill2;
     private int _currentPassiveIndex = 0;
+    public ScrollRect scrollRect;
+    [SerializeField] private RectTransform contentRectTransform;
+    [SerializeField] private RectTransform viewportRectTransform;
+    
+    // Biến để theo dõi trạng thái của scroll
+    private bool _isAtTop = true;
+    private bool _isAtBottom = false;
 
     private void Awake()
     {
@@ -36,12 +43,93 @@ public class SkillInfo_UI : MonoBehaviour
         {
             skillImageParent = skillImage.transform.parent.gameObject;
         }
+        
+        // Lấy reference đến contentRect và viewportRect nếu chưa có
+        if (contentRectTransform == null && scrollRect != null)
+        {
+            contentRectTransform = scrollRect.content;
+        }
+        
+        if (viewportRectTransform == null && scrollRect != null)
+        {
+            viewportRectTransform = scrollRect.viewport as RectTransform;
+        }
     }
 
     private void OnDestroy()
     {
         leftButton.onClick.RemoveListener(OnLeftButtonClick);
         rightButton.onClick.RemoveListener(OnRightButtonClick);
+    }
+    
+    // Đặt lại vị trí scroll về đầu - đổi thành public để ShowInfoPopup có thể gọi
+    public void ResetScrollPosition()
+    {
+        if (scrollRect != null)
+        {
+            scrollRect.verticalNormalizedPosition = 1.0f;
+            UpdateScrollState();
+            _isAtTop = true;
+            _isAtBottom = false;
+        }
+    }
+    
+    // Kiểm tra và cập nhật trạng thái của ScrollRect
+    private void UpdateScrollState()
+    {
+        if (scrollRect == null || contentRectTransform == null || viewportRectTransform == null) 
+            return;
+        
+        // Tính toán xem content có cần scroll không
+        bool needsScrolling = contentRectTransform.rect.height > viewportRectTransform.rect.height;
+        
+        // Chỉ bật scroll nếu cần thiết
+        scrollRect.enabled = needsScrolling;
+        
+        if (needsScrolling)
+        {
+            // Giới hạn vị trí scroll
+            ClampScrollPosition();
+        }
+    }
+    
+    // Giới hạn vị trí cuộn để tránh khoảng trống
+    private void ClampScrollPosition()
+    {
+        if (scrollRect == null) return;
+        
+        // Đảm bảo không cuộn quá cao hoặc quá thấp
+        float normalizedPosition = scrollRect.verticalNormalizedPosition;
+        normalizedPosition = Mathf.Clamp01(normalizedPosition);
+        
+        // Chỉ set lại nếu thực sự cần thiết để tránh event loops
+        if (Mathf.Abs(scrollRect.verticalNormalizedPosition - normalizedPosition) > 0.001f)
+        {
+            scrollRect.verticalNormalizedPosition = normalizedPosition;
+        }
+        
+        // Cập nhật trạng thái vị trí scroll
+        _isAtTop = normalizedPosition >= 0.99f;
+        _isAtBottom = normalizedPosition <= 0.01f;
+    }
+    
+    // Phương thức công khai để ShowInfoPopup có thể gọi để kiểm tra giới hạn scroll
+    public void CheckScrollBounds()
+    {
+        ClampScrollPosition();
+    }
+    
+    // Kiểm tra xem nên cho phép ScrollRect cha xử lý sự kiện không
+    public bool ShouldAllowParentScrolling(Vector2 scrollDelta)
+    {
+        // Nếu đang ở đỉnh và muốn scroll lên trên nữa hoặc ở đáy và muốn scroll xuống nữa
+        return (_isAtTop && scrollDelta.y > 0) || (_isAtBottom && scrollDelta.y < 0);
+    }
+    
+    // Được gọi khi kích thước của content thay đổi
+    public void OnContentSizeChanged()
+    {
+        UpdateScrollState();
     }
 
     public void SetupPassives(SkillInfo passiveSkill1, SkillInfo passiveSkill2)
@@ -66,6 +154,7 @@ public class SkillInfo_UI : MonoBehaviour
         }
 
         UpdatePassiveDisplay();
+        ResetScrollPosition();
     }
 
     private void UpdatePassiveDisplay()
@@ -107,6 +196,10 @@ public class SkillInfo_UI : MonoBehaviour
 
         leftButton.gameObject.SetActive(canGoLeft);
         rightButton.gameObject.SetActive(canGoRight);
+        
+        // Cập nhật trạng thái scroll sau khi thay đổi nội dung
+        Canvas.ForceUpdateCanvases();
+        UpdateScrollState();
     }
 
     public void SetupNormal(Dictionary<SkillTurnType, List<SkillInfo>> skillInfos, int skillIndex, int turnTypeIndex)
@@ -142,6 +235,7 @@ public class SkillInfo_UI : MonoBehaviour
         }
 
         UpdateNormalUI(availableTurnIndices);
+        ResetScrollPosition();
     }
 
     private void UpdateNormalUI(List<int> availableTurnIndices)
@@ -191,6 +285,10 @@ public class SkillInfo_UI : MonoBehaviour
 
         leftButton.gameObject.SetActive(currentTurnTypeIndex > 0);
         rightButton.gameObject.SetActive(currentTurnTypeIndex < availableTurnIndices.Count - 1);
+        
+        // Cập nhật trạng thái scroll sau khi thay đổi nội dung
+        Canvas.ForceUpdateCanvases();
+        UpdateScrollState();
     }
 
     private void OnLeftButtonClick()
@@ -201,6 +299,7 @@ public class SkillInfo_UI : MonoBehaviour
             {
                 _currentPassiveIndex--;
                 UpdatePassiveDisplay();
+                ResetScrollPosition();
             }
         }
         else
@@ -225,6 +324,7 @@ public class SkillInfo_UI : MonoBehaviour
             }
 
             UpdateNormalUI(availableTurnIndices);
+            ResetScrollPosition();
         }
     }
 
@@ -236,6 +336,7 @@ public class SkillInfo_UI : MonoBehaviour
             {
                 _currentPassiveIndex++;
                 UpdatePassiveDisplay();
+                ResetScrollPosition();
             }
         }
         else
@@ -260,6 +361,26 @@ public class SkillInfo_UI : MonoBehaviour
             }
 
             UpdateNormalUI(availableTurnIndices);
+            ResetScrollPosition();
+        }
+    }
+    
+    private void OnEnable()
+    {
+        ResetScrollPosition();
+    }
+    
+    private void OnDisable()
+    {
+        ResetScrollPosition();
+    }
+    
+    private void Update()
+    {
+        // Kiểm tra và giới hạn vị trí scroll mỗi khung hình nếu scroll đang hoạt động
+        if (scrollRect != null && scrollRect.enabled)
+        {
+            ClampScrollPosition();
         }
     }
 }
