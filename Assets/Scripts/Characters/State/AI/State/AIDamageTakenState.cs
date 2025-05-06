@@ -33,7 +33,7 @@ public class AIDamageTakenState : DamageTakenState
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter because no valid skills.");
             return false;
         }
-        
+#if !UNITY_EDITOR
         if (Character.lastDamageTakenCountered)
         {
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter because already countered last time.");
@@ -51,6 +51,7 @@ public class AIDamageTakenState : DamageTakenState
             AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - Cannot counter: {Random.value} > 0.3");
             return false;
         }
+#endif
         _castSkillData = castSkillData[Random.Range(0, castSkillData.Count)];
         AlkawaDebug.Log(ELogCategory.SKILL, $"[{Character.characterConfig.characterName}] - using skill {_castSkillData.SkillInfo.name} on {target.characterConfig.characterName}");
 

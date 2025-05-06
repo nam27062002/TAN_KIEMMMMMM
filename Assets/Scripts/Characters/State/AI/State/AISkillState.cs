@@ -20,7 +20,6 @@
             }
             else
             {
-                GpManager.SetSelectedCharacter(GpManager.MainCharacter);
                 GpManager.SetSelectedCharacter(GpManager.PreviousSelectedCharacter != null ? GpManager.PreviousSelectedCharacter : GpManager.MainCharacter);
                 GpManager.SetInteract(true);
             }

@@ -1299,20 +1299,25 @@ public class GameplayManager : SingletonMonoBehavior<GameplayManager>
             yield break;
         }
         
-        yield return WaitUntilAllCharactersExitCamera(characters);
-        CleanupSequence();
-        action?.Invoke();
-    }
-
-    private IEnumerator WaitUntilAllCharactersExitCamera(List<Character> characters)
-    {
-        Camera mainCamera = GetMainCamera();
-        if (mainCamera == null) yield break;
-
-        while (!AreAllCharactersOutOfCamera(characters, mainCamera))
+        // Thêm hệ thống timeout - giới hạn thời gian đợi tối đa là 10 giây
+        float timeoutDuration = 10f;
+        float elapsedTime = 0f;
+        
+        // Chỉ đợi nhân vật ra khỏi camera hoặc hết timeout
+        while (!AreAllCharactersOutOfCamera(characters, GetMainCamera()) && elapsedTime < timeoutDuration)
         {
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
+        
+        // Nếu hết thời gian đợi, ghi log để debug
+        if (elapsedTime >= timeoutDuration)
+        {
+            Debug.LogWarning("Timeout reached waiting for characters to exit camera. Proceeding anyway.");
+        }
+        
+        CleanupSequence();
+        action?.Invoke();
     }
 
     private Camera GetMainCamera()
