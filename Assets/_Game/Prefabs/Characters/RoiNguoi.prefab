@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ba450258e4fe198a8817cc04b25b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterId: 0
   characterType: 8
   characterAnimationData: {fileID: 7289129136760376311}
   hpBar: {fileID: 225272192236176594}
@@ -108,7 +109,7 @@ MonoBehaviour:
   model: {fileID: 3910181860838020176}
   characterConfig:
     characterHeight: 1
-    characterName: "R\u1ED1i Ng\u01B0\u1EDDi "
+    characterName: Manurchin
     characterIcon: {fileID: 21300000, guid: 9d177a0c550955642a0284ccd3e722ba, type: 3}
     slideBarIcon: {fileID: 21300000, guid: f6caf975ae1416944bb10f5941c28f3d, type: 3}
     characterNoBgIcon: {fileID: 6832083214674340683, guid: e6ed10984429b4a40914ef43ab5986a6, type: 3}

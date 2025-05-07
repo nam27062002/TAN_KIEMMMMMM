@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb37350c28d44f5c89a6e4ddca9ee6a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterId: 0
   characterType: 0
   characterAnimationData: {fileID: 4661756497990611313}
   hpBar: {fileID: 2790403680272580180}
@@ -212,11 +213,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "Drink the stronRaise his Gourd and drink the strong wine V\xE2n
-        Thi\xEAu, increasing dmg dealt by 10% current HP. Then, imbues his sword
-        with alcoholic chi. For the next 5 turns, all skills have a chance to make
-        enemies hit drunken. g wine V\xE2n Thi\xEAu, increasing dmg dealt by 10%
-        current HP."
+      description: "Raise his Gourd and drink the strong wine V\xE2n Thi\xEAu, increasing
+        dmg dealt by 10% current HP. Then, imbues his sword with alcoholic chi. For
+        the next 5 turns, all skills have a chance to make enemies hit drunken."
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 748b49141ded6bb4cb3e062af2c159e2, type: 3}
       name: The Seven songs

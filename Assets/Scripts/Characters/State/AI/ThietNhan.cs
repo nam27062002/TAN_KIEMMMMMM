@@ -30,9 +30,6 @@ public class ThietNhan : AICharacter
         {
             base.SetSpeed();
         }
-#if UNITY_EDITOR
-        Info.Speed = Info.Cell.CellPosition == new Vector2Int(2, 6) ? 800 : 600;
-#endif
     }
     
     protected override bool TryMoving()

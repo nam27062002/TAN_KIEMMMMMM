@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4fa00dbc8df4470abd2e985ad00b0ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterId: 0
   characterType: 2
   characterAnimationData: {fileID: 4811324158122557611}
   hpBar: {fileID: 2651813540610510734}
@@ -102,7 +103,7 @@ MonoBehaviour:
   model: {fileID: 1274149462394461964}
   characterConfig:
     characterHeight: 0.55
-    characterName: "Thi\u1EBFt Nh\xE2n"
+    characterName: Steelborns
     characterIcon: {fileID: 21300000, guid: e55e5373d10db6543b614591ae678d79, type: 3}
     slideBarIcon: {fileID: 21300000, guid: 6326bd0ceb66ce145833bd72fd433cf0, type: 3}
     characterNoBgIcon: {fileID: 1393845800056972909, guid: ac8613fd7e2d03c469d77cbcc2089005, type: 3}
