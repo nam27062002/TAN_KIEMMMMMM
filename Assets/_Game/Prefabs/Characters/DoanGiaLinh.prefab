@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737bb98e42684bf4b4056d4336c49bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterId: 0
   characterType: 1
   characterAnimationData: {fileID: 6624640028912595744}
   hpBar: {fileID: 4460552136440462341}
@@ -212,11 +213,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: Ring the little bell on her wrist while releasing poison into
+      description: "Ring the little bell on her wrist while releasing poison into
         the air. The combination of the sound and poison focuses on unleashing the
-        potential of an ally within the areas of 4 squares around the user, increasing
-        their movement (2 squares) and AP (1-once time used). Allies cannot take
-        actions on the same turn this skill was used.
+        potential of an ally within the areas of 4 squares around the user, <color=red>increasing
+        their movement (2 squares) and AP (1-once time used)</color>. Allies cannot
+        take actions on the same turn this skill was used.\r"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: ce02b039dfb1d974385826061c887829, type: 3}
       name: Red Dahlia
@@ -229,9 +230,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Thrusts forward with a quill, injecting a poison which causes
-        blindness into one enemy, decreasing their accuracy for 10 rounds. Afterwards,
-        a Red Dahlia blooms on the affected enemy.
+      description: 'Thrusts forward with a quill, injecting a poison which <color=blue>causes
+        blindness</color> into one enemy, decreasing their accuracy for 10 rounds.
+        Afterwards, a Red Dahlia blooms on the affected enemy.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 495b61bfe7e7a2d46b7e55a40df97d16, type: 3}
       name: Winter Rose
@@ -244,10 +247,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: Retrieving all poison powder from all enemies, reducing their
-        Chi Defense depending on the number of stacks removed. When the poison is
-        recalled, it immediately causes any and all flowers on them to bloom, dealing
-        dmg to the target and healing Linh based on the number of stacks removed.
+      description: 'Retrieving all poison powder from all enemies, <color=blue>reducing
+        their Chi Defense</color> depending on the number of stacks removed. When
+        the poison is recalled, it immediately causes <u>any and all</u> flowers
+        on them to bloom, dealing dmg to the target and healing Linh based on the
+        number of stacks removed.
+
+'
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: e1109e1473cbe4a43a1ded5a0cde98a6, type: 3}
@@ -275,8 +281,8 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: "Ring the little bell on her wrist while releasing poison into
-        the air. The combination of the sound and poison causes dizziness, slowing
-        enemies' reactions, giving allies\u2019 attacks an advantage."
+        the air. The combination of the sound and poison causes <color=blue>dizziness,
+        slowing enemies' reactions</color>, giving allies\u2019 attacks an advantage.\r\n"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: e9b2156db6f0d7148838129e6c1b2b01, type: 3}
       name: White Lotus
@@ -289,9 +295,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Thrusts forward with a quill, injecting a poison which causes
-        sleepiness into one enemy. Afterwards, a White Lotus blooms on the affected
-        enemy.
+      description: 'Thrusts forward with a quill, injecting a poison which <color=blue>causes
+        sleepiness</color> into one enemy. Afterwards, a White Lotus blooms on the
+        affected enemy.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 4227811f9b7bb39408552d36a7dd212c, type: 3}
       name: Red Dodder
@@ -304,9 +312,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 2
-      description: Retrieving all poison powder from the turn's master, healing and
-        giving herself 1 point of life steal per stack of poison powder removed.
-        Grants all allies in range life-steal.
+      description: 'Retrieving all poison powder from the turn''s master, <color=red>healing
+        and giving herself 1 point of lifesteal</color> per stack of poison powder
+        removed. Grants <color=red>all allies in range life-steal</color>.
+
+'
       canBeDodged: 1
     combatSkill:
     - icon: {fileID: 21300000, guid: 412bd91e9a05fce4a9aa62acfe3e8ad8, type: 3}
@@ -333,10 +343,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Ring the little bell on her wrist while releasing poison into
+      description: 'Ring the little bell on her wrist while releasing poison into
         the air. The combination of the sound and poison causes the attacking enemy
-        to hallucinate, stunning them and dealing continuous damage. Afterward, a
-        Night Cactus blooms on the affected enemy.
+        to <color=blue>hallucinate, stunning them and dealing continuous damage</color>.
+        Afterward, a Night Cactus blooms on the affected enemy.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: c209965e5c9cd4d45a226df6607e7407, type: 3}
       name: Marigold
@@ -349,9 +361,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Thrusts forward with a quill, injecting a poison which causes
-        paralysis into the attacking enemy, slowly causing the target to stiffen
-        like a statue. Afterwards, a Marigold blooms on the affected enemy.
+      description: 'Thrusts forward with a quill, injecting a poison which <color=blue>causes
+        paralysis</color> into the attacking enemy, slowly causing the target to
+        stiffen like a statue. Afterwards, a Marigold blooms on the affected enemy.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: f0245e1542ae3204080686bb10664dc7, type: 3}
       name: Sundews
@@ -364,10 +378,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 1
       damageType: 4
-      description: 'Retrieving all poison powder from the attacking enemy, annulling
-        all physical dmg from said enemy. When the poison is recalled, it immediately
-        causes any and all flowers on them to bloom, dealing dmg to the target and
-        healing Linh based on the number of stacks removed. '
+      description: 'Retrieving all poison powder from the attacking enemy, <color=red>annulling
+        all physical dmg from said enemy</color>. When the poison is recalled, it
+        immediately causes <u>any and all</u> flowers on them to bloom, dealing dmg
+        to the target and healing Linh based on the number of stacks removed.
+
+'
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
@@ -381,16 +397,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: 'Passive: For every 3 HP lost, gains a venomous parasite. Skills
-        can transfer these parasites onto enemies (toggleable).
-
-        Parasites
-        can eat the Poisonous Flowers that bloom on enemies, dealing dmg and spreading
-        the same poison in the form of a bloodpool (1 square radius).
-
-        !
+      description: "Passive: For every 3 HP lost, gains a venomous parasite. Skills
+        can transfer these parasites onto enemies (toggleable). Parasites can eat
+        the Poisonous Flowers that bloom on enemies, dealing dmg and <color=blue>spreading
+        the same poison in the form of a bloodpool</color> (1 square radius).\r\n\r!
         Poison powder: every time this character uses any skill, she has a chance
-        to inflict poison powder on every other character on the map.'
+        to inflict poison powder on every other character on the map.\r\n"
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
