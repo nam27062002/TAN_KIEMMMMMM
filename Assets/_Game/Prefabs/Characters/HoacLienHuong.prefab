@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77a922feca14861b511785a06283244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterId: 0
   characterType: 3
   characterAnimationData: {fileID: 6210250308618888383}
   hpBar: {fileID: 3469845707852262298}
@@ -210,10 +211,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 8
-      description: 'Draw death energy in the range of 10 square around herself to
-        empower her attacks, then leap forward (4 squares), dealing dmg to all enemies
-        in her path. This skill deal additional dmg base on the number of bodies
-        on the battle field. '
+      description: 'Using the death energy around herself, she summons a tower (4
+        squares AoE), <color=blue>blocking 3 instances of dmg</color> from the outside.
+        Enemies trapped inside the tower takes dmg every round.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: b39c88e743443a949831189233ab6553, type: 3}
       name: Morning's First Light
@@ -272,8 +274,8 @@ MonoBehaviour:
       description: "Draw death energy in the range of 10 square around herself then
         leap towards the turn master (2 squares), using death energy to create a
         link between herself and the turn master. As long as this link exists, the
-        linked ally receives an ATK buff but also take half the dmg when enemies
-        attack Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng."
+        linked ally <color=red>receives an ATK buff</color> but also take half the
+        dmg when enemies attack Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng.\r\n"
       canBeDodged: 1
     - icon: {fileID: -3537580891591011323, guid: a97897a1fec02854282671c8d23474ec, type: 3}
       name: Dragon & Snake Twin Armors
@@ -287,9 +289,9 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 2
       description: "Give the turn master a Snake Armor while giving herself a Dragon
-        Armor. Snake Armor increases Chi Defense. As long as both Armors exist, 50%
-        of Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng's MP used is instead taken from the
-        Snake Armor wearer."
+        Armor. Snake Armor <color=red>increases Chi Defense</color>. As long as both
+        Armors exist, 50% of Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng\u2019s MP used is
+        instead taken from the Snake Armor wearer.\r\n"
       canBeDodged: 1
     - icon: {fileID: -8178576035687786624, guid: 980a727da5c46cc4da1ee06a07d3b5dc, type: 3}
       name: Mystical Land of Ashcloud
@@ -304,8 +306,9 @@ MonoBehaviour:
       damageType: 2
       description: "Using death energy as a medium, Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng
         teleports to an ally (the turn master), and gives herself a massive amount
-        of Chi Defense. Until next round, all attacks targeting the turn master will
-        be redirected towards Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng instead. "
+        of <color=red>Chi Defense</color>. Until next round, <color=blue>all attacks</color>
+        targeting the turn master will be <color=blue>redirected</color> towards
+        Ho\u1EAFc Li\xEAn H\u01B0\u01A1ng instead.\r\n"
       canBeDodged: 1
     combatSkill:
     - icon: {fileID: 2037120817534264460, guid: 72139ca088282ff48ab52ed50ead1d13, type: 3}
@@ -332,9 +335,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 8
-      description: Leap backward (2 squares), extracting death energy from the attacking
-        enemy's weapon before redirecting it back at them. If her new position is
-        out of enemy's attack range, then enemy's skill misses by default.
+      description: 'Leap backward (2 squares), extracting death energy from the attacking
+        enemy''s weapon before redirecting it back at them. If her new position is
+        out of enemy''s attack range, then enemy''s skill <color=blue>misses by default</color>.
+
+'
       canBeDodged: 1
     - icon: {fileID: -8359747887217438903, guid: 7d3603f082f7ba54a9c4a7fa5d1967f9, type: 3}
       name: Chilling Night Breeze
@@ -347,8 +352,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 1
       damageType: 4
-      description: 'Nullifying incoming dmg, then turns herself into a breeze that
-        sneaks behind the attacking enemy. '
+      description: '<color=blue>Nullifying incoming dmg</color>, then turns herself
+        into a breeze that sneaks behind the attacking enemy.
+
+'
       canBeDodged: 1
     - icon: {fileID: 7338152196854973384, guid: e5a7bd3a9bde49b4289d09ca454e84f0, type: 3}
       name: Rising Dragon of Smokes
@@ -361,9 +368,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: 'Using death energy as a medium, she switches place with the attacking
-        enemy, then sweeps her spear, dealing dmg to the nearest enemy (1 square)
-        around her.'
+      description: 'Using death energy as a medium, she <color=blue>switches place</color>
+        with the attacking enemy, then sweeps her spear, dealing dmg to the <color=orange>nearest
+        enemy</color> (1 square) around her.
+
+'
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
@@ -377,10 +386,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "After each round, increases dmg dealt by 2 (max 6) and reduces
-        rolls required for crit by 1 (max 3). Increases crit dmg dealt. When the
-        maximum buff of Empresses\u2019 Bowstrings is reached, every attack also
-        dmg the user. "
+      description: "After each round, <color=red>increases dmg</color> dealt by 2
+        (max 6) and <color=red>reduces rolls required for crit</color> by 1 (max
+        3). <color=red>Increases crit dmg dealt</color>. When the maximum buff of
+        Empresses\u2019 Bowstrings is reached, every attack also dmg the user.\r\n"
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
@@ -394,11 +403,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Base movement range: 8 squares, reducing by 1 each round, to
-        a minimum of 3 squares. \r\n\r\nStart each battle with +4 dodge chance, which
-        reduces by 1 at the end of the round. When this bonus dodge chance is reduced
-        to 0, AP used during enemy's turn has a chance to turn yellow instead of
-        red. "
+      description: 'Base movement range: 8 squares, reducing by 1 each round, to
+        a minimum of 3 squares. Start each battle with <color=red>+4 dodge chance</color>,
+        which reduces by 1 at the end of the round. When <color=red>this bonus</color>
+        dodge chance is reduced to 0, AP used during enemy''s turn has a chance to
+        turn yellow instead of red.
+
+'
       canBeDodged: 1
   passiveSkills:
   - {fileID: 4073403874055096316}
