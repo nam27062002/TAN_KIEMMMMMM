@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1f85678e2b4f879270f42bfe9a54e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharacterId: 0
   characterType: 4
   characterAnimationData: {fileID: 916104675403726340}
   hpBar: {fileID: 7691809308480958753}
@@ -239,9 +240,12 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 3
-      description: Target himself and one single ally, granting both a shield, which
-        will explode and deal dmg to enemies when destroyed. Removes all debuffs
-        from targeted ally when the shield is first applied.
+      description: 'Target himself and one single ally, <color=red>granting both
+        a shield</color>, which will explode and deal dmg to enemies when destroyed.
+        <color=red>Removes all debuffs</color> from targeted ally when the shield
+        is first applied.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 1b2d23e89f1fd0c458748be4e723a89d, type: 3}
       name: Submerging in the Ancient Atmosphere
@@ -254,8 +258,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: Performs a roar imbued with Chi. Taunt the target and all enemies
-        in the areas of 5 squares around the target.
+      description: 'Performs a roar imbued with Chi. <color=blue>Taunt</color> the
+        target and all enemies in the areas of 5 squares around the target.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 334c1b9ed31741d49b05465de26ea373, type: 3}
       name: Everlasting Blue
@@ -268,10 +274,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Punch the targeted enemy with all his might, exploding his shield
+      description: 'Punch the targeted enemy with all his might, exploding his shield
         and heals himself based on the amount of remaining shield. Then enters Berserker
-        state after the shield exploded. Increasing movement range by 4 squares and
-        has a chance to inflict Fear on all enemies at the beginning of each turn.
+        state after the shield exploded. <color=red>Increasing movement range</color>
+        by 4 squares and has a chance to inflict <color=blue>Fear</color> on all
+        enemies at the beginning of each turn.
+
+'
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 5dbd273f544d7004ebcec644e32ed464, type: 3}
@@ -298,8 +307,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: Grant the turn master a shield for an amount equal to the dmg
-        they last dealt to enemy
+      description: 'Grant the turn master a shield for an amount equal to the dmg
+        they last dealt to enemy this round.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: a534078403968c745918d0771f2fde33, type: 3}
       name: Descending on the Misty Citadel
@@ -312,9 +323,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 2
-      description: "Creating a 5-points mist armor for all allies within 3 squares
-        area around himself, while taunting all enemies in the areas of 5 squares
-        around the turn\u2019s master."
+      description: "Creating a 5-points <color=red>mist armor</color> for all allies
+        within 3 squares area around himself, while <color=blue>taunting</color>
+        all enemies in the areas of 5 squares around the turn\u2019s master.\r\n"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 92d6599197b118248b88e91a7f54c77e, type: 3}
       name: Melancholic Blue
@@ -328,10 +339,11 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 0
       description: "Explode his shield and heal himself based on the amount of shield
-        remaining. After the shield explode, gives a temporary shield to the turn
-        master for 2 rounds. Until the end of next round, all incoming dmg to the
-        ally shielded by this skill is reduced to 1. While this shield is active,
-        Ph\u1EA1m C\u1EF1 Ch\xEDch's Defense is reduced to 0."
+        remaining. After the shield explodes, gives a <color=red>temporary shield</color>
+        to the turn master for 2 rounds. Until the end of next round, <color=blue>all
+        incoming dmg</color> to the ally shielded by this skill is <color=blue>reduced
+        to 1</color>. While this shield is active, Ph\u1EA1m C\u1EF1 Ch\xEDch\u2019s
+        <color=blue>Defense is reduced to 0</color>.\r\n"
       canBeDodged: 1
     combatSkill:
     - icon: {fileID: 21300000, guid: 1831d2f14b54a8c4c85470249722a4c7, type: 3}
@@ -358,9 +370,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Gained shield equal to the amount of dmg taken. Until the end
-        of the round, he'll take dmg targeting all allies within 2 squares around
-        himself as well.
+      description: 'Gained shield equal to the amount of dmg taken. Until the end
+        of the round, he''ll <color=blue>take dmg targeting all allies</color> within
+        2 squares around himself as well.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 07d6b726ee041ef4eb3634fe49385904, type: 3}
       name: Climbing up the Cloud Ladder
@@ -373,7 +387,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 1
       damageType: 4
-      description: Reflect the enemy's attack, then inflict Taunt on the attacker.
+      description: '<color=blue>Reflect the enemy''s attack</color>, then inflict
+        <color=blue>Taunt</color> on the attacker.
+
+'
       canBeDodged: 0
     - icon: {fileID: 21300000, guid: be209ed9a9367b04280db00f16dffb43, type: 3}
       name: Memories of Blue (Ancient Battlefield)
@@ -387,9 +404,10 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 1
       description: "Explode his shield and heal himself based on the amount of shield
-        remaining. After the shield explode, turn the 4 squares area around Ph\u1EA1m
-        C\u1EF1 Ch\xEDch into an Ancient Battlefield. Ancient Battlefield blocks
-        enemies' range attacks and inflicts Bleeding on all enemies who enter it."
+        remaining. After the shield explodes, turn the 4 squares area around Ph\u1EA1m
+        C\u1EF1 Ch\xEDch into an Ancient Battlefield. Ancient Battlefield <color=blue>blocks
+        enemies\u2019 attacks</color> and inflicts <color=blue>Bleeding</color> on
+        all enemies who enter it.\r\n"
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
@@ -403,8 +421,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Whenever using skills, will use HP instead of \xBD of the MP
-        cost (toggleable passive). Increases ATK based on HP lost."
+      description: "Whenever using skills, will <color=red>use HP instead</color>
+        of \xBD of the MP cost (toggleable passive). <color=red>Increases ATK</color>
+        based on HP lost.\r"
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
@@ -418,8 +437,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Base movement range: 4 squares. Massively increases Defense &
-        Chi Defense when movement range used in a round is \u2264 3"
+      description: "Base movement range: 4 squares. Massively <color=red>increases
+        Defense & Chi Defense</color> when movement range used in a round is \u2264
+        3.\r\n"
       canBeDodged: 1
   passiveSkills: []
   Info:
