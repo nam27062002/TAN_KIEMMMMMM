@@ -223,7 +223,8 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: "Using its flesh tentacle to chug a rock soaked in Steelborn\u2019s
-        venom at an enemy. "
+        venom at an enemy. Causes nearby Steelborn to join in on attacking the same
+        target.\r\n"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 2b34cb4773b89294bbce104eeef056b9, type: 3}
       name: 'Infestation '
@@ -238,7 +239,8 @@ MonoBehaviour:
       damageType: 4
       description: "Grab hold of an enemy then spit a seed into the target\u2019s
         mouth. If the target is infested and unable to cleanse themselves within
-        2 rounds, they\u2019ll die. Other Steelborn nearby has a chance to join in"
+        2 rounds, they\u2019ll <color=red>die instantly</color>. Other Steelborn
+        nearby has a chance to join in.\r\n"
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 2bea061885017714799bf019c2ad2d5b, type: 3}
@@ -305,7 +307,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: 'Causes nearby Steelborn to join in on attacking their attacker. '
+      description: 'Using its flesh tentacle to bind enemies, dealing dmg based on
+        numbers of Steelborn in the vicinity. All nearby Steelborn has a <color=blue>chance
+        to join in</color> with a normal attack.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: a3fe2025ac048a340be307f59e9ab142, type: 3}
       name: 'Infestation '
@@ -319,8 +325,8 @@ MonoBehaviour:
       canBlockDamage: 0
       damageType: 4
       description: "Spit a seed out to deflect enemies\u2019 attack. Steelborn\u2019s
-        poisonous blood within the seed has a chance of blinding enemies. However,
-        this does not have the chance to trigger the infestation. "
+        poisonous blood within the seed has a chance of <color=blue>blinding</color>
+        enemies. However, this does not have the chance to trigger the infestation.\r\n"
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
@@ -334,13 +340,13 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "\r\nPassive \r\n\r\nSteelborn\u2019s flesh ooze out a special
-        poison to neutralize their prey. Steelborn\u2019s attacks reduces target\u2019s
-        movement range by 2 squares each round and has a chance to lock targets\u2019
-        AP. This poison cannot stack with itself but can stack with poison from other
-        Steelborn. \r\n\r\nHivemind: A Steelborn has a chance of joining in on an
-        attack whenever other Steelborn attacks, but has no special skill during
-        their allies\u2019 turns. \r\n\r\n"
+      description: "Steelborn\u2019s flesh ooze out a special poison to neutralize
+        their prey. Steelborn\u2019s attacks <color=red>reduces target\u2019s movement
+        range</color> by 2 squares each round and has a chance to <color=blue>lock
+        targets\u2019 AP</color>. This poison cannot stack with itself but can stack
+        with poison from other Steelborn.\r\n\r\nHivemind: A Steelborn has a chance
+        of joining in on an attack whenever other Steelborn attacks, but has no special
+        skill during their allies\u2019 turns.\r\n"
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
