@@ -198,9 +198,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Stab forward, dealing 1.5 times the base skill dmg, and inflicting
-        a Blood Seal on the target. At the same time, reducing the opponent's MP
-        by 0.5 of the dmg dealt.
+      description: Stab forward, dealing 1.5 times the base skill dmg, and <color=red>inflicting
+        a Blood Seal</color> on the target. At the same time, <color=blue>reducing
+        the opponent's MP by 0.5 of the dmg dealt</color>.
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 4a284cf3f3d4fae4baee0a01744b5c0c, type: 3}
       name: By the Misty Bamboo Riverside
@@ -213,9 +213,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "Raise his Gourd and drink the strong wine V\xE2n Thi\xEAu, increasing
-        dmg dealt by 10% current HP. Then, imbues his sword with alcoholic chi. For
-        the next 5 turns, all skills have a chance to make enemies hit drunken."
+      description: "Raise his Gourd and drink the strong wine V\xE2n Thi\u1EC1u,
+        <color=red>increasing dmg</color> dealt by 10% current HP. Then, imbues his
+        sword with alcoholic chi. For the next 5 turns, all skills have a chance
+        to make enemies hit <color=blue>drunken</color>.\r\n"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 748b49141ded6bb4cb3e062af2c159e2, type: 3}
       name: The Seven songs
@@ -228,8 +229,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: Shakes his wrist, performing a double-slash, which inflicts bleeding
-        on target.
+      description: 'Shakes his wrist, performing a <u>double-slash</u>, which inflicts
+        <color=blue>bleeding</color> on target.
+
+'
       canBeDodged: 1
     movementSkill:
     - icon: {fileID: 21300000, guid: 8c1777af8fdc083458f7882b7817ba9f, type: 3}
@@ -256,8 +259,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 4
-      description: Stab forward, stunning enemy while increasing critical hit rate
-        for self and the turn master as well as inflicting a Blood Seal on the target.
+      description: 'Stab forward, <color=blue>stunning enemy</color> while <color=red>increasing
+        critical hit rate for self and</color> <color=red>the turn master</color>
+        as well as <color=red>inflicting a Blood Seal</color> on the target.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: a58a7c4ec4bd53843a53239ef355700a, type: 3}
       name: Face redder than a Lotus
@@ -270,10 +276,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "Drink a mixture of the 2 wines \u2013 V\xE2n Thi\xEAu and M\xF4ng
-        V\u0169 \u2013 massively increases dodge rate. Then, imbues his sword with
-        alcoholic chi. Enemies who miss are guaranteed to get drunk. Drunken enemies
-        who miss will be dealt spike dmg."
+      description: "Drink a mixture of the 2 wines \u2013 V\xE2n Thi\u1EC1u and M\u1ED9ng
+        V\u0169 \u2013 <color=red>massively increases dodge rate</color>. Then, imbues
+        his sword with alcoholic chi. Enemies who miss are guaranteed to get <color=blue>drunk</color>.
+        Drunken enemies who miss will be dealt <color=blue>spike dmg</color>.\r\n"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 7ee6655c6c54f3149a563a40311e01b6, type: 3}
       name: Not Anybody Important
@@ -286,8 +292,10 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: Shakes his wrist, performing a double-slash that shook the enemies'
-        innards, disabling their defense.
+      description: 'Shakes his wrist, performing a <u>double-slash</u> that shook
+        the enemies'' <color=red>innards</color>, <color=blue>disabling their defense</color>.
+
+'
       canBeDodged: 0
     combatSkill:
     - icon: {fileID: 21300000, guid: 9abd56b3b82f07549b9766afd97db3bb, type: 3}
@@ -314,9 +322,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 1
       damageType: 4
-      description: Stab forward, inflicting a Blood Seal while blocking and countering
-        the opponent's attack, disrupting their chi flow. Inflicts Chi Ban for 2
-        turns.
+      description: 'Stab forward, <color=red>inflicting a Blood Seal</color> while
+        blocking and <color=red>countering the opponent''s attack</color>, disrupting
+        their chi flow. <color=blue>Inflicts Chi Ban</color> for 2 turns.
+
+'
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: c85a2b1dd3dfcad4c9099661931b738b, type: 3}
       name: Walking Home Drunk
@@ -329,9 +339,9 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 1
-      description: "Drinking the light wine M\xF4ng V\u0169, gaining lifesteal. Then,
-        imbues his sword with alcoholic chi. For the next 5 turns, all skills have
-        a chance to make enemies hit drunken."
+      description: "Drinking the light wine M\u1ED9ng V\u0169, <color=red>gaining
+        lifesteal</color>. Then, imbues his sword with alcoholic chi. For the next
+        5 turns, all skills have a chance to make enemies hit <color=blue>drunken</color>.\r\n"
       canBeDodged: 1
     - icon: {fileID: 21300000, guid: 122e4b20043b2004b9195a0f862c1f1e, type: 3}
       name: Sorrowful Journey
@@ -344,8 +354,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 1
       canBlockDamage: 0
       damageType: 4
-      description: Shakes his wrist, performing a double-slash that makes the attacking
-        enemy fall down, inflicts prone to the target.
+      description: 'Shakes his wrist, performing a <u>double-slash</u> that makes
+        the attacking enemy <u>fall down</u>, inflicts <color=blue>prone</color>
+        to the target.
+
+'
       canBeDodged: 1
     passtiveSkill1:
       icon: {fileID: 0}
@@ -359,10 +372,11 @@ MonoBehaviour:
       canOverrideSetTargetCharacters: 0
       canBlockDamage: 0
       damageType: 0
-      description: "Every 4 HP lost, increases dmg dealt by 1 (max 5). Every 8 HP
-        lost, reduce the requirements for rolling a crit by 1 (max 3). Every 2 MP
-        lost, increases dmg received by 2 (max 2). AP used in enemies\u2019 turns
-        will change to yellow but AP used in allies\u2019 turns will change to red. "
+      description: "Every 4 HP lost, <color=red>increases dmg dealt</color> by 1
+        (max 5). Every 8 HP lost, <color=red>reduce the requirements for rolling
+        a crit</color> by 1 (max 3). Every 2 MP lost, increases dmg received by 2
+        (max 2). AP used in enemies\u2019 turns will change to <color=yellow>yellow</color>
+        but AP used in allies\u2019 turns will change to <color=red>red</color>."
       canBeDodged: 1
     passtiveSkill2:
       icon: {fileID: 0}
